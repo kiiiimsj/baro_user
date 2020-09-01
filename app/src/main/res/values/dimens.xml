@@ -1,0 +1,4 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="order_list_cart_dp">80dp</dimen>
+</resources>

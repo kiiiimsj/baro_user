@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#8D00F1"
+        android:fontFamily="@font/bmhannapro"
+        android:gravity="center"
+        android:text="주문 완료"
+        android:letterSpacing="0.3"
+        android:textColor="#ffffff"
+        android:textSize="16dp" />
+
+
+    <TextView
+        android:padding="20dp"
+        android:id="@+id/mesgase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:fontFamily="@font/bmhannapro"
+        android:textSize="16dp"
+        android:text="주문 결제가 완료 되었습니다"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/okay"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="확 인"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:letterSpacing="0.2"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/button_border_full"
+            android:fontFamily="@font/bmhannapro"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+</LinearLayout>

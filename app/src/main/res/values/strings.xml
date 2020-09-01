@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">WantChu</string>
+
+    <!--승재꺼!!-->
+
+    <!-- 회원 가입 약관 문자열-->
+    <string name="report">WantChu 문의사항</string>
+
+    <!--성재꺼!!-->
+
+
+    <!--태영이꺼!!-->
+
+    <!--회원가입 3-->
+    <string name="notice_title"> 타이틀 </string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+
+</resources>

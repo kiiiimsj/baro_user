@@ -1,0 +1,84 @@
+
+<resources>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <string name="SERVER">http://54.180.56.44:8080/</string>
+    <!--json form :  phone | pass -->
+    <!--server send form : result | message -->
+    <string name="login">MemberLogin.do</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : phone -->
+    <!--server send form : result | message -->
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : phone | email | nick | pass -->
+    <!--server send form : result | message -->
+    <string name="register">MemberRegister.do</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : phone | pass-->
+    <!--server send form : result | message -->
+    <string name="passUpdate">MemberPassUpdate.do</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : X -->
+    <!--server send form : notice_code | notice_date | title | notice_id | content -->
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : title | content | notice_code {'NOTICE' | 'EVENT' | 'ALTER'} -->
+    <!--server send form : result | message -->
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : X-->
+    <!--server send form : store_id | store_opentime | store_latitude | store_closetime | store_daysoff | message | result | -->
+    <string name="storeFindById">StoreFindById.do?store_id=</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : X -->
+    <!--server send form : result | message | category{store_id | category_name | category_id } -->
+    <string name="categoryFindByStoreId">CategoryFindByStoreId.do?store_id=</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : X -->
+    <!--server send form : result | message | menu {store_id | category_id | menu_info | menu_name | menu_defaultprice | menu_id} -->
+    <string name="menuFindByStoreId">MenuFindByStoreId.do?store_id=</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : phone | email -->
+    <!--server send form : result | message -->
+    <string name="emailUpdate">MemberEmailUpdate.do</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : X-->
+    <!--server send form : result | total_orders-->
+    <string name="orderTotalCountByPhone">OrderTotalCountByPhone.do?phone=</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : X-->
+    <!--server send form : result | coupon -->
+    <string name="couponFindByPhone">CouponFindByPhone.do?phone=</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : X-->
+    <!--server send form : result | coupon -->
+    <string name="couponCountByPhone">CouponCountByPhone.do?phone=</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+
+    <!--json form : X-->
+    <!--server send form : result | inquiry -->
+    <string name="inquiryListFindByEmail">InquiryListFindByEmail.do?email=</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : X-->
+    <!--server send form : result | inquiry -->
+    <string name="inquiryFindById">InquiryFindById.do?inquiry_id=</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->
+
+    <!--json form : X-->
+    <!--server send form : result | inquiry -->
+    <string name="InquirySave">InquirySave.do</string>
+    <!-- GET = 0 | POST = 1 | PUT = 2 -->=
+
+</resources>

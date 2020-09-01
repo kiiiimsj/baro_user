@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/bottomIconClock"
+        android:state_checked="true" android:color="#000000"
+        android:icon="@drawable/ic_baseline_access_time_24"
+        android:title="주문현황"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/bottomIconMyStore"
+        android:state_checked="true" android:color="#000000"
+        android:icon="@drawable/heart_full"
+        android:title="My 매장"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/none"
+        android:title=" "
+        />
+    <item
+        android:id="@+id/bottomIconOrderList"
+        android:state_checked="true" android:color="#000000"
+        android:icon="@drawable/ic_baseline_assignment_24"
+        android:title="주문내역"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/bottomIconMyPage"
+        android:state_checked="true" android:color="#000000"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="마이페이지"
+        app:showAsAction="always"
+        />
+</menu>

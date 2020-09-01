@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "452286000255",
+    "firebase_url": "https://wantchu-e2a20.firebaseio.com",
+    "project_id": "wantchu-e2a20",
+    "storage_bucket": "wantchu-e2a20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452286000255:android:7cd7b58dd959777328634a",
+        "android_client_info": {
+          "package_name": "com.example.wantchu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452286000255-7jlb7tv001jb9r0bodqg4rv4ngood0pf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wantchu",
+            "certificate_hash": "e876f1bec849eac55aa4535223801416f7f7dcf4"
+          }
+        },
+        {
+          "client_id": "452286000255-v5e0nclt2408t7spa9q6af80s9p06h6d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbG2wNzrgdJitcII8tKe0EuGEdC2-FyKA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452286000255-v5e0nclt2408t7spa9q6af80s9p06h6d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context=".InquiryShow">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/back_pressed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickBack"
+            android:background="@color/white"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/general_back_icon" />
+
+        <TextView
+            android:id="@+id/inquiry_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/brandon_grotesque_black"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="25dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/inquiry_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:text="2020-08-19 에 작성됨"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:id="@+id/inquiry_is_replied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/black"
+            android:text="답변이 완료된 질문입니다."
+            android:textSize="15dp"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/inquiry_content"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        />
+    <TextView
+
+        android:layout_width="match_parent"
+        android:text="답변은 등록하신 이메일로 보내집니다."
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+</LinearLayout>

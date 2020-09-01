@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#8D00F1"
+        android:fontFamily="@font/bmhannapro"
+        android:gravity="center"
+        android:text="커스텀 다이얼로그"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
+
+
+
+    <TextView
+        android:id="@+id/mesgase"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:fontFamily="@font/bmhannapro"
+        android:textSize="16dp"
+        android:text="성공적으로 장바구니에 물건이 담겼습니다"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/goStore"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="다른메뉴 보기"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/button_border_full"
+            android:fontFamily="@font/bmhannapro"
+            />
+
+        <Button
+            android:id="@+id/goBasket"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="장바구니"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="60dp"
+            android:background="@drawable/button_border_full"
+            android:fontFamily="@font/bmhannapro"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+</LinearLayout>

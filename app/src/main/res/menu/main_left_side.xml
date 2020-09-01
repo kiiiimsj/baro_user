@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item
+    android:id="@+id/left_coupon"
+    android:title="쿠폰" />
+<item
+    android:id="@+id/left_noti"
+    android:title="공지사항" />
+<item
+    android:id="@+id/left_entry_request"
+    android:title="입점요청" />
+<item
+    android:id="@+id/left_one_to_one"
+    android:title="1:1문의" />
+</menu>
