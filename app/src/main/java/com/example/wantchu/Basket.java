@@ -318,11 +318,14 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         String lastUrl = "BillingGetUserToken.do";
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
+        Log.i("qerw", phoneNumber);
+        Log.i("qerw", user_id);
         makeRequest2(url, hashMap);
     }
 
     private void makeRequest2(String url, HashMap<String, String> hashMap) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(hashMap),
                 new Response.Listener<JSONObject>() {
                     @Override

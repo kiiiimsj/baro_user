@@ -98,6 +98,7 @@ public class CouponDialog extends DialogFragment {
         String lastUrl = "CouponFindUsable.do?phone=" + phone + "&price=" + totalPrice;
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
+        Log.e("success","gura");
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
