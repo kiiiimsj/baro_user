@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
     android:background="@color/white"
     android:elevation="12dp">
@@ -15,7 +15,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
 
@@ -23,7 +23,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingRight="5dp"
             android:paddingLeft="5dp"
@@ -79,16 +79,12 @@
                 android:id="@+id/essentials"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-
-
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/nonEssentials"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
             </LinearLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/priceLinear"

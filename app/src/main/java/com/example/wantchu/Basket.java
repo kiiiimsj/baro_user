@@ -116,7 +116,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         if(getFragmentManager().isDestroyed()){
             Log.e("시발사라졌다고 ","mm");
         }
@@ -318,11 +317,14 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         String lastUrl = "BillingGetUserToken.do";
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
+        Log.i("qerw", phoneNumber);
+        Log.i("qerw", user_id);
         makeRequest2(url, hashMap);
     }
 
     private void makeRequest2(String url, HashMap<String, String> hashMap) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(hashMap),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -425,6 +427,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         String lastUrl = "OrderInsert.do";
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
+        Log.e("json",json);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest request = new StringRequest(Request.Method.POST, url,
@@ -474,7 +477,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         Log.i("webSocket", "connectToWebSocket() called.");
         URI uri;
         try {
-            uri = new URI("ws://54.180.56.44:8080/websocket");
+            uri = new URI("ws://15.165.22.64:8080/websocket");
         } catch(Exception e) {
             e.printStackTrace();
             return;

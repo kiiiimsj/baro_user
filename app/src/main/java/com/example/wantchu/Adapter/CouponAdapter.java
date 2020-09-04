@@ -36,24 +36,24 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
     public void onBindViewHolder(@NonNull CouponViewHolder holder, int position) {
         Coupon coupon = couponList.coupon.get(position);
         holder.couponId.setText(Integer.toString(coupon.getCoupon_id()));
-        holder.couponCondition.setText(coupon.getCoupon_condition());
+        holder.couponCondition.setText(coupon.getCoupon_condition()+" 원 이상 구매시 적용");
 
-        if(coupon.getCoupon_content().length() >= 10) {
-            holder.couponContent.setTextSize(25);
-        }
-        if(coupon.getCoupon_content().length() >= 20) {
-            holder.couponContent.setTextSize(20);
-        }
-        if(coupon.getCoupon_content().length() >= 30) {
-            holder.couponContent.setTextSize(15);
-        }
+//        if(coupon.getCoupon_content().length() >= 10) {
+//            holder.couponContent.setTextSize(25);
+//        }
+//        if(coupon.getCoupon_content().length() >= 20) {
+//            holder.couponContent.setTextSize(20);
+//        }
+//        if(coupon.getCoupon_content().length() >= 30) {
+//            holder.couponContent.setTextSize(15);
+//        }
 
         holder.couponContent.setText(coupon.getCoupon_content());
         holder.couponDate.setText(coupon.getCoupon_enddate());
         holder.couponDiscount.setText(coupon.getCoupon_discount());
-        if(coupon.getCoupon_title().length() >= 10) {
-            holder.couponName.setTextSize(20);
-        }
+//        if(coupon.getCoupon_title().length() >= 10) {
+//            holder.couponName.setTextSize(20);
+//        }
         holder.couponName.setText(coupon.getCoupon_title());
 
 
