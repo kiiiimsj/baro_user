@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -85,7 +86,15 @@ public class InquiryList extends AppCompatActivity implements InquiryListAdapter
         Gson gson = new Gson();
         inquiryDataList = gson.fromJson(response, InquiryDataList.class);
         Log.i("GET GSON", inquiryDataList.toString());
-
+        if(inquiryDataList.result == false) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(InquiryList.this, inquiryDataList.message, Toast.LENGTH_LONG);
+                }
+            });
+            return;
+        }
         setInquiryList(inquiryDataList);
     }
 
