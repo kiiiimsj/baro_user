@@ -10,6 +10,7 @@
     <color name="gray">#40000000</color>
     <color name="main">#8D00F1</color>
     <color name="nearWhite">#FCF7FF</color>
+    <color name="littleGray">#EDEDED</color>
 
 
     <!--      Dashboard Colors      -->

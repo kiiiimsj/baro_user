@@ -1,16 +1,20 @@
 package com.example.wantchu.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
@@ -65,19 +69,20 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
         return listStoreViewHolder;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ListStoreAdapter.ListStoreViewHolder holder, int position) {
         ListStoreHelperClass listStoreHelperClass = listStoreLocations.get(position);
 
         holder.storeImage.setBackgroundDrawable(Drawable.createFromPath(listStoreHelperClass.storeImage));
         holder.storeName.setText(listStoreHelperClass.storeName);
-
         holder.storeLocation.setText(listStoreHelperClass.storeLocation);
         holder.mDistance.setText(String.valueOf((int)listStoreHelperClass.storeDistance + "m"));
         holder.storeId.setText(String.valueOf(listStoreHelperClass.storeId));
         if(listStoreHelperClass.storeIsOpen != null) {
             if(listStoreHelperClass.storeIsOpen.equals("N")) {
                 holder.isOpen.setText("준비중");
+                holder.store.setBackgroundColor(Color.rgb(237,237,237));
             }
             if(listStoreHelperClass.storeIsOpen.equals("Y")) {
                 holder.isOpen.setText("영업중");
@@ -98,6 +103,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
         public TextView mDistance;
         public TextView storeId;
         public TextView isOpen;
+        public LinearLayout store;
 
         public ListStoreViewHolder(@NonNull View itemView, int po) {
             super(itemView);
@@ -108,6 +114,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             mDistance = itemView.findViewById(R.id.distance);
             storeId = itemView.findViewById(R.id.store_id);
             isOpen = itemView.findViewById(R.id.is_open);
+            store = itemView.findViewById(R.id.store);
             ListStoreHelperClass list =listStoreLocations.get(po);
 
             if(listStoreLocations.size() == po + 1 ) {
