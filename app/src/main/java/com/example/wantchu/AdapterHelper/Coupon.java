@@ -1,6 +1,9 @@
 package com.example.wantchu.AdapterHelper;
 
 public class Coupon {
+    public static final String SALE = "SALE";
+    public static final String DISCOUNT="DISCOUNT";
+
     private String coupon_title;
     private String coupon_condition;
     private int coupon_id;

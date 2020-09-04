@@ -61,6 +61,7 @@ public class SideMyCoupon extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.e("couponList",response);
                         ParsingCoupon(response);
                     }
                 },
@@ -95,7 +96,7 @@ public class SideMyCoupon extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(couponAdapter);
 
-        setHeight();
+//        setHeight();
     }
 
     private void setHeight() {

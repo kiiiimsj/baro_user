@@ -6,13 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp"
     tools:context=".Basket">
 
     <RelativeLayout
         android:id="@+id/relativeLayout2"
-        android:layout_width="406dp"
-        android:layout_height="111dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -49,7 +48,6 @@
             android:layout_marginTop="30sp"
             android:fontFamily="@font/baloo"
             android:gravity="center"
-            android:padding="30sp"
             android:text="가게 이름"
             android:textSize="20dp" />
     </RelativeLayout>

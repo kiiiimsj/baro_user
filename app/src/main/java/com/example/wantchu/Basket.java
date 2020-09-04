@@ -116,7 +116,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         if(getFragmentManager().isDestroyed()){
             Log.e("시발사라졌다고 ","mm");
         }
@@ -428,6 +427,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         String lastUrl = "OrderInsert.do";
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
+        Log.e("json",json);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest request = new StringRequest(Request.Method.POST, url,
