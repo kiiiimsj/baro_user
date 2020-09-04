@@ -83,6 +83,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             if(listStoreHelperClass.storeIsOpen.equals("N")) {
                 holder.isOpen.setText("준비중");
                 holder.store.setBackgroundColor(Color.rgb(237,237,237));
+                
             }
             if(listStoreHelperClass.storeIsOpen.equals("Y")) {
                 holder.isOpen.setText("영업중");
