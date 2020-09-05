@@ -40,7 +40,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".OrderStatus"></activity>
 
         <uses-library android:name="com.google.android.maps" />
         <uses-library
@@ -60,15 +60,15 @@
             android:exported="true"
             android:stopWithTask="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-
         <activity android:name=".ChangePass1Logging" />
         <activity android:name=".UpdateEmail" />
-        <activity android:name=".ListStoreFavoritePage"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".ListStoreFavoritePage"
+            android:launchMode="singleTask" />
         <activity android:name=".Basket" />
         <activity android:name=".MyMap" />
         <activity android:name=".SideMyCoupon" />
@@ -83,19 +83,21 @@
         <activity android:name=".ChangeEmail2" />
         <activity android:name=".StoreDetailInfo" />
         <activity android:name=".ChangeEmail" />
-        <activity android:name=".ListStorePage"/>
+        <activity android:name=".ListStorePage" />
         <activity android:name=".Login" />
         <activity android:name=".InquiryShow" />
         <activity android:name=".InquiryList" />
         <activity android:name=".Inquiry" />
         <activity android:name=".OrderDetails" />
-        <activity android:name=".OrderHistory"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".OrderHistory"
+            android:launchMode="singleTask" />
         <activity android:name=".StoreInfo" />
         <activity android:name=".MainPage" />
         <activity android:name=".SearchStore" />
-        <activity android:name=".MyPage"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".MyPage"
+            android:launchMode="singleTask" />
         <activity android:name=".FirstPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

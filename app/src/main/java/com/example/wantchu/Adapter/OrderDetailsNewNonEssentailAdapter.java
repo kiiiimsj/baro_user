@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,8 +101,8 @@ public class OrderDetailsNewNonEssentailAdapter extends RecyclerView.Adapter<Ord
         TextView optionCount;
         TextView optionPrice;
         TextView optionName;
-        Button plus;
-        Button minus;
+        ImageButton plus;
+        ImageButton minus;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             plus = (itemView).findViewById(R.id.plus);

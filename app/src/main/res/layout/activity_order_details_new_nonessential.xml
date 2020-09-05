@@ -51,15 +51,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_weight="2">
-        <Button
-            android:id="@+id/plus"
+        <ImageButton
+            android:id="@+id/minus"
             android:layout_weight="1"
             android:layout_margin="3dp"
+            android:src="@drawable/minus"
+            android:layout_gravity="center_vertical"
             android:background="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+">
-        </Button>
+        </ImageButton>
         <TextView
             android:id="@+id/optionCount"
             android:background="@color/white"
@@ -69,14 +71,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"/>
-        <Button
-            android:id="@+id/minus"
+        <ImageButton
+            android:id="@+id/plus"
             android:layout_weight="1"
             android:layout_margin="3dp"
+            android:src="@drawable/plus"
+            android:layout_gravity="center_vertical"
             android:background="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ㅡ">
-        </Button>
+        </ImageButton>
     </LinearLayout>
 </LinearLayout>
