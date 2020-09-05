@@ -178,6 +178,10 @@
                     android:padding="5dp"
                     android:layout_margin="3dp"
                     android:text=" 퍼스널 옵션"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/black"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/menuRecyler_nonEssential"
                     android:scrollbars="vertical"
