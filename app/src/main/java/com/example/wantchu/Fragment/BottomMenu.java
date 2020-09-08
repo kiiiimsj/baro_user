@@ -14,6 +14,7 @@ import com.example.wantchu.ListStoreFavoritePage;
 import com.example.wantchu.MainPage;
 import com.example.wantchu.MyPage;
 import com.example.wantchu.OrderHistory;
+import com.example.wantchu.OrderProgressing;
 import com.example.wantchu.R;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -69,6 +70,10 @@ public class BottomMenu extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.bottomIconClock:
+                        if (getTokenActivityName(getActivity().toString()).equals("OrderProgressing")) {
+                            break;
+                        }
+                        startActivity(new Intent(getActivity(), OrderProgressing.class));
                         break;
                     case R.id.bottomIconMyStore:
                         if (getTokenActivityName(getActivity().toString()).equals("ListStoreFavoritePage")) {

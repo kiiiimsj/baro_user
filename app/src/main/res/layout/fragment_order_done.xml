@@ -8,7 +8,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#8D00F1"
+        android:background="@color/main"
         android:fontFamily="@font/bmhannapro"
         android:gravity="center"
         android:text="주문 완료"
