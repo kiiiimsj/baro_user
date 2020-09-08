@@ -1,8 +1,6 @@
 package com.example.wantchu;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,12 +9,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Register1 extends AppCompatActivity {
 
@@ -27,6 +37,7 @@ public class Register1 extends AppCompatActivity {
     private Button nextButton;
     private ImageView backButton;
 
+    String _phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,35 +57,11 @@ public class Register1 extends AppCompatActivity {
         if (_getUserEnteredPhoneNumber.charAt(0) == '0') {
             _getUserEnteredPhoneNumber = _getUserEnteredPhoneNumber.substring(1);
         } //remove 0 at the start if entered by the user
-        final String _phone = KOREA + _getUserEnteredPhoneNumber;
+        _phone = KOREA + _getUserEnteredPhoneNumber;
         Log.i("PHONE NUMBER : " , _phone);
 
+        makeRequestForCheckPhone(urlMaker());
 
-        Query checkUser = FirebaseDatabase.getInstance().getReference("Users").child(_phone);
-        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){ //만약 휴대폰정보가 firebase에 존재한다면
-                    phoneTextInput.setError("존재하는 휴대폰번호입니다.");
-                    phoneTextInput.requestFocus();
-                    return;
-                }
-                else{ // firebase에 회원정보가 없을때
-                    phoneTextInput.setError(null);
-                    phoneTextInput.setErrorEnabled(false);
-
-                    Intent intent = new Intent(getApplicationContext(), VerifyOTP.class);
-                    intent.putExtra("phone", _phone);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(Register1.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private boolean validateFields() {
@@ -96,7 +83,54 @@ public class Register1 extends AppCompatActivity {
             return true;
         }
     }
+    public String urlMaker() {
+        StringBuilder urlBuilder =  new StringBuilder(getApplicationContext().getString(R.string.SERVER));
+        urlBuilder.append(getApplicationContext().getString(R.string.memberPhoneCheck));
+        urlBuilder.append(phoneTextInput.getEditText().getText().toString());
 
+        return urlBuilder.toString();
+    }
+    public void makeRequestForCheckPhone(String url) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("response", response);
+                parsing(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+    private void parsing(String response) {
+        boolean result = false;
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            result = jsonObject.getBoolean("result");
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(!result) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(Register1.this, "이미 존재하는 핸드폰 입니다.", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        else {
+            Intent intent = new Intent(getApplicationContext(), VerifyOTP.class);
+            intent.putExtra("phone", _phone);
+            startActivity(intent);
+            finish();
+        }
+
+    }
     public void callBackFromRegister1(View view) {
         startActivity(new Intent(getApplicationContext(), Login.class));
         finish();

@@ -128,7 +128,7 @@ public class Register2 extends AppCompatActivity {
 
         makeRequestForRegister(urlMaker(), registerUsers);
         if(getResult) {
-            storeNewPhoneData();
+            //storeNewPhoneData();
             startActivity(new Intent(getApplicationContext(), Login.class));
             finish();
         }
