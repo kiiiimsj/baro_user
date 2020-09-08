@@ -64,7 +64,7 @@
             </intent-filter>
         </service>
 
-
+        <activity android:name=".OrderProgressing" />
         <activity android:name=".ChangePass1Logging" />
         <activity android:name=".UpdateEmail" />
         <activity android:name=".ListStoreFavoritePage"
