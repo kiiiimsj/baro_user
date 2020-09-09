@@ -72,7 +72,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
             background = itemView.findViewById(R.id.background);
 
             if(listMenuHelperClasses.size() == po + 1) {
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 400);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 480);
                 itemView.setLayoutParams(layoutParams);
             }
 
