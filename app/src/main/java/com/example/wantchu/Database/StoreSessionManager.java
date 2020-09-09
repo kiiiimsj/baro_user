@@ -96,6 +96,10 @@ return storeEditor;
 
         return storeData;
     }
+    public void clearStoreSession() {
+        storeEditor.clear();
+        storeEditor.commit();
+    }
 
     public HashMap<String, String> getStoreDetailFromSessionById(int storeId) {
         HashMap<String, String> storeData = getStoreDetailFromSession();
