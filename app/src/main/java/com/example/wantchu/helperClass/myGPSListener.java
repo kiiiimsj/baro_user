@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.StringTokenizer;
 
 public class myGPSListener implements LocationListener {
     Context context;
@@ -42,6 +43,7 @@ public class myGPSListener implements LocationListener {
         Log.e("err", "???");
         LatLng latLng= null;
         Location location;
+        Location location2;
         long minTime = 10000;
         float minDistance = 0;
 
@@ -49,30 +51,41 @@ public class myGPSListener implements LocationListener {
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, this);
             manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, this);
 
-            location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            location2 = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Log.i("location2" , location2+"");
             location = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            Log.i("location", location+"");
 
             double latitude;
             double longitude;
-            if (location != null) {
+            if (location2 != null) {
                 Log.e("err", "???");
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
+                latitude = location2.getLatitude();
+                longitude = location2.getLongitude();
                 latLng = new LatLng(latitude, longitude);
                 String message = "가게리스트페이지에서 내 위치 -> Latitude : " + latitude + "\nLongitude:" + longitude;
                 Log.d("Map", message);
             }
             else {
-                latitude = 37.4963;
-                longitude = 126.9575;
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
                 latLng = new LatLng(latitude, longitude);
             }
 
             Geocoder geocoder = new Geocoder(context, Locale.KOREA);
             try {
                 List<Address> list = geocoder.getFromLocation(latitude, longitude, 10);
-                Log.d("MyMapaa", list.get(0).getAddressLine(0));
-                getAdress.setText(list.get(0).getAddressLine(0)); //--> 처리
+                StringBuilder fAddress = new StringBuilder();
+                Address address = list.get(0);
+                StringBuilder addressBuilder = new StringBuilder();
+                addressBuilder.append(address.getCountryName()+" ")
+                    .append(address.getAdminArea());
+                StringTokenizer stringTokenizer = new StringTokenizer(address.getAddressLine(0), addressBuilder.toString());
+                while(stringTokenizer.hasMoreTokens()) {
+                     fAddress.append(stringTokenizer.nextToken()+" ");
+                }
+                Log.i("address", fAddress.toString());
+                getAdress.setText(fAddress); //--> 처리
             }
             catch(Exception e){
                 e.printStackTrace();

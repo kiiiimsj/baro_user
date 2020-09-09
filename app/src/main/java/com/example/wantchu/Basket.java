@@ -60,6 +60,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import kr.co.bootpay.Bootpay;
 import kr.co.bootpay.BootpayAnalytics;
@@ -600,8 +601,21 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                     @Override
                     public void onError(@Nullable String message) {
                         Log.d("error", message);
-                        OrderLimitExcessDialog orderLimitExcessDialog = new OrderLimitExcessDialog(Basket.this, message);
-                        orderLimitExcessDialog.callFunction();
+                        String getMessage ="";
+                        try {
+                            JSONObject jsonObject = new JSONObject(message);
+                            getMessage = jsonObject.getString("msg");
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if(!getMessage.equals("")) {
+                            OrderLimitExcessDialog orderLimitExcessDialog = new OrderLimitExcessDialog(Basket.this, getMessage);
+                            orderLimitExcessDialog.callFunction();
+                        }
+                        else {
+                            return;
+                        }
                         //오류
                     }
                 })
