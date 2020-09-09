@@ -1,5 +1,6 @@
 package com.example.wantchu.Dialogs;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -19,11 +20,17 @@ public class OrderLimitExcessDialog extends AppCompatActivity {
         this.context = context;
         this.errorMessage = errorMessage;
     }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     public void callFunction() {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dlg.setContentView(R.layout.fragment_order_limit_excess);
-        TextView errorMessageView =findViewById(R.id.error_message);
+        TextView errorMessageView = dlg.findViewById(R.id.error_message);
         errorMessageView.setText(errorMessage);
         dlg.show();
 
