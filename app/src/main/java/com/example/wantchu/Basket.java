@@ -383,7 +383,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                 discount_price = dc;
                 used_coupon_id = coupon_id;
                 clarityIsOpenStore();
-
             }
         });
         Bundle bundle = couponDialog.getArguments();

@@ -95,6 +95,7 @@ public class CouponDialog extends DialogFragment {
 
     private void makeRequest(String phone,int totalPrice){
         RequestQueue requestQueue  = Volley.newRequestQueue(context);
+        Log.i("phone", phone);
         String lastUrl = "CouponFindUsable.do?phone=" + phone + "&price=" + totalPrice;
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
