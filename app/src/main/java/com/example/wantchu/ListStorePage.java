@@ -89,12 +89,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         chooseShowList();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        chooseShowList();
-    }
-
     public void chooseShowList() {
         Intent intent = getIntent();
         Log.i("PASS", "PASS5");
