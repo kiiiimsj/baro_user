@@ -108,7 +108,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             linearLayout =(itemView).findViewById(R.id.shellHistoryItem);
             receipt_id = (itemView).findViewById(R.id.orderGroup_id);
             if(order.size() == po + 1) {
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 500);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 400);
                 itemView.setLayoutParams(layoutParams);
             }
         }

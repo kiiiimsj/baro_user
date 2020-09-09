@@ -119,7 +119,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             ListStoreHelperClass list =listStoreLocations.get(po);
 
             if(listStoreLocations.size() == po + 1 ) {
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 500);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 400);
                 itemView.setLayoutParams(layoutParams);
             }
             makeRequest(list.storeImage, context, storeImage);

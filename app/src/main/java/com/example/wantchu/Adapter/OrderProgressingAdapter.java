@@ -25,8 +25,8 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
     private static String ACCEPT = "ACCEPT";
     private static String PREPARING = "PREPARING";
 
-    ArrayList<OrderProgressingParsingHelper> mData;
-    Context context;
+    static ArrayList<OrderProgressingParsingHelper> mData;
+    static Context context;
 
     public OrderProgressingAdapter(ArrayList<OrderProgressingParsingHelper> mData, Context context) {
         this.mData = mData;
@@ -39,9 +39,14 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         Context context = parent.getContext();
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.activity_order_progressing_list,parent,false);
-        ViewHolder viewHolder = new OrderProgressingAdapter.ViewHolder(view);
+        ViewHolder viewHolder = new OrderProgressingAdapter.ViewHolder(view, viewType);
 
         return viewHolder;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
@@ -78,21 +83,23 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         return (mData.size() <= 0 ? 0 : mData.size());
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView order_state;
         TextView order_date;
         TextView stores_name;
         TextView total_prices;
         LinearLayout shell;
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, int po) {
             super(itemView);
             order_state = (itemView).findViewById(R.id.order_state);
             order_date = (itemView).findViewById(R.id.ordered_dates);
             stores_name = (itemView).findViewById(R.id.store_names);
             total_prices = (itemView).findViewById(R.id.totalPrices);
             shell = (itemView).findViewById(R.id.shellProgressingItem);
+            if(mData.size() == po + 1) {
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
+                itemView.setLayoutParams(layoutParams);
+            }
         }
-
-
     }
 }
