@@ -60,6 +60,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import kr.co.bootpay.Bootpay;
 import kr.co.bootpay.BootpayAnalytics;
@@ -370,9 +371,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
 
     public void onClick_onestore(View v) {
         Toast.makeText(this, "왜안되노", Toast.LENGTH_LONG).show();
-        SharedPreferences shf = getApplicationContext().getSharedPreferences("basketList", MODE_PRIVATE);
-        SharedPreferences.Editor editor = shf.edit();
-        editor.clear().commit();
 
         recalculateTotalPrice();
         CouponDialog couponDialog = CouponDialog.newInstance(Basket.this, new CouponDialog.CouponDialogListener() {
@@ -382,7 +380,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                 discount_price = dc;
                 used_coupon_id = coupon_id;
                 clarityIsOpenStore();
-
             }
         });
         Bundle bundle = couponDialog.getArguments();
@@ -560,6 +557,9 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                     @Override
                     public void onDone(@Nullable String message) {
                         Log.d("done", message);
+                        SharedPreferences shf = getApplicationContext().getSharedPreferences("basketList", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = shf.edit();
+                        editor.clear().commit();
                         HashMap<String, String> hashMap = new HashMap<>();
                         String price = null;
                         String receipt_id = null;
@@ -600,8 +600,21 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                     @Override
                     public void onError(@Nullable String message) {
                         Log.d("error", message);
-                        OrderLimitExcessDialog orderLimitExcessDialog = new OrderLimitExcessDialog(Basket.this, message);
-                        orderLimitExcessDialog.callFunction();
+                        String getMessage ="";
+                        try {
+                            JSONObject jsonObject = new JSONObject(message);
+                            getMessage = jsonObject.getString("msg");
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if(!getMessage.equals("")) {
+                            OrderLimitExcessDialog orderLimitExcessDialog = new OrderLimitExcessDialog(Basket.this, getMessage);
+                            orderLimitExcessDialog.callFunction();
+                        }
+                        else {
+                            return;
+                        }
                         //오류
                     }
                 })
