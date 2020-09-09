@@ -61,14 +61,15 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
                 bundle.putString("json",json);
             }
         });
-//        if(mData.get(position).getOrder_state().equals(ACCEPT)){
-//            holder.order_date.setText("제 조 중");
-//        }
-//        else if(mData.get(position).getOrder_state().equals(PREPARING)){
-//            holder.order_date.setText("접 수 대 기");
-//        }else{
-//            ;
-//        }
+
+        if(reverse.getOrder_state().equals(ACCEPT)){
+            holder.order_state.setText("제 조 중");
+        }
+        else if(reverse.getOrder_state().equals(PREPARING)){
+            holder.order_state.setText("접 수 대 기");
+        }else{
+            ;
+        }
 
 
     }
