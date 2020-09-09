@@ -371,9 +371,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
 
     public void onClick_onestore(View v) {
         Toast.makeText(this, "왜안되노", Toast.LENGTH_LONG).show();
-        SharedPreferences shf = getApplicationContext().getSharedPreferences("basketList", MODE_PRIVATE);
-        SharedPreferences.Editor editor = shf.edit();
-        editor.clear().commit();
 
         recalculateTotalPrice();
         CouponDialog couponDialog = CouponDialog.newInstance(Basket.this, new CouponDialog.CouponDialogListener() {
@@ -383,7 +380,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                 discount_price = dc;
                 used_coupon_id = coupon_id;
                 clarityIsOpenStore();
-
             }
         });
         Bundle bundle = couponDialog.getArguments();
@@ -561,6 +557,9 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                     @Override
                     public void onDone(@Nullable String message) {
                         Log.d("done", message);
+                        SharedPreferences shf = getApplicationContext().getSharedPreferences("basketList", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = shf.edit();
+                        editor.clear().commit();
                         HashMap<String, String> hashMap = new HashMap<>();
                         String price = null;
                         String receipt_id = null;
