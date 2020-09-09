@@ -294,10 +294,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 SessionManager sessionManager1 = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
-                SessionManager sessionManager2 = new SessionManager(getApplicationContext(), SessionManager.SESSION_REMEMMBERME);
-                if(sessionManager2.getUsersSession() != null) {
-                    sessionManager2.clearRememberMeSession();
-                }
                 if(sessionManager1.getUsersDetailFromSession() != null) {
                     sessionManager1.clearDetailUserSession();
                 }

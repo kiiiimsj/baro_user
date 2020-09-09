@@ -75,17 +75,17 @@ public class myGPSListener implements LocationListener {
             Geocoder geocoder = new Geocoder(context, Locale.KOREA);
             try {
                 List<Address> list = geocoder.getFromLocation(latitude, longitude, 10);
-                Log.d("MyMapaa", list.get(0).getAddressLine(0));
-                String address =list.get(0).getSubLocality();
-                String address2 = list.get(0).getThoroughfare();
-                String address3 = list.get(0).getFeatureName();
-
-                String address4 = list.get(0).getSubThoroughfare();
-                Log.i("address4", Integer.parseInt(address4)+"");
-                Log.i("address", address);
-                Log.i("address2", address2);
-                Log.i("address3", address3);
-                getAdress.setText(address+" "+address2+" "+address3); //--> 처리
+                StringBuilder fAddress = new StringBuilder();
+                Address address = list.get(0);
+                StringBuilder addressBuilder = new StringBuilder();
+                addressBuilder.append(address.getCountryName()+" ")
+                    .append(address.getAdminArea());
+                StringTokenizer stringTokenizer = new StringTokenizer(address.getAddressLine(0), addressBuilder.toString());
+                while(stringTokenizer.hasMoreTokens()) {
+                     fAddress.append(stringTokenizer.nextToken()+" ");
+                }
+                Log.i("address", fAddress.toString());
+                getAdress.setText(fAddress); //--> 처리
             }
             catch(Exception e){
                 e.printStackTrace();
