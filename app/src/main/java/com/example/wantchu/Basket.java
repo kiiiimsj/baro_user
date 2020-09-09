@@ -427,7 +427,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         String lastUrl = "OrderInsert.do";
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
-        Log.e("json",json);
+        Log.e("jsonNNN",json);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest request = new StringRequest(Request.Method.POST, url,
