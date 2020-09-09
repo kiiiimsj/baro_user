@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +37,7 @@ public class ProgressingDetailDialog extends DialogFragment {
 
     TextView store_name;
     TextView totals;
+
     ImageButton delete_this;
     RecyclerView progressDetail;
     Gson gson;
@@ -70,6 +73,7 @@ public class ProgressingDetailDialog extends DialogFragment {
         //////////////////////////////
         store_name = progressingDetail.findViewById(R.id.store_name);
         totals = progressingDetail.findViewById(R.id.totals);
+
         delete_this = progressingDetail.findViewById(R.id.deleteThis);
         progressDetail = progressingDetail.findViewById(R.id.ProgressDetailList);
 
@@ -83,10 +87,12 @@ public class ProgressingDetailDialog extends DialogFragment {
         totals.setText(data.getTotal_price()+"");
         progressDetail.setLayoutManager(new LinearLayoutManager(context));
 
+
         /////////////////////////////
         builder.setView(progressingDetail);
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
+
         makeRequest(data.getReceipt_id());
         return dialog;
     }
