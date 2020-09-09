@@ -75,6 +75,9 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     Gson gson;
 
     RelativeLayout recycleBack;
+    RelativeLayout logoutLayout;
+
+    StoreSessionManager storeSessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +101,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         context = this;
         // 왼쪽 사이드바
 
-        StoreSessionManager storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
+        storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
         storeSessionManager.setIsFavorite(false);
         //orderListCart
         runOnUiThread(new Runnable() {
@@ -285,7 +288,26 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         sessionManager.getUsersDetailSession();
         HashMap<String, String> getName = sessionManager.getUsersDetailFromSession();
         TextView name = navigationView.getHeaderView(0).findViewById(R.id.userName);
+        logoutLayout = navigationView.getHeaderView(0).findViewById(R.id.logout_button);
         //navigationView.getMenu().getItem(0).set
+        logoutLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SessionManager sessionManager1 = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+                SessionManager sessionManager2 = new SessionManager(getApplicationContext(), SessionManager.SESSION_REMEMMBERME);
+                if(sessionManager2.getUsersSession() != null) {
+                    sessionManager2.clearRememberMeSession();
+                }
+                if(sessionManager1.getUsersDetailFromSession() != null) {
+                    sessionManager1.clearDetailUserSession();
+                }
+                if(storeSessionManager.getStoresSession() != null) {
+                    storeSessionManager.clearStoreSession();
+                }
+                startActivity(new Intent(getApplicationContext(), Login.class));
+                finish();
+            }
+        });
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
 

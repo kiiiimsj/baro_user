@@ -32,6 +32,7 @@ import com.example.wantchu.AdapterHelper.ExtraOrder;
 import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Dialogs.OrderCancelDialog;
 import com.example.wantchu.Dialogs.OrderDoneDialog;
+import com.example.wantchu.Dialogs.OrderLimitExcessDialog;
 import com.example.wantchu.JsonParsingHelper.ClarityIsOpenStoreParsing;
 import com.example.wantchu.JsonParsingHelper.OrderInsertParsing;
 import com.example.wantchu.JsonParsingHelper.OrderInsertParsingChild;
@@ -599,6 +600,8 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                     @Override
                     public void onError(@Nullable String message) {
                         Log.d("error", message);
+                        OrderLimitExcessDialog orderLimitExcessDialog = new OrderLimitExcessDialog(Basket.this, message);
+                        orderLimitExcessDialog.callFunction();
                         //오류
                     }
                 })

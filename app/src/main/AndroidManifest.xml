@@ -40,7 +40,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".OrderStatus"></activity>
+        <activity android:name=".Dialogs.OrderLimitExcessDialog"></activity>
+        <activity android:name=".OrderStatus" />
 
         <uses-library android:name="com.google.android.maps" />
         <uses-library
