@@ -66,6 +66,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
                 bundle.putString("json",json);
             }
         });
+
         if(reverse.getOrder_state().equals(ACCEPT)){
             holder.order_state.setText("제 조 중");
         }
