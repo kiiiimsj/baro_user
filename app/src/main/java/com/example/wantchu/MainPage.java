@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.Html;
@@ -51,6 +54,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -108,7 +112,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                startLocation();
                 navigationDrawer();
             }
         });
@@ -120,15 +123,14 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         viewPager.setAdapter(advertiseAdapter);
         addDots(0);
         viewPager.addOnPageChangeListener(changeListener);
-
         mSearch.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 //This is the filter
                 if (event.getAction()!=KeyEvent.ACTION_DOWN)
                     return true;
-
                 if(keyCode == KeyEvent.KEYCODE_ENTER) {
+
                     String message = mSearch.getText().toString();
                     Intent intent = new Intent(MainPage.this, ListStorePage.class);
                     intent.putExtra("isSearchOrder", true);
@@ -357,8 +359,9 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 break;
             case R.id.left_one_to_one:
                 startActivity(new Intent(getApplicationContext(), InquiryList.class));
-
-
+                break;
+            case R.id.left_events:
+                startActivity(new Intent(getApplicationContext(), Events.class));
                 break;
         }
         return true;

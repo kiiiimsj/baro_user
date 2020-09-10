@@ -13,4 +13,7 @@
 <item
     android:id="@+id/left_one_to_one"
     android:title="1:1문의" />
+<item
+    android:id="@+id/left_events"
+    android:title="이벤트" />
 </menu>
