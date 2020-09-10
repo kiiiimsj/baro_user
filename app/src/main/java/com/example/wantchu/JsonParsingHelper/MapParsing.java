@@ -7,6 +7,7 @@ public class MapParsing {
     boolean result;
     String message;
     ArrayList<MapListParsing> MapList = new ArrayList<>();
+    public MapParsing() {}
 
     public ArrayList<MapListParsing> getMapList() {
         return MapList;

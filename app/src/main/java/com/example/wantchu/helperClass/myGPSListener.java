@@ -19,17 +19,16 @@ import java.util.StringTokenizer;
 
 public class myGPSListener implements LocationListener {
     Context context;
+    double latitude =0;
+    double longitude =0;
     public myGPSListener (Context context) {
         this.context = context;
     }
     public void onLocationChanged(Location location) {
-        Double latitude = location.getLatitude();
-        Double longitude = location.getLongitude();
-
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
         String message = "내 위치 -> Latitude : "+ latitude + "\nLongitude:"+ longitude;
         Log.d("Map", message);
-
-
     }
 
     public void onProviderDisabled(String provider) { }
@@ -38,6 +37,33 @@ public class myGPSListener implements LocationListener {
 
     public void onStatusChanged(String provider, int status, Bundle extras) { }
 
+    public LatLng getMyLatLng() {
+        LatLng latLng = new LatLng(latitude, longitude);
+        if(latitude == 0f || longitude == 0f) {
+            startLocationService(null);
+        }
+        return latLng;
+    }
+    public void setMapLocationTextView(TextView getAddress) {
+        Geocoder geocoder = new Geocoder(context, Locale.KOREA);
+        try {
+            List<Address> list = geocoder.getFromLocation(latitude, longitude, 10);
+            StringBuilder fAddress = new StringBuilder();
+            Address address = list.get(0);
+            StringBuilder addressBuilder = new StringBuilder();
+            addressBuilder.append(address.getCountryName()+" ")
+                    .append(address.getAdminArea());
+            StringTokenizer stringTokenizer = new StringTokenizer(address.getAddressLine(0), addressBuilder.toString());
+            while(stringTokenizer.hasMoreTokens()) {
+                fAddress.append(stringTokenizer.nextToken()+" ");
+            }
+            Log.i("address", fAddress.toString());
+            getAddress.setText(fAddress); //--> 처리
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     public LatLng startLocationService(TextView getAdress) {
         LocationManager manager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         Log.e("err", "???");
@@ -56,8 +82,7 @@ public class myGPSListener implements LocationListener {
             location = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             Log.i("location", location+"");
 
-            double latitude;
-            double longitude;
+
             if (location2 != null) {
                 Log.e("err", "???");
                 latitude = location2.getLatitude();
@@ -71,29 +96,12 @@ public class myGPSListener implements LocationListener {
                 longitude = location.getLongitude();
                 latLng = new LatLng(latitude, longitude);
             }
+            if(getAdress != null) {
+                setMapLocationTextView(getAdress);
+                Toast.makeText(context.getApplicationContext(), "내 위치확인 요청함",
+                        Toast.LENGTH_SHORT).show();
 
-            Geocoder geocoder = new Geocoder(context, Locale.KOREA);
-            try {
-                List<Address> list = geocoder.getFromLocation(latitude, longitude, 10);
-                StringBuilder fAddress = new StringBuilder();
-                Address address = list.get(0);
-                StringBuilder addressBuilder = new StringBuilder();
-                addressBuilder.append(address.getCountryName()+" ")
-                    .append(address.getAdminArea());
-                StringTokenizer stringTokenizer = new StringTokenizer(address.getAddressLine(0), addressBuilder.toString());
-                while(stringTokenizer.hasMoreTokens()) {
-                     fAddress.append(stringTokenizer.nextToken()+" ");
-                }
-                Log.i("address", fAddress.toString());
-                getAdress.setText(fAddress); //--> 처리
             }
-            catch(Exception e){
-                e.printStackTrace();
-            }
-
-            Toast.makeText(context.getApplicationContext(), "내 위치확인 요청함",
-                    Toast.LENGTH_SHORT).show();
-
         }
 
         catch(SecurityException e) {
