@@ -484,7 +484,9 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         webSocketClient = new WebSocketClient(uri, new Draft_17()) {
             @Override
             public void onOpen(ServerHandshake handshakedata) {
-                Log.i("webSocket Open", "opened.");
+                Log.e("webSocket Open", "opened.");
+                Log.e("phone", phone);
+                Log.e("message", message);
                 webSocketClient.send("connect:::" + phone);
                 webSocketClient.send("message:::" + store_id + ":::" + message);
             }
