@@ -471,7 +471,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         requestQueue.add(request);
     }
 
-    private void connectToWebSocket(final String phnone, final int store_id, final String message) {
+    private void connectToWebSocket(final String phone, final int store_id, final String message) {
         Log.i("webSocket", "connectToWebSocket() called.");
         URI uri;
         try {
