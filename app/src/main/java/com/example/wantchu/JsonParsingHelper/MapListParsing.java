@@ -13,6 +13,7 @@ public class MapListParsing implements Comparable<MapListParsing>{
         this.store_longitude = store_longitude;
         this.distance = distance;
     }
+    public  MapListParsing() {}
 
     public String getStore_name() {
         return store_name;
