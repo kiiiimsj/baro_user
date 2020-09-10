@@ -62,18 +62,18 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
         setContentView(R.layout.activity_login);
 
         //firebase messaging을 이용하기위해 가져오는 회원 기기의 토큰값
-//        FirebaseInstanceId.getInstance().getInstanceId()
-//                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-//                        if(!task.isSuccessful()){
-//                            Log.e("token failed", String.valueOf(task.getException()));
-//                            return;
-//                        }
-//                        userToken = task.getResult().getToken();
-//                        Log.e("aaa", userToken);
-//                    }
-//                });
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if(!task.isSuccessful()){
+                            Log.e("token failed", String.valueOf(task.getException()));
+                            return;
+                        }
+                        userToken = task.getResult().getToken();
+                        Log.e("aaa", userToken);
+                    }
+                });
         startLocationService();
         SharedPreferences shf = getApplicationContext().getSharedPreferences("basketList", MODE_PRIVATE);
         SharedPreferences.Editor editor = shf.edit();
