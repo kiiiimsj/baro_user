@@ -22,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wantchu.JsonParsingHelper.MapListParsing;
 import com.example.wantchu.JsonParsingHelper.MapParsing;
 import com.example.wantchu.Url.UrlMaker;
+import com.example.wantchu.helperClass.myGPSListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
@@ -49,7 +50,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
     GoogleMap map;
     MarkerOptions myLocationMarker;
     LatLng latLng;
-
+    myGPSListener myGPSListener = new myGPSListener(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,8 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
             public void onMapReady(GoogleMap googleMap) {
                 Log.d("Map", "지도 준비됨.");
                 map = googleMap;
+                latLng = myGPSListener.startLocationService(null);
+                showCurrentLocation(latLng.latitude, latLng.longitude);
                 try {
                     map.setMyLocationEnabled(true);
                 }
@@ -77,8 +80,9 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
             e.printStackTrace();
         }
 
-        latLng = startLocationService();
+        //latLng = startLocationService();
 
+        Log.i("latLng", latLng +"");
         AutoPermissions.Companion.loadAllPermissions(this, 101);
     }
 
@@ -92,7 +96,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        mapInfo(response);
+                        jsonParsing(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -104,22 +108,22 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
         requestQueue.add(request);
     }
 
-    private void mapInfo(String result){
+    private void mapInfo(MapParsing mapParsing){
         ArrayList<MapListParsing> DataList = new ArrayList<>();
-
-
-        MapParsing mapParsing = new MapParsing();
-        jsonParsing(result, mapParsing);
-        MapListParsing mapListParsing;
+        MapListParsing mapListParsing = new MapListParsing();
         Location myLocation = new Location("");
         myLocation.setLatitude(latLng.latitude);
         myLocation.setLongitude(latLng.longitude);
+
         for(int i = 0; i < mapParsing.getMapList().size();i++){
             mapListParsing = mapParsing.getMapList().get(i);
             Location storeLocation = new Location("");
             storeLocation.setLatitude(Double.parseDouble(mapListParsing.getStore_latitude()));
             storeLocation.setLongitude(Double.parseDouble(mapListParsing.getStore_longitude()));
             double distance = getDistance(myLocation, storeLocation);
+            if(distance >= 1000) {
+                continue;
+            }
             mapListParsing = new MapListParsing(mapListParsing.getStore_name(), mapListParsing.getStore_latitude(), mapListParsing.getStore_longitude(), distance);
             DataList.add(mapListParsing);
         }
@@ -140,7 +144,8 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
 
     }
 
-    private synchronized void jsonParsing(String result, MapParsing mapParsing){
+    private void jsonParsing(String result){
+        MapParsing mapParsing = new MapParsing();
         try{
             Boolean result2 = new JSONObject(result).getBoolean("result");
             mapParsing.setMessage(new JSONObject(result).getString("message"));
@@ -162,72 +167,73 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
             e.printStackTrace();
 
         }
+        mapInfo(mapParsing);
     }
 
-    public LatLng startLocationService() {
-        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        LatLng latLng = null;
-        try {
-            Location location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (location != null) {
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                latLng = new LatLng(latitude, longitude);
-                String message = "최근 위치 -> Latitude : " + latitude + "\nLongitude:" + longitude;
-                Log.d("Map", message);
-
-                Geocoder geocoder = new Geocoder(this, Locale.KOREA);
-                try {
-                    List<Address> list = geocoder.getFromLocation(latitude, longitude, 10);
-                    Log.d("MyMapbb", list.get(0).getAddressLine(0));
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-
-            GPSListener gpsListener = new GPSListener();
-            long minTime = 10000;
-            float minDistance = 0;
-
-            manager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    minTime, minDistance, gpsListener);
-
-            Toast.makeText(getApplicationContext(), "내 위치확인 요청함",
-                    Toast.LENGTH_SHORT).show();
-
-        } catch(SecurityException e) {
-            e.printStackTrace();
-        }
-        return latLng;
-    }
-
-    public void onClickBack(View view) {
-        super.onBackPressed();
-    }
-
-    class GPSListener implements LocationListener {
-        public void onLocationChanged(Location location) {
-            Double latitude = location.getLatitude();
-            Double longitude = location.getLongitude();
-
-            String message = "내 위치 -> Latitude : "+ latitude + "\nLongitude:"+ longitude;
-
-            showCurrentLocation(latitude, longitude);
-
-        }
-
-        public void onProviderDisabled(String provider) { }
-
-        public void onProviderEnabled(String provider) { }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) { }
-    }
-
+//    public LatLng startLocationService() {
+//        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        LatLng latLng = null;
+//        try {
+//            Location location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//            if (location != null) {
+//                double latitude = location.getLatitude();
+//                double longitude = location.getLongitude();
+//                latLng = new LatLng(latitude, longitude);
+//                String message = "최근 위치 -> Latitude : " + latitude + "\nLongitude:" + longitude;
+//                Log.d("Map", message);
+//
+//                Geocoder geocoder = new Geocoder(this, Locale.KOREA);
+//                try {
+//                    List<Address> list = geocoder.getFromLocation(latitude, longitude, 10);
+//                    Log.d("MyMapbb", list.get(0).getAddressLine(0));
+//                }
+//                catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            GPSListener gpsListener = new GPSListener();
+//            long minTime = 10000;
+//            float minDistance = 0;
+//
+//            manager.requestLocationUpdates(
+//                    LocationManager.GPS_PROVIDER,
+//                    minTime, minDistance, gpsListener);
+//
+//            Toast.makeText(getApplicationContext(), "내 위치확인 요청함",
+//                    Toast.LENGTH_SHORT).show();
+//
+//        } catch(SecurityException e) {
+//            e.printStackTrace();
+//        }
+//        return latLng;
+//    }
+//
+//    public void onClickBack(View view) {
+//        super.onBackPressed();
+//    }
+//
+//    class GPSListener implements LocationListener {
+//        public void onLocationChanged(Location location) {
+//            Double latitude = location.getLatitude();
+//            Double longitude = location.getLongitude();
+//
+//            String message = "내 위치 -> Latitude : "+ latitude + "\nLongitude:"+ longitude;
+//
+//            showCurrentLocation(latitude, longitude);
+//
+//        }
+//
+//        public void onProviderDisabled(String provider) { }
+//
+//        public void onProviderEnabled(String provider) { }
+//
+//        public void onStatusChanged(String provider, int status, Bundle extras) { }
+//    }
+//
     private void showCurrentLocation(Double latitude, Double longitude) {
         LatLng curPoint = new LatLng(latitude, longitude);
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(curPoint, 17));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(curPoint, 17));
         showMyLocationMarker(curPoint);
     }
 
