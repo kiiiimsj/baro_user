@@ -39,6 +39,7 @@ import com.example.wantchu.Adapter.TypeAdapter;
 import com.example.wantchu.AdapterHelper.TypeHelperClass;
 import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Database.StoreSessionManager;
+import com.example.wantchu.Dialogs.IfLogoutDialog;
 import com.example.wantchu.JsonParsingHelper.TypeListParsing;
 import com.example.wantchu.JsonParsingHelper.TypeParsing;
 import com.example.wantchu.Url.UrlMaker;
@@ -53,7 +54,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface{
+public class MainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, IfLogoutDialog.clickButton {
 
     RecyclerView mRecyclerView;
     RecyclerView.Adapter adapter;
@@ -289,21 +290,14 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         HashMap<String, String> getName = sessionManager.getUsersDetailFromSession();
         TextView name = navigationView.getHeaderView(0).findViewById(R.id.userName);
         logoutLayout = navigationView.getHeaderView(0).findViewById(R.id.logout_button);
-        //navigationView.getMenu().getItem(0).set
         logoutLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SessionManager sessionManager1 = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
-                if(sessionManager1.getUsersDetailFromSession() != null) {
-                    sessionManager1.clearDetailUserSession();
-                }
-                if(storeSessionManager.getStoresSession() != null) {
-                    storeSessionManager.clearStoreSession();
-                }
-                startActivity(new Intent(getApplicationContext(), Login.class));
-                finish();
+                IfLogoutDialog ifLogoutDialog = new IfLogoutDialog(MainPage.this, MainPage.this);
+                ifLogoutDialog.callFunction();
             }
         });
+
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
 
@@ -413,5 +407,23 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         intent.putExtra("type_name", viewHolder.title.getText().toString());
         intent.putExtra("list_type", "find_type");
         startActivity(intent);
+    }
+
+    @Override
+    public void clickOkay() {
+        SessionManager sessionManager1 = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        if(sessionManager1.getUsersDetailFromSession() != null) {
+            sessionManager1.clearDetailUserSession();
+        }
+        if(storeSessionManager.getStoresSession() != null) {
+            storeSessionManager.clearStoreSession();
+        }
+        startActivity(new Intent(getApplicationContext(), Login.class));
+        finish();
+    }
+
+    @Override
+    public void clickCancel() {
+
     }
 }
