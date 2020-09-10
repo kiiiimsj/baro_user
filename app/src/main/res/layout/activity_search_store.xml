@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="onClickBack"
                 android:layout_centerVertical="true"
-                android:padding="15dp"
+                android:padding="10dp"
                 android:src="@drawable/general_back_icon" />
 
             <TextView

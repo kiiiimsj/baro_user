@@ -209,9 +209,9 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
 //        return latLng;
 //    }
 //
-//    public void onClickBack(View view) {
-//        super.onBackPressed();
-//    }
+    public void onClickBack(View view) {
+        super.onBackPressed();
+    }
 //
 //    class GPSListener implements LocationListener {
 //        public void onLocationChanged(Location location) {

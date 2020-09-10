@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarSize="0dp"
-    android:padding="30dp"
     android:fillViewport="true"
     tools:context=".SideMyCoupon">
 
@@ -21,14 +20,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:padding="15dp">
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp">
             <ImageView
                 android:id="@+id/login_back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onClickBack"
                 android:layout_centerVertical="true"
-                android:src="@drawable/general_back_icon" />
+                android:src="@drawable/general_back_icon"
+                android:padding="10dp"/>
 
             <TextView
                 android:id="@+id/title"
@@ -37,6 +38,7 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/brandon_grotesque_black"
                 android:text="내 쿠폰 리스트"
+                android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="25sp" />
         </RelativeLayout>
