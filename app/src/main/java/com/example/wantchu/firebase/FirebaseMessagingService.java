@@ -16,7 +16,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public FirebaseMessagingService() {
     }
 
-    private static String CHANNEL_ID = "CHANNEL1";
+    private static String CHANNEL_ID = "2";
     private static String CHANNEL_NAME = "channel1";
 
 
