@@ -383,9 +383,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         Toast.makeText(this, "왜안되노", Toast.LENGTH_LONG).show();
 
         recalculateTotalPrice();
-        if(isOpen==true) {
-            findUserForm();
-        }
+
         CouponDialog couponDialog = CouponDialog.newInstance(Basket.this, new CouponDialog.CouponDialogListener() {
             @Override
             public void clickBtn(int discountTotal, int dc, int coupon_id) {
@@ -393,6 +391,9 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                 discount_price = dc;
                 used_coupon_id = coupon_id;
 //                clarityIsOpenStore();
+                if(isOpen==true) {
+                    findUserForm();
+                }
             }
         });
         Bundle bundle = couponDialog.getArguments();
