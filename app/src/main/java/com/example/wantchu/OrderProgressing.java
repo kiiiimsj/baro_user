@@ -20,6 +20,8 @@ import com.example.wantchu.JsonParsingHelper.OrderProgressingParsing;
 import com.example.wantchu.JsonParsingHelper.OrderProgressingParsingHelper;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.gson.Gson;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,18 +30,27 @@ public class OrderProgressing extends AppCompatActivity {
     Gson gson;
     OrderProgressingParsing orderProgressingParsing;
 
+    SwipyRefreshLayout refreshLayout;
     RecyclerView recyclerView;
     OrderProgressingAdapter orderProgressingAdapter;
+    String phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_progressing);
 
         recyclerView = findViewById(R.id.orderProgresslist);
+        refreshLayout = findViewById(R.id.refresh_list);
         gson = new Gson();
         SessionManager sessionManager = new SessionManager(this,SessionManager.SESSION_USERSESSION);
         HashMap<String,String> hashMap = sessionManager.getUsersDetailFromSession();
-        String phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
+        phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
+        refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                makeRequest(phone);
+            }
+        });
 
         makeRequest(phone);
     }
@@ -72,6 +83,7 @@ public class OrderProgressing extends AppCompatActivity {
         OrderProgressingAdapter orderProgressingAdapter = new OrderProgressingAdapter(orderProgressingParsingHelpers,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderProgressingAdapter);
+        refreshLayout.setRefreshing(false);
     }
 
     private void jsonparsing(String response) {

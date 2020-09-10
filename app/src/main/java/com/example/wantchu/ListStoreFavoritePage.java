@@ -90,7 +90,19 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         makeRequestForFavorite(phone);
 
     }
-        private void mRecyclerView2(){
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        sessionManager.getUsersSession();
+        HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
+
+        phone = hashMap.get(sessionManager.KEY_PHONENUMBER);
+        makeRequestForFavorite(phone);
+    }
+
+    private void mRecyclerView2(){
         mRecyclerView.setHasFixedSize(true);
         ArrayList<ListStoreHelperClass> DataList = new ArrayList<>();
         HashMap<String, FavoriteHelperClass> hashMap = new HashMap<>();

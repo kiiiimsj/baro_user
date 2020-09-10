@@ -62,6 +62,8 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
 
     StoreSessionManager storeSessionManager;
     ArrayList<ListStoreListParsing> listStoreListParsings;
+
+    SharedPreferences saveListSet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         typeName = findViewById(R.id.type_name);
         mAddress = findViewById(R.id.address);
         mapBar = findViewById(R.id.map_bar);
+        saveListSet = getSharedPreferences("saveList", MODE_PRIVATE);
 
         myGPSListener myGPSListener = new myGPSListener(this);
         latLng = myGPSListener.startLocationService(mAddress);
@@ -89,9 +92,28 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         chooseShowList();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        chooseShowList();
+    }
+
     public void chooseShowList() {
         Intent intent = getIntent();
-        Log.i("PASS", "PASS5");
+        if(intent != null) {
+            saveListSet.edit().putString("list_type", intent.getStringExtra("list_type"));
+            saveListSet.edit().apply();
+            saveListSet.edit().commit();
+        }
+        if(intent.getStringExtra("list_type")==null) {
+            String value = saveListSet.getString("list_type", null);
+            if(value == null) {
+                Toast.makeText(this, "로딩 실패", Toast.LENGTH_LONG).show();
+                return;
+            }
+            intent.putExtra("list_type", value);
+        }
+        Log.i("intent.getString", intent.getStringExtra("list_type"));
         if(intent.getStringExtra("list_type").equals("search")){
             storeSearch = intent.getStringExtra("searchStore");
             Log.i("storeSearchValue", storeSearch);

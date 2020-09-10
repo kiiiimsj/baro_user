@@ -1,11 +1,7 @@
 package com.example.wantchu.Dialogs;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -13,26 +9,37 @@ import android.widget.TextView;
 
 import com.example.wantchu.R;
 
-public class OrderLimitExcessDialog {
+public class IfLogoutDialog {
     public Context context;
-    public String errorMessage;
-    public OrderLimitExcessDialog(Context context, String errorMessage){
+    public interface clickButton {
+        void clickOkay();
+        void clickCancel();
+    }
+    public clickButton mListener;
+    public IfLogoutDialog(Context context, clickButton mListener){
         this.context = context;
-        this.errorMessage = errorMessage;
+        this.mListener = mListener;
     }
 
     public void callFunction() {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dlg.setContentView(R.layout.fragment_order_limit_excess);
-        TextView errorMessageView = dlg.findViewById(R.id.error_message);
-        errorMessageView.setText(errorMessage);
+        dlg.setContentView(R.layout.fragment_if_logout);
         dlg.show();
 
         final Button okay = (Button) dlg.findViewById(R.id.okay);
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mListener.clickOkay();
+                dlg.dismiss();
+            }
+        });
+        final Button cancel = (Button) dlg.findViewById(R.id.dialog_close);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.clickCancel();
                 dlg.dismiss();
             }
         });
