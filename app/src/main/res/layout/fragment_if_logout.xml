@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#8D00F1"
+        android:fontFamily="@font/bmhannapro"
+        android:gravity="center"
+        android:text="로그아웃"
+        android:letterSpacing="0.3"
+        android:textColor="#ffffff"
+        android:textSize="16dp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        >
+        <TextView
+
+            android:id="@+id/mesgase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:fontFamily="@font/bmhannapro"
+            android:textSize="16dp"
+            android:text="로그아웃 하시겠습니까?"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/okay"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="확 인"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:letterSpacing="0.2"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/button_border_full"
+            android:fontFamily="@font/bmhannapro"/>
+        <Button
+            android:id="@+id/dialog_close"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="닫기"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:letterSpacing="0.2"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/button_border_full"
+            android:fontFamily="@font/bmhannapro"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#000000"/>
+</LinearLayout>

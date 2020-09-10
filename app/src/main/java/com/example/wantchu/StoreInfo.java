@@ -563,7 +563,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
             String url = "http://54.180.56.44:8080/FavoriteSave.do";
 
             makeRequestFavoriteReg(url, hashMap);
-            //setListCommit();
+
             favoriteListParsing = new FavoriteListParsing();
             favoriteListParsing.setStore_id(Integer.parseInt(storedIdStr));
             favoriteListParsing.setStore_info(storeDetail.getStoreInfo());
