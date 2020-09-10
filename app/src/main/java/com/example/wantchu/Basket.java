@@ -112,7 +112,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
     int totalPrice;
     int used_coupon_id;
     int discount_price ;
-    boolean isOpen = false;
+    boolean isOpen = true;
     BasketAdapter basketAdapter =null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +165,9 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         basketAdapter = new BasketAdapter(detailsFixToBaskets, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(basketAdapter);
-
+        if(storeName!="") {
+            clarityIsOpenStore();
+        }
 
         // 초기설정 - 해당 프로젝트(안드로이드)의 application id 값을 설정합니다. 결제와 통계를 위해 꼭 필요합니다.
         BootpayAnalytics.init(this, application_id);
@@ -275,30 +277,20 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
     @Override
     protected void onPause() {
         super.onPause();
+        Log.i("jsonAAA","AAAAAA");
         SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if(!isOpen){
             editor.remove(Basket.IN_MY_BASEKT);
+            editor.remove("orderCnt");
+            editor.remove("currentStoreName");
+            editor.remove("currentStoreId");
             editor.commit();
             Log.e("ddddddddddd",sharedPreferences.getString(Basket.IN_MY_BASEKT,"")+"귀로");
+
+
         }
         else if(!pay) {
-            Gson gson = new Gson();
-            String json = gson.toJson(detailsFixToBaskets);
-            Log.i("json", json);
-            editor.putString(IN_MY_BASEKT, json);
-            editor.commit();
-        }else{
-            ;
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (!pay) {
-            SharedPreferences sharedPreferences = getSharedPreferences("basketList", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
             Gson gson = new Gson();
             String json = gson.toJson(detailsFixToBaskets);
             Log.i("json", json);
@@ -306,8 +298,26 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
             Log.i("ondesDETAIL_SIZE", detailsFixToBaskets.size()+"");
             editor.putInt("orderCnt", (detailsFixToBaskets.size()));
             editor.commit();
+        }else{
+            ;
         }
     }
+
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        if (!pay) {
+//            SharedPreferences sharedPreferences = getSharedPreferences("basketList", MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            Gson gson = new Gson();
+//            String json = gson.toJson(detailsFixToBaskets);
+//            Log.i("시바련아", json);
+//            editor.putString(IN_MY_BASEKT, json);
+//            Log.i("ondesDETAIL_SIZE", detailsFixToBaskets.size()+"");
+//            editor.putInt("orderCnt", (detailsFixToBaskets.size()));
+//            editor.commit();
+//        }
+//    }
 
     private void findUserForm() {
         final String phoneNumber = phone;
@@ -373,13 +383,16 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         Toast.makeText(this, "왜안되노", Toast.LENGTH_LONG).show();
 
         recalculateTotalPrice();
+        if(isOpen==true) {
+            findUserForm();
+        }
         CouponDialog couponDialog = CouponDialog.newInstance(Basket.this, new CouponDialog.CouponDialogListener() {
             @Override
             public void clickBtn(int discountTotal, int dc, int coupon_id) {
                 realTotalPrice = discountTotal;
                 discount_price = dc;
                 used_coupon_id = coupon_id;
-                clarityIsOpenStore();
+//                clarityIsOpenStore();
             }
         });
         Bundle bundle = couponDialog.getArguments();
@@ -400,16 +413,28 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                         Gson gson = new Gson();
                         ClarityIsOpenStoreParsing clarityIsOpenStoreParsing = gson.fromJson(response,ClarityIsOpenStoreParsing.class);
                         isOpen = clarityIsOpenStoreParsing.getResult();
-                        if(isOpen==true) {
-                            findUserForm();
-                        }else{
+//                        if(isOpen==true) {
+//                            findUserForm();
+//                        }else{
+//                            SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList, Context.MODE_PRIVATE);
+//                            SharedPreferences.Editor editor = sharedPreferences.edit();
+//                            editor.remove(Basket.IN_MY_BASEKT);
+//                            editor.commit();
+//                            StoreCloseDialog storeCloseDialog = new StoreCloseDialog(Basket.this);
+//                            storeCloseDialog.callFunction();
+//
+//                        }
+
+                        if(isOpen!=true) {
                             SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.remove(Basket.IN_MY_BASEKT);
+                            editor.remove("orderCnt");
+                            editor.remove("currentStoreId");
+                            editor.remove("currentStoreName");
                             editor.commit();
                             StoreCloseDialog storeCloseDialog = new StoreCloseDialog(Basket.this);
                             storeCloseDialog.callFunction();
-
                         }
                     }
                 },
