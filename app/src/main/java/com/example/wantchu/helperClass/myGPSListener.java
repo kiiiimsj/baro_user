@@ -72,7 +72,6 @@ public class myGPSListener implements LocationListener {
         Location location2;
         long minTime = 10000;
         float minDistance = 0;
-
         try {
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, this);
             manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, this);
@@ -92,6 +91,10 @@ public class myGPSListener implements LocationListener {
                 Log.d("Map", message);
             }
             else {
+                if(location == null) {
+                    Toast.makeText(context, "GPS를 키고 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
+                    return null;
+                }
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
                 latLng = new LatLng(latitude, longitude);
