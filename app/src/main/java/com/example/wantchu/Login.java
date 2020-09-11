@@ -58,11 +58,13 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
     SessionManager sessionManager;
     SessionManager userSession;
     String userToken;
+    ProgressApplication progressApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
         //firebase messaging을 이용하기위해 가져오는 회원 기기의 토큰값
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
@@ -124,7 +126,8 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
             }
         });
         //프로그래스바 실행
-        startProgress();
+
+        progressApplication.progressOFF();
     }
     //프로그래스바
     private void startProgress(){

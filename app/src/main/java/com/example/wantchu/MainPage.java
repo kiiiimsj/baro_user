@@ -84,11 +84,14 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     RelativeLayout logoutLayout;
 
     StoreSessionManager storeSessionManager;
+    ProgressApplication progressApplication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
-
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
         sp = getSharedPreferences("favorite", MODE_PRIVATE);
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
@@ -180,18 +183,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
             }
         }).start();
-        startProgress();
-    }
-    private void startProgress(){
-        final ProgressApplication progressApplication = new ProgressApplication();
 
-        progressApplication.progressON(this);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressApplication.progressOFF();
-            }
-        },3500);
     }
     private void startLocation() {
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -305,8 +297,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             typeHelperClass.typeCodes.add(typeListParsing.getTypeCode());
             DataList.add(typeHelperClass);
         }
-
         mRecyclerView.setAdapter(adapter);
+        progressApplication.progressOFF();
     }
 
     private void navigationDrawer() {

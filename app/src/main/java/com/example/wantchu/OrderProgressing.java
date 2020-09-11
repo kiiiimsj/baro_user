@@ -35,10 +35,13 @@ public class OrderProgressing extends AppCompatActivity {
     RecyclerView recyclerView;
     OrderProgressingAdapter orderProgressingAdapter;
     String phone;
+    ProgressApplication progressApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_progressing);
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
 
         recyclerView = findViewById(R.id.orderProgresslist);
         refreshLayout = findViewById(R.id.refresh_list);
@@ -54,18 +57,6 @@ public class OrderProgressing extends AppCompatActivity {
         });
 
         makeRequest(phone);
-        startProgress();
-    }
-    private void startProgress(){
-        final ProgressApplication progressApplication = new ProgressApplication();
-
-        progressApplication.progressON(this);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressApplication.progressOFF();
-            }
-        },3500);
     }
     private void makeRequest(String phone) {
         UrlMaker urlMaker = new UrlMaker();
@@ -96,6 +87,7 @@ public class OrderProgressing extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderProgressingAdapter);
         refreshLayout.setRefreshing(false);
+        progressApplication.progressOFF();
     }
 
     private void jsonparsing(String response) {

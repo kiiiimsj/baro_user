@@ -86,10 +86,13 @@ public class OrderDetails extends AppCompatActivity {
     View v;
     Button fix;
 
+    ProgressApplication progressApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
         orderDetails = OrderDetails.this;
         Intent intent = getIntent();
         final int defaultPrice = intent.getExtras().getInt("menuDefaultPrice");
@@ -268,21 +271,6 @@ public class OrderDetails extends AppCompatActivity {
                 expandableListView.requestLayout();
             }
         });
-
-        //--------------------------------------------------------
-        startProgress();
-
-    }
-    private void startProgress(){
-        final ProgressApplication progressApplication = new ProgressApplication();
-
-        progressApplication.progressON(this);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressApplication.progressOFF();
-            }
-        },3500);
     }
     private void addNewMenuToBasket(ArrayList<DetailsFixToBasket> detailsFixToBaskets,SharedPreferences.Editor editor){
         Gson gson = new Gson();
@@ -408,7 +396,7 @@ public class OrderDetails extends AppCompatActivity {
             ////////////////////////////////////////////////////////////////////////
             newNonEssentailRecyclerView.setVisibility(View.GONE);
         }
-
+        progressApplication.progressOFF();
     }
 
     private synchronized void makeRequest() {

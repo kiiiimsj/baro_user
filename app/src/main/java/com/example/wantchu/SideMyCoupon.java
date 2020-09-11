@@ -34,10 +34,13 @@ public class SideMyCoupon extends AppCompatActivity {
     CouponAdapter couponAdapter;
     CouponList couponListData;
     RecyclerView recyclerView;
+    ProgressApplication progressApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_side_my_coupon);
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
         recyclerView = findViewById(R.id.coupon_list);
 
         makeRequestForCoupon(urlMaker());
@@ -95,8 +98,7 @@ public class SideMyCoupon extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(couponAdapter);
-
-//        setHeight();
+        progressApplication.progressOFF();
     }
 
     private void setHeight() {
