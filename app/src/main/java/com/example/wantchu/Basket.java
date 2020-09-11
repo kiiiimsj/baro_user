@@ -91,6 +91,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
     DetailsFixToBasket detailsFixToBasket;
     RecyclerView recyclerView;
     TextView StoreName;
+    TextView BasketPrice;
     LinearLayout recyclerViewShell;
 
     private WebSocketClient webSocketClient;
@@ -125,6 +126,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         recyclerView = findViewById(R.id.basketList);
         recyclerViewShell = findViewById(R.id.linearLayout2);
         StoreName = findViewById(R.id.store_name);
+        BasketPrice = findViewById(R.id.basket_price);
         SharedPreferences sharedPreferences = getSharedPreferences(BasketList, MODE_PRIVATE);
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
@@ -162,6 +164,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
             }
             totalPrice += detailsFixToBaskets.get(i).getPrice();
         }
+        BasketPrice.setText("총 금액 : " + totalPrice);
         basketAdapter = new BasketAdapter(detailsFixToBaskets, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(basketAdapter);

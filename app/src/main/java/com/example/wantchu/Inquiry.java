@@ -129,7 +129,6 @@ public class Inquiry extends AppCompatActivity {
             });
 
             startActivity(new Intent(getApplicationContext(), InquiryList.class));
-            finish();
         }
         else {
             runOnUiThread(new Runnable() {

@@ -216,11 +216,11 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         requestQueue.add(request);
     }
 
-    public void onClickBack(View view) {
-        super.onBackPressed();
+    @Override
+    protected void onStop() {
+        super.onStop();
         finish();
     }
-
 
     @Override
     public void onItemLongSelected(View v, int adapterPosition) {
