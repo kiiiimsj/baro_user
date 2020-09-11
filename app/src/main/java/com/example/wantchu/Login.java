@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -48,7 +49,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class Login extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback, AutoPermissionsListener {
+public class Login extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback, AutoPermissionsListener{
 
     TextInputLayout phone, password;
     CheckBox rememberUser;
@@ -122,8 +123,22 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
                 password.setError(null);
             }
         });
-
+        //프로그래스바 실행
+        startProgress();
     }
+    //프로그래스바
+    private void startProgress(){
+        final ProgressApplication progressApplication = new ProgressApplication();
+
+        progressApplication.progressON(this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressApplication.progressOFF();
+            }
+        },3500);
+    }
+
 
     private void startLocationService() {
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
