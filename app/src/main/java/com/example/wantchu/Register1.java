@@ -127,7 +127,6 @@ public class Register1 extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), VerifyOTP.class);
             intent.putExtra("phone", _phone);
             startActivity(intent);
-            finish();
         }
 
     }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chaos.view.PinView;
@@ -26,23 +27,46 @@ public class VerifyOTP extends AppCompatActivity {
     private PinView pinFromUser;
     String phoneNumber;
     String codeBySystem;
-
+    TextView timer;
+    int sec = 120;
+    int min;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_o_t_p);
-
+        timer = findViewById(R.id.timer);
         pinFromUser = findViewById(R.id.pin_view);
         Intent intent = getIntent();
 
         phoneNumber = intent.getStringExtra("phone");
         sendVerificationCodeToUser(phoneNumber);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(sec != 0) {
+                    try {
+                        Thread.sleep(1000);
+                        sec--;
+                        min = sec / 60;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                timer.setText(min + " : " +(sec / 2)+" 분");
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
     }
 
     private void sendVerificationCodeToUser(String phoneNo) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNo,        // Phone number to verify
-                60,                 // Timeout duration
+                120,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 TaskExecutors.MAIN_THREAD,               // Activity (for callback binding)
                 mCallbacks);        // OnVerificationStateChangedCallbacks
