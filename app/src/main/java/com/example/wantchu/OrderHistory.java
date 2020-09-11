@@ -99,7 +99,9 @@ public class OrderHistory extends AppCompatActivity {
         return orderHistoryParsing;
     }
 
-    public void onClickBack(View view) {
-        super.onBackPressed();
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 }

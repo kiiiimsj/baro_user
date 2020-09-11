@@ -89,7 +89,11 @@ public class OrderProgressing extends AppCompatActivity {
     private void jsonparsing(String response) {
         orderProgressingParsing = gson.fromJson(response,OrderProgressingParsing.class);
     }
-    public void onClickBack(View view) {
-        super.onBackPressed();
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 }

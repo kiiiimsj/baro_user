@@ -303,8 +303,9 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         setRecyclerView(result ,counts);
     }
 
-    public void onClickBack(View view) {
-        super.onBackPressed();
+    @Override
+    protected void onStop() {
+        super.onStop();
         finish();
     }
 }

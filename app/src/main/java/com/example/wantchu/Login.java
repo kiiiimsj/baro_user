@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -108,6 +109,20 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
                 }
             }
         });
+
+        phoneEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                phone.setError(null);
+            }
+        });
+        passwordEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                password.setError(null);
+            }
+        });
+
     }
 
     private void startLocationService() {

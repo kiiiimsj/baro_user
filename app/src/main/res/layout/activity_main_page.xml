@@ -79,7 +79,7 @@
                 android:background="@color/white"
                 android:onClick="onClickBell"
                 android:padding="5dp"
-                android:src="@drawable/ic_baseline_person_24"
+                android:src="@drawable/ic_baseline_notifications_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"

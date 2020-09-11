@@ -75,11 +75,17 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
         tools:layout_editor_absoluteX="10dp">
 
+        <TextView
+            android:id="@+id/basket_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="총 금액 : 5000원"/>
         <Button
             android:id="@+id/pay"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/muli"
             android:textSize="15sp"

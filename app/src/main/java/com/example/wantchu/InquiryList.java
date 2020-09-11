@@ -42,8 +42,7 @@ public class InquiryList extends AppCompatActivity implements InquiryListAdapter
     }
 
     public void onClickBack(View view) {
-        startActivity(new Intent(getApplicationContext(), MainPage.class));
-        finish();
+        onBackPressed();
     }
 
     public void write_inquiry(View view) {
