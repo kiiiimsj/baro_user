@@ -115,10 +115,14 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
     int discount_price ;
     boolean isOpen = true;
     BasketAdapter basketAdapter =null;
+
+    ProgressApplication progressApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
         if(getFragmentManager().isDestroyed()){
             Log.e("시발사라졌다고 ","mm");
         }
@@ -185,6 +189,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                 phone, // bootUser 휴대폰 번호
                 null); //  서울|인천|대구|대전|광주|부산|울산|경기|강원|충청북도|충북|충청남도|충남|전라북도|전북|전라남도|전남|경상북도|경북|경상남도|경남|제주|세종 중 택 1
         startTrace();
+        progressApplication.progressOFF();
         //결제=========================================
     }
 

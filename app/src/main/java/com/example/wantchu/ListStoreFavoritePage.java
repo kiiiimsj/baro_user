@@ -60,12 +60,14 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
     Gson gson;
     String phone;
     ArrayList<FavoriteListParsing> favoriteListParsings;
+    ProgressApplication progressApplication;
     //ArrayList<ListStoreListParsing> listStoreListParsings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_store_favorite_page);
-
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
         typeName = findViewById(R.id.type_name);
@@ -98,18 +100,6 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         else {
             makeRequestForFavorite(phone);
         }
-        startProgress();
-    }
-    private void startProgress(){
-        final ProgressApplication progressApplication = new ProgressApplication();
-
-        progressApplication.progressON(this);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressApplication.progressOFF();
-            }
-        },3500);
     }
     @Override
     protected void onResume() {
@@ -170,6 +160,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
 
         adapter = new ListStoreAdapter(DataList, this, this, this);
         mRecyclerView.setAdapter(adapter);
+        progressApplication.progressOFF();
     }
     private void mRecyclerView2(){
         mRecyclerView.setHasFixedSize(true);
@@ -212,6 +203,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
 
         adapter = new ListStoreAdapter(DataList, this, this, this);
         mRecyclerView.setAdapter(adapter);
+        progressApplication.progressOFF();
     }
     private void jsonParsingForSf(String result) {
         ListStoreParsing listStoreParsing = new ListStoreParsing();

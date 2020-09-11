@@ -36,11 +36,13 @@ public class OrderHistory extends AppCompatActivity {
     OrderHistoryAdapter orderHistoryAdapter;
     HistoryDetail historyDetail;
 
+    ProgressApplication progressApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
-
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
         sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String,String> hashMap = sessionManager.getUsersDetailFromSession();
@@ -53,19 +55,6 @@ public class OrderHistory extends AppCompatActivity {
         Log.i("sdffd", phoneNumber + "zzzzzzzzzzz");
         recyclerView = findViewById(R.id.orderHistorylist);
         makeRequest();
-        startProgress();
-
-    }
-    private void startProgress(){
-        final ProgressApplication progressApplication = new ProgressApplication();
-
-        progressApplication.progressON(this);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressApplication.progressOFF();
-            }
-        },3500);
     }
     private synchronized void makeRequest() {
         UrlMaker urlMaker = new UrlMaker();
@@ -102,6 +91,7 @@ public class OrderHistory extends AppCompatActivity {
         orderHistoryAdapter = new OrderHistoryAdapter(order, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(OrderHistory.this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(orderHistoryAdapter);
+        progressApplication.progressOFF();
     }
 
     private OrderHistoryParsing jsonParsing(String result) {

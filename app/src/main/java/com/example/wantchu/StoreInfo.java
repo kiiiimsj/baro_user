@@ -97,12 +97,13 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
     SessionManager sessionManager;
     String _phone;
 
-
+    ProgressApplication progressApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_info);
-
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
 
         //세션에서 휴대폰값 가져오기
         sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
@@ -134,18 +135,6 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         if(favoriteList == null) {
             return;
         }
-        startProgress();
-    }
-    private void startProgress(){
-        final ProgressApplication progressApplication = new ProgressApplication();
-
-        progressApplication.progressON(this);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressApplication.progressOFF();
-            }
-        },3500);
     }
     private void getFavoriteStoreId() {
         //favorite으로 key설정된 sharedperferences
@@ -231,6 +220,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         }
         mMenuAdapter = new MenuListAdapter(DataList, this, this);
         mRecyclerViewMenu.setAdapter(mMenuAdapter);
+        progressApplication.progressOFF();
     }
     //메뉴 UI ----------------------------------------------------------------
     ///동적할당 시도
