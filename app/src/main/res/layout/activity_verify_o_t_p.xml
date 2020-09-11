@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="3 : 00"
+            android:text="02 : 00 분"
             android:textSize="20sp"
             android:textColor="@color/black"
             />
