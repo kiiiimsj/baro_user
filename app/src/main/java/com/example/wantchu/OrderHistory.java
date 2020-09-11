@@ -1,6 +1,7 @@
 package com.example.wantchu;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -52,9 +53,20 @@ public class OrderHistory extends AppCompatActivity {
         Log.i("sdffd", phoneNumber + "zzzzzzzzzzz");
         recyclerView = findViewById(R.id.orderHistorylist);
         makeRequest();
+        startProgress();
 
     }
+    private void startProgress(){
+        final ProgressApplication progressApplication = new ProgressApplication();
 
+        progressApplication.progressON(this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressApplication.progressOFF();
+            }
+        },3500);
+    }
     private synchronized void makeRequest() {
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "OrderListFindByPhone.do?phone=" + phoneNumber;

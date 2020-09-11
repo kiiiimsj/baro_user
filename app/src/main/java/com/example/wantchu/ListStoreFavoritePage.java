@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -97,9 +98,19 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         else {
             makeRequestForFavorite(phone);
         }
-
+        startProgress();
     }
+    private void startProgress(){
+        final ProgressApplication progressApplication = new ProgressApplication();
 
+        progressApplication.progressON(this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressApplication.progressOFF();
+            }
+        },3500);
+    }
     @Override
     protected void onResume() {
         super.onResume();

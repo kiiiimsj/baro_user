@@ -3,6 +3,7 @@ package com.example.wantchu;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -76,8 +77,19 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         setList();
         setExpandableListView();
         setExpandListener();
+        startProgress();
     }
+    private void startProgress(){
+        final ProgressApplication progressApplication = new ProgressApplication();
 
+        progressApplication.progressON(this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressApplication.progressOFF();
+            }
+        },3500);
+    }
     private void setMyInfo() {
         SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersDetailSession();
