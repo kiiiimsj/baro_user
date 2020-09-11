@@ -49,7 +49,7 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnListItemSelectedInterfaceForMenu, MenuListAdapter.OnListItemLongSelectedInterfaceForMenu{
-    //private final static String SERVER = "http://54.180.56.44:8080/";
+    //private final static String SERVER = "http://15.165.22.64:8080/";
     private final static int SEND_CODE = 1;
 
     //content 이름
@@ -129,17 +129,10 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
 
         //받은 상점 아이디로 상점 디테일 정보 불러오기
         drawStoreInfo(Integer.parseInt(storedIdStr));
-        //drawStoreInfo(1);
+
         if(favoriteList == null) {
             return;
         }
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                checkFavorite();
-            }
-        });
     }
     private void getFavoriteStoreId() {
         //favorite으로 key설정된 sharedperferences
@@ -417,6 +410,18 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         this.onBackPressed();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                checkFavorite();
+            }
+        });
+
+    }
+
     //가게정보 버튼
     public void showDetailStoreInfo(View view) {
         Intent intent = new Intent(getApplicationContext(), StoreDetailInfo.class);
@@ -507,7 +512,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         requestQueue.add(request);
     }
 
-    //메뉴 Volley : http://54.180.56.44:8080/MenuFindByStoreId.do?store_id=가게id값
+    //메뉴 Volley : http://15.165.22.64:8080/MenuFindByStoreId.do?store_id=가게id값
     public void makeRequestGetMenu(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.GET, url,
@@ -541,7 +546,6 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
             }
         }
     }
-
     public void onClickFavorite(View view) {
         for(int i = 0; i< favoriteList.size();i++){
             String favoriteId = String.valueOf(favoriteList.get(i).getStore_id());
@@ -560,29 +564,12 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("phone", phone);
             hashMap.put("store_id", storeId);
-            String url = "http://54.180.56.44:8080/FavoriteSave.do";
+            String url = "http://15.165.22.64:8080/FavoriteSave.do";
 
             makeRequestFavoriteReg(url, hashMap);
 
-            favoriteListParsing = new FavoriteListParsing();
-            favoriteListParsing.setStore_id(Integer.parseInt(storedIdStr));
-            favoriteListParsing.setStore_info(storeDetail.getStoreInfo());
-            favoriteListParsing.setStore_latitude(String.valueOf(storeDetail.getStoreLatitude()));
-            favoriteListParsing.setStore_longitude(String.valueOf(storeDetail.getStoreLongitude()));
-            favoriteListParsing.setStore_name(storeDetail.getName());
-            favoriteListParsing.setStore_location(storeDetail.getStoreLocation());
-            favoriteListParsing.setStore_image(storeDetail.getStore_image());
-
             mFavorite.setImageResource(R.drawable.heart_full);
-            favoriteList.add(favoriteListParsing);
-            //리스트에 추가
-            favoriteParsing.setFavorite(favoriteList);
 
-            String save = gson.toJson(favoriteParsing, FavoriteParsing.class);
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putString("favorite", save);
-            editor.apply();
-            editor.commit();
             index = 1;
             AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(StoreInfo.this);
             addFavoriteDialog.callFunction();
@@ -594,7 +581,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("phone", phone);
             hashMap.put("store_id", storeId);
-            String url = "http://54.180.56.44:8080/FavoriteDelete.do";
+            String url = "http://15.165.22.64:8080/FavoriteDelete.do";
 
             makeRequestFavorteRem(url, hashMap);
 
@@ -611,6 +598,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("favorite", save);
             editor.commit();
+
             index = 0;
             DeleteFavoriteDialog deleteFavoriteDialog = new DeleteFavoriteDialog(StoreInfo.this);
             deleteFavoriteDialog.callFunction();
@@ -666,15 +654,42 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
                 });
         requestQueue.add(jsonObjectRequest);
     }
-    public synchronized void applyJson(final JSONObject result){
-        jsonParsing(result);
-    }
-    public synchronized  void jsonParsing(JSONObject result){
+    public void applyJson(final JSONObject result){
         Boolean _result = false;
         String _message = null;
         try{
             _result = result.getBoolean("result");
+            if(_result) {
+                favoriteListParsing = new FavoriteListParsing();
+                favoriteListParsing.setStore_id(Integer.parseInt(storedIdStr));
+                favoriteListParsing.setStore_info(storeDetail.getStoreInfo());
+                favoriteListParsing.setStore_latitude(String.valueOf(storeDetail.getStoreLatitude()));
+                favoriteListParsing.setStore_longitude(String.valueOf(storeDetail.getStoreLongitude()));
+                favoriteListParsing.setStore_name(storeDetail.getName());
+                favoriteListParsing.setStore_location(storeDetail.getStoreLocation());
+                favoriteListParsing.setStore_image(storeDetail.getStore_image());
+                favoriteList.add(favoriteListParsing);
+                //리스트에 추가
+                favoriteParsing.setFavorite(favoriteList);
+
+                String save = gson.toJson(favoriteParsing, FavoriteParsing.class);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("favorite", save);
+                editor.apply();
+                editor.commit();
+            }
             Log.e("result11", String.valueOf(_result));
+            _message = result.getString("message");
+        }
+        catch(JSONException e){
+            e.printStackTrace();
+        }
+    }
+    public void jsonParsing(JSONObject result){
+        Boolean _result = false;
+        String _message = null;
+        try{
+            _result = result.getBoolean("result");
             _message = result.getString("message");
         }
         catch(JSONException e){

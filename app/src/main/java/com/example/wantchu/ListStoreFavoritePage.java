@@ -87,7 +87,16 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
 
         phone = hashMap.get(sessionManager.KEY_PHONENUMBER);
-        makeRequestForFavorite(phone);
+        sp = getSharedPreferences("favorite", MODE_PRIVATE);
+        if(sp.edit() != null) {
+            //;
+            Log.i("spLog", sp.getString("favorite", null));
+
+            jsonParsingForSf(sp.getString("favorite", null));
+        }
+        else {
+            makeRequestForFavorite(phone);
+        }
 
     }
 
@@ -99,9 +108,58 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
 
         phone = hashMap.get(sessionManager.KEY_PHONENUMBER);
-        makeRequestForFavorite(phone);
-    }
+        sp = getSharedPreferences("favorite", MODE_PRIVATE);
+        if(sp.edit() != null) {
+            //;
+            Log.i("spLog", sp.getString("favorite", null));
 
+            jsonParsingForSf(sp.getString("favorite", null));
+        }
+        else {
+            makeRequestForFavorite(phone);
+        }
+    }
+    private void mRecyclerView2ForSf(){
+        mRecyclerView.setHasFixedSize(true);
+        ArrayList<ListStoreHelperClass> DataList = new ArrayList<>();
+        HashMap<String, FavoriteHelperClass> hashMap = new HashMap<>();
+        hashMap.put("FavoriteHelperClass", new FavoriteHelperClass("","","","","","","",0.0));
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        Location myLocation = new Location("");
+        myLocation.setLatitude(latLng.latitude);
+        myLocation.setLongitude(latLng.longitude);
+
+        for(int i = 0; i<favoriteListParsings.size();i++){
+            Location storeLocation = new Location("");
+
+            storeLocation.setLatitude(Double.parseDouble(favoriteListParsings.get(i).getStore_latitude()));
+            storeLocation.setLongitude(Double.parseDouble(favoriteListParsings.get(i).getStore_longitude()));
+
+            double distance = getDistance(myLocation, storeLocation);
+
+            Log.e("distance", String.valueOf(distance));
+
+            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(favoriteListParsings.get(i).getStore_name(),favoriteListParsings.get(i).getStore_location(),favoriteListParsings.get(i).getStore_image(),distance,favoriteListParsings.get(i).getStore_id(), favoriteListParsings.get(i).getStore_is_open());
+
+            listStoreHelperClass.storeNames.add(favoriteListParsings.get(i).getStore_name());
+            listStoreHelperClass.storeLocations.add(favoriteListParsings.get(i).getStore_location());
+            listStoreHelperClass.storeImages.add(favoriteListParsings.get(i).getStore_image());
+
+            Log.e("storeimaaaage", favoriteListParsings.get(i).getStore_image());
+
+            listStoreHelperClass.storeDistances.add(distance);
+            listStoreHelperClass.storeIds.add(favoriteListParsings.get(i).getStore_id());
+            listStoreHelperClass.storesIsOpen.add(favoriteListParsings.get(i).getStore_is_open());
+
+            DataList.add(listStoreHelperClass);
+        }
+        Collections.sort(DataList);
+
+        adapter = new ListStoreAdapter(DataList, this, this, this);
+        mRecyclerView.setAdapter(adapter);
+    }
     private void mRecyclerView2(){
         mRecyclerView.setHasFixedSize(true);
         ArrayList<ListStoreHelperClass> DataList = new ArrayList<>();
@@ -144,7 +202,46 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         adapter = new ListStoreAdapter(DataList, this, this, this);
         mRecyclerView.setAdapter(adapter);
     }
+    private void jsonParsingForSf(String result) {
+        ListStoreParsing listStoreParsing = new ListStoreParsing();
+        JSONArray jsonArray = null;
+        favoriteListParsings = new ArrayList<>();
+        boolean result2 = false;
+        try {
+            result2 = (Boolean) new JSONObject(result).getBoolean("result");
+            listStoreParsing.setMessage(new JSONObject(result).getString("message"));
+            jsonArray = new JSONObject(result).getJSONArray("favorite");
+            if (result2 == false || jsonArray == null) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ListStoreFavoritePage.this, "가게정보를 받아올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jObject = jsonArray.getJSONObject(i);
+                String store_name = jObject.optString("store_name");
+                String store_latitude = jObject.optString("store_latitude");
+                String store_longitude = jObject.optString("store_longitude");
+                String store_image = jObject.optString("store_image");
+                String store_info = jObject.optString("store_info");
+                String store_is_open = jObject.optString("is_open");
 
+                Log.e("storeImageee", store_image);
+
+                String store_location = jObject.optString("store_location");
+                int store_id = jObject.optInt("store_id");
+                FavoriteListParsing favoriteListParsing = new FavoriteListParsing(store_id, store_info, store_latitude, store_longitude, store_name, store_location, store_image, store_is_open);
+                Log.i("LISTSTORELISTPARSING", favoriteListParsing.toString());
+                favoriteListParsings.add(favoriteListParsing);
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mRecyclerView2ForSf();
+    }
     private void jsonParsing(String result) {
         ListStoreParsing listStoreParsing = new ListStoreParsing();
         JSONArray jsonArray = null;

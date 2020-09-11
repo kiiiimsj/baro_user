@@ -95,7 +95,8 @@
             android:name=".OrderHistory"
             android:launchMode="singleTask" />
         <activity android:name=".StoreInfo" />
-        <activity android:name=".MainPage" />
+        <activity android:name=".MainPage"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".SearchStore" />
         <activity
             android:name=".MyPage"

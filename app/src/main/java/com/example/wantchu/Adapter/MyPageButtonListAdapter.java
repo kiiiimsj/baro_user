@@ -1,6 +1,7 @@
 package com.example.wantchu.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wantchu.R;
 
-public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonListAdapter.MypageViewHoder>{
+import static android.content.Context.MODE_PRIVATE;
 
+public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonListAdapter.MypageViewHoder>{
+    SharedPreferences shf;
+    Context context;
     public interface OnListItemLongSelectedInterfaceForMyPage {
         void onItemLongSelectedForMyPage(View v, int adapterPosition);
     }
@@ -26,10 +30,11 @@ public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonLi
 
     int[] setCount;
     String[] list;
-    public MyPageButtonListAdapter(MyPageButtonListAdapter.OnListItemSelectedInterfaceForMyPage mListener, String[] list, int[] setCount) {
+    public MyPageButtonListAdapter(MyPageButtonListAdapter.OnListItemSelectedInterfaceForMyPage mListener, String[] list, int[] setCount, Context context) {
         this.mListener = mListener;
         this.setCount = setCount;
         this.list = list;
+        this.context =context;
     }
     public MyPageButtonListAdapter(String[] list) {
         this.list = list;
@@ -54,7 +59,9 @@ public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonLi
             holder.count.setText(Integer.toString(setCount[1]));
         }
         if(strS.equals("장바구니")) {
-            holder.count.setText(Integer.toString(0));
+            shf = context.getSharedPreferences("basketList", MODE_PRIVATE);
+            int count = shf.getInt("orderCnt", 0);
+            holder.count.setText(Integer.toString(count));
         }
     }
 
