@@ -32,10 +32,14 @@ public class InquiryList extends AppCompatActivity implements InquiryListAdapter
     InquiryListAdapter inquiryListAdapter;
     InquiryDataList inquiryDataList;
     RecyclerView recyclerView;
+    ProgressApplication progressApplication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inquiry_list);
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
 
         recyclerView = findViewById(R.id.inquiry_list_view);
         makeRequestForInquiry(urlMaker());
@@ -101,6 +105,7 @@ public class InquiryList extends AppCompatActivity implements InquiryListAdapter
         inquiryListAdapter = new InquiryListAdapter(data,this, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(inquiryListAdapter);
+        progressApplication.progressOFF();
     }
 
     @Override

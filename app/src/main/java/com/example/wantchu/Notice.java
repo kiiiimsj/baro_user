@@ -45,10 +45,15 @@ public class Notice extends AppCompatActivity {
     ArrayList<NoticeGroup> DataList;
     private ExpandableListView listView;
     int width;
+    ProgressApplication progressApplication;
+
     @Override
     public void  onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
+
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -147,6 +152,7 @@ public class Notice extends AppCompatActivity {
                 new ExpandAdapter(getApplicationContext(),R.layout.activity_notice_group_parent,R.layout.activity_notice_group_child,DataList);
         listView.setIndicatorBounds(width-100, width); //이 코드를 지우면 화살표 위치가 바뀐다.
         listView.setAdapter(adapter);
+        progressApplication.progressOFF();
     }
 
     public void onClickBack(View view) {

@@ -53,11 +53,13 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
     TextView emailSpace;
     TextView phoneSpace;
     MyPageExpandAdapter myPageExpandAdapter;
-
+    ProgressApplication progressApplication;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
+        progressApplication = new ProgressApplication();
+        progressApplication.progressON(this);
         counts = new int[3];
 
         getPhoneNumber();
@@ -77,18 +79,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         setList();
         setExpandableListView();
         setExpandListener();
-        startProgress();
-    }
-    private void startProgress(){
-        final ProgressApplication progressApplication = new ProgressApplication();
-
-        progressApplication.progressON(this);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressApplication.progressOFF();
-            }
-        },3500);
     }
     private void setMyInfo() {
         SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
@@ -188,6 +178,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         myPageExpandAdapter = new MyPageExpandAdapter(getApplicationContext(), R.layout.my_page_parent_view, R.layout.my_page_expandable, lists);
         expandableListView.setGroupIndicator(null);
         expandableListView.setAdapter(myPageExpandAdapter);
+        progressApplication.progressOFF();
     }
     public void setRecyclerView(boolean result, int[] setCounts) {
         mButtonlist.setHasFixedSize(true);
