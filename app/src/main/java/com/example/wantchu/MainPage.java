@@ -83,7 +83,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     RelativeLayout logoutLayout;
 
     StoreSessionManager storeSessionManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,6 +143,19 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 else {
                     return false;
                 }
+            }
+        });
+        glasses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = mSearch.getText().toString();
+                Intent intent = new Intent(MainPage.this, ListStorePage.class);
+                intent.putExtra("isSearchOrder", true);
+                intent.putExtra("searchStore", message);
+                intent.putExtra("list_type", "search");
+                Log.i("MESSAGE", message);
+                //mSearch.setText("");
+                startActivity(intent);
             }
         });
 

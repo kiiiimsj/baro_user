@@ -184,7 +184,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         if(result) {
             Log.i("VIEW", result+"");
             Log.i("VIEW", setCounts+"");
-            buttonAdapter = new MyPageButtonListAdapter(this, buttons, setCounts);
+            buttonAdapter = new MyPageButtonListAdapter(this, buttons, setCounts, this);
         }
         else {
             buttonAdapter = new MyPageButtonListAdapter(buttons);
