@@ -9,6 +9,7 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.text.Html;
 import android.util.Log;
@@ -107,6 +108,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
         storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
         storeSessionManager.setIsFavorite(false);
+        startLocation();
         //orderListCart
         runOnUiThread(new Runnable() {
             @Override
@@ -178,12 +180,21 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
             }
         }).start();
-
+        startProgress();
     }
+    private void startProgress(){
+        final ProgressApplication progressApplication = new ProgressApplication();
 
+        progressApplication.progressON(this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressApplication.progressOFF();
+            }
+        },3500);
+    }
     private void startLocation() {
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
         if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("설정");

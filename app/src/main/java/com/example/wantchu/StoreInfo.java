@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,6 +134,18 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         if(favoriteList == null) {
             return;
         }
+        startProgress();
+    }
+    private void startProgress(){
+        final ProgressApplication progressApplication = new ProgressApplication();
+
+        progressApplication.progressON(this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressApplication.progressOFF();
+            }
+        },3500);
     }
     private void getFavoriteStoreId() {
         //favorite으로 key설정된 sharedperferences

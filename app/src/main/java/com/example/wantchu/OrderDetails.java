@@ -3,6 +3,7 @@ package com.example.wantchu;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -269,8 +270,19 @@ public class OrderDetails extends AppCompatActivity {
         });
 
         //--------------------------------------------------------
+        startProgress();
 
+    }
+    private void startProgress(){
+        final ProgressApplication progressApplication = new ProgressApplication();
 
+        progressApplication.progressON(this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressApplication.progressOFF();
+            }
+        },3500);
     }
     private void addNewMenuToBasket(ArrayList<DetailsFixToBasket> detailsFixToBaskets,SharedPreferences.Editor editor){
         Gson gson = new Gson();
