@@ -93,9 +93,37 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
 
     @Override
     public int getItemCount() {
-        return listStoreLocations.size();
+        return listStoreLocations == null ? 0 : listStoreLocations.size();
+    }
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
     }
 
+    @Override
+    public boolean onFailedToRecycleView(@NonNull ListStoreAdapter.ListStoreViewHolder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull ListStoreAdapter.ListStoreViewHolder  holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull ListStoreAdapter.ListStoreViewHolder  holder) {
+        super.onViewRecycled(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull ListStoreAdapter.ListStoreViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
     public static class ListStoreViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView storeImage;

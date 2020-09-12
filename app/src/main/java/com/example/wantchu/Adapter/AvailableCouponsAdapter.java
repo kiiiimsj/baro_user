@@ -139,6 +139,35 @@ public class AvailableCouponsAdapter extends RecyclerView.Adapter<AvailableCoupo
         return (coupons == null? 0 : coupons.size());
     }
 
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+    }
+
+    @Override
+    public boolean onFailedToRecycleView(@NonNull AvailableCouponsAdapter.ViewHolder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull AvailableCouponsAdapter.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull AvailableCouponsAdapter.ViewHolder holder) {
+        super.onViewRecycled(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull AvailableCouponsAdapter.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView couponEnd;
         TextView discountAmount;

@@ -58,6 +58,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         ((TextView)holder.itemName.getChildAt(0)).setText(detailsFixToBasket.getName());
         ((TextView)holder.itemName.getChildAt(1)).setText(""+detailsFixToBasket.getDefaultPrice());
         if(essentials.size()!=0) {
+            holder.essential.setVisibility(View.VISIBLE);
             iterator = essentials.keySet().iterator();
             while (iterator.hasNext()) {
 //                String key = iterator.next();
@@ -80,9 +81,10 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
 
         }
         else{
-            holder.essential.setVisibility(View.INVISIBLE);
+            holder.essential.setVisibility(View.GONE);
         }
         if(nonEssentials.size()!=0) {
+            holder.nonEssential.setVisibility(View.VISIBLE);
             iterator = nonEssentials.keySet().iterator();
             holder.nonEssential.removeAllViews();
             while (iterator.hasNext()) {
@@ -90,6 +92,9 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                ExtraOrder optionData = nonEssentials.get(key);
                 int price = optionData.getExtra_price();
                 int count = optionData.getExtra_count();
+                if (count == 0){
+                    continue;
+                }
                 LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.activity_basket_item_child2, null, false);
                 ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(0)).setText(key);
                 ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(2)).setText("" + count);
@@ -97,7 +102,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                 holder.nonEssential.addView(linearLayout);
             }
         }else{
-            holder.nonEssential.setVisibility(View.INVISIBLE);
+            holder.nonEssential.setVisibility(View.GONE);
         }
         ((TextView)holder.priceLinear.getChildAt(3)).setText("total : "+detailsFixToBasket.getPrice()+"원");
         ((TextView)holder.priceLinear.getChildAt(2)).setText(""+detailsFixToBasket.getCount()+" 개");
@@ -124,7 +129,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return detailsFixToBaskets.size();
+        return (detailsFixToBaskets == null? 0 : detailsFixToBaskets.size());
     }
 
     ///////////////////////////////////

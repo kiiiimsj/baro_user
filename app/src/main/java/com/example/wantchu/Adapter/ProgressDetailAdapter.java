@@ -42,6 +42,7 @@ public class ProgressDetailAdapter extends RecyclerView.Adapter<ProgressDetailAd
         holder.menu_defaultPrice.setText(data.get(position).getMenu_defaultprice()+"");
         holder.count.setText(data.get(position).getOrder_count()+"");
         int optionPrices = 0;
+        holder.options.removeAllViews();
         for(int i = 0;i<extras.size();i++){
             String optionName = extras.get(i).getExtra_name();
             int optionPrice = extras.get(i).getExtra_price();
@@ -63,11 +64,41 @@ public class ProgressDetailAdapter extends RecyclerView.Adapter<ProgressDetailAd
         holder.total_price.setText(""+eachPrice*data.get(position).getOrder_count()+"원");
     }
 
+
     @Override
     public int getItemCount() {
-        return (data.size() <= 0 ? 0 : data.size());
+        return (data == null ? 0 : data.size());
     }
 
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+    }
+
+    @Override
+    public boolean onFailedToRecycleView(@NonNull ProgressDetailAdapter.ViewHolder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull ProgressDetailAdapter.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull ProgressDetailAdapter.ViewHolder holder) {
+        super.onViewRecycled(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull ProgressDetailAdapter.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView menu_name;
         TextView menu_defaultPrice;

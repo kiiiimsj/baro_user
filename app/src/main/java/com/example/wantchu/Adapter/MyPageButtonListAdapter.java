@@ -67,9 +67,37 @@ public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonLi
 
     @Override
     public int getItemCount() {
-        return list.length;
+        return list == null? 0 : list.length;
+    }
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
     }
 
+    @Override
+    public boolean onFailedToRecycleView(@NonNull MyPageButtonListAdapter.MypageViewHoder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull MyPageButtonListAdapter.MypageViewHoder  holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull MyPageButtonListAdapter.MypageViewHoder  holder) {
+        super.onViewRecycled(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull MyPageButtonListAdapter.MypageViewHoder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
     public class MypageViewHoder extends RecyclerView.ViewHolder {
         public TextView buttonName;
         public TextView count;

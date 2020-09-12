@@ -48,6 +48,7 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
         holder.default_price.setText(""+parsingHelperArrayList.get(position).getMenu_defaultprice());
         int itemCount = parsingHelperArrayList.get(position).getOrder_count();
         int optionPrices = 0;
+        holder.options.removeAllViews();
         for(int i = 0;i<extras.size();i++){
             String optionName = extras.get(i).getExtra_name();
             int optionPrice = extras.get(i).getExtra_price();
@@ -74,8 +75,38 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
 
     @Override
     public int getItemCount() {
-        return parsingHelperArrayList.size();
+        return (parsingHelperArrayList == null ? 0 : parsingHelperArrayList.size());
     }
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+    }
+
+    @Override
+    public boolean onFailedToRecycleView(@NonNull HistoryDetailAdapter.ViewHolder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull HistoryDetailAdapter.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull HistoryDetailAdapter.ViewHolder holder) {
+        super.onViewRecycled(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull HistoryDetailAdapter.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView menu_name;

@@ -94,9 +94,37 @@ public class OrderDetailsNewNonEssentailAdapter extends RecyclerView.Adapter<Ord
 
     @Override
     public int getItemCount() {
-        return (DataList.size() == 0? 0: DataList.size());
+        return (DataList == null? 0: DataList.size());
+    }
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
     }
 
+    @Override
+    public boolean onFailedToRecycleView(@NonNull OrderDetailsNewNonEssentailAdapter.ViewHolder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull OrderDetailsNewNonEssentailAdapter.ViewHolder  holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull OrderDetailsNewNonEssentailAdapter.ViewHolder  holder) {
+        super.onViewRecycled(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull OrderDetailsNewNonEssentailAdapter.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView optionCount;
         TextView optionPrice;
