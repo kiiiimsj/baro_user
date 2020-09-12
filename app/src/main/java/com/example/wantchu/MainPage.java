@@ -333,9 +333,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         });
     }
     public void onClickBell(View view) {
-//        Intent intent = new Intent(getApplicationContext(), MyPage.class);
-//        startActivity(intent);
-//        finish();
+        startActivity(new Intent(getApplicationContext(), Events.class));
     }
 
     @Override
