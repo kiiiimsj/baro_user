@@ -90,7 +90,7 @@ public class Events extends AppCompatActivity {
                         Log.i("response1", "response succeeded.");
                         imageView.setImageBitmap(response);
                     }
-                }, 1000, 1000, ImageView.ScaleType.FIT_CENTER, null,
+                }, 1000, 1000, ImageView.ScaleType.FIT_XY, null,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
