@@ -98,6 +98,8 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
     SessionManager sessionManager;
     String _phone;
 
+    boolean result = false;
+
     ProgressApplication progressApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,9 +114,9 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
 
-
-        getFavoriteStoreId();
-
+        //getFavoriteStoreId();
+        //즐겨찾기 가게 확인
+        checkFavorite();
         //즐겨찾기 연결
         mFavorite = findViewById(R.id.favorite);
 
@@ -128,14 +130,18 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         Intent intent = getIntent();
         storedIdStr=intent.getStringExtra("store_id");
 
-        //즐겨찾기 가게 확인
+
 
         //받은 상점 아이디로 상점 디테일 정보 불러오기
         drawStoreInfo(Integer.parseInt(storedIdStr));
+    }
 
-        if(favoriteList == null) {
-            return;
-        }
+    public HashMap setHashDataForCheckFavorite() {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("phone", _phone);
+        data.put("store_id", storedIdStr);
+
+        return data;
     }
     private void getFavoriteStoreId() {
         //favorite으로 key설정된 sharedperferences
@@ -155,21 +161,39 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
     }
 
     private void checkFavorite() {
-        if(favoriteList.size() != 0){
-            for(int i =0;i < favoriteList.size();i++){
-                //favoriteList를 확인하면서 favoriteList 내부의 ArrayList에서 getStoreId 가져오기
-                String favoriteId = String.valueOf(favoriteList.get(i).getStore_id());
-
-                // 즐겨찾기에 있는 가게 면 index 1로 설정
-                if(favoriteId.equals(storedIdStr)){
-                    mFavorite.setImageResource(R.drawable.heart_full);
-                    index = 1;
-                    break;
-                }
-                mFavorite.setImageResource(R.drawable.heart_empty);
-                //아니면 0
-                index = 0;
+        makeRequestForCheckFavorite(setHashDataForCheckFavorite());
+    }
+    private void makeRequestForCheckFavorite(HashMap data) {
+        UrlMaker urlMaker = new UrlMaker();
+        String url = urlMaker.UrlMake("FavoriteExist.do");
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                parsing(response.toString());
             }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private void parsing(String toString) {
+        try {
+            JSONObject jsonObject = new JSONObject(toString);
+            result = jsonObject.getBoolean("result");
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(result) {
+            mFavorite.setImageResource(R.drawable.heart_full);
+        }
+        else {
+            mFavorite.setImageResource(R.drawable.heart_empty);
         }
     }
 
@@ -422,13 +446,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
     @Override
     protected void onResume() {
         super.onResume();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                checkFavorite();
-            }
-        });
-
+        checkFavorite();
     }
 
     //가게정보 버튼
@@ -556,34 +574,8 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         }
     }
     public void onClickFavorite(View view) {
-        for(int i = 0; i< favoriteList.size();i++){
-            String favoriteId = String.valueOf(favoriteList.get(i).getStore_id());
-            if(favoriteId.equals(storedIdStr)){
-                index = 1;
-                break;
-            }
-            index = 0;
-        }
-        //현재는 즐겨찾기되어있지 않지만 즐겨찾기 버튼을 눌러 등록하고자할때
-        if(index == 0){
-
-            String phone = _phone;
-            String storeId = storedIdStr;
-
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("phone", phone);
-            hashMap.put("store_id", storeId);
-            String url = "http://15.165.22.64:8080/FavoriteSave.do";
-
-            makeRequestFavoriteReg(url, hashMap);
-
-            mFavorite.setImageResource(R.drawable.heart_full);
-
-            index = 1;
-            AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(StoreInfo.this);
-            addFavoriteDialog.callFunction();
-        }
-        else{//현재 즐겨찾기가 등록되어있지만 취소하고자할때store_location
+        if(result) {
+            //등록 - > 미등록
             String phone = _phone;
             String storeId = storedIdStr;
 
@@ -593,28 +585,89 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
             String url = "http://15.165.22.64:8080/FavoriteDelete.do";
 
             makeRequestFavorteRem(url, hashMap);
-
             mFavorite.setImageResource(R.drawable.heart_empty);
-            for(int i = 0; i< favoriteList.size();i++){
-                String favoriteId = String.valueOf(favoriteList.get(i).getStore_id());
-                if(favoriteId.equals(storedIdStr)){
-                    favoriteList.remove(favoriteList.get(i));
-                    break;
-                }
-            }
-            favoriteParsing.setFavorite(favoriteList);
-            String save = gson.toJson(favoriteParsing, FavoriteParsing.class);
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putString("favorite", save);
-            editor.commit();
 
-            index = 0;
             DeleteFavoriteDialog deleteFavoriteDialog = new DeleteFavoriteDialog(StoreInfo.this);
             deleteFavoriteDialog.callFunction();
+            //true 등록되어있을때
         }
-        for(int i = 0; i< favoriteList.size();i++){
-            Log.e("favorlistㅅㅅㅅ", String.valueOf(favoriteList.get(i)));
+        else {
+            //미등록 -> 등록
+            String phone = _phone;
+            String storeId = storedIdStr;
+
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("phone", phone);
+            hashMap.put("store_id", storeId);
+
+            String url = "http://15.165.22.64:8080/FavoriteSave.do";
+            makeRequestFavoriteReg(url, hashMap);
+
+            mFavorite.setImageResource(R.drawable.heart_full);
+            AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(StoreInfo.this);
+            addFavoriteDialog.callFunction();
+            //false 등록되어있지 않을 때
         }
+//        for(int i = 0; i< favoriteList.size();i++){
+//            String favoriteId = String.valueOf(favoriteList.get(i).getStore_id());
+//            if(favoriteId.equals(storedIdStr)){
+//                index = 1;
+//                break;
+//            }
+//            index = 0;
+//        }
+//        //현재는 즐겨찾기되어있지 않지만 즐겨찾기 버튼을 눌러 등록하고자할때
+//        if(index == 0){
+//
+//            String phone = _phone;
+//            String storeId = storedIdStr;
+//
+//            HashMap<String, String> hashMap = new HashMap<>();
+//            hashMap.put("phone", phone);
+//            hashMap.put("store_id", storeId);
+//
+//            String url = "http://15.165.22.64:8080/FavoriteSave.do";
+//
+//            makeRequestFavoriteReg(url, hashMap);
+//
+//            mFavorite.setImageResource(R.drawable.heart_full);
+//
+//            index = 1;
+//            AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(StoreInfo.this);
+//            addFavoriteDialog.callFunction();
+//        }
+//        else{//현재 즐겨찾기가 등록되어있지만 취소하고자할때store_location
+//            String phone = _phone;
+//            String storeId = storedIdStr;
+//
+//            HashMap<String, String> hashMap = new HashMap<>();
+//            hashMap.put("phone", phone);
+//            hashMap.put("store_id", storeId);
+//            String url = "http://15.165.22.64:8080/FavoriteDelete.do";
+//
+//            makeRequestFavorteRem(url, hashMap);
+//
+//            mFavorite.setImageResource(R.drawable.heart_empty);
+//            for(int i = 0; i< favoriteList.size();i++){
+//                String favoriteId = String.valueOf(favoriteList.get(i).getStore_id());
+//                if(favoriteId.equals(storedIdStr)){
+//                    favoriteList.remove(favoriteList.get(i));
+//                    break;
+//                }
+//            }
+//            favoriteParsing.setFavorite(favoriteList);
+//            String save = gson.toJson(favoriteParsing, FavoriteParsing.class);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putString("favorite", save);
+//            editor.commit();
+//
+//            index = 0;
+//            DeleteFavoriteDialog deleteFavoriteDialog = new DeleteFavoriteDialog(StoreInfo.this);
+//            deleteFavoriteDialog.callFunction();
+//        }
+//        for(int i = 0; i< favoriteList.size();i++){
+//            Log.e("favorlistㅅㅅㅅ", String.valueOf(favoriteList.get(i)));
+//        }
     }
 
     private synchronized void makeRequestFavorteRem(String url, HashMap<String, String> data) {
@@ -668,25 +721,25 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         String _message = null;
         try{
             _result = result.getBoolean("result");
-            if(_result) {
-                favoriteListParsing = new FavoriteListParsing();
-                favoriteListParsing.setStore_id(Integer.parseInt(storedIdStr));
-                favoriteListParsing.setStore_info(storeDetail.getStoreInfo());
-                favoriteListParsing.setStore_latitude(String.valueOf(storeDetail.getStoreLatitude()));
-                favoriteListParsing.setStore_longitude(String.valueOf(storeDetail.getStoreLongitude()));
-                favoriteListParsing.setStore_name(storeDetail.getName());
-                favoriteListParsing.setStore_location(storeDetail.getStoreLocation());
-                favoriteListParsing.setStore_image(storeDetail.getStore_image());
-                favoriteList.add(favoriteListParsing);
-                //리스트에 추가
-                favoriteParsing.setFavorite(favoriteList);
-
-                String save = gson.toJson(favoriteParsing, FavoriteParsing.class);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("favorite", save);
-                editor.apply();
-                editor.commit();
-            }
+//            if(_result) {
+//                favoriteListParsing = new FavoriteListParsing();
+//                favoriteListParsing.setStore_id(Integer.parseInt(storedIdStr));
+//                favoriteListParsing.setStore_info(storeDetail.getStoreInfo());
+//                favoriteListParsing.setStore_latitude(String.valueOf(storeDetail.getStoreLatitude()));
+//                favoriteListParsing.setStore_longitude(String.valueOf(storeDetail.getStoreLongitude()));
+//                favoriteListParsing.setStore_name(storeDetail.getName());
+//                favoriteListParsing.setStore_location(storeDetail.getStoreLocation());
+//                favoriteListParsing.setStore_image(storeDetail.getStore_image());
+//                favoriteList.add(favoriteListParsing);
+//                //리스트에 추가
+//                favoriteParsing.setFavorite(favoriteList);
+//
+//                String save = gson.toJson(favoriteParsing, FavoriteParsing.class);
+//                SharedPreferences.Editor editor = sp.edit();
+//                editor.putString("favorite", save);
+//                editor.apply();
+//                editor.commit();
+//            }
             Log.e("result11", String.valueOf(_result));
             _message = result.getString("message");
         }
