@@ -394,7 +394,7 @@ public class OrderDetails extends AppCompatActivity {
         } else {
 //            expandListViewShell.setVisibility(View.GONE);
             ////////////////////////////////////////////////////////////////////////
-            newNonEssentailRecyclerView.setVisibility(View.GONE);
+            expandListViewShell.setVisibility(View.GONE);
         }
         progressApplication.progressOFF();
     }
