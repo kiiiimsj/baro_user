@@ -381,15 +381,9 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 Log.i("onPageSelected", position+"");
                 addDots(position);
                 currentPos = position;
-                EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(position);
-                Intent intent = new Intent(getApplicationContext(), Events.class);
-                intent.putExtra("event_id", eventHelperParsingClass.event_id);
-                startActivity(intent);
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         };
     }

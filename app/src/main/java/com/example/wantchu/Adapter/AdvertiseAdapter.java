@@ -1,6 +1,7 @@
 package com.example.wantchu.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wantchu.Events;
 import com.example.wantchu.JsonParsingHelper.EventHelperClass;
 import com.example.wantchu.R;
 import com.example.wantchu.Url.UrlMaker;
@@ -48,7 +50,7 @@ public class AdvertiseAdapter extends PagerAdapter {
     }
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         posi = position;
         layoutInflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.advertise_design, container, false);
@@ -56,7 +58,15 @@ public class AdvertiseAdapter extends PagerAdapter {
         EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(position);
         makeRequestForgetImage(eventHelperParsingClass.event_image, imageView, context);
         container.addView(view);
-
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(position);
+                Intent intent = new Intent(context, Events.class);
+                intent.putExtra("event_id", eventHelperParsingClass.event_id);
+                context.startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -89,6 +99,9 @@ public class AdvertiseAdapter extends PagerAdapter {
                     }
                 });
         requestQueue.add(request);
+    }
+    public void setClickListener() {
+
     }
 }
 
