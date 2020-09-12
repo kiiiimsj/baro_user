@@ -93,11 +93,13 @@ public class myGPSListener implements LocationListener {
             else {
                 if(location == null) {
                     Toast.makeText(context, "GPS를 키고 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
-                    return null;
+                    latLng = new LatLng(37.4962, 126.9586);
                 }
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-                latLng = new LatLng(latitude, longitude);
+                else {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                    latLng = new LatLng(latitude, longitude);
+                }
             }
             if(getAdress != null) {
                 setMapLocationTextView(getAdress);
