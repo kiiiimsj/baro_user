@@ -127,6 +127,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:layout_above="@id/fix"
         android:layout_below="@id/content_layout"
         android:id="@+id/scroll_back"
         android:layout_weight="1"
