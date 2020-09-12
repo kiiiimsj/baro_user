@@ -206,7 +206,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
 
     private void mRecyclerView(){
         mRecyclerView.setHasFixedSize(true);
-
         ArrayList<ListStoreHelperClass> DataList = new ArrayList<>();
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

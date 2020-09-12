@@ -90,16 +90,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
 
         phone = hashMap.get(sessionManager.KEY_PHONENUMBER);
-        sp = getSharedPreferences("favorite", MODE_PRIVATE);
-        if(sp.edit() != null) {
-            //;
-            Log.i("spLog", sp.getString("favorite", null));
-
-            jsonParsingForSf(sp.getString("favorite", null));
-        }
-        else {
-            makeRequestForFavorite(phone);
-        }
+        makeRequestForFavorite(phone);
     }
     @Override
     protected void onResume() {
@@ -109,16 +100,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
 
         phone = hashMap.get(sessionManager.KEY_PHONENUMBER);
-        sp = getSharedPreferences("favorite", MODE_PRIVATE);
-        if(sp.edit() != null) {
-            //;
-            Log.i("spLog", sp.getString("favorite", null));
-
-            jsonParsingForSf(sp.getString("favorite", null));
-        }
-        else {
-            makeRequestForFavorite(phone);
-        }
+        makeRequestForFavorite(phone);
     }
     private void mRecyclerView2ForSf(){
         mRecyclerView.setHasFixedSize(true);
@@ -314,12 +296,6 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
                     }
                 });
         requestQueue.add(request);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
     }
 
     @Override
