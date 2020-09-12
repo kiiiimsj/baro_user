@@ -59,9 +59,9 @@
             <ImageView
                 android:id="@+id/event_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
+                android:layout_height="match_parent" />
             <TextView
+                android:layout_below="@id/event_image"
                 android:id="@+id/event_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
