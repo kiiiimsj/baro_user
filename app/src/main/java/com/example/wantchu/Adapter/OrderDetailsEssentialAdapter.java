@@ -170,9 +170,37 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
     }
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData == null ? 0 : mData.size();
+    }
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
     }
 
+    @Override
+    public boolean onFailedToRecycleView(@NonNull OrderDetailsEssentialAdapter.ViewHolder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull OrderDetailsEssentialAdapter.ViewHolder  holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull OrderDetailsEssentialAdapter.ViewHolder  holder) {
+        super.onViewRecycled(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull OrderDetailsEssentialAdapter.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView optionName;
         LinearLayout essentialOptionTableShell;

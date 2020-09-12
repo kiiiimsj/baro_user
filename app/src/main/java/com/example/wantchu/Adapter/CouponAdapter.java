@@ -61,7 +61,36 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
 
     @Override
     public int getItemCount() {
-        return couponList.coupon.size();
+        return couponList == null? 0 : couponList.coupon.size();
+    }
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+    }
+
+    @Override
+    public boolean onFailedToRecycleView(@NonNull CouponAdapter.CouponViewHolder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull CouponAdapter.CouponViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull CouponAdapter.CouponViewHolder holder) {
+        super.onViewRecycled(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull CouponAdapter.CouponViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
     public class CouponViewHolder extends RecyclerView.ViewHolder {

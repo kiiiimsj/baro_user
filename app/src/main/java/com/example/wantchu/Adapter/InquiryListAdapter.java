@@ -61,9 +61,37 @@ public class InquiryListAdapter extends RecyclerView.Adapter<InquiryListAdapter.
 
     @Override
     public int getItemCount() {
-        return inquiryDataList.inquiry.size();
+        return inquiryDataList== null? 0: inquiryDataList.inquiry.size();
+    }
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
     }
 
+    @Override
+    public boolean onFailedToRecycleView(@NonNull InquiryListAdapter.InquiryViewHolder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull InquiryListAdapter.InquiryViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull InquiryListAdapter.InquiryViewHolder holder) {
+        super.onViewRecycled(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull InquiryListAdapter.InquiryViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
     public class InquiryViewHolder extends RecyclerView.ViewHolder {
         public TextView inquiryTitle;
         public TextView inquiryDate;
