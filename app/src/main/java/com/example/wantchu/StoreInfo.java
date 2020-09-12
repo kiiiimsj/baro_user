@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -346,6 +347,11 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         int firstOpen = 0;
         try {
             JSONArray jsonArray = new JSONObject(result).getJSONArray("category");
+            if(jsonArray == null) {
+                progressApplication.progressOFF();
+                Toast.makeText(this, "로딩에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                return;
+            }
             for (int i = 0; i < jsonArray.length() ; i++) {
                 storeCategories = new StoreCategories();
                 JSONObject jobj = jsonArray.getJSONObject(i);
