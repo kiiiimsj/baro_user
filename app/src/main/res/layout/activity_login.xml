@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
+                    
                     android:background="@color/white"
                     android:text="비밀번호 찾기"
                     android:onClick="onClickFindPass"
