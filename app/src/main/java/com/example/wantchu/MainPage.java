@@ -43,6 +43,8 @@ import com.example.wantchu.JsonParsingHelper.EventHelperClass;
 import com.example.wantchu.JsonParsingHelper.TypeListParsing;
 import com.example.wantchu.JsonParsingHelper.TypeParsing;
 import com.example.wantchu.Url.UrlMaker;
+import com.example.wantchu.helperClass.myGPSListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -82,6 +84,11 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     ProgressApplication progressApplication;
     EventHelperClass eventHelperClass;
     ViewPager.OnPageChangeListener changeListener;
+
+    RelativeLayout mapBar;
+    TextView mAddress;
+
+    LatLng latLng;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,9 +106,11 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
         navigationView = findViewById(R.id.left_navi);
         recycleBack = findViewById(R.id.background1);
+        mapBar = findViewById(R.id.map_bar);
         //Fragment 생성
         dotsLayout = findViewById(R.id.dots);
         context = this;
+        mAddress = findViewById(R.id.address);
         // 왼쪽 사이드바
         storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
         storeSessionManager.setIsFavorite(false);
@@ -117,8 +126,19 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
         // 타입 버튼 동적으로 만드는 메소드
         makeRequest();
-
-
+        myGPSListener myGPSListener = new myGPSListener(this);
+        latLng = myGPSListener.startLocationService(mAddress);
+        if(latLng == null) {
+            mAddress.setText("GPS를 설정 해 주세요");
+        }
+        mapBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MyMap.class);
+                intent.putExtra("from", "main");
+                startActivity(intent);
+            }
+        });
         mSearch.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

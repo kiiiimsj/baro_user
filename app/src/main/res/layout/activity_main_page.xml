@@ -50,23 +50,40 @@
                 
                 android:src="@drawable/menu_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintEnd_toStartOf="@+id/map_bar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView"
+            <RelativeLayout
+                android:id="@+id/map_bar"
+                android:background="@drawable/button_border_full"
                 android:layout_width="250dp"
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_toStartOf="@+id/logo_image"
-                
-                android:src="@drawable/categories_restaurant_background"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/logo_image"
                 app:layout_constraintStart_toEndOf="@+id/menu_image"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="서울시 동작구" />
+
+                <ImageView
+                    android:id="@+id/map_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_baseline_location_on_24"/>
+
+            </RelativeLayout>
 
             <fragment
                 android:name="com.example.wantchu.Fragment.AlarmBell"
@@ -80,7 +97,7 @@
                 android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/map_bar"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

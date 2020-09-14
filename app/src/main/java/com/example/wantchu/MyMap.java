@@ -2,15 +2,14 @@ package com.example.wantchu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -19,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wantchu.Dialogs.MapSetPositionDialog;
 import com.example.wantchu.JsonParsingHelper.MapListParsing;
 import com.example.wantchu.JsonParsingHelper.MapParsing;
 import com.example.wantchu.Url.UrlMaker;
@@ -28,8 +28,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
@@ -40,21 +40,45 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
-public class MyMap extends AppCompatActivity implements AutoPermissionsListener {
+public class MyMap extends AppCompatActivity implements AutoPermissionsListener, MapSetPositionDialog.isClickOkay {
 
+    TextView title;
     SupportMapFragment mapFragment;
     GoogleMap map;
+    MarkerOptions oldMarkerOption;
+    MarkerOptions currentMarkerOption;
+
+    Marker newMarker;
+
     MarkerOptions myLocationMarker;
-    LatLng latLng;
-    myGPSListener myGPSListener = new myGPSListener(this);
+
+
+    LatLng oldLatLng;
+
+    String where;
+    TextView address;
+
+    MapSetPositionDialog mapSetPositionDialog;
+    SharedPreferences setMyNewLocation;
+    myGPSListener GPSListener;
+    SharedPreferences.Editor editor;
+    Bundle myMapBundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_map);
+        setMyNewLocation = getSharedPreferences("newLocation", MODE_PRIVATE);
+        GPSListener = new myGPSListener(this);
+        myMapBundle = new Bundle();
+        title = findViewById(R.id.type_name);
+        address = findViewById(R.id.show_latlng_address);
+        oldMarkerOption = new MarkerOptions();
+        mapSetPositionDialog = new MapSetPositionDialog(this, this);
+
+        editor = setMyNewLocation.edit();
+        Intent intent = getIntent();
+        where = intent.getStringExtra("from");
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -62,15 +86,53 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
             public void onMapReady(GoogleMap googleMap) {
                 Log.d("Map", "지도 준비됨.");
                 map = googleMap;
-                latLng = myGPSListener.startLocationService(null);
-                showCurrentLocation(latLng.latitude, latLng.longitude);
+                oldLatLng = GPSListener.startLocationService(null);
+
+                GPSListener.setMapLocationTextView(address, oldLatLng);
+                showCurrentLocation(oldLatLng.latitude, oldLatLng.longitude);
+
                 try {
+                    //map.setMyLocationEnabled(true);
+                    map.moveCamera(CameraUpdateFactory.newLatLng(oldLatLng));
+                    map.setContentDescription("현재 설정 위치");
                     map.setMyLocationEnabled(true);
+                    map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                        @Override
+                        public void onMapClick(final LatLng latLng) {
+                            map.clear();
+
+                            oldMarkerOption.position(oldLatLng).title("현재 위치");
+                            Marker oldMarker = map.addMarker(oldMarkerOption);
+                            oldMarker.showInfoWindow();
+                            map.addMarker(oldMarkerOption);
+
+                            currentMarkerOption = new MarkerOptions().position(latLng).title("현재 위치로 설정");
+                            Marker showMaker = map.addMarker(currentMarkerOption);
+
+                            GPSListener.setMapLocationTextView(address, latLng);
+                            showMaker.showInfoWindow();
+
+                            map.addMarker(currentMarkerOption);
+                            map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                @Override
+                                public void onInfoWindowClick(Marker marker) {
+                                    mapSetPositionDialog.callFunction();
+                                    newMarker = marker;
+                                }
+                            });
+                        }
+                    });
+
                 }
                 catch(SecurityException e){
                     e.printStackTrace();
                 }
-                makeRequest();
+                if(where.equals("main")) {
+                    title.setText("현재 내 위치");
+                }
+                else {
+                    makeRequest();
+                }
             }
         });
 
@@ -82,10 +144,23 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
 
         //latLng = startLocationService();
 
-        Log.i("latLng", latLng +"");
+        Log.i("latLng", oldLatLng +"");
         AutoPermissions.Companion.loadAllPermissions(this, 101);
     }
+    @Override
+    public void clickOkay() {
+        Location temp = new Location(LocationManager.GPS_PROVIDER);
+        temp.setLatitude(newMarker.getPosition().latitude);
+        temp.setLongitude(newMarker.getPosition().longitude);
+        editor.putString("location", ":"+newMarker.getPosition().latitude+":"+newMarker.getPosition().longitude);
+        editor.apply();
+        editor.commit();
+        Log.i("location_temp", setMyNewLocation.getString("location", null));
 
+        Intent intent = new Intent(getApplicationContext(), MainPage.class);
+        startActivity(intent);
+        finish();
+    }
     private void makeRequest(){
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "StoreAllLocation.do";
@@ -112,8 +187,8 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
         ArrayList<MapListParsing> DataList = new ArrayList<>();
         MapListParsing mapListParsing = new MapListParsing();
         Location myLocation = new Location("");
-        myLocation.setLatitude(latLng.latitude);
-        myLocation.setLongitude(latLng.longitude);
+        myLocation.setLatitude(oldLatLng.latitude);
+        myLocation.setLongitude(oldLatLng.longitude);
 
         for(int i = 0; i < mapParsing.getMapList().size();i++){
             mapListParsing = mapParsing.getMapList().get(i);
@@ -268,5 +343,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener 
         distance = myLocation.distanceTo(storeLocation);
         return distance;
     }
+
 
 }
