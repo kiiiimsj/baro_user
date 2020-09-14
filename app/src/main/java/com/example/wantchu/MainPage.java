@@ -5,18 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,6 +39,7 @@ import com.example.wantchu.AdapterHelper.TypeHelperClass;
 import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Database.StoreSessionManager;
 import com.example.wantchu.Dialogs.IfLogoutDialog;
+import com.example.wantchu.JsonParsingHelper.EventHelperClass;
 import com.example.wantchu.JsonParsingHelper.TypeListParsing;
 import com.example.wantchu.JsonParsingHelper.TypeParsing;
 import com.example.wantchu.Url.UrlMaker;
@@ -55,7 +51,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -63,7 +58,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
     RecyclerView mRecyclerView;
     RecyclerView.Adapter adapter;
-    ImageView menu, myPage, glasses;
+    ImageView menu, glasses;
     EditText mSearch;
 
     Context context;
@@ -85,7 +80,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
     StoreSessionManager storeSessionManager;
     ProgressApplication progressApplication;
-
+    EventHelperClass eventHelperClass;
+    ViewPager.OnPageChangeListener changeListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +92,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
         menu = findViewById(R.id.menu_image);
-        myPage = findViewById(R.id.logo_image);
         glasses = findViewById(R.id.glasses);
         mSearch = findViewById(R.id.search);
         viewPager = findViewById(R.id.info_image);
@@ -108,7 +103,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         dotsLayout = findViewById(R.id.dots);
         context = this;
         // 왼쪽 사이드바
-
         storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
         storeSessionManager.setIsFavorite(false);
         startLocation();
@@ -123,10 +117,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
         // 타입 버튼 동적으로 만드는 메소드
         makeRequest();
-        advertiseAdapter = new AdvertiseAdapter(context);
-        viewPager.setAdapter(advertiseAdapter);
-        addDots(0);
-        viewPager.addOnPageChangeListener(changeListener);
+
+
         mSearch.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -163,26 +155,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(intent);
             }
         });
+        makeRequestForEventThread();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            viewPager.setCurrentItem((currentPos + 1)%4);
-                        }
-                    });
-                }
-
-            }
-        }).start();
 
     }
     private void startLocation() {
@@ -202,7 +176,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    ;
                 }
             });
             AlertDialog dialog = builder.create();
@@ -227,35 +200,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         }
     }
 
-    ViewPager.OnPageChangeListener changeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            if(position == 3) {
-                position = 0;
-            }
-        }
 
-        @Override
-        public void onPageSelected(int position) {
-            Log.i("onPageSelected", position+"");
-            addDots(position);
-            currentPos = position;
-            if (position == 0) {
-
-            } else if (position == 1) {
-
-            } else if (position == 2) {
-
-            } else if (position == 3){
-
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
     public void makeRequest() {
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "TypeFindAll.do";
@@ -333,9 +278,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         });
     }
     public void onClickBell(View view) {
-//        Intent intent = new Intent(getApplicationContext(), MyPage.class);
-//        startActivity(intent);
-//        finish();
+        startActivity(new Intent(getApplicationContext(), Alerts.class));
     }
 
     @Override
@@ -376,7 +319,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(new Intent(getApplicationContext(), InquiryList.class));
                 break;
             case R.id.left_events:
-                startActivity(new Intent(getApplicationContext(), Events.class));
+                startActivity(new Intent(getApplicationContext(), Alerts.class));
                 break;
         }
         return true;
@@ -406,6 +349,73 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             e.printStackTrace();
         }
 
+    }
+    public void makeRequestForEventThread() {
+        String url = new UrlMaker().UrlMake("EventFindAll.do");
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("GET_EVENT_PICTURE", response);
+                eventParsing(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+    private void setAdvertiseAdapter() {
+        changeListener = new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if(position == eventHelperClass.event.size()) {
+                    position = 0;
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.i("onPageSelected", position+"");
+                addDots(position);
+                currentPos = position;
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        };
+    }
+    private void eventParsing(String response) {
+        Gson gson = new Gson();
+        eventHelperClass = gson.fromJson(response, EventHelperClass.class);
+        advertiseAdapter = new AdvertiseAdapter(context, eventHelperClass);
+        viewPager.setAdapter(advertiseAdapter);
+
+        addDots(0);
+
+        setAdvertiseAdapter();
+        viewPager.addOnPageChangeListener(changeListener);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            viewPager.setCurrentItem((currentPos + 1)%eventHelperClass.event.size());
+                        }
+                    });
+                }
+
+            }
+        }).start();
     }
 
     @Override

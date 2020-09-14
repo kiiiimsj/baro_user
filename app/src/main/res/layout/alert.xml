@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp">
+    <TextView
+        android:id="@+id/alert_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:text="새로운 쿠폰 받으세요!"
+        />
+    <TextView
+        android:layout_below="@id/alert_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/alert_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:text="9월 이벤트로 인한 새로운 쿠폰이 지급되었으니 쿠폰창에서 확인해주세요!"
+        />
+    <TextView
+        android:layout_below="@id/alert_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/alert_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="~2020년 9월 20일"
+        />
+    <TextView
+        android:id="@+id/alert_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="1"
+        />
+</RelativeLayout>
