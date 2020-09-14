@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MyMap">
-
     <RelativeLayout
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp">
-
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp">
         <ImageView
             android:id="@+id/back_pressed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:onClick="onClickBack"
             android:padding="10dp"
             android:src="@drawable/general_back_icon" />
@@ -26,20 +22,26 @@
             android:id="@+id/type_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:fontFamily="@font/brandon_grotesque_black"
-            android:gravity="center"
-            android:text="주변 가게"
+            android:layout_centerInParent="true"
             android:textColor="@color/black"
-            android:textSize="25dp" />
+            android:text="주변 가게"
+            android:textSize="25sp" />
     </RelativeLayout>
-
-    <fragment
-        android:id="@+id/map"
+    <TextView
+        android:layout_below="@id/top_bar"
+        android:id="@+id/show_latlng_address"
+        android:text="동작구 사당로 41-2"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textAlignment="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <fragment
         class="com.google.android.gms.maps.SupportMapFragment"
-        tools:layout="@layout/activity_my_map" />
-</LinearLayout>
+        android:id="@+id/map"
+        android:layout_below="@id/show_latlng_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>
