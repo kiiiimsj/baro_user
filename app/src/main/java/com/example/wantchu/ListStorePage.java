@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.ListStoreAdapter;
@@ -30,6 +31,7 @@ import com.example.wantchu.JsonParsingHelper.ListStoreParsing;
 import com.example.wantchu.Url.UrlMaker;
 import com.example.wantchu.helperClass.myGPSListener;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.JsonObject;
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
 
@@ -43,15 +45,12 @@ import java.util.Collections;
 //import com.example.wantchu.Database.SendToServer;
 
 public class ListStorePage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface , AutoPermissionsListener {
-    RelativeLayout mapBar;
     ImageView backButton;
 
     RecyclerView mRecyclerView;
     ListStoreAdapter adapter;
 
     TextView typeName;
-    TextView mAddress;
-
     //메인페이지에서 넘어온 리스트에 필요한 값들
     String type_code;
     String type_name;
@@ -75,25 +74,11 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
         typeName = findViewById(R.id.type_name);
-        mAddress = findViewById(R.id.address);
-        mapBar = findViewById(R.id.map_bar);
         saveListSet = getSharedPreferences("saveList", MODE_PRIVATE);
-
-        myGPSListener myGPSListener = new myGPSListener(this);
-        latLng = myGPSListener.startLocationService(mAddress);
-        if(latLng == null) {
-            mAddress.setText("GPS를 설정 해 주세요");
-        }
         storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
 
-        mapBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MyMap.class));
-            }
-        });
-
-
+        myGPSListener myGPSListener = new myGPSListener(this);
+        latLng = myGPSListener.startLocationService(null);
         chooseShowList();
     }
     @Override
@@ -144,17 +129,28 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         return urlBuilder.toString();
     }
     private void makeRequestForTypeFind() {
-        String lastUrl = "StoreInfoFindByType.do?type_code=" + type_code;
+        JSONObject jsonObject = new JSONObject();
+        Log.e("type_code",type_code);
+        try {
+            jsonObject.put("type_code",type_code);
+            jsonObject.put("latitude",latLng.latitude);
+            jsonObject.put("longitude",latLng.longitude);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String lastUrl = "StoreInfoFindByType.do?";
+//        String lastUrl = "StoreInfoFindByType.do?type_code=" + type_code;
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         Log.i("storesList", "request made to " + url);
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,jsonObject,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        Log.e("storeList", response);
-                        jsonParsing(response);
+                    public void onResponse(JSONObject response) {
+                        Log.e("storeList", response.toString());
+                        jsonParsing(response.toString());
                     }
                 },
                 new Response.ErrorListener() {
@@ -218,20 +214,18 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         for(int i = 0; i< listStoreListParsings.size();i++){
 
             Location storeLocation = new Location("");
-            storeLocation.setLatitude(Double.parseDouble(listStoreListParsings.get(i).getStoreLatitude()));
-            storeLocation.setLongitude(Double.parseDouble(listStoreListParsings.get(i).getStoreLongitude()));
-            double distance = getDistance(myLocation, storeLocation);
+//            double distance = getDistance(myLocation, storeLocation);
 
-            Log.e("dist", String.valueOf(distance));
+//            Log.e("dist", String.valueOf(distance));
 
-            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(listStoreListParsings.get(i).getStoreName(), listStoreListParsings.get(i).getStoreLocation(), listStoreListParsings.get(i).getStoreImage(),distance, listStoreListParsings.get(i).getStoreId(), listStoreListParsings.get(i).getStoreIsOpen());
+            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(listStoreListParsings.get(i).getStoreName(), listStoreListParsings.get(i).getStoreLocation(), listStoreListParsings.get(i).getStoreImage(), listStoreListParsings.get(i).getDistance(), listStoreListParsings.get(i).getStoreId(), listStoreListParsings.get(i).getStoreIsOpen());
 
             Log.e("hey", listStoreListParsings.get(i).getStoreImage());
 
             listStoreHelperClass.storeNames.add(listStoreListParsings.get(i).getStoreName());
             listStoreHelperClass.storeLocations.add(listStoreListParsings.get(i).getStoreLocation());
             listStoreHelperClass.storeImages.add(listStoreListParsings.get(i).getStoreImage());
-            listStoreHelperClass.storeDistances.add(distance);
+            listStoreHelperClass.storeDistances.add(listStoreListParsings.get(i).getDistance());
             listStoreHelperClass.storeIds.add(listStoreListParsings.get(i).getStoreId());
             storeIds[i] = listStoreListParsings.get(i).getStoreId();
 
@@ -260,16 +254,15 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jObject = jsonArray.getJSONObject(i);
                     String store_name = jObject.optString("store_name");
-                    String store_latitude = jObject.optString("store_latitude");
-                    String store_longitude = jObject.optString("store_longitude");
                     String store_image = jObject.optString("store_image");
                     String store_open = jObject.optString("is_open");
+                    float distance = (float)jObject.optDouble("distance");
 
                     Log.e("storeImageee", store_image);
 
                     String store_location = jObject.optString("store_location");
                     int store_id = jObject.optInt("store_id");
-                    ListStoreListParsing listStoreListParsing = new ListStoreListParsing(store_name, store_latitude, store_longitude, store_location, store_image, store_id, store_open);
+                    ListStoreListParsing listStoreListParsing = new ListStoreListParsing(store_name, "","" , store_location, store_image, store_id, store_open, distance);
                     Log.i("LISTSTORELISTPARSING", listStoreListParsing.toString());
                     listStoreListParsings.add(listStoreListParsing);
                 }

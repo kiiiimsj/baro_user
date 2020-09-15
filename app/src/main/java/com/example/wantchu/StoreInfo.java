@@ -364,18 +364,20 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
     }
     //JSON parsing 구간
     private void jsonParsingCategory(String result) {
-
+        boolean parsingResult = false;
         int storeId = 0;
         String name = null;
         int categoryId = 0;
         int firstOpen = 0;
         try {
-            JSONArray jsonArray = new JSONObject(result).getJSONArray("category");
-            if(jsonArray == null) {
+            JSONObject jsonObject = new JSONObject(result);
+            parsingResult=jsonObject.getBoolean("result");
+            if(!parsingResult) {
                 progressApplication.progressOFF();
                 Toast.makeText(this, "로딩에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
+            JSONArray jsonArray = new JSONObject(result).getJSONArray("category");
             for (int i = 0; i < jsonArray.length() ; i++) {
                 storeCategories = new StoreCategories();
                 JSONObject jobj = jsonArray.getJSONObject(i);

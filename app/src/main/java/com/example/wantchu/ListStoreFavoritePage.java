@@ -43,14 +43,12 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class ListStoreFavoritePage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface {
-    RelativeLayout mapBar;
     ImageView backButton;
 
     RecyclerView mRecyclerView;
     ListStoreAdapter adapter;
 
     TextView typeName;
-    TextView mAddress;
 
     LatLng latLng;
 
@@ -71,23 +69,14 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
         typeName = findViewById(R.id.type_name);
-        mAddress = findViewById(R.id.address);
-        mapBar = findViewById(R.id.map_bar);
 
-        myGPSListener myGPSListener = new myGPSListener(this);
-        latLng = myGPSListener.startLocationService(mAddress);
-
-        mapBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ListStoreFavoritePage.this, MyMap.class));
-            }
-        });
 
         gson = new GsonBuilder().create();
         sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
+        myGPSListener myGPSListener = new myGPSListener(this);
+        latLng = myGPSListener.startLocationService(null);
 
         phone = hashMap.get(sessionManager.KEY_PHONENUMBER);
         makeRequestForFavorite(phone);
@@ -120,11 +109,11 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
             storeLocation.setLatitude(Double.parseDouble(favoriteListParsings.get(i).getStore_latitude()));
             storeLocation.setLongitude(Double.parseDouble(favoriteListParsings.get(i).getStore_longitude()));
 
-            double distance = getDistance(myLocation, storeLocation);
+            float distance = (float)getDistance(myLocation, storeLocation);
 
             Log.e("distance", String.valueOf(distance));
 
-            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(favoriteListParsings.get(i).getStore_name(),favoriteListParsings.get(i).getStore_location(),favoriteListParsings.get(i).getStore_image(),distance,favoriteListParsings.get(i).getStore_id(), favoriteListParsings.get(i).getStore_is_open());
+            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(favoriteListParsings.get(i).getStore_name(),favoriteListParsings.get(i).getStore_location(),favoriteListParsings.get(i).getStore_image(), distance,favoriteListParsings.get(i).getStore_id(), favoriteListParsings.get(i).getStore_is_open());
 
             listStoreHelperClass.storeNames.add(favoriteListParsings.get(i).getStore_name());
             listStoreHelperClass.storeLocations.add(favoriteListParsings.get(i).getStore_location());
@@ -163,7 +152,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
             storeLocation.setLatitude(Double.parseDouble(favoriteListParsings.get(i).getStore_latitude()));
             storeLocation.setLongitude(Double.parseDouble(favoriteListParsings.get(i).getStore_longitude()));
 
-            double distance = getDistance(myLocation, storeLocation);
+            float distance = (float)getDistance(myLocation, storeLocation);
 
             Log.e("distance", String.valueOf(distance));
 

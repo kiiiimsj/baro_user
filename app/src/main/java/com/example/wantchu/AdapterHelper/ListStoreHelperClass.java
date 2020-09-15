@@ -6,16 +6,16 @@ public class ListStoreHelperClass implements Comparable<ListStoreHelperClass>{
     public ArrayList<String> storeNames;
     public ArrayList<String> storeLocations;
     public ArrayList<String> storeImages;
-    public ArrayList<Double> storeDistances;
+    public ArrayList<Float> storeDistances;
     public ArrayList<Integer> storeIds;
     public ArrayList<String> storesIsOpen;
     public String storeName;
     public String storeLocation;
     public String storeImage;
-    public double storeDistance;
+    public float storeDistance;
     public int storeId;
     public String storeIsOpen;
-    public ListStoreHelperClass(String storeName, String storeLocation, String storeImage, double storeDistance, int storeId, String storeIsOpen){
+    public ListStoreHelperClass(String storeName, String storeLocation, String storeImage, float storeDistance, int storeId, String storeIsOpen){
         storeNames = new ArrayList<>();
         storeLocations = new ArrayList<>();
         storeImages = new ArrayList<>();
