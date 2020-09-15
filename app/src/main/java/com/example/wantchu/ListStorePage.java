@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.ListStoreAdapter;
@@ -30,6 +31,7 @@ import com.example.wantchu.JsonParsingHelper.ListStoreParsing;
 import com.example.wantchu.Url.UrlMaker;
 import com.example.wantchu.helperClass.myGPSListener;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.JsonObject;
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
 
@@ -127,17 +129,28 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         return urlBuilder.toString();
     }
     private void makeRequestForTypeFind() {
-        String lastUrl = "StoreInfoFindByType.do?type_code=" + type_code;
+        JSONObject jsonObject = new JSONObject();
+        Log.e("type_code",type_code);
+        try {
+            jsonObject.put("type_code",type_code);
+            jsonObject.put("latitude",latLng.latitude);
+            jsonObject.put("longitude",latLng.longitude);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String lastUrl = "StoreInfoFindByType.do?";
+//        String lastUrl = "StoreInfoFindByType.do?type_code=" + type_code;
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         Log.i("storesList", "request made to " + url);
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,jsonObject,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        Log.e("storeList", response);
-                        jsonParsing(response);
+                    public void onResponse(JSONObject response) {
+                        Log.e("storeList", response.toString());
+                        jsonParsing(response.toString());
                     }
                 },
                 new Response.ErrorListener() {
