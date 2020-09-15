@@ -47,7 +47,7 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                
                 android:src="@drawable/menu_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/map_bar"
@@ -61,7 +61,6 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_toStartOf="@+id/logo_image"
-                android:layout_toLeftOf="@+id/logo_image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/logo_image"
                 app:layout_constraintStart_toEndOf="@+id/menu_image"

@@ -34,6 +34,7 @@ public class CustomDialog {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dlg.setContentView(R.layout.custom_dialog);
+        dlg.setCanceledOnTouchOutside(false);
         dlg.show();
 
         final Button goBasket = (Button) dlg.findViewById(R.id.goBasket);
