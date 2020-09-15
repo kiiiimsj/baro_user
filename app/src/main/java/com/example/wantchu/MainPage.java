@@ -176,8 +176,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             }
         });
         makeRequestForEventThread();
-
-
     }
     private void startLocation() {
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

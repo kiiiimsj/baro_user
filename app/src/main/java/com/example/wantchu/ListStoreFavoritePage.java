@@ -80,7 +80,9 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         mapBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ListStoreFavoritePage.this, MyMap.class));
+                Intent intent = new Intent(getApplicationContext(), MyMap.class);
+                intent.putExtra("from", "favoritePage");
+                startActivity(intent);
             }
         });
 
