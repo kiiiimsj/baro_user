@@ -206,7 +206,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
 //            if(distance >= 1000) {
 //                continue;
 //            }
-            mapListParsing = new MapListParsing(mapListParsing.getStore_name(), mapListParsing.getStore_latitude(), mapListParsing.getStore_longitude(), mapListParsing.getStore_distance());
+            mapListParsing = new MapListParsing(mapListParsing.getStore_name(), mapListParsing.getStore_latitude(), mapListParsing.getStore_longitude(), mapListParsing.getDistance());
             DataList.add(mapListParsing);
         }
         MarkerOptions markerOptions = null;
