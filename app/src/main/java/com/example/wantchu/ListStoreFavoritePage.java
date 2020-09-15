@@ -43,14 +43,12 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class ListStoreFavoritePage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface {
-    RelativeLayout mapBar;
     ImageView backButton;
 
     RecyclerView mRecyclerView;
     ListStoreAdapter adapter;
 
     TextView typeName;
-    TextView mAddress;
 
     LatLng latLng;
 
@@ -71,25 +69,14 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
         typeName = findViewById(R.id.type_name);
-        mAddress = findViewById(R.id.address);
-        mapBar = findViewById(R.id.map_bar);
 
-        myGPSListener myGPSListener = new myGPSListener(this);
-        latLng = myGPSListener.startLocationService(mAddress);
-
-        mapBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MyMap.class);
-                intent.putExtra("from", "favoritePage");
-                startActivity(intent);
-            }
-        });
 
         gson = new GsonBuilder().create();
         sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
+        myGPSListener myGPSListener = new myGPSListener(this);
+        latLng = myGPSListener.startLocationService(null);
 
         phone = hashMap.get(sessionManager.KEY_PHONENUMBER);
         makeRequestForFavorite(phone);

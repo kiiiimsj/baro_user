@@ -127,18 +127,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                 catch(SecurityException e){
                     e.printStackTrace();
                 }
-                if(where != null) {
-                    if(where.equals("main")) {
-                        title.setText("현재 내 위치");
-                    }
-                    if(where.equals("favoritePage")) {
-                        title.setText("즐겨찾기 가게 위치");
-                        //favorite_store 위치
-                    }
-                }
-                else {
-                    makeRequest();
-                }
+                makeRequest();
             }
         });
 

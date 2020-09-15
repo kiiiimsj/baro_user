@@ -43,15 +43,12 @@ import java.util.Collections;
 //import com.example.wantchu.Database.SendToServer;
 
 public class ListStorePage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface , AutoPermissionsListener {
-    RelativeLayout mapBar;
     ImageView backButton;
 
     RecyclerView mRecyclerView;
     ListStoreAdapter adapter;
 
     TextView typeName;
-    TextView mAddress;
-
     //메인페이지에서 넘어온 리스트에 필요한 값들
     String type_code;
     String type_name;
@@ -75,25 +72,11 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
         typeName = findViewById(R.id.type_name);
-        mAddress = findViewById(R.id.address);
-        mapBar = findViewById(R.id.map_bar);
         saveListSet = getSharedPreferences("saveList", MODE_PRIVATE);
-
-        myGPSListener myGPSListener = new myGPSListener(this);
-        latLng = myGPSListener.startLocationService(mAddress);
-        if(latLng == null) {
-            mAddress.setText("GPS를 설정 해 주세요");
-        }
         storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
 
-        mapBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MyMap.class));
-            }
-        });
-
-
+        myGPSListener myGPSListener = new myGPSListener(this);
+        latLng = myGPSListener.startLocationService(null);
         chooseShowList();
     }
     @Override
