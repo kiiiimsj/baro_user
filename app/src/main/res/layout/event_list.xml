@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="150dp"
+        android:padding="15dp"
+        android:background="@drawable/categories_car_background">
+        <TextView
+            android:id="@+id/alert_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="첫 가입 이벤트 할인 이벤트"
+            android:textSize="25dp"
+            android:fontFamily="@font/baloo"
+            android:textColor="@color/black"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"/>
+
+        <TextView
+            android:textColor="@color/black"
+            android:gravity="left"
+            android:id="@+id/alert_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="12dp"
+            android:text="~2020-08-20" />
+        <TextView
+            android:id="@+id/alert_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:text="1"
+            />
+    </RelativeLayout>
+</LinearLayout>

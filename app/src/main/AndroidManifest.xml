@@ -41,6 +41,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".Events"></activity>
+        <activity android:name=".Alerts" />
         <activity android:name=".OrderStatus" />
 
         <uses-library android:name="com.google.android.maps" />
@@ -95,8 +96,9 @@
             android:name=".OrderHistory"
             android:launchMode="singleTask" />
         <activity android:name=".StoreInfo" />
-        <activity android:name=".MainPage"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".MainPage"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MyPage"
             android:launchMode="singleTask" />

@@ -5,24 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Events">
+
     <RelativeLayout
         android:id="@+id/top_bar"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp">
 
         <ImageView
             android:id="@+id/back_pressed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClickBack"
             android:layout_centerVertical="true"
+            android:background="@color/white"
+            android:onClick="onClickBack"
             android:padding="10dp"
             android:src="@drawable/general_back_icon" />
 
         <TextView
-            android:id="@+id/type_name"
+            android:id="@+id/event_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -30,14 +32,45 @@
             android:layout_centerVertical="true"
             android:fontFamily="@font/brandon_grotesque_black"
             android:gravity="center"
-            android:text="이벤트"
+            android:text="새로운 가게들이 추가됩니다!"
             android:textColor="@color/black"
-            android:textSize="25dp" />
+            android:textSize="20sp" />
     </RelativeLayout>
-    <androidx.recyclerview.widget.RecyclerView
+    <TextView
         android:layout_below="@id/top_bar"
-        android:id="@+id/event_list"
+        android:id="@+id/event_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:text="2020년 9월 12일 ~ 2020년 9월 15일"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_below="@id/event_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/event_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_below="@id/event_image"
+                android:id="@+id/event_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:text="맥도날드 숭실대점 버거킹 숭실대점 매머드 숭실대점
+등등 추가 완료"/>
+        </RelativeLayout>
+    </ScrollView>
+
 </RelativeLayout>
