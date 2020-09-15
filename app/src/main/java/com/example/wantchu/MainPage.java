@@ -135,7 +135,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MyMap.class);
-                intent.putExtra("from", "main");
                 startActivity(intent);
             }
         });
