@@ -70,6 +70,9 @@ public class myGPSListener implements LocationListener {
         return latLng;
     }
     public void setMapLocationTextView(TextView getAddress) {
+        if(getAddress == null) {
+            return;
+        }
         Geocoder geocoder = new Geocoder(context, Locale.KOREA);
         try {
             List<Address> list = geocoder.getFromLocation(latitude, longitude, 10);

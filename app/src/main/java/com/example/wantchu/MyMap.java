@@ -16,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Dialogs.MapSetPositionDialog;
@@ -40,6 +41,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class MyMap extends AppCompatActivity implements AutoPermissionsListener, MapSetPositionDialog.isClickOkay {
 
@@ -55,6 +58,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
 
 
     LatLng oldLatLng;
+    LatLng beforeLatLng;
 
     String where;
     TextView address;
@@ -75,44 +79,46 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         address = findViewById(R.id.show_latlng_address);
         oldMarkerOption = new MarkerOptions();
         mapSetPositionDialog = new MapSetPositionDialog(this, this);
-
+        makeRequest(setHashMapData());
         editor = setMyNewLocation.edit();
-        Intent intent = getIntent();
-        where = intent.getStringExtra("from");
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
+
                 Log.d("Map", "지도 준비됨.");
                 map = googleMap;
+                Log.i("LOCATION_PRINT", GPSListener.startLocationService(null)+"");
                 oldLatLng = GPSListener.startLocationService(null);
 
                 GPSListener.setMapLocationTextView(address, oldLatLng);
                 showCurrentLocation(oldLatLng.latitude, oldLatLng.longitude);
-
                 try {
-                    //map.setMyLocationEnabled(true);
                     map.moveCamera(CameraUpdateFactory.newLatLng(oldLatLng));
                     map.setContentDescription("현재 설정 위치");
                     map.setMyLocationEnabled(true);
                     map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                         @Override
                         public void onMapClick(final LatLng latLng) {
-                            map.clear();
+                            //map.clear();
 
                             oldMarkerOption.position(oldLatLng).title("현재 위치");
                             Marker oldMarker = map.addMarker(oldMarkerOption);
                             oldMarker.showInfoWindow();
-                            map.addMarker(oldMarkerOption);
+                            map.addMarker(oldMarkerOption).showInfoWindow();
 
                             currentMarkerOption = new MarkerOptions().position(latLng).title("현재 위치로 설정");
-                            Marker showMaker = map.addMarker(currentMarkerOption);
+                            final Marker showMaker = map.addMarker(currentMarkerOption);
 
                             GPSListener.setMapLocationTextView(address, latLng);
                             showMaker.showInfoWindow();
-
-                            map.addMarker(currentMarkerOption);
+                            map.setOnInfoWindowCloseListener(new GoogleMap.OnInfoWindowCloseListener() {
+                                @Override
+                                public void onInfoWindowClose(Marker marker) {
+                                    showMaker.remove();
+                                }
+                            });
                             map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                                 @Override
                                 public void onInfoWindowClick(Marker marker) {
@@ -127,7 +133,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                 catch(SecurityException e){
                     e.printStackTrace();
                 }
-                makeRequest();
             }
         });
 
@@ -156,26 +161,33 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         startActivity(intent);
         finish();
     }
-    private void makeRequest(){
+    public HashMap setHashMapData() {
+        HashMap<String, Object> hash = new HashMap<>();
+        LatLng setMyNewLatLng = GPSListener.startLocationService(null);
+        hash.put("latitude", setMyNewLatLng.latitude);
+        hash.put("longitude", setMyNewLatLng.longitude);
+
+        return hash;
+    }
+    private void makeRequest(HashMap data){
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "StoreAllLocation.do";
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Log.e("map", url);
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        jsonParsing(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("map", "error");
-                    }
-                });
-        requestQueue.add(request);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("RESPONSE", response.toString());
+                jsonParsing(response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
     }
 
     private void mapInfo(MapParsing mapParsing){
@@ -190,15 +202,13 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             Location storeLocation = new Location("");
             storeLocation.setLatitude(Double.parseDouble(mapListParsing.getStore_latitude()));
             storeLocation.setLongitude(Double.parseDouble(mapListParsing.getStore_longitude()));
-            double distance = getDistance(myLocation, storeLocation);
-            if(distance >= 1000) {
-                continue;
-            }
-            mapListParsing = new MapListParsing(mapListParsing.getStore_name(), mapListParsing.getStore_latitude(), mapListParsing.getStore_longitude(), distance);
+//            double distance = getDistance(myLocation, storeLocation);
+//            if(distance >= 1000) {
+//                continue;
+//            }
+            mapListParsing = new MapListParsing(mapListParsing.getStore_name(), mapListParsing.getStore_latitude(), mapListParsing.getStore_longitude(), mapListParsing.getStore_distance());
             DataList.add(mapListParsing);
         }
-        Collections.sort(DataList);
-
         MarkerOptions markerOptions = null;
         //마커 여러개 만들기
 
@@ -208,10 +218,9 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             Double logi = Double.parseDouble(store.getStore_longitude());
             String name = store.getStore_name();
             markerOptions = new MarkerOptions();
-            markerOptions.position(new LatLng(lati, logi)).title(name);
+            markerOptions.position(new LatLng(lati, logi)).title(name+"\n"+((int)store.getStore_distance())+"m");
             map.addMarker(markerOptions).showInfoWindow();
         }
-
     }
 
     private void jsonParsing(String result){
@@ -227,7 +236,8 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                 String store_name = jObject.optString("store_name");
                 String store_latitude = jObject.optString("store_latitude");
                 String store_longitude = jObject.optString("store_longitude");
-                MapListParsing mapListParsing = new MapListParsing(store_name, store_latitude, store_longitude, 0.0);
+                float store_distance = (float)jObject.optDouble("store_distance");
+                MapListParsing mapListParsing = new MapListParsing(store_name, store_latitude, store_longitude, store_distance);
                 mapListParsings.add(mapListParsing);
                 Log.e("realMap", result2.toString());
             }
