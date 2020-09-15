@@ -218,7 +218,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             Double logi = Double.parseDouble(store.getStore_longitude());
             String name = store.getStore_name();
             markerOptions = new MarkerOptions();
-            markerOptions.position(new LatLng(lati, logi)).title(name+"\n"+((int)store.getStore_distance())+"m");
+            markerOptions.position(new LatLng(lati, logi)).title(name+"\n"+((int)store.getDistance())+"m");
             map.addMarker(markerOptions).showInfoWindow();
         }
     }
