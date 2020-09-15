@@ -8,8 +8,9 @@ public class ListStoreListParsing {
     String storeImage;
     int storeId;
     String storeIsOpen;
+    float distance;
 
-    public ListStoreListParsing(String storeName, String storeLatitude, String storeLongitude, String storeLocation, String storeImage, int storeId, String isOpen) {
+    public ListStoreListParsing(String storeName, String storeLatitude, String storeLongitude, String storeLocation, String storeImage, int storeId, String isOpen, float distance) {
         this.storeName = storeName;
         this.storeLatitude = storeLatitude;
         this.storeLongitude = storeLongitude;
@@ -17,6 +18,7 @@ public class ListStoreListParsing {
         this.storeImage = storeImage;
         this.storeId = storeId;
         this.storeIsOpen = isOpen;
+        this.distance = distance;
     }
     public ListStoreListParsing(String storeName, String storeLatitude, String storeLongitude, String storeLocation, String storeImage, int storeId){
         this.storeName = storeName;
@@ -25,6 +27,14 @@ public class ListStoreListParsing {
         this.storeLocation = storeLocation;
         this.storeImage = storeImage;
         this.storeId = storeId;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
     public String getStoreName() {

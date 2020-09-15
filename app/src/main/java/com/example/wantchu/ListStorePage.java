@@ -214,20 +214,18 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         for(int i = 0; i< listStoreListParsings.size();i++){
 
             Location storeLocation = new Location("");
-            storeLocation.setLatitude(Double.parseDouble(listStoreListParsings.get(i).getStoreLatitude()));
-            storeLocation.setLongitude(Double.parseDouble(listStoreListParsings.get(i).getStoreLongitude()));
-            double distance = getDistance(myLocation, storeLocation);
+//            double distance = getDistance(myLocation, storeLocation);
 
-            Log.e("dist", String.valueOf(distance));
+//            Log.e("dist", String.valueOf(distance));
 
-            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(listStoreListParsings.get(i).getStoreName(), listStoreListParsings.get(i).getStoreLocation(), listStoreListParsings.get(i).getStoreImage(),distance, listStoreListParsings.get(i).getStoreId(), listStoreListParsings.get(i).getStoreIsOpen());
+            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(listStoreListParsings.get(i).getStoreName(), listStoreListParsings.get(i).getStoreLocation(), listStoreListParsings.get(i).getStoreImage(), listStoreListParsings.get(i).getDistance(), listStoreListParsings.get(i).getStoreId(), listStoreListParsings.get(i).getStoreIsOpen());
 
             Log.e("hey", listStoreListParsings.get(i).getStoreImage());
 
             listStoreHelperClass.storeNames.add(listStoreListParsings.get(i).getStoreName());
             listStoreHelperClass.storeLocations.add(listStoreListParsings.get(i).getStoreLocation());
             listStoreHelperClass.storeImages.add(listStoreListParsings.get(i).getStoreImage());
-            listStoreHelperClass.storeDistances.add(distance);
+            listStoreHelperClass.storeDistances.add(listStoreListParsings.get(i).getDistance());
             listStoreHelperClass.storeIds.add(listStoreListParsings.get(i).getStoreId());
             storeIds[i] = listStoreListParsings.get(i).getStoreId();
 
@@ -256,16 +254,15 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jObject = jsonArray.getJSONObject(i);
                     String store_name = jObject.optString("store_name");
-                    String store_latitude = jObject.optString("store_latitude");
-                    String store_longitude = jObject.optString("store_longitude");
                     String store_image = jObject.optString("store_image");
                     String store_open = jObject.optString("is_open");
+                    float distance = (float)jObject.optDouble("distance");
 
                     Log.e("storeImageee", store_image);
 
                     String store_location = jObject.optString("store_location");
                     int store_id = jObject.optInt("store_id");
-                    ListStoreListParsing listStoreListParsing = new ListStoreListParsing(store_name, store_latitude, store_longitude, store_location, store_image, store_id, store_open);
+                    ListStoreListParsing listStoreListParsing = new ListStoreListParsing(store_name, "","" , store_location, store_image, store_id, store_open, distance);
                     Log.i("LISTSTORELISTPARSING", listStoreListParsing.toString());
                     listStoreListParsings.add(listStoreListParsing);
                 }
