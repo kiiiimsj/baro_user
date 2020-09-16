@@ -113,6 +113,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
     String user_token = null;
     int realTotalPrice;
     int totalPrice;
+    int totalOrderCount = 0;
     int used_coupon_id;
     int discount_price ;
     boolean isOpen = true;
@@ -159,6 +160,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                     String jsonChild = jsonArray.optString(i);
                     detailsFixToBasket = gson.fromJson(jsonChild, DetailsFixToBasket.class);
                     if (detailsFixToBasket.getName().equals("")) continue;
+                    totalOrderCount += detailsFixToBasket.getCount();
                     detailsFixToBaskets.add(detailsFixToBasket);
                 }
             } catch (JSONException e) {
@@ -304,10 +306,14 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         else if(!pay) {
             Gson gson = new Gson();
             String json = gson.toJson(detailsFixToBaskets);
+            int count = 0;
+            for(int i = 0;i<detailsFixToBaskets.size();i++){
+                count +=detailsFixToBaskets.get(i).getCount();
+            }
             Log.i("json", json);
             editor.putString(IN_MY_BASEKT, json);
             Log.i("ondesDETAIL_SIZE", detailsFixToBaskets.size()+"");
-            editor.putInt("orderCnt", (detailsFixToBaskets.size()));
+            editor.putInt("orderCnt", count);
             editor.commit();
         }else{
             ;
