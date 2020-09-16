@@ -2,6 +2,7 @@ package com.example.wantchu;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -118,7 +119,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
                     startActivity(email);
                 }
                 if(groupPosition == 4) {
-                    startActivity(new Intent(getApplicationContext(), InquiryList.class));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
                 }
                 return false;
             }
