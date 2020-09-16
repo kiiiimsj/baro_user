@@ -9,9 +9,10 @@ public class FavoriteListParsing {
     String store_location;
     String store_image;
     String store_is_open;
+    float distance;
     public FavoriteListParsing() {}
 
-    public FavoriteListParsing(int store_id, String store_info, String store_latitude, String store_longitude, String store_name, String store_location, String store_image, String store_is_open) {
+    public FavoriteListParsing(int store_id, String store_info, String store_latitude, String store_longitude, String store_name, String store_location, String store_image, String store_is_open, float distance) {
         this.store_id = store_id;
         this.store_info = store_info;
         this.store_latitude = store_latitude;
@@ -20,6 +21,15 @@ public class FavoriteListParsing {
         this.store_location = store_location;
         this.store_image = store_image;
         this.store_is_open = store_is_open;
+        this.distance = distance;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
     public String getStore_is_open() {

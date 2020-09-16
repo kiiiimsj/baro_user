@@ -150,14 +150,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         for(int i = 0; i<favoriteListParsings.size();i++){
             Location storeLocation = new Location("");
 
-            storeLocation.setLatitude(Double.parseDouble(favoriteListParsings.get(i).getStore_latitude()));
-            storeLocation.setLongitude(Double.parseDouble(favoriteListParsings.get(i).getStore_longitude()));
-
-            float distance = (float)getDistance(myLocation, storeLocation);
-
-            Log.e("distance", String.valueOf(distance));
-
-            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(favoriteListParsings.get(i).getStore_name(),favoriteListParsings.get(i).getStore_location(),favoriteListParsings.get(i).getStore_image(),distance,favoriteListParsings.get(i).getStore_id(), favoriteListParsings.get(i).getStore_is_open());
+            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(favoriteListParsings.get(i).getStore_name(),favoriteListParsings.get(i).getStore_location(),favoriteListParsings.get(i).getStore_image(),favoriteListParsings.get(i).getDistance(), favoriteListParsings.get(i).getStore_id(), favoriteListParsings.get(i).getStore_is_open());
 
             listStoreHelperClass.storeNames.add(favoriteListParsings.get(i).getStore_name());
             listStoreHelperClass.storeLocations.add(favoriteListParsings.get(i).getStore_location());
@@ -165,7 +158,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
 
             Log.e("storeimaaaage", favoriteListParsings.get(i).getStore_image());
 
-            listStoreHelperClass.storeDistances.add(distance);
+            listStoreHelperClass.storeDistances.add(favoriteListParsings.get(i).getDistance());
             listStoreHelperClass.storeIds.add(favoriteListParsings.get(i).getStore_id());
             listStoreHelperClass.storesIsOpen.add(favoriteListParsings.get(i).getStore_is_open());
 
@@ -202,12 +195,13 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
                 String store_image = jObject.optString("store_image");
                 String store_info = jObject.optString("store_info");
                 String store_is_open = jObject.optString("is_open");
+                float distance = (float)jObject.optDouble("distance");
 
                 Log.e("storeImageee", store_image);
 
                 String store_location = jObject.optString("store_location");
                 int store_id = jObject.optInt("store_id");
-                FavoriteListParsing favoriteListParsing = new FavoriteListParsing(store_id, store_info, store_latitude, store_longitude, store_name, store_location, store_image, store_is_open);
+                FavoriteListParsing favoriteListParsing = new FavoriteListParsing(store_id, store_info, store_latitude, store_longitude, store_name, store_location, store_image, store_is_open, distance);
                 Log.i("LISTSTORELISTPARSING", favoriteListParsing.toString());
                 favoriteListParsings.add(favoriteListParsing);
             }
@@ -242,12 +236,13 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
                 String store_image = jObject.optString("store_image");
                 String store_info = jObject.optString("store_info");
                 String store_is_open = jObject.optString("is_open");
+                float distance = (float)jObject.optDouble("distance");
 
                 Log.e("storeImageee", store_image);
 
                 String store_location = jObject.optString("store_location");
                 int store_id = jObject.optInt("store_id");
-                FavoriteListParsing favoriteListParsing = new FavoriteListParsing(store_id, store_info, store_latitude, store_longitude, store_name, store_location, store_image, store_is_open);
+                FavoriteListParsing favoriteListParsing = new FavoriteListParsing(store_id, store_info, store_latitude, store_longitude, store_name, store_location, store_image, store_is_open, distance);
                 Log.i("LISTSTORELISTPARSING", favoriteListParsing.toString());
                 favoriteListParsings.add(favoriteListParsing);
             }
