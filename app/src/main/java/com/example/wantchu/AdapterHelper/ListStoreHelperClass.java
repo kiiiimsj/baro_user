@@ -2,7 +2,7 @@ package com.example.wantchu.AdapterHelper;
 
 import java.util.ArrayList;
 
-public class ListStoreHelperClass implements Comparable<ListStoreHelperClass>{
+public class ListStoreHelperClass{
     public ArrayList<String> storeNames;
     public ArrayList<String> storeLocations;
     public ArrayList<String> storeImages;
@@ -29,18 +29,6 @@ public class ListStoreHelperClass implements Comparable<ListStoreHelperClass>{
         this.storeDistance = storeDistance;
         this.storeId = storeId;
     }
-
-    @Override
-    public int compareTo(ListStoreHelperClass listStoreHelperClass) {
-        if(this.storeDistance < listStoreHelperClass.storeDistance){
-            return -1;
-        }
-        else if(this.storeDistance > listStoreHelperClass.storeDistance){
-            return 1;
-        }
-        return 0;
-    }
-
     @Override
     public String toString() {
         return "ListStoreHelperClass{" +
