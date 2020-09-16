@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.ListStoreAdapter;
@@ -259,23 +260,30 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
     }
 
     private void makeRequestForFavorite(String phone) {
-        String lastUrl = "FavoriteList.do?phone="+phone;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("phone",phone);
+            jsonObject.put("latitude",latLng.latitude);
+            jsonObject.put("longitude",latLng.longitude);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String lastUrl = "FavoriteList.do?";
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Log.e("url", url);
-        StringRequest request = new StringRequest(Request.Method.GET,url,
-                new Response.Listener<String>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,jsonObject,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        Log.i("favoritefirst", response);
+                    public void onResponse(JSONObject response) {
+                        Log.i("favoritefirst", response.toString());
                         sp = getSharedPreferences("favorite", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("favorite", response);
+                        editor.putString("favorite", response.toString());
                         editor.apply();
                         editor.commit();
-                        jsonParsing(response);
-
+                        jsonParsing(response.toString());
                     }
                 },
                 new Response.ErrorListener() {
