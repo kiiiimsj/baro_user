@@ -89,6 +89,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     TextView mAddress;
 
     LatLng latLng;
+    myGPSListener myGPSListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +127,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
         // 타입 버튼 동적으로 만드는 메소드
         makeRequest();
-        myGPSListener myGPSListener = new myGPSListener(this);
+        myGPSListener = new myGPSListener(this);
         latLng = myGPSListener.startLocationService(mAddress);
         if(latLng == null) {
             mAddress.setText("GPS를 설정 해 주세요");
@@ -176,6 +177,16 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         });
         makeRequestForEventThread();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        latLng = myGPSListener.startLocationService(mAddress);
+        if(latLng == null) {
+            mAddress.setText("GPS를 설정 해 주세요");
+        }
+    }
+
     private void startLocation() {
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){

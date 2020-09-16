@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +29,13 @@ import com.example.wantchu.Url.UrlMaker;
 import com.example.wantchu.helperClass.myGPSListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -51,6 +58,9 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
     GoogleMap map;
     MarkerOptions oldMarkerOption;
     MarkerOptions currentMarkerOption;
+    Button setMyLocation;
+    Button setNewLatLng;
+    RelativeLayout OverLayMarker;
 
     Marker newMarker;
 
@@ -58,9 +68,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
 
 
     LatLng oldLatLng;
-    LatLng beforeLatLng;
 
-    String where;
     TextView address;
 
     MapSetPositionDialog mapSetPositionDialog;
@@ -75,66 +83,23 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         setMyNewLocation = getSharedPreferences("newLocation", MODE_PRIVATE);
         GPSListener = new myGPSListener(this);
         myMapBundle = new Bundle();
+
         title = findViewById(R.id.type_name);
         address = findViewById(R.id.show_latlng_address);
+        OverLayMarker = findViewById(R.id.over_lay_marker);
+        setNewLatLng = findViewById(R.id.set_location);
+
+
+        setMyLocation = findViewById(R.id.location_change);
+
         oldMarkerOption = new MarkerOptions();
         mapSetPositionDialog = new MapSetPositionDialog(this, this);
+
         makeRequest(setHashMapData());
         editor = setMyNewLocation.edit();
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-
-                Log.d("Map", "지도 준비됨.");
-                map = googleMap;
-                Log.i("LOCATION_PRINT", GPSListener.startLocationService(null)+"");
-                oldLatLng = GPSListener.startLocationService(null);
-
-                GPSListener.setMapLocationTextView(address, oldLatLng);
-                showCurrentLocation(oldLatLng.latitude, oldLatLng.longitude);
-                try {
-                    map.moveCamera(CameraUpdateFactory.newLatLng(oldLatLng));
-                    map.setContentDescription("현재 설정 위치");
-                    map.setMyLocationEnabled(true);
-                    map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                        @Override
-                        public void onMapClick(final LatLng latLng) {
-                            //map.clear();
-
-                            oldMarkerOption.position(oldLatLng).title("현재 위치");
-                            Marker oldMarker = map.addMarker(oldMarkerOption);
-                            oldMarker.showInfoWindow();
-                            map.addMarker(oldMarkerOption).showInfoWindow();
-
-                            currentMarkerOption = new MarkerOptions().position(latLng).title("현재 위치로 설정");
-                            final Marker showMaker = map.addMarker(currentMarkerOption);
-
-                            GPSListener.setMapLocationTextView(address, latLng);
-                            showMaker.showInfoWindow();
-                            map.setOnInfoWindowCloseListener(new GoogleMap.OnInfoWindowCloseListener() {
-                                @Override
-                                public void onInfoWindowClose(Marker marker) {
-                                    showMaker.remove();
-                                }
-                            });
-                            map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                                @Override
-                                public void onInfoWindowClick(Marker marker) {
-                                    mapSetPositionDialog.callFunction();
-                                    newMarker = marker;
-                                }
-                            });
-                        }
-                    });
-
-                }
-                catch(SecurityException e){
-                    e.printStackTrace();
-                }
-            }
-        });
+        setMapFragmentGetMapAsync();
 
         try {
             MapsInitializer.initialize(this);
@@ -147,6 +112,62 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         Log.i("latLng", oldLatLng +"");
         AutoPermissions.Companion.loadAllPermissions(this, 101);
     }
+
+    private void setMapFragmentGetMapAsync() {
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+
+                Log.d("Map", "지도 준비됨.");
+                map = googleMap;
+                oldLatLng = GPSListener.startLocationService(null);
+                OverLayMarker.setVisibility(View.INVISIBLE);
+                setNewLatLng.setVisibility(View.INVISIBLE);
+                GPSListener.setMapLocationTextView(address, oldLatLng);
+
+                showCurrentLocation(oldLatLng.latitude, oldLatLng.longitude);
+                try {
+                    map.moveCamera(CameraUpdateFactory.newLatLng(oldLatLng));
+                    map.setContentDescription("현재 설정 위치");
+                    map.setMyLocationEnabled(true);
+
+                    setMyLocation.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            setNewLatLng.setVisibility(View.VISIBLE);
+                            OverLayMarker.setVisibility(View.VISIBLE);
+                            LatLng latLng = new LatLng(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
+                            final MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+                            markerOptions.visible(false);
+
+                            GPSListener.setMapLocationTextView(address, latLng);
+                            map.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+                                @Override
+                                public void onCameraIdle() {
+                                    OverLayMarker.setVisibility(View.VISIBLE);
+                                    LatLng latLng = new LatLng(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
+                                    markerOptions.position(latLng);
+                                    markerOptions.visible(false);
+
+                                    GPSListener.setMapLocationTextView(address, latLng);
+                                }
+                            });
+                            setNewLatLng.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mapSetPositionDialog.callFunction();
+                                    newMarker = map.addMarker(markerOptions);
+                                }
+                            });
+                        }
+                    });
+                }
+                catch(SecurityException e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     @Override
     public void clickOkay() {
         Location temp = new Location(LocationManager.GPS_PROVIDER);
@@ -155,11 +176,9 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         editor.putString("location", ":"+newMarker.getPosition().latitude+":"+newMarker.getPosition().longitude);
         editor.apply();
         editor.commit();
+        makeRequest(setHashMapData());
+        setMapFragmentGetMapAsync();
         Log.i("location_temp", setMyNewLocation.getString("location", null));
-
-        Intent intent = new Intent(getApplicationContext(), MainPage.class);
-        startActivity(intent);
-        finish();
     }
     public HashMap setHashMapData() {
         HashMap<String, Object> hash = new HashMap<>();

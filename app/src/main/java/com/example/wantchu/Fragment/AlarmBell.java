@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.AdapterHelper.AlertsHelperClass;
 import com.example.wantchu.Alerts;
+import com.example.wantchu.JsonParsingHelper.AlertIsNewParsing;
 import com.example.wantchu.R;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.gson.Gson;
@@ -40,10 +41,8 @@ public class AlarmBell extends Fragment {
 
     SharedPreferences oldSp;
 
-    AlertsHelperClass oldNumber;
-    AlertsHelperClass newNumber;
+    AlertIsNewParsing newNumber;
 
-    LayoutInflater inflater;
     public AlarmBell(Context context) {
         this.context = context;
     }
@@ -60,7 +59,7 @@ public class AlarmBell extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        makeRequestForAlerts();
     }
 
     @Nullable
@@ -82,20 +81,17 @@ public class AlarmBell extends Fragment {
     }
 
     private void compareNumber() {
-        if(saveNewAlertNumber > saveAlertNumber) {
-            isNewAlarm.setVisibility(View.VISIBLE);
-        }
-        if(saveNewAlertNumber < saveAlertNumber) {
-            isNewAlarm.setVisibility(View.VISIBLE);
-        }
         if(saveNewAlertNumber == saveAlertNumber) {
             isNewAlarm.setVisibility(View.INVISIBLE);
+        }
+        else {
+            isNewAlarm.setVisibility(View.VISIBLE);
         }
     }
 
     private void makeRequestForAlerts() {
         UrlMaker urlMaker = new UrlMaker();
-        String url=urlMaker.UrlMake("AlertFindAll.do");
+        String url=urlMaker.UrlMake("GetLatestAlertWhenMemberLogin.do");
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -114,18 +110,17 @@ public class AlarmBell extends Fragment {
 
     private void compareSetNumber(String response) {
         oldSp = getActivity().getSharedPreferences("oldAlert", Context.MODE_PRIVATE);
-        if(oldSp.getString("alertsList", null) == null) {
+        if(oldSp.getInt("alertId", 0) == 0) {
             saveAlertNumber = 0;
         }
         else {
-            Gson gson = new Gson();
-            oldNumber = gson.fromJson(oldSp.getString("alertsList", null), AlertsHelperClass.class);
-            saveAlertNumber = oldNumber.alert.size();
+            saveAlertNumber = oldSp.getInt("alertId", 0);
         }
+
         Gson gson2 = new Gson();
-        newNumber = gson2.fromJson(response, AlertsHelperClass.class);
+        newNumber = gson2.fromJson(response, AlertIsNewParsing.class);
         Log.i("newNumber", newNumber.toString());
-        saveNewAlertNumber = newNumber.alert.size();
+        saveNewAlertNumber = newNumber.getRecentlyAlertId();
 
         Log.i("NEW_ALERT_NUMBER", saveNewAlertNumber+"");
         Log.i("OLD_ALERT_NUMBER", saveAlertNumber+"");
