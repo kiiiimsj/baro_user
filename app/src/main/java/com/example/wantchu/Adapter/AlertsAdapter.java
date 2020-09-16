@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wantchu.AdapterHelper.AlertsHelperClass;
+import com.example.wantchu.JsonParsingHelper.AlertIsNewParsing;
 import com.example.wantchu.R;
 
 public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsViewHolder> {
