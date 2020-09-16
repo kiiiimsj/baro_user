@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.Html;
@@ -333,7 +334,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(email);
                 break;
             case R.id.left_one_to_one:
-                startActivity(new Intent(getApplicationContext(), InquiryList.class));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
                 break;
             case R.id.left_events:
                 startActivity(new Intent(getApplicationContext(), Alerts.class));
