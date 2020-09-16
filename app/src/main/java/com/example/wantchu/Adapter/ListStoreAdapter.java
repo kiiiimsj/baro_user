@@ -177,7 +177,6 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             StringBuilder urlBuilder = new StringBuilder()
                     .append(url)
                     .append(store_image);
-
             Log.i("store", urlBuilder.toString());
             RequestQueue requestQueue = Volley.newRequestQueue(context);
 
