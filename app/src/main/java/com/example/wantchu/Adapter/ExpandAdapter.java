@@ -5,11 +5,15 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wantchu.AdapterHelper.NoticeGroup;
+import com.example.wantchu.Notice;
 import com.example.wantchu.R;
 
 import java.util.ArrayList;
@@ -52,6 +56,13 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
         childContent.setText(DataList.get(groupPosition).childContent.get(childPosition));
 //        childTitle.setText(DataList.get(groupPosition).childTitle.get(childPosition));
         childDate.setText(DataList.get(groupPosition).childDate.get(childPosition));
+//        View view = super.getVi
+//        Animation animation = AnimationUtils.loadAnimation(context,R.anim.expandable_open);
+//        animation.setDuration(600);
+//        convertView.startAnimation(animation);
+//        convertView.setAnimation(animation);
+//        parent.getChildAt(groupPosition).startAnimation(animation);
+//        parent.getChildAt(childPosition).setAnimation(animation);
         return convertView;
     }
     @Override
