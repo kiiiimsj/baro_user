@@ -47,6 +47,7 @@ import java.util.HashMap;
 public class ListStorePage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface , AutoPermissionsListener {
     private final static int FIRST = 1;
     private final static int AFTER_FIRST =2;
+    private final static int ON_RESTART = 3;
     ImageView backButton;
 
     SwipyRefreshLayout refreshLayout;
@@ -86,7 +87,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         currentPos = 0;
         myGPSListener myGPSListener = new myGPSListener(this);
         latLng = myGPSListener.startLocationService(null);
-        chooseShowList();
+        chooseShowList(FIRST);
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
@@ -95,13 +96,32 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
             }
         });
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("onPause", "onPause");
+        SharedPreferences sf =getSharedPreferences("storeID", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sf.edit();
+        editor.putBoolean("onPause", true);
+        editor.apply();
+        editor.commit();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        chooseShowList();
+        SharedPreferences sf =getSharedPreferences("storeID", MODE_PRIVATE);
+        if(sf.getBoolean("onPause", false)){
+            Log.i("isPause", "11");
+            chooseShowList(ON_RESTART);
+            SharedPreferences.Editor editor = sf.edit();
+            editor.putBoolean("onPause", false);
+            editor.apply();
+            editor.commit();
+        }
     }
-
-    public void chooseShowList() {
+    public void chooseShowList(int state) {
         Intent intent = getIntent();
         if(intent != null) {
             saveListSet.edit().putString("list_type", intent.getStringExtra("list_type"));
@@ -130,7 +150,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
             type_name = intent.getStringExtra("type_name");
             Log.i("TYPE_CODE", 1+"");
             typeName.setText(type_name);
-            makeRequestForTypeFind(setHashDataForTypeFind(), FIRST);
+            makeRequestForTypeFind(setHashDataForTypeFind(), state);
         }
     }
 
@@ -143,6 +163,10 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         return urlBuilder.toString();
     }
     public HashMap setHashDataForTypeFind() {
+        SharedPreferences getStore = getSharedPreferences("storeID", MODE_PRIVATE);
+        if(getStore.getInt("current", -1) != -1) {
+            currentPos = getStore.getInt("current", -1);
+        }
         HashMap<String, Object> data = new HashMap<>();
         data.put("type_code", type_code);
         data.put("startPoint", currentPos);
@@ -229,17 +253,8 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         ArrayList<ListStoreHelperClass> DataListForIsOpen = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Location myLocation = new Location("");
-
-        myLocation.setLatitude(latLng.latitude);
-        myLocation.setLongitude(latLng.longitude);
         int [] storeIds = new int[listStoreParsing.store.size()];
         for(int i = 0; i< listStoreParsing.store.size();i++){
-
-            Location storeLocation = new Location("");
-//            double distance = getDistance(myLocation, storeLocation);
-
-//            Log.e("dist", String.valueOf(distance));
 
             ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(listStoreParsing.store.get(i).getStore_name(), listStoreParsing.store.get(i).getStore_location(), listStoreParsing.store.get(i).getStore_image(), listStoreParsing.store.get(i).getDistance(), listStoreParsing.store.get(i).getStore_id(), listStoreParsing.store.get(i).getIs_open());
 
@@ -261,7 +276,8 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         }
         DataListForIsOpen.addAll(DataList);
         SharedPreferences getStoreId = getSharedPreferences("storeID", MODE_PRIVATE);
-        getStoreId.edit().putString("storeid", storeIds.toString()).apply();
+        getStoreId.edit().putString("listStore", listStoreParsing.toString()).apply();
+        getStoreId.edit().putInt("currentPos", currentPos);
         getStoreId.edit().apply();
         getStoreId.edit().commit();
 
@@ -273,12 +289,13 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
 
     private void jsonParsing(String result, int state) {
         //ListStoreParsing listStoreParsing = new ListStoreParsing();
+
         if(state == FIRST) {
             Gson gson = new Gson();
             listStoreParsing = gson.fromJson(result, ListStoreParsing.class);
             mRecyclerView();
         }
-        else {
+        if(state ==AFTER_FIRST) {
             Gson gson = new Gson();
             ListStoreParsing getAddList = gson.fromJson(result, ListStoreParsing.class);
             if(!getAddList.isResult()) {
@@ -287,6 +304,14 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
             }
             else {
                 listStoreParsing.store.addAll(getAddList.store);
+                mRecyclerView();
+            }
+        }
+        if(state == ON_RESTART) {
+            if(listStoreParsing == null) {
+                SharedPreferences getStore = getSharedPreferences("storeID", MODE_PRIVATE);
+                Gson gson = new Gson();
+                listStoreParsing = gson.fromJson(getStore.getString("listStore", null), ListStoreParsing.class);
                 mRecyclerView();
             }
         }
