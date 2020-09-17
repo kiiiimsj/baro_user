@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +29,9 @@ import com.example.wantchu.JsonParsingHelper.ListStoreParsing;
 import com.example.wantchu.Url.UrlMaker;
 import com.example.wantchu.helperClass.myGPSListener;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.JsonObject;
+import com.google.gson.Gson;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
 
@@ -40,13 +40,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 
 //import com.example.wantchu.Database.SendToServer;
 
 public class ListStorePage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface , AutoPermissionsListener {
+    private final static int FIRST = 1;
+    private final static int AFTER_FIRST =2;
     ImageView backButton;
 
+    SwipyRefreshLayout refreshLayout;
+    int currentPos;
     RecyclerView mRecyclerView;
     ListStoreAdapter adapter;
 
@@ -64,6 +68,8 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     ArrayList<ListStoreListParsing> listStoreListParsings;
     ProgressApplication progressApplication;
     SharedPreferences saveListSet;
+
+    ListStoreParsing listStoreParsing;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,15 +77,23 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         setContentView(R.layout.activity_list_store_page);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
+        refreshLayout = findViewById(R.id.refresh_list);
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
         typeName = findViewById(R.id.type_name);
         saveListSet = getSharedPreferences("saveList", MODE_PRIVATE);
         storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
-
+        currentPos = 0;
         myGPSListener myGPSListener = new myGPSListener(this);
         latLng = myGPSListener.startLocationService(null);
         chooseShowList();
+        refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                currentPos += 20;
+                makeRequestForTypeFind(setHashDataForTypeFind(), AFTER_FIRST);
+            }
+        });
     }
     @Override
     protected void onResume() {
@@ -116,7 +130,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
             type_name = intent.getStringExtra("type_name");
             Log.i("TYPE_CODE", 1+"");
             typeName.setText(type_name);
-            makeRequestForTypeFind();
+            makeRequestForTypeFind(setHashDataForTypeFind(), FIRST);
         }
     }
 
@@ -128,16 +142,25 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         urlBuilder.append(keyword);
         return urlBuilder.toString();
     }
-    private void makeRequestForTypeFind() {
-        JSONObject jsonObject = new JSONObject();
-        Log.e("type_code",type_code);
-        try {
-            jsonObject.put("type_code",type_code);
-            jsonObject.put("latitude",latLng.latitude);
-            jsonObject.put("longitude",latLng.longitude);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public HashMap setHashDataForTypeFind() {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("type_code", type_code);
+        data.put("startPoint", currentPos);
+        data.put("latitude",latLng.latitude);
+        data.put("longitude",latLng.longitude);
+
+        return data;
+    }
+    private void makeRequestForTypeFind(HashMap data, final int state) {
+//        JSONObject jsonObject = new JSONObject();
+//        Log.e("type_code",type_code);
+//        try {
+//            jsonObject.put("type_code",type_code);
+//            jsonObject.put("latitude",latLng.latitude);
+//            jsonObject.put("longitude",latLng.longitude);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         String lastUrl = "StoreInfoFindByType.do?";
 //        String lastUrl = "StoreInfoFindByType.do?type_code=" + type_code;
@@ -145,12 +168,12 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         Log.i("storesList", "request made to " + url);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,jsonObject,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("storeList", response.toString());
-                        jsonParsing(response.toString());
+                        jsonParsing(response.toString(), state);
                     }
                 },
                 new Response.ErrorListener() {
@@ -171,7 +194,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
                     @Override
                     public void onResponse(String response) {
                         Log.e("searchStore", response);
-                        jsonParsing(response);
+                        //jsonParsing(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -210,27 +233,27 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
 
         myLocation.setLatitude(latLng.latitude);
         myLocation.setLongitude(latLng.longitude);
-        int [] storeIds = new int[listStoreListParsings.size()];
-        for(int i = 0; i< listStoreListParsings.size();i++){
+        int [] storeIds = new int[listStoreParsing.store.size()];
+        for(int i = 0; i< listStoreParsing.store.size();i++){
 
             Location storeLocation = new Location("");
 //            double distance = getDistance(myLocation, storeLocation);
 
 //            Log.e("dist", String.valueOf(distance));
 
-            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(listStoreListParsings.get(i).getStoreName(), listStoreListParsings.get(i).getStoreLocation(), listStoreListParsings.get(i).getStoreImage(), listStoreListParsings.get(i).getDistance(), listStoreListParsings.get(i).getStoreId(), listStoreListParsings.get(i).getStoreIsOpen());
+            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(listStoreParsing.store.get(i).getStore_name(), listStoreParsing.store.get(i).getStore_location(), listStoreParsing.store.get(i).getStore_image(), listStoreParsing.store.get(i).getDistance(), listStoreParsing.store.get(i).getStore_id(), listStoreParsing.store.get(i).getIs_open());
 
-            Log.e("hey", listStoreListParsings.get(i).getStoreImage());
+            Log.e("hey", listStoreParsing.store.get(i).getStore_image());
 
-            listStoreHelperClass.storeNames.add(listStoreListParsings.get(i).getStoreName());
-            listStoreHelperClass.storeLocations.add(listStoreListParsings.get(i).getStoreLocation());
-            listStoreHelperClass.storeImages.add(listStoreListParsings.get(i).getStoreImage());
-            listStoreHelperClass.storeDistances.add(listStoreListParsings.get(i).getDistance());
-            listStoreHelperClass.storeIds.add(listStoreListParsings.get(i).getStoreId());
-            storeIds[i] = listStoreListParsings.get(i).getStoreId();
+            listStoreHelperClass.storeNames.add(listStoreParsing.store.get(i).getStore_name());
+            listStoreHelperClass.storeLocations.add(listStoreParsing.store.get(i).getStore_location());
+            listStoreHelperClass.storeImages.add(listStoreParsing.store.get(i).getStore_image());
+            listStoreHelperClass.storeDistances.add(listStoreParsing.store.get(i).getDistance());
+            listStoreHelperClass.storeIds.add(listStoreParsing.store.get(i).getStore_id());
+            storeIds[i] = listStoreParsing.store.get(i).getStore_id();
 
-            listStoreHelperClass.storesIsOpen.add(listStoreListParsings.get(i).getStoreIsOpen());
-            if(listStoreListParsings.get(i).getStoreIsOpen().equals("Y")) {
+            listStoreHelperClass.storesIsOpen.add(listStoreParsing.store.get(i).getIs_open());
+            if(listStoreParsing.store.get(i).getIs_open().equals("Y")) {
                 DataListForIsOpen.add(listStoreHelperClass);
                 continue;
             }
@@ -245,35 +268,54 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         adapter = new ListStoreAdapter(DataListForIsOpen, this, this,  this);
         mRecyclerView.setAdapter(adapter);
         progressApplication.progressOFF();
+        refreshLayout.setRefreshing(false);
     }
 
-    private void jsonParsing(String result) {
+    private void jsonParsing(String result, int state) {
         //ListStoreParsing listStoreParsing = new ListStoreParsing();
-        JSONArray jsonArray = null;
-        listStoreListParsings = new ArrayList<>();
-        jsonArray = jsonParsingType(result);
-        try {
-            if(jsonArray != null) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jObject = jsonArray.getJSONObject(i);
-                    String store_name = jObject.optString("store_name");
-                    String store_image = jObject.optString("store_image");
-                    String store_open = jObject.optString("is_open");
-                    float distance = (float)jObject.optDouble("distance");
-
-                    Log.e("storeImageee", store_image);
-
-                    String store_location = jObject.optString("store_location");
-                    int store_id = jObject.optInt("store_id");
-                    ListStoreListParsing listStoreListParsing = new ListStoreListParsing(store_name, "","" , store_location, store_image, store_id, store_open, distance);
-                    Log.i("LISTSTORELISTPARSING", listStoreListParsing.toString());
-                    listStoreListParsings.add(listStoreListParsing);
-                }
+        if(state == FIRST) {
+            Gson gson = new Gson();
+            listStoreParsing = gson.fromJson(result, ListStoreParsing.class);
+            mRecyclerView();
+        }
+        else {
+            Gson gson = new Gson();
+            ListStoreParsing getAddList = gson.fromJson(result, ListStoreParsing.class);
+            if(!getAddList.isResult()) {
+                Toast.makeText(this, "더 불러올 내역이 없습니다", Toast.LENGTH_SHORT).show();
+                refreshLayout.setRefreshing(false);
+            }
+            else {
+                listStoreParsing.store.addAll(getAddList.store);
+                mRecyclerView();
             }
         }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+//        JSONArray jsonArray = null;
+//        //listStoreListParsings = new ArrayList<>();
+//        jsonArray = jsonParsingType(result);
+//        try {
+//            if(jsonArray != null) {
+//                for (int i = 0; i < jsonArray.length(); i++) {
+//                    JSONObject jObject = jsonArray.getJSONObject(i);
+//                    String store_name = jObject.optString("store_name");
+//                    String store_image = jObject.optString("store_image");
+//                    String store_open = jObject.optString("is_open");
+//                    float distance = (float)jObject.optDouble("distance");
+//
+//                    Log.e("storeImageee", store_image);
+//
+//                    String store_location = jObject.optString("store_location");
+//                    int store_id = jObject.optInt("store_id");
+//                    ListStoreListParsing listStoreListParsing = new ListStoreListParsing(store_name, store_location, store_image, store_id, store_open, distance);
+//                    Log.i("LISTSTORELISTPARSING", listStoreListParsing.toString());
+//                    listStoreListParsings.add(listStoreListParsing);
+//                }
+//            }
+//        }
+//        catch (JSONException e) {
+//            e.printStackTrace();
+//        }
         //listStoreParsing.setStoreLists(listStoreListParsings);
         mRecyclerView();
     }

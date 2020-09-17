@@ -46,12 +46,18 @@
             android:id="@+id/back"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+                android:id="@+id/refresh_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srl_direction="bottom"
+                >
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"/>
-
+            </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
             <fragment
                 android:name="com.example.wantchu.Fragment.BottomMenu"
                 android:id="@+id/bottom_menu"
