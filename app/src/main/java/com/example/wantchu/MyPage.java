@@ -106,17 +106,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
                     startActivity(intent);
                 }
                 if(groupPosition == 3) {
-                    SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
-                    sessionManager.getUsersDetailSession();
-                    HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
-                    Intent email = new Intent(Intent.ACTION_SEND);
-                    email.setType("plain/Text");
-                    email.putExtra(Intent.EXTRA_EMAIL, userData.get(SessionManager.KEY_EMAIL));
-                    email.putExtra(Intent.EXTRA_CC, "skybattle@paran.com");
-                    email.putExtra(Intent.EXTRA_SUBJECT, "<" + getString(R.string.app_name) + " " + getString(R.string.report) + ">");
-                    email.putExtra(Intent.EXTRA_TEXT, "\n기기명 (Device):\n안드로이드 OS (Android OS):\n내용 (Content):\n");
-                    email.setType("message/rfc822");
-                    startActivity(email);
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
                 }
                 if(groupPosition == 4) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
