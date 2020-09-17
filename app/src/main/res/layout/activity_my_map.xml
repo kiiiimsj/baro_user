@@ -27,6 +27,14 @@
             android:textColor="@color/black"
             android:text="주변 가게"
             android:textSize="25sp" />
+        <Button
+            android:id="@+id/location_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="위치 설정"
+            />
     </RelativeLayout>
     <TextView
         android:layout_below="@id/top_bar"
@@ -38,10 +46,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+    <RelativeLayout
+        android:layout_below="@id/show_latlng_address"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     <fragment
         class="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/map"
-        android:layout_below="@id/show_latlng_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:id="@+id/over_lay_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        >
+        <TextView
+            android:id="@+id/marker_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="여기로 위치 설정"
+            />
+        <ImageView
+            android:id="@+id/marker_image"
+            android:layout_below="@id/marker_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/flag_ic_android"
+            />
+    </RelativeLayout>
+    <Button
+        android:id="@+id/set_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/muli"
+        android:textSize="15sp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_border_full"
+        android:textColor="@color/black"
+        android:text="현재 위치로 설정하기"/>
+    </RelativeLayout>
 </RelativeLayout>

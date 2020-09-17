@@ -89,9 +89,6 @@
         <activity android:name=".ChangeEmail" />
         <activity android:name=".ListStorePage" />
         <activity android:name=".Login" />
-        <activity android:name=".InquiryShow" />
-        <activity android:name=".InquiryList" />
-        <activity android:name=".Inquiry" />
         <activity android:name=".OrderDetails" />
         <activity
             android:name=".OrderHistory"

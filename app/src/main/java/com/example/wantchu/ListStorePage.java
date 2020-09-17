@@ -203,7 +203,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     private void mRecyclerView(){
         mRecyclerView.setHasFixedSize(true);
         ArrayList<ListStoreHelperClass> DataList = new ArrayList<>();
-
+        ArrayList<ListStoreHelperClass> DataListForIsOpen = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Location myLocation = new Location("");
@@ -230,16 +230,19 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
             storeIds[i] = listStoreListParsings.get(i).getStoreId();
 
             listStoreHelperClass.storesIsOpen.add(listStoreListParsings.get(i).getStoreIsOpen());
-
+            if(listStoreListParsings.get(i).getStoreIsOpen().equals("Y")) {
+                DataListForIsOpen.add(listStoreHelperClass);
+                continue;
+            }
             DataList.add(listStoreHelperClass);
         }
+        DataListForIsOpen.addAll(DataList);
         SharedPreferences getStoreId = getSharedPreferences("storeID", MODE_PRIVATE);
         getStoreId.edit().putString("storeid", storeIds.toString()).apply();
         getStoreId.edit().apply();
         getStoreId.edit().commit();
-        Collections.sort(DataList);
 
-        adapter = new ListStoreAdapter(DataList, this, this,  this);
+        adapter = new ListStoreAdapter(DataListForIsOpen, this, this,  this);
         mRecyclerView.setAdapter(adapter);
         progressApplication.progressOFF();
     }

@@ -164,8 +164,10 @@ public class myGPSListener implements LocationListener {
             }
             else {
                 if(location == null) {
-                    Toast.makeText(context, "GPS를 키고 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
-                    latLng = new LatLng(37.4962, 126.9586);
+                    Toast.makeText(context, "GPS가 꺼져있으므로 기본위치로 설정합니다.", Toast.LENGTH_SHORT).show();
+                    latLng = new LatLng(37.495865, 126.954219);
+                    latitude = latLng.latitude;
+                    longitude = latLng.longitude;
                 }
                 else {
                     latitude = location.getLatitude();

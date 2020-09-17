@@ -120,10 +120,10 @@ public class OrderDetails extends AppCompatActivity {
         recyclerViewShell = findViewById(R.id.essentialOptionShell);
         //fix_details = findViewById(R.id.order_details_fix);
         fix = findViewById(R.id.fix);
-        v = findViewById(R.id.cart_click_button);
+//        v = findViewById(R.id.cart_click_button);
         //--------------------------------------------------------
         itemName.setText(menu_name);
-        v.bringToFront();
+//        v.bringToFront();
         // 이벤트 심는곳
         fix.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -277,6 +277,10 @@ public class OrderDetails extends AppCompatActivity {
         detailsFixToBaskets.add(detailsFixToBasket);
         String json = gson.toJson(detailsFixToBaskets);
         Log.i("굿보이", json);
+        int count = 0;
+        for(int i =0;i<detailsFixToBaskets.size();i++){
+            count += detailsFixToBaskets.get(i).getCount();
+        }
         editor.putString(Basket.IN_MY_BASEKT, json);
         editor.putInt("orderCnt", detailsFixToBaskets.size());
         editor.putString("currentStoreName", gson.toJson(store_name));
