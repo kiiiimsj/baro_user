@@ -45,16 +45,17 @@ public class HistoryDetailDialog extends DialogFragment {
         return fragment;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        final int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 400, getResources().getDisplayMetrics());
-
-        final int height  = ActionBar.LayoutParams.WRAP_CONTENT;
-
-
-        getDialog().getWindow().setLayout(width, height);
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        final int width = ActionBar.LayoutParams.WRAP_CONTENT;;
+////        final int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 400, getResources().getDisplayMetrics());
+//
+//        final int height  = ActionBar.LayoutParams.WRAP_CONTENT;
+//
+//
+//        getDialog().getWindow().setLayout(width, height);
+//    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
