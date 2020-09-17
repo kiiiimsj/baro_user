@@ -47,10 +47,10 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
             convertView = myinf.inflate(this.chlidLayout, parent, false);
         }
         TextView childContent = (TextView)convertView.findViewById(R.id.notice_child_text);
-        TextView childTitle = (TextView)convertView.findViewById(R.id.notice_child_title);
+//        TextView childTitle = (TextView)convertView.findViewById(R.id.notice_child_title);
         TextView childDate = (TextView)convertView.findViewById(R.id.notice_child_date);
         childContent.setText(DataList.get(groupPosition).childContent.get(childPosition));
-        childTitle.setText(DataList.get(groupPosition).childTitle.get(childPosition));
+//        childTitle.setText(DataList.get(groupPosition).childTitle.get(childPosition));
         childDate.setText(DataList.get(groupPosition).childDate.get(childPosition));
         return convertView;
     }
