@@ -31,14 +31,16 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsView
 
     @Override
     public void onBindViewHolder(@NonNull AlertsViewHolder holder, int position) {
-        AlertsHelperClass.AlertsHelperClassParsing alertsHelperClassParsing =alertsHelperClass.alert.get(position);
-        if(holder == null || alertsHelperClassParsing == null) {
+
+//        AlertsHelperClass.AlertsHelperClassParsing alertsHelperClassParsing =alertsHelperClass.alert.get(position);
+        AlertsHelperClass.AlertsHelperClassParsing reverse =alertsHelperClass.alert.get(alertsHelperClass.alert.size()-position-1);
+        if(holder == null || reverse == null) {
             return;
         }
-        holder.alertTitle.setText(alertsHelperClassParsing.alert_title);
-        holder.alertContent.setText(alertsHelperClassParsing.alert_content);
-        holder.alertStartDate.setText(alertsHelperClassParsing.alert_startdate);
-        holder.alertId.setText(alertsHelperClassParsing.alert_id+"");
+        holder.alertTitle.setText(reverse.alert_title);
+        holder.alertContent.setText(reverse.alert_content);
+        holder.alertStartDate.setText(reverse.alert_startdate);
+        holder.alertId.setText(reverse.alert_id+"");
     }
 
     @Override

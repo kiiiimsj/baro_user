@@ -282,7 +282,7 @@ public class OrderDetails extends AppCompatActivity {
             count += detailsFixToBaskets.get(i).getCount();
         }
         editor.putString(Basket.IN_MY_BASEKT, json);
-        editor.putInt("orderCnt", detailsFixToBaskets.size());
+        editor.putInt("orderCnt", count);
         editor.putString("currentStoreName", gson.toJson(store_name));
         editor.putString("currentStoreId", gson.toJson(store_id));
         editor.putString("currentStoreNumber", gson.toJson(store_id));

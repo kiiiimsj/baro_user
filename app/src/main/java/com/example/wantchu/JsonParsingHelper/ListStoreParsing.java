@@ -3,17 +3,14 @@ package com.example.wantchu.JsonParsingHelper;
 import java.util.ArrayList;
 
 public class ListStoreParsing {
-    boolean result;
-    String message;
-
-    ArrayList<ListStoreListParsing> storeLists = new ArrayList<>();
-
+    public boolean result;
+    public String message;
+    public ArrayList<ListStoreListParsing> store;
     public ArrayList<ListStoreListParsing> getStoreLists() {
-        return storeLists;
+        return store;
     }
-
-    public void setStoreLists(ArrayList<ListStoreListParsing> storeLists) {
-        this.storeLists = storeLists;
+    public void setStoreLists(ArrayList<ListStoreListParsing> store) {
+        this.store = store;
     }
 
     public boolean isResult() {

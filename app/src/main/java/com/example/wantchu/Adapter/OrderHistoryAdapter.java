@@ -2,6 +2,7 @@ package com.example.wantchu.Adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wantchu.JsonParsingHelper.OrderHistoryParsing;
 import com.example.wantchu.JsonParsingHelper.OrderHistoryParsingHelper;
 import com.example.wantchu.R;
 import com.example.wantchu.Dialogs.HistoryDetailDialog;
@@ -23,7 +25,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     static ArrayList<OrderHistoryParsingHelper> order;
     Context context;
     private OnItemClickListener mListener = null;
-    public OrderHistoryAdapter(ArrayList<OrderHistoryParsingHelper> order,Context context) {
+    public OrderHistoryAdapter(ArrayList<OrderHistoryParsingHelper> order, Context context) {
         this.order = order;
         this.context = context;
     }
@@ -59,11 +61,12 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull OrderHistoryAdapter.ViewHolder holder, final int position) {
-        final OrderHistoryParsingHelper reverse = order.get(order.size()-position-1);
+        final OrderHistoryParsingHelper reverse = order.get(order.size() - position - 1);
         holder.store_name.setText(reverse.getStore_name());
         holder.ordered_date.setText(reverse.getOrder_date());
         holder.totalPrice.setText(""+reverse.getTotal_price());
         holder.receipt_id.setText(""+reverse.getReceipt_id());
+        holder.order_state.setText(reverse.getOrder_state());
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +132,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         TextView ordered_date;
         TextView totalPrice;
         TextView receipt_id;
+        TextView order_state;
         LinearLayout linearLayout;
         public ViewHolder(@NonNull View itemView, int po) {
             super(itemView);
@@ -137,6 +141,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             totalPrice = (itemView).findViewById(R.id.totalPrices);
             linearLayout =(itemView).findViewById(R.id.shellHistoryItem);
             receipt_id = (itemView).findViewById(R.id.orderGroup_id);
+            order_state = (itemView).findViewById(R.id.order_state);
             if(order.size() == po + 1) {
                 ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 450);
                 itemView.setLayoutParams(layoutParams);

@@ -124,10 +124,10 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
             stores_name = (itemView).findViewById(R.id.store_names);
             total_prices = (itemView).findViewById(R.id.totalPrices);
             shell = (itemView).findViewById(R.id.shellProgressingItem);
-            if(mData.size() == po + 1) {
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 450);
-                itemView.setLayoutParams(layoutParams);
-            }
+//            if(mData.size() == po + 1) {
+//                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 450);
+//                itemView.setLayoutParams(layoutParams);
+//            }
         }
     }
 }
