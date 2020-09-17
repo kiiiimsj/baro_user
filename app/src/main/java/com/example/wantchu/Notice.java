@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -45,6 +49,7 @@ public class Notice extends AppCompatActivity {
     ArrayList<NoticeGroup> DataList;
     private ExpandableListView listView;
     int width;
+    int openChild = 0;
     ProgressApplication progressApplication;
 
     @Override
@@ -151,7 +156,38 @@ public class Notice extends AppCompatActivity {
         ExpandAdapter adapter =
                 new ExpandAdapter(getApplicationContext(),R.layout.activity_notice_group_parent,R.layout.activity_notice_group_child,DataList);
         listView.setIndicatorBounds(width-100, width); //이 코드를 지우면 화살표 위치가 바뀐다.
+
         listView.setAdapter(adapter);
+        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(final int i) {
+                final Animation animation = AnimationUtils.loadAnimation(Notice.this,R.anim.expandable_open);
+                animation.setDuration(600);
+                openChild+=1;
+                Log.e("i",i+openChild+"");
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        try {
+                            Thread.sleep(100);
+                            listView.getChildAt(i+openChild).setAnimation(animation);
+                            listView.getChildAt(i+openChild).startAnimation(animation);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, animation.getDuration());
+
+            }
+        });
+        listView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int i) {
+                Animation animation = AnimationUtils.loadAnimation(Notice.this,R.anim.expandable_open);
+                animation.setDuration(600);
+                openChild-=1;
+            }
+        });
         progressApplication.progressOFF();
     }
 
