@@ -116,7 +116,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
 
         //getFavoriteStoreId();
         //즐겨찾기 가게 확인
-        checkFavorite();
+
         //즐겨찾기 연결
         mFavorite = findViewById(R.id.favorite);
 
@@ -129,6 +129,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
 
         Intent intent = getIntent();
         storedIdStr=intent.getStringExtra("store_id");
+        checkFavorite();
 
 
 
@@ -140,6 +141,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         HashMap<String, Object> data = new HashMap<>();
         data.put("phone", _phone);
         data.put("store_id", storedIdStr);
+        Log.i("storeID", storedIdStr);
 
         return data;
     }
@@ -448,6 +450,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
     @Override
     protected void onResume() {
         super.onResume();
+        getFavoriteStoreId();
         checkFavorite();
     }
 

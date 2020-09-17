@@ -292,6 +292,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(getApplicationContext(), StoreInfo.class);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
+        Log.i("storeId", listStoreViewHolder.storeId.getText().toString());
         startActivity(intent);
     }
     private double getDistance(Location myLocation, Location storeLocation){

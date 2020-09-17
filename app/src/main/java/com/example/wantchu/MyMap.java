@@ -1,6 +1,7 @@
 package com.example.wantchu;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -63,6 +66,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
     SharedPreferences setMyNewLocation;
     myGPSListener GPSListener;
     SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,11 +89,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         setMapFragmentGetMapAsync();
 
-        try {
-            MapsInitializer.initialize(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         Log.i("latLng", oldLatLng +"");
         AutoPermissions.Companion.loadAllPermissions(this, 101);
     }
@@ -98,7 +98,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-
                 Log.d("Map", "지도 준비됨.");
                 map = googleMap;
                 oldMarkerOption = new MarkerOptions();
@@ -107,6 +106,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                 setNewLatLng.setVisibility(View.INVISIBLE);
                 GPSListener.setMapLocationTextView(address, oldLatLng);
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(oldLatLng, 17));
+                map.getUiSettings().setMapToolbarEnabled(false);
                 oldMarkerOption.position(oldLatLng);
                 map.addMarker(oldMarkerOption);
                 try {
@@ -151,6 +151,11 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                 }
             }
         });
+        try {
+            MapsInitializer.initialize(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @Override
     public void clickOkay() {
@@ -207,17 +212,18 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             mapListParsing = new MapListParsing(mapListParsing.getStore_name(), mapListParsing.getStore_latitude(), mapListParsing.getStore_longitude(), mapListParsing.getDistance());
             DataList.add(mapListParsing);
         }
-        MarkerOptions markerOptions = null;
+        ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
         //마커 여러개 만들기
-
         for(int i = 0; i< DataList.size(); i++){
             MapListParsing store = DataList.get(i);
             Double lati = Double.parseDouble(store.getStore_latitude());
             Double logi = Double.parseDouble(store.getStore_longitude());
             String name = store.getStore_name();
-            markerOptions = new MarkerOptions();
-            markerOptions.position(new LatLng(lati, logi)).title(name+"\n"+((int)store.getDistance())+"m");
-            map.addMarker(markerOptions).showInfoWindow();
+            MarkerOptions markerOption = new MarkerOptions().position(new LatLng(lati, logi)).title(name).snippet(((int)store.getDistance())+"m");
+            markerOptions.add(markerOption);
+        }
+        for (int i = 0 ; i <markerOptions.size(); i++) {
+            map.addMarker(markerOptions.get(i)).showInfoWindow();
         }
     }
 
@@ -234,7 +240,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                 String store_name = jObject.optString("store_name");
                 String store_latitude = jObject.optString("store_latitude");
                 String store_longitude = jObject.optString("store_longitude");
-                float store_distance = (float)jObject.optDouble("store_distance");
+                float store_distance = (float)jObject.optDouble("distance");
                 MapListParsing mapListParsing = new MapListParsing(store_name, store_latitude, store_longitude, store_distance);
                 mapListParsings.add(mapListParsing);
                 Log.e("realMap", result2.toString());
@@ -270,6 +276,23 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         return distance;
     }
 
+    @Override
+    protected void onResume() {
+        mapFragment.onResume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        mapFragment.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onLowMemory() {
+        mapFragment.onLowMemory();
+        super.onLowMemory();
+    }
 
     public void onClickBack(View view) {
     }
