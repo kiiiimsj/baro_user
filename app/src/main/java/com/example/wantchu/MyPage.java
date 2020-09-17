@@ -81,6 +81,14 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         setExpandableListView();
         setExpandListener();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPhoneNumber();
+        makeRequestForOrderCount(urlMaker());
+    }
+
     private void setMyInfo() {
         SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersDetailSession();
@@ -213,7 +221,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
             if(shf.getInt("orderCnt", 0) > 0) {
                 startActivity(new Intent(getApplicationContext(), Basket.class));
             }
-            return;
         }
     }
     public String urlMaker() {
@@ -305,11 +312,5 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         }
         counts[1] = count;
         setRecyclerView(result ,counts);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
     }
 }

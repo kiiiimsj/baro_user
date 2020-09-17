@@ -31,7 +31,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsView
 
     @Override
     public void onBindViewHolder(@NonNull AlertsViewHolder holder, int position) {
-        AlertsHelperClass.AlertsHelperClassParsing alertsHelperClassParsing =alertsHelperClass.alert.get(position);
+        AlertsHelperClass.AlertsHelperClassParsing alertsHelperClassParsing =alertsHelperClass.alert.get(alertsHelperClass.alert.size() - position - 1);
         if(holder == null || alertsHelperClassParsing == null) {
             return;
         }
