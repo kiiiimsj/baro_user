@@ -66,8 +66,8 @@ public class StoreInfoReNewer extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0 :
-                        //fm.beginTransaction().replace(R.id.store_list_fragment,storeMenuFragment).commit();
-                        break;
+                    //fm.beginTransaction().replace(R.id.store_list_fragment,storeMenuFragment).commit();
+                    break;
                     case 1 :
                         //fm.beginTransaction().(storeMenuFragment).commit();
                         break;

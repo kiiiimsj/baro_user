@@ -80,7 +80,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_store_info, container, false);
         fm= getFragmentManager();
-        fm.beginTransaction().replace(R.id.bottom_menu, bottomMenu).commit();
+        fm.beginTransaction().add(R.id.bottom_menu, bottomMenu).commit();
         mCategoryTabLayout = rootView.findViewById(R.id.category_layout);
         mRecyclerViewMenu = rootView.findViewById(R.id.menu_list);
         return null;
