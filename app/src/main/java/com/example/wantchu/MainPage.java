@@ -439,11 +439,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public void onItemLongSelected(View v, int adapterPosition) {
-//        TypeAdapter.TypeViewHolder viewHolder = (TypeAdapter.TypeViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
-//        Intent intent = new Intent(getApplicationContext(), ListStorePage.class);
-//        intent.putExtra("type_code", viewHolder.code.getText().toString());
-//        intent.putExtra("list_type", )
-//        startActivity(intent);
     }
 
     @Override

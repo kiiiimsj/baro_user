@@ -98,10 +98,10 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         Log.i("onPause", "onPause");
-        SharedPreferences sf =getSharedPreferences("storeID", MODE_PRIVATE);
+        SharedPreferences sf =getSharedPreferences("onPause", MODE_PRIVATE);
         SharedPreferences.Editor editor = sf.edit();
         editor.putBoolean("onPause", true);
         editor.apply();
@@ -111,12 +111,12 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences sf =getSharedPreferences("storeID", MODE_PRIVATE);
+        SharedPreferences sf =getSharedPreferences("onPause", MODE_PRIVATE);
         if(sf.getBoolean("onPause", false)){
             Log.i("isPause", "11");
             chooseShowList(ON_RESTART);
             SharedPreferences.Editor editor = sf.edit();
-            editor.putBoolean("onPause", false);
+            editor.clear();
             editor.apply();
             editor.commit();
         }
@@ -288,8 +288,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     }
 
     private void jsonParsing(String result, int state) {
-        //ListStoreParsing listStoreParsing = new ListStoreParsing();
-
         if(state == FIRST) {
             Gson gson = new Gson();
             listStoreParsing = gson.fromJson(result, ListStoreParsing.class);
@@ -315,33 +313,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
                 mRecyclerView();
             }
         }
-
-//        JSONArray jsonArray = null;
-//        //listStoreListParsings = new ArrayList<>();
-//        jsonArray = jsonParsingType(result);
-//        try {
-//            if(jsonArray != null) {
-//                for (int i = 0; i < jsonArray.length(); i++) {
-//                    JSONObject jObject = jsonArray.getJSONObject(i);
-//                    String store_name = jObject.optString("store_name");
-//                    String store_image = jObject.optString("store_image");
-//                    String store_open = jObject.optString("is_open");
-//                    float distance = (float)jObject.optDouble("distance");
-//
-//                    Log.e("storeImageee", store_image);
-//
-//                    String store_location = jObject.optString("store_location");
-//                    int store_id = jObject.optInt("store_id");
-//                    ListStoreListParsing listStoreListParsing = new ListStoreListParsing(store_name, store_location, store_image, store_id, store_open, distance);
-//                    Log.i("LISTSTORELISTPARSING", listStoreListParsing.toString());
-//                    listStoreListParsings.add(listStoreListParsing);
-//                }
-//            }
-//        }
-//        catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-        //listStoreParsing.setStoreLists(listStoreListParsings);
         mRecyclerView();
     }
 
@@ -371,7 +342,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     @Override
     public void onItemLongSelected(View v, int adapterPosition) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
-        Intent intent = new Intent(getApplicationContext(), StoreInfo.class);
+        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
         intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
         startActivity(intent);
@@ -380,7 +351,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     @Override
     public void onItemSelected(View v, int position) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
-        Intent intent = new Intent(getApplicationContext(), StoreInfo.class);
+        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
         if(listStoreViewHolder.storeId == null) {
             runOnUiThread(new Runnable() {
                 @Override

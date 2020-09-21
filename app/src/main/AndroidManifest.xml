@@ -28,7 +28,6 @@
     <meta-data
         android:name="com.google.android.maps.v2.API_KEY"
         android:value="AIzaSyBCEYl5maaBv6WDhrGvrrFUeVCdMML8hwg" />
-
     <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
@@ -41,7 +40,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Events"></activity>
+        <activity android:name=".StoreInfoReNewer"></activity>
+        <activity android:name=".Events" />
         <activity android:name=".Alerts" />
         <activity android:name=".OrderStatus" />
 
