@@ -478,7 +478,11 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                         Log.i("OrderDetails", response);
 
                         connectToWebSocket(phone, store_id, json);
-                        sendFcmToOwner();
+                        try {
+                            sendFcmToOwner();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
