@@ -2,6 +2,7 @@ package com.example.wantchu;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -220,6 +221,12 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             Double logi = Double.parseDouble(store.getStore_longitude());
             String name = store.getStore_name();
             MarkerOptions markerOption = new MarkerOptions().position(new LatLng(lati, logi)).title(name).snippet(((int)store.getDistance())+"m");
+            int height = 130;
+            int width = 80;
+            BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.map_marker_purple);
+            Bitmap b = bitmapdraw.getBitmap();
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+            markerOption.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
             markerOptions.add(markerOption);
         }
         for (int i = 0 ; i <markerOptions.size(); i++) {
