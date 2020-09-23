@@ -71,6 +71,8 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     SharedPreferences saveListSet;
 
     ListStoreParsing listStoreParsing;
+
+    static int count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         setContentView(R.layout.activity_list_store_page);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
+        count = 1;
         refreshLayout = findViewById(R.id.refresh_list);
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
@@ -98,27 +101,17 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         Log.i("onPause", "onPause");
-        SharedPreferences sf =getSharedPreferences("storeID", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sf.edit();
-        editor.putBoolean("onPause", true);
-        editor.apply();
-        editor.commit();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences sf =getSharedPreferences("storeID", MODE_PRIVATE);
-        if(sf.getBoolean("onPause", false)){
+        if(count == 0){
             Log.i("isPause", "11");
             chooseShowList(ON_RESTART);
-            SharedPreferences.Editor editor = sf.edit();
-            editor.putBoolean("onPause", false);
-            editor.apply();
-            editor.commit();
         }
     }
     public void chooseShowList(int state) {
@@ -167,6 +160,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         if(getStore.getInt("current", -1) != -1) {
             currentPos = getStore.getInt("current", -1);
         }
+        Log.i("GET_DATA", type_code +" : " + currentPos + " : " + latLng.latitude + " : " + latLng.longitude);
         HashMap<String, Object> data = new HashMap<>();
         data.put("type_code", type_code);
         data.put("startPoint", currentPos);
@@ -288,8 +282,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     }
 
     private void jsonParsing(String result, int state) {
-        //ListStoreParsing listStoreParsing = new ListStoreParsing();
-
         if(state == FIRST) {
             Gson gson = new Gson();
             listStoreParsing = gson.fromJson(result, ListStoreParsing.class);
@@ -315,33 +307,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
                 mRecyclerView();
             }
         }
-
-//        JSONArray jsonArray = null;
-//        //listStoreListParsings = new ArrayList<>();
-//        jsonArray = jsonParsingType(result);
-//        try {
-//            if(jsonArray != null) {
-//                for (int i = 0; i < jsonArray.length(); i++) {
-//                    JSONObject jObject = jsonArray.getJSONObject(i);
-//                    String store_name = jObject.optString("store_name");
-//                    String store_image = jObject.optString("store_image");
-//                    String store_open = jObject.optString("is_open");
-//                    float distance = (float)jObject.optDouble("distance");
-//
-//                    Log.e("storeImageee", store_image);
-//
-//                    String store_location = jObject.optString("store_location");
-//                    int store_id = jObject.optInt("store_id");
-//                    ListStoreListParsing listStoreListParsing = new ListStoreListParsing(store_name, store_location, store_image, store_id, store_open, distance);
-//                    Log.i("LISTSTORELISTPARSING", listStoreListParsing.toString());
-//                    listStoreListParsings.add(listStoreListParsing);
-//                }
-//            }
-//        }
-//        catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-        //listStoreParsing.setStoreLists(listStoreListParsings);
         mRecyclerView();
     }
 
@@ -371,7 +336,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     @Override
     public void onItemLongSelected(View v, int adapterPosition) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
-        Intent intent = new Intent(getApplicationContext(), StoreInfo.class);
+        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
         intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
         startActivity(intent);
@@ -380,7 +345,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     @Override
     public void onItemSelected(View v, int position) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
-        Intent intent = new Intent(getApplicationContext(), StoreInfo.class);
+        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
         if(listStoreViewHolder.storeId == null) {
             runOnUiThread(new Runnable() {
                 @Override

@@ -281,7 +281,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
     @Override
     public void onItemLongSelected(View v, int adapterPosition) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
-        Intent intent = new Intent(getApplicationContext(), StoreInfo.class);
+        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
         intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
         startActivity(intent);
@@ -290,7 +290,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
     @Override
     public void onItemSelected(View v, int position) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
-        Intent intent = new Intent(getApplicationContext(), StoreInfo.class);
+        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
         Log.i("storeId", listStoreViewHolder.storeId.getText().toString());
         startActivity(intent);

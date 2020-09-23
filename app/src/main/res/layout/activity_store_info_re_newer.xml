@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".StoreInfoReNewer">
+
+    <RelativeLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:id="@+id/back_pressed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:onClick="onClickBack"
+            android:padding="15dp"
+            android:src="@drawable/general_back_icon" />
+
+        <TextView
+            android:id="@+id/type_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/brandon_grotesque_black"
+            android:gravity="center"
+            android:text="가게이름"
+            android:textColor="@color/black"
+            android:textSize="25dp" />
+        <ImageView
+            android:id="@+id/favorite"
+            android:onClick="onClickFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/heart_empty"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/tab_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_bar"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="5dp">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/order_history_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="10dp"
+                android:text="메뉴"
+                android:textColor="@color/white" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/calc_history_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="가게정보"
+                android:textColor="@color/white" />
+        </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
+    <fragment
+        android:name="com.example.wantchu.StoreMenuFragment"
+        android:id="@+id/store_list_fragment"
+        android:layout_below="@id/tab_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tab_list"
+        android:id="@+id/store_detail_info_fragment"
+        android:name="com.example.wantchu.StoreDetailInfoFragment"
+        />
+    <fragment
+        android:id="@+id/cart_click_button"
+        android:name="com.example.wantchu.Fragment.OrderListCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_menu"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="@dimen/order_list_cart_dp"/>
+    <fragment
+        android:id="@+id/bottom_menu"
+        android:name="com.example.wantchu.Fragment.BottomMenu"
+        android:backgroundDimEnabled="false"
+        android:windowBackground="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

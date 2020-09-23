@@ -29,7 +29,6 @@ import java.util.StringTokenizer;
  */
 public class BottomMenu extends Fragment {
     BottomAppBar mBottomMenu;
-    FloatingActionButton center;
     BottomNavigationView realBottom;
     public BottomMenu() {}
 
@@ -50,17 +49,6 @@ public class BottomMenu extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_bottom_menu, container, false);
         mBottomMenu = rootView.findViewById(R.id.menu_bottom);
         realBottom = rootView.findViewById(R.id.real_bottom);
-        center = rootView.findViewById(R.id.createHome);
-        center.bringToFront();
-        center.setOnClickListener(new FloatingActionButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getTokenActivityName(getActivity().toString()).equals("MainPage")) {
-                    return;
-                }
-                startActivity(new Intent(getActivity(), MainPage.class));
-            }
-        });
         clickBottomMenu();
         return rootView;
     }
@@ -69,6 +57,12 @@ public class BottomMenu extends Fragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.bottomIconHome:
+                        if (getTokenActivityName(getActivity().toString()).equals("MainPage")) {
+                            break;
+                        }
+                        startActivity(new Intent(getActivity(), MainPage.class));
+                        break;
                     case R.id.bottomIconClock:
                         if (getTokenActivityName(getActivity().toString()).equals("OrderProgressing")) {
                             break;

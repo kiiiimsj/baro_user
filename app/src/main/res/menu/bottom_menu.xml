@@ -2,35 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/bottomIconHome"
+        android:icon="@drawable/home_off"
+        android:title="홈"
+        />
+    <item
         android:id="@+id/bottomIconClock"
-        android:state_checked="true" android:color="#000000"
-        android:icon="@drawable/ic_baseline_access_time_24"
+        android:icon="@drawable/order_progress_off"
         android:title="주문현황"
-        app:showAsAction="always"
         />
     <item
         android:id="@+id/bottomIconMyStore"
-        android:state_checked="true" android:color="#000000"
-        android:icon="@drawable/heart_full"
-        android:title="My 매장"
-        app:showAsAction="always"
-        />
-    <item
-        android:id="@+id/none"
-        android:title=" "
+        android:icon="@drawable/my_favorite_off"
+        android:title="찜한 가게"
         />
     <item
         android:id="@+id/bottomIconOrderList"
-        android:state_checked="true" android:color="#000000"
-        android:icon="@drawable/ic_baseline_assignment_24"
+        android:icon="@drawable/order_history_off"
         android:title="주문내역"
-        app:showAsAction="always"
         />
     <item
         android:id="@+id/bottomIconMyPage"
-        android:state_checked="true" android:color="#000000"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/mypage_off"
         android:title="마이페이지"
-        app:showAsAction="always"
         />
 </menu>
