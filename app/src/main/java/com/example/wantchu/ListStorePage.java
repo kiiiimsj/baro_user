@@ -71,6 +71,8 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     SharedPreferences saveListSet;
 
     ListStoreParsing listStoreParsing;
+
+    static int count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         setContentView(R.layout.activity_list_store_page);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
+        count = 1;
         refreshLayout = findViewById(R.id.refresh_list);
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
@@ -101,24 +104,14 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     protected void onStop() {
         super.onStop();
         Log.i("onPause", "onPause");
-        SharedPreferences sf =getSharedPreferences("onPause", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sf.edit();
-        editor.putBoolean("onPause", true);
-        editor.apply();
-        editor.commit();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences sf =getSharedPreferences("onPause", MODE_PRIVATE);
-        if(sf.getBoolean("onPause", false)){
+        if(count == 0){
             Log.i("isPause", "11");
             chooseShowList(ON_RESTART);
-            SharedPreferences.Editor editor = sf.edit();
-            editor.clear();
-            editor.apply();
-            editor.commit();
         }
     }
     public void chooseShowList(int state) {
@@ -167,6 +160,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         if(getStore.getInt("current", -1) != -1) {
             currentPos = getStore.getInt("current", -1);
         }
+        Log.i("GET_DATA", type_code +" : " + currentPos + " : " + latLng.latitude + " : " + latLng.longitude);
         HashMap<String, Object> data = new HashMap<>();
         data.put("type_code", type_code);
         data.put("startPoint", currentPos);

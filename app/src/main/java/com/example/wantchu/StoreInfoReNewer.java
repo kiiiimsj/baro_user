@@ -10,16 +10,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Dialogs.AddFavoriteDialog;
 import com.example.wantchu.Dialogs.DeleteFavoriteDialog;
+import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.JsonParsingHelper.FavoriteListParsing;
 import com.example.wantchu.JsonParsingHelper.FavoriteParsing;
 import com.example.wantchu.Url.UrlMaker;
@@ -35,6 +38,7 @@ import java.util.HashMap;
 
 public class StoreInfoReNewer extends AppCompatActivity {
     ImageView mFavorite;
+    TextView titleName;
     SessionManager sessionManager;
     String _phone;
     String storedIdStr;
@@ -42,48 +46,27 @@ public class StoreInfoReNewer extends AppCompatActivity {
     boolean result =false;
     SharedPreferences sp;
     StoreMenuFragment storeMenuFragment;
+    StoreDetailInfoFragment storeDetailInfoFragment;
+    StoreDetail storeDetailData;
+    Intent myIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_info_re_newer);
 
         mFavorite = findViewById(R.id.favorite);
+        titleName = findViewById(R.id.type_name);
         tabs = findViewById(R.id.tab_tabs);
 
         sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
-        Intent intent = getIntent();
-        storedIdStr=intent.getStringExtra("store_id");
+        myIntent = getIntent();
+        storedIdStr=myIntent.getStringExtra("store_id");
         checkFavorite();
-
-        final FragmentManager fm = getSupportFragmentManager();
-        storeMenuFragment = (StoreMenuFragment) fm.findFragmentById(R.id.store_list_fragment);
-        fm.beginTransaction().replace(R.id.store_list_fragment, storeMenuFragment).commit();
-        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0 :
-                    //fm.beginTransaction().replace(R.id.store_list_fragment,storeMenuFragment).commit();
-                    break;
-                    case 1 :
-                        //fm.beginTransaction().(storeMenuFragment).commit();
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        setTabEvent();
+        makeRequestGetStore(Integer.parseInt(storedIdStr));
     }
     @Override
     protected void onResume() {
@@ -244,5 +227,68 @@ public class StoreInfoReNewer extends AppCompatActivity {
         catch(JSONException e){
             e.printStackTrace();
         }
+    }
+    public void makeRequestGetStore(final int number) {
+        String url = new UrlMaker().UrlMake("StoreFindById.do?store_id="+ number);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        jsonParsingStore(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("type", "error");
+                    }
+                });
+        //request.setShouldCache(false);
+        requestQueue.add(request);
+    }
+
+    private void jsonParsingStore(String response) {
+        Log.i("JSONPARSING", response);
+        Gson gson = new GsonBuilder().create();
+        storeDetailData = gson.fromJson(response, StoreDetail.class);
+        setTitleName();
+    }
+
+    private void setTabEvent() {
+        final FragmentManager fm = getSupportFragmentManager();
+        storeMenuFragment = (StoreMenuFragment) fm.findFragmentById(R.id.store_list_fragment);
+        storeDetailInfoFragment = (StoreDetailInfoFragment) fm.findFragmentById(R.id.store_detail_info_fragment);
+        fm.beginTransaction().show(storeMenuFragment).commit();
+        fm.beginTransaction().hide(storeDetailInfoFragment).commit();
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0 :
+                        fm.beginTransaction().show(storeMenuFragment).commit();
+                        fm.beginTransaction().hide(storeDetailInfoFragment).commit();
+                        break;
+                    case 1 :
+                        fm.beginTransaction().show(storeDetailInfoFragment).commit();
+                        fm.beginTransaction().hide(storeMenuFragment).commit();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    private void setTitleName() {
+        titleName.setText(storeDetailData.getStore_name());
     }
 }

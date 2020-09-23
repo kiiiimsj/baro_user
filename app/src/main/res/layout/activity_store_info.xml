@@ -48,26 +48,6 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:scrollbars="vertical" />
-
-                <fragment
-                    android:id="@+id/cart_click_button"
-                    android:name="com.example.wantchu.Fragment.OrderListCart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="bottom"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="@dimen/order_list_cart_dp" />
-
-                <fragment
-                    android:id="@+id/bottom_menu"
-                    android:name="com.example.wantchu.Fragment.BottomMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:backgroundDimEnabled="false"
-                    android:windowBackground="@android:color/transparent" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

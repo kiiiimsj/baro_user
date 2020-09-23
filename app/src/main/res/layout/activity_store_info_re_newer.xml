@@ -92,4 +92,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tab_list"
+        android:id="@+id/store_detail_info_fragment"
+        android:name="com.example.wantchu.StoreDetailInfoFragment"
+        />
+    <fragment
+        android:id="@+id/cart_click_button"
+        android:name="com.example.wantchu.Fragment.OrderListCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_menu"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="@dimen/order_list_cart_dp"/>
+    <fragment
+        android:id="@+id/bottom_menu"
+        android:name="com.example.wantchu.Fragment.BottomMenu"
+        android:backgroundDimEnabled="false"
+        android:windowBackground="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        />
+
 </RelativeLayout>

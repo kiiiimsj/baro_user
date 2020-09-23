@@ -1,6 +1,5 @@
 package com.example.wantchu;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,8 +31,8 @@ import com.example.wantchu.HelperDatabase.StoreCategories;
 import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.HelperDatabase.StoreMenus;
 import com.example.wantchu.Url.UrlMaker;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,22 +78,21 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_store_info, container, false);
-        fm= getFragmentManager();
-        fm.beginTransaction().add(R.id.bottom_menu, bottomMenu).commit();
         mCategoryTabLayout = rootView.findViewById(R.id.category_layout);
         mRecyclerViewMenu = rootView.findViewById(R.id.menu_list);
-        return null;
+        drawStoreInfo(Integer.parseInt(storedIdStr));
+        return rootView;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        progressApplication = new ProgressApplication();
-        progressApplication.progressON(getActivity());
+        //progressApplication = new ProgressApplication();
+        //progressApplication.progressON(getActivity());
 
         //세션에서 휴대폰값 가져오기
         Log.i("onCreate", true+"");
-        sessionManager = new SessionManager(getActivity(), SessionManager.SESSION_USERSESSION);
+        sessionManager = new SessionManager(getActivity().getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
@@ -102,7 +100,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         Intent intent = getActivity().getIntent();
         storedIdStr=intent.getStringExtra("store_id");
 
-        drawStoreInfo(Integer.parseInt(storedIdStr));
+
     }
     ///UI 설정 구간 ---------------------------------------------------
     //상점정보 UI 설정 ---------------------------------------------------
@@ -115,7 +113,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                drawCategoryInfo(storeDetail.getStoreId());
+                                drawCategoryInfo(storeDetail.getStore_id());
                             }
                         });
                     }
@@ -149,7 +147,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         }
         mMenuAdapter = new MenuListAdapter(DataList, this, this);
         mRecyclerViewMenu.setAdapter(mMenuAdapter);
-        progressApplication.progressOFF();
+        //progressApplication.progressOFF();
     }
     //메뉴 UI ----------------------------------------------------------------
     ///동적할당 시도
@@ -277,7 +275,9 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
             JSONObject jsonObject = new JSONObject(result);
             parsingResult=jsonObject.getBoolean("result");
             if(!parsingResult) {
-                progressApplication.progressOFF();
+                if(progressApplication != null) {
+                    progressApplication.progressOFF();
+                }
                 Toast.makeText(getActivity(), "로딩에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -318,27 +318,9 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     }
     //JSON parsing 구간
     private void jsonParsingStore(String result) {
-        storeDetail = new StoreDetail();
-        try {
-            Boolean resultParse = new JSONObject(result).getBoolean("result");
-            String getMessage = new JSONObject(result).getString("message");
-            storeDetail.setStoreId(new JSONObject(result).getInt("store_id"));
-            storeDetail.setStoreOpenTime(new JSONObject(result).getString("store_opentime"));
-            storeDetail.setStoreInfo(new JSONObject(result).getString("store_info"));
-            storeDetail.setStoreLatitude(new JSONObject(result).getDouble("store_latitude"));
-            storeDetail.setStoreCloseTime(new JSONObject(result).getString("store_closetime"));
-            storeDetail.setStoreDaysoff(new JSONObject(result).getString("store_daysoff"));
-            storeDetail.setStorePhone(new JSONObject(result).getString("store_phone"));
-            storeDetail.setStoreLongitude(new JSONObject(result).getDouble("store_longitude"));
-            storeDetail.setName(new JSONObject(result).getString("store_name"));
-            storeDetail.setStoreLocation(new JSONObject(result).getString("store_location"));
-            storeDetail.setTypeCode(new JSONObject(result).getString("type_code"));
-            storeDetail.setStore_image(new JSONObject(result).getString("store_image"));
-            setDrawStoreInfo();
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Gson gson = new Gson();
+        storeDetail = gson.fromJson(result, StoreDetail.class);
+        setDrawStoreInfo();
     }
     //상점 불러오는 구간 ---------------------------------------------------
 
@@ -351,7 +333,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
 
     //가게정보 버튼
     public void showDetailStoreInfo(View view) {
-        Intent intent = new Intent(getActivity(), StoreDetailInfo.class);
+        Intent intent = new Intent(getActivity(), StoreDetailInfoFragment.class);
         //intent.putExtra("StoreDetail", storeDetail.toString());
         intent.putExtra("StoreDetail", storeDetail.toString());
         startActivity(intent);
@@ -386,9 +368,9 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         intent.putExtra("menuName", getMenuName);
         intent.putExtra("menuDefaultPrice", Integer.parseInt(str));
         intent.putExtra("menuId", Integer.parseInt(getMenuId));
-        intent.putExtra("storeName", storeDetail.getName());
-        intent.putExtra("storeId", storeDetail.getStoreId());
-        intent.putExtra("storeNumber",storeDetail.getStorePhone());//가게 전화번호
+        intent.putExtra("storeName", storeDetail.getStore_name());
+        intent.putExtra("storeId", storeDetail.getStore_id());
+        intent.putExtra("storeNumber",storeDetail.getStore_phone());//가게 전화번호
 
         startActivity(intent);
     }

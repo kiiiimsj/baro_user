@@ -3,68 +3,67 @@ package com.example.wantchu.HelperDatabase;
 import com.google.android.gms.common.util.Strings;
 
 public class StoreDetail {
-    private int storeId;
-    private String storeOpenTime;
-    private String storeInfo;
-    private double storeLatitude;
-    private String storeCloseTime;
-    private String storeDaysoff;
+    private int store_id;
+    private String store_opentime;
+    private String store_info;
+    private double store_latitude;
+    private String store_closetime;
+    private String store_daysoff;
     private String message;
     private boolean result;
-    private String storePhone;
-    private double storeLongitude;
-    private String name;
-    private String storeLocation;
-    private String typeCode;
+    private String store_phone;
+    private double store_longitude;
+    private String store_name;
+    private String store_location;
+    private String type_code;
     private String store_image;
 
-
-    public int getStoreId() {
-        return storeId;
+    public int getStore_id() {
+        return store_id;
     }
 
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
+    public void setStore_id(int store_id) {
+        this.store_id = store_id;
     }
 
-    public String getStoreOpenTime() {
-        return storeOpenTime;
+    public String getStore_opentime() {
+        return store_opentime;
     }
 
-    public void setStoreOpenTime(String storeOpenTime) {
-        this.storeOpenTime = storeOpenTime;
+    public void setStore_opentime(String store_opentime) {
+        this.store_opentime = store_opentime;
     }
 
-    public String getStoreInfo() {
-        return storeInfo;
+    public String getStore_info() {
+        return store_info;
     }
 
-    public void setStoreInfo(String storeInfo) {
-        this.storeInfo = storeInfo;
+    public void setStore_info(String store_info) {
+        this.store_info = store_info;
     }
 
-    public double getStoreLatitude() {
-        return storeLatitude;
+    public double getStore_latitude() {
+        return store_latitude;
     }
 
-    public void setStoreLatitude(double storeLatitude) {
-        this.storeLatitude = storeLatitude;
+    public void setStore_latitude(double store_latitude) {
+        this.store_latitude = store_latitude;
     }
 
-    public String getStoreCloseTime() {
-        return storeCloseTime;
+    public String getStore_closetime() {
+        return store_closetime;
     }
 
-    public void setStoreCloseTime(String storeCloseTime) {
-        this.storeCloseTime = storeCloseTime;
+    public void setStore_closetime(String store_closetime) {
+        this.store_closetime = store_closetime;
     }
 
-    public String getStoreDaysoff() {
-        return storeDaysoff;
+    public String getStore_daysoff() {
+        return store_daysoff;
     }
 
-    public void setStoreDaysoff(String storeDaysoff) {
-        this.storeDaysoff = storeDaysoff;
+    public void setStore_daysoff(String store_daysoff) {
+        this.store_daysoff = store_daysoff;
     }
 
     public String getMessage() {
@@ -83,44 +82,44 @@ public class StoreDetail {
         this.result = result;
     }
 
-    public String getStorePhone() {
-        return storePhone;
+    public String getStore_phone() {
+        return store_phone;
     }
 
-    public void setStorePhone(String storePhone) {
-        this.storePhone = storePhone;
+    public void setStore_phone(String store_phone) {
+        this.store_phone = store_phone;
     }
 
-    public double getStoreLongitude() {
-        return storeLongitude;
+    public double getStore_longitude() {
+        return store_longitude;
     }
 
-    public void setStoreLongitude(double storeLongitude) {
-        this.storeLongitude = storeLongitude;
+    public void setStore_longitude(double store_longitude) {
+        this.store_longitude = store_longitude;
     }
 
-    public String getName() {
-        return name;
+    public String getStore_name() {
+        return store_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
     }
 
-    public String getStoreLocation() {
-        return storeLocation;
+    public String getStore_location() {
+        return store_location;
     }
 
-    public void setStoreLocation(String storeLocation) {
-        this.storeLocation = storeLocation;
+    public void setStore_location(String store_location) {
+        this.store_location = store_location;
     }
 
-    public String getTypeCode() {
-        return typeCode;
+    public String getType_code() {
+        return type_code;
     }
 
-    public void setTypeCode(String typeCode) {
-        this.typeCode = typeCode;
+    public void setType_code(String type_code) {
+        this.type_code = type_code;
     }
 
     public String getStore_image() {
@@ -131,44 +130,23 @@ public class StoreDetail {
         this.store_image = store_image;
     }
 
-    public StoreDetail() {}
-
-    public StoreDetail(int storeId, String storeOpenTime, String storeInfo, double storeLatitude, String storeCloseTime, String storeDaysoff,
-                       String message, boolean result, String storePhone, double storeLongitude, String name, String storeLocation, String typeCode, String storeImage) {
-        this.storeId = storeId;
-        this.storeOpenTime = storeOpenTime;
-        this.storeInfo = storeInfo;
-        this.storeLatitude = storeLatitude;
-        this.storeCloseTime = storeCloseTime;
-        this.storeDaysoff = storeDaysoff;
-        this.message = message;
-        this.result = result;
-        this.storePhone = storePhone;
-        this.storeLongitude = storeLongitude;
-        this.name = name;
-        this.storeLocation = storeLocation;
-        this.typeCode = typeCode;
-        this.store_image = storeImage;
-    }
-
     @Override
     public String toString() {
-        //{"result":true,"message":"01093756927의즐겨찾기 정보 가져오기 성공","favorite":[{"store_id":1,"store_info":"안녕하세요 이 카페는 테스트용 카페입니다.","store_latitude":37.4952,"store_longitude":126.9565,"store_name":"test cafe","store_location":"서울특별시 테스트구 테스트동 테스트로 111 테스트빌딩 2층","store_image":"test_cafe1.png"},{"store_id":3,"store_info":"CAFE2 의 정보 입니다.","store_latitude":0.1,"store_longitude":0.1,"store_name":"TEST CAFE2","store_location":"테스트시 테스트동","store_image":"test_cafe2.png"},{"store_id":4,"store_info":"CAFE3 의 정보 입니다.","store_latitude":0.2,"store_longitude":0.2,"store_name":"TEST CAFE3","store_location":"테스트시 테스트2동","store_image":"test_cafe3.png"},{"store_id":15,"store_info":"자연별곡 개노맛","store_latitude":3.1,"store_longitude":3.1,"store_name":"자연별곡","store_location":"테스트시 테스트10동","store_image":"default.png"},{"store_id":19,"store_info":"존나 맛있는 샌드위치 에그드랍","store_latitude":10.1,"store_longitude":10.2,"store_name":"에그드랍","store_location":"서울 중구 퇴계로 18 2층 2-6호","store_image":"default.png"}]}
         return "{" +
-                "\"storeId\":" + storeId +
-                ",\"storeOpenTime\":\"" + storeOpenTime + '\"' +
-                ",\"storeInfo\":\"" + storeInfo + '\"' +
-                ",\"storeLatitude\":" + storeLatitude +
-                ",\"storeCloseTime\":\"" + storeCloseTime + '\"' +
-                ",\"storeDaysoff\":\"" + storeDaysoff + '\"' +
+                "\"store_id\":" + store_id +
+                ",\"store_opentime\":\"" + store_opentime + '\"' +
+                ",\"store_info\":\"" + store_info + '\"' +
+                ",\"store_latitude\":" + store_latitude +
+                ",\"store_closetime\":\"" + store_closetime + '\"' +
+                ",\"store_daysoff\":\"" + store_daysoff + '\"' +
                 ",\"message\":\"" + message + '\"' +
                 ",\"result\":" + result +
-                ",\"storePhone\":\"" + storePhone + '\"' +
-                ",\"storeLongitude\":" + storeLongitude +
-                ",\"name\":\"" + name + '\"' +
-                ",\"storeLocation\":\"" + storeLocation + '\"' +
-                ",\"typeCode\":\"" + typeCode + '\"' +
-                ",\"storeImage\":\"" + store_image + '\"' +
+                ",\"store_phone\":\"" + store_phone + '\"' +
+                ",\"store_longitude\":" + store_longitude +
+                ",\"store_name\":\"" + store_name + '\"' +
+                ",\"store_location\":\"" + store_location + '\"' +
+                ",\"type_code\":\"" + type_code + '\"' +
+                ",\"store_image\":\"" + store_image + '\"' +
                 '}';
     }
 }
