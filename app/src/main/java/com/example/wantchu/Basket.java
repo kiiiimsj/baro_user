@@ -478,6 +478,11 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
                         Log.i("OrderDetails", response);
 
                         connectToWebSocket(phone, store_id, json);
+                        try {
+                            sendFcmToOwner();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -512,6 +517,27 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
             }
         };
         requestQueue.add(request);
+    }
+
+    private void sendFcmToOwner() throws JSONException {
+        String url = new UrlMaker().UrlMake("OrderSendMessage.do");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("store_id",store_id);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.e("success",response.toString());
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("fail",error.toString());
+                            }
+                        });
+        requestQueue.add(jsonObjectRequest);
     }
 
     private void connectToWebSocket(final String phone, final int store_id, final String message) {

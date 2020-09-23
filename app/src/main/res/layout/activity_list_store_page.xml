@@ -35,7 +35,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:fontFamily="@font/brandon_grotesque_black"
+                android:fontFamily="@font/notosans_black"
                 android:gravity="center"
                 android:text="카페"
                 android:textColor="@color/black"

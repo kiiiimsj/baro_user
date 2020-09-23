@@ -89,6 +89,7 @@
                     android:layout_centerVertical="true"
                     android:buttonTint="@color/black"
                     android:text="아이디/비밀번호 저장"
+                    android:fontFamily="@font/notosans_bold"
                     android:textColor="@color/black"/>
 
                 <Button
