@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:text="커피만"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/muli_black"
+                    android:fontFamily="@font/notosans_bold"
                     android:padding="5dp"/>
 
                 <TextView
@@ -48,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="숭실대학교 4번출구"
+                    android:fontFamily="@font/metropolis_extralight"
                     android:textSize="13sp"
                     android:maxLength="15"
                     android:padding="5dp"/>
