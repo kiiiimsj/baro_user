@@ -1,20 +1,18 @@
 package com.example.wantchu;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,25 +20,19 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.wantchu.Adapter.CategoryListAdapter;
 import com.example.wantchu.Adapter.MenuListAdapter;
 import com.example.wantchu.AdapterHelper.ListCategoryHelperClass;
 import com.example.wantchu.AdapterHelper.ListMenuHelperClass;
 import com.example.wantchu.Database.SessionManager;
-import com.example.wantchu.Dialogs.AddFavoriteDialog;
-import com.example.wantchu.Dialogs.DeleteFavoriteDialog;
+import com.example.wantchu.Fragment.BottomMenu;
 import com.example.wantchu.HelperDatabase.StoreCategories;
 import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.HelperDatabase.StoreMenus;
-import com.example.wantchu.JsonParsingHelper.FavoriteListParsing;
-import com.example.wantchu.JsonParsingHelper.FavoriteParsing;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,19 +42,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnListItemSelectedInterfaceForMenu, MenuListAdapter.OnListItemLongSelectedInterfaceForMenu{
-    //private final static String SERVER = "http://15.165.22.64:8080/";
+public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnListItemSelectedInterfaceForMenu, MenuListAdapter.OnListItemLongSelectedInterfaceForMenu {
     private final static int SEND_CODE = 1;
-
-    //content 이름
-    TextView titleName;
-
-    //store 이름
-    //TextView storeName;
-
-    //store 위치
-    TextView storeLocation;
-
     //RecyclerView 설정
     TabLayout mCategoryTabLayout;
     RecyclerView mRecyclerViewMenu;
@@ -72,7 +53,6 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
     StoreCategories storeCategories = null;
     StoreMenus storeMenus = null;
 
-    CategoryListAdapter mCategoryAdapter;
     MenuListAdapter mMenuAdapter;
 
     //Categories
@@ -80,126 +60,49 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
     //Menus
     ArrayList<StoreMenus> saveMenus = new ArrayList<>();
 
-    LayoutInflater inflater = null;
-
-    int index;
-    ImageView mFavorite;
     String storedIdStr;
-
-    //즐겨찾기 변수
-    SharedPreferences sp;
-    Gson gson;
-    String contactFavorite;
-    FavoriteParsing favoriteParsing;
-    FavoriteListParsing favoriteListParsing;
-    ArrayList<FavoriteListParsing> favoriteList;
 
     //세션에서 회원 휴대폰값 가져오기
     SessionManager sessionManager;
     String _phone;
 
-    boolean result = false;
-
     ProgressApplication progressApplication;
+    FragmentManager fm;
+    BottomMenu bottomMenu;
+    View rootView;
+    public StoreMenuFragment() {
+
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.activity_store_info, container, false);
+        mCategoryTabLayout = rootView.findViewById(R.id.category_layout);
+        mRecyclerViewMenu = rootView.findViewById(R.id.menu_list);
+        drawStoreInfo(Integer.parseInt(storedIdStr));
+        return rootView;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store_info);
-        progressApplication = new ProgressApplication();
-        progressApplication.progressON(this);
+        //progressApplication = new ProgressApplication();
+        //progressApplication.progressON(getActivity());
 
         //세션에서 휴대폰값 가져오기
-        sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        Log.i("onCreate", true+"");
+        sessionManager = new SessionManager(getActivity().getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
-
-        //getFavoriteStoreId();
-        //즐겨찾기 가게 확인
-
         //즐겨찾기 연결
-        mFavorite = findViewById(R.id.favorite);
-
-        titleName = findViewById(R.id.title_content);
-        //storeName = findViewById(R.id.store_title);
-        storeLocation = findViewById(R.id.store_location);
-        mCategoryTabLayout = findViewById(R.id.category_layout);
-        mRecyclerViewMenu = findViewById(R.id.menu_list);
-        inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
-
-        Intent intent = getIntent();
+        Intent intent = getActivity().getIntent();
         storedIdStr=intent.getStringExtra("store_id");
-        checkFavorite();
 
 
-
-        //받은 상점 아이디로 상점 디테일 정보 불러오기
-        drawStoreInfo(Integer.parseInt(storedIdStr));
     }
-
-    public HashMap setHashDataForCheckFavorite() {
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("phone", _phone);
-        data.put("store_id", storedIdStr);
-        Log.i("storeID", storedIdStr);
-
-        return data;
-    }
-    private void getFavoriteStoreId() {
-        //favorite으로 key설정된 sharedperferences
-        sp = getSharedPreferences("favorite", MODE_PRIVATE);
-        if(sp == null) {
-            return;
-        }
-        gson = new GsonBuilder().create();
-
-        //favorite에 저장되어 있는 string 꺼내오기
-        contactFavorite = sp.getString("favorite","");
-        Log.i("FAVORITE", contactFavorite);
-        if(!contactFavorite.equals("")){
-            favoriteParsing = gson.fromJson(contactFavorite, FavoriteParsing.class);
-            favoriteList = favoriteParsing.getFavorite();
-        }
-    }
-
-    private void checkFavorite() {
-        makeRequestForCheckFavorite(setHashDataForCheckFavorite());
-    }
-    private void makeRequestForCheckFavorite(HashMap data) {
-        UrlMaker urlMaker = new UrlMaker();
-        String url = urlMaker.UrlMake("FavoriteExist.do");
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                parsing(response.toString());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(jsonObjectRequest);
-    }
-
-    private void parsing(String toString) {
-        try {
-            JSONObject jsonObject = new JSONObject(toString);
-            result = jsonObject.getBoolean("result");
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if(result) {
-            mFavorite.setImageResource(R.drawable.heart_full);
-        }
-        else {
-            mFavorite.setImageResource(R.drawable.heart_empty);
-        }
-    }
-
-    ///UI 설정 구간 ----------------------------------------------------
+    ///UI 설정 구간 ---------------------------------------------------
     //상점정보 UI 설정 ---------------------------------------------------
     private void setDrawStoreInfo() {
         new Thread(new Runnable() {
@@ -207,13 +110,10 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
             public void run() {
                 try {
                     if(storeDetail != null) {
-                        runOnUiThread(new Runnable() {
+                        getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                titleName.setText(storeDetail.getName());
-                                //storeName.setText(storeDetail.getName());
-                                storeLocation.setText(storeDetail.getStoreLocation());
-                                drawCategoryInfo(storeDetail.getStoreId());
+                                drawCategoryInfo(storeDetail.getStore_id());
                             }
                         });
                     }
@@ -234,7 +134,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
             if(saveMenus.get(i).getCategoryId() == number) {
                 StoreMenus storeMenus = saveMenus.get(i);
 
-                mRecyclerViewMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                mRecyclerViewMenu.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                 ListMenuHelperClass listMenuHelperClass = new ListMenuHelperClass(storeMenus.getMenuName(), storeMenus.getMenuDefaultprice(), storeMenus.getMenuId());
 
                 listMenuHelperClass.storeMenusName.add(storeMenus.getMenuName());
@@ -247,14 +147,14 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         }
         mMenuAdapter = new MenuListAdapter(DataList, this, this);
         mRecyclerViewMenu.setAdapter(mMenuAdapter);
-        progressApplication.progressOFF();
+        //progressApplication.progressOFF();
     }
     //메뉴 UI ----------------------------------------------------------------
     ///동적할당 시도
     private void setMRecyclerViewCategory() {
         ArrayList<ListCategoryHelperClass> DataList = new ArrayList<>();
         for(int i = 0; i < saveCategories.size(); i++){
-            View tabView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.category_layout, null);
+            View tabView = LayoutInflater.from(getActivity()).inflate(R.layout.category_layout, null);
             StoreCategories storeCategories = saveCategories.get(i);
 
             TextView categoryId= tabView.findViewById(R.id.category_id);
@@ -312,7 +212,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("");
         final StringBuilder stringBuilder = new StringBuilder(url);
-        stringBuilder.append(getApplicationContext().getString(R.string.menuFindByStoreId));
+        stringBuilder.append(getActivity().getString(R.string.menuFindByStoreId));
         stringBuilder.append(number);
         makeRequestGetMenu(stringBuilder.toString());
     }
@@ -359,7 +259,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("");
         final StringBuilder stringBuilder = new StringBuilder(url);
-        stringBuilder.append(getApplicationContext().getString(R.string.categoryFindByStoreId));
+        stringBuilder.append(getActivity().getString(R.string.categoryFindByStoreId));
         stringBuilder.append(number);
 
         makeRequestGetCategory(stringBuilder.toString());
@@ -375,8 +275,10 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
             JSONObject jsonObject = new JSONObject(result);
             parsingResult=jsonObject.getBoolean("result");
             if(!parsingResult) {
-                progressApplication.progressOFF();
-                Toast.makeText(this, "로딩에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                if(progressApplication != null) {
+                    progressApplication.progressOFF();
+                }
+                Toast.makeText(getActivity(), "로딩에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
             JSONArray jsonArray = new JSONObject(result).getJSONArray("category");
@@ -409,54 +311,29 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("");
         final StringBuilder stringBuilder = new StringBuilder(url);
-        stringBuilder.append(getApplicationContext().getString(R.string.storeFindById));
+        stringBuilder.append(getActivity().getString(R.string.storeFindById));
         stringBuilder.append(number);
 
         makeRequestGetStore(stringBuilder.toString(), number);
     }
     //JSON parsing 구간
     private void jsonParsingStore(String result) {
-        storeDetail = new StoreDetail();
-        try {
-            Boolean resultParse = new JSONObject(result).getBoolean("result");
-            String getMessage = new JSONObject(result).getString("message");
-            storeDetail.setStoreId(new JSONObject(result).getInt("store_id"));
-            storeDetail.setStoreOpenTime(new JSONObject(result).getString("store_opentime"));
-            storeDetail.setStoreInfo(new JSONObject(result).getString("store_info"));
-            storeDetail.setStoreLatitude(new JSONObject(result).getDouble("store_latitude"));
-            storeDetail.setStoreCloseTime(new JSONObject(result).getString("store_closetime"));
-            storeDetail.setStoreDaysoff(new JSONObject(result).getString("store_daysoff"));
-            storeDetail.setStorePhone(new JSONObject(result).getString("store_phone"));
-            storeDetail.setStoreLongitude(new JSONObject(result).getDouble("store_longitude"));
-            storeDetail.setName(new JSONObject(result).getString("store_name"));
-            storeDetail.setStoreLocation(new JSONObject(result).getString("store_location"));
-            storeDetail.setTypeCode(new JSONObject(result).getString("type_code"));
-            storeDetail.setStore_image(new JSONObject(result).getString("store_image"));
-            setDrawStoreInfo();
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Gson gson = new Gson();
+        storeDetail = gson.fromJson(result, StoreDetail.class);
+        setDrawStoreInfo();
     }
     //상점 불러오는 구간 ---------------------------------------------------
 
 
     //뒤로가기 버튼
-    public void onClickBack(View view) {
-        finish();
-        this.onBackPressed();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getFavoriteStoreId();
-        checkFavorite();
-    }
+//    public void onClickBack(View view) {
+//        finish();
+//        this.onBackPressed();
+//    }
 
     //가게정보 버튼
     public void showDetailStoreInfo(View view) {
-        Intent intent = new Intent(getApplicationContext(), StoreDetailInfo.class);
+        Intent intent = new Intent(getActivity(), StoreDetailInfoFragment.class);
         //intent.putExtra("StoreDetail", storeDetail.toString());
         intent.putExtra("StoreDetail", storeDetail.toString());
         startActivity(intent);
@@ -487,13 +364,13 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
 
         String getMenuId = viewHolder.menuId.getText().toString();
 
-        Intent intent = new Intent(getApplicationContext(), OrderDetails.class);
+        Intent intent = new Intent(getActivity(), OrderDetails.class);
         intent.putExtra("menuName", getMenuName);
         intent.putExtra("menuDefaultPrice", Integer.parseInt(str));
         intent.putExtra("menuId", Integer.parseInt(getMenuId));
-        intent.putExtra("storeName", storeDetail.getName());
-        intent.putExtra("storeId", storeDetail.getStoreId());
-        intent.putExtra("storeNumber",storeDetail.getStorePhone());//가게 전화번호
+        intent.putExtra("storeName", storeDetail.getStore_name());
+        intent.putExtra("storeId", storeDetail.getStore_id());
+        intent.putExtra("storeNumber",storeDetail.getStore_phone());//가게 전화번호
 
         startActivity(intent);
     }
@@ -506,7 +383,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
     ///Volley 구간 -----------------------------------------------------------------------
     //상점 Volley : StoreFindById.do?store_id=가게id값
     public void makeRequestGetStore(String url, final int number) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -526,7 +403,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
 
     //카테고리 Volley : CategoryFindByStoreId.do?store_id=가게id값
     public void makeRequestGetCategory(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -546,7 +423,7 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
 
     //메뉴 Volley : http://15.165.22.64:8080/MenuFindByStoreId.do?store_id=가게id값
     public void makeRequestGetMenu(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -578,190 +455,4 @@ public class StoreInfo extends AppCompatActivity implements MenuListAdapter.OnLi
             }
         }
     }
-    public void onClickFavorite(View view) {
-        if(result) {
-            //등록 - > 미등록
-            String phone = _phone;
-            String storeId = storedIdStr;
-
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("phone", phone);
-            hashMap.put("store_id", storeId);
-            String url = "http://15.165.22.64:8080/FavoriteDelete.do";
-
-            makeRequestFavorteRem(url, hashMap);
-            mFavorite.setImageResource(R.drawable.heart_empty);
-
-            DeleteFavoriteDialog deleteFavoriteDialog = new DeleteFavoriteDialog(StoreInfo.this);
-            deleteFavoriteDialog.callFunction();
-            //true 등록되어있을때
-        }
-        else {
-            //미등록 -> 등록
-            String phone = _phone;
-            String storeId = storedIdStr;
-
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("phone", phone);
-            hashMap.put("store_id", storeId);
-
-            String url = "http://15.165.22.64:8080/FavoriteSave.do";
-            makeRequestFavoriteReg(url, hashMap);
-
-            mFavorite.setImageResource(R.drawable.heart_full);
-            AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(StoreInfo.this);
-            addFavoriteDialog.callFunction();
-            //false 등록되어있지 않을 때
-        }
-//        for(int i = 0; i< favoriteList.size();i++){
-//            String favoriteId = String.valueOf(favoriteList.get(i).getStore_id());
-//            if(favoriteId.equals(storedIdStr)){
-//                index = 1;
-//                break;
-//            }
-//            index = 0;
-//        }
-//        //현재는 즐겨찾기되어있지 않지만 즐겨찾기 버튼을 눌러 등록하고자할때
-//        if(index == 0){
-//
-//            String phone = _phone;
-//            String storeId = storedIdStr;
-//
-//            HashMap<String, String> hashMap = new HashMap<>();
-//            hashMap.put("phone", phone);
-//            hashMap.put("store_id", storeId);
-//
-//            String url = "http://15.165.22.64:8080/FavoriteSave.do";
-//
-//            makeRequestFavoriteReg(url, hashMap);
-//
-//            mFavorite.setImageResource(R.drawable.heart_full);
-//
-//            index = 1;
-//            AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(StoreInfo.this);
-//            addFavoriteDialog.callFunction();
-//        }
-//        else{//현재 즐겨찾기가 등록되어있지만 취소하고자할때store_location
-//            String phone = _phone;
-//            String storeId = storedIdStr;
-//
-//            HashMap<String, String> hashMap = new HashMap<>();
-//            hashMap.put("phone", phone);
-//            hashMap.put("store_id", storeId);
-//            String url = "http://15.165.22.64:8080/FavoriteDelete.do";
-//
-//            makeRequestFavorteRem(url, hashMap);
-//
-//            mFavorite.setImageResource(R.drawable.heart_empty);
-//            for(int i = 0; i< favoriteList.size();i++){
-//                String favoriteId = String.valueOf(favoriteList.get(i).getStore_id());
-//                if(favoriteId.equals(storedIdStr)){
-//                    favoriteList.remove(favoriteList.get(i));
-//                    break;
-//                }
-//            }
-//            favoriteParsing.setFavorite(favoriteList);
-//            String save = gson.toJson(favoriteParsing, FavoriteParsing.class);
-//            SharedPreferences.Editor editor = sp.edit();
-//            editor.putString("favorite", save);
-//            editor.commit();
-//
-//            index = 0;
-//            DeleteFavoriteDialog deleteFavoriteDialog = new DeleteFavoriteDialog(StoreInfo.this);
-//            deleteFavoriteDialog.callFunction();
-//        }
-//        for(int i = 0; i< favoriteList.size();i++){
-//            Log.e("favorlistㅅㅅㅅ", String.valueOf(favoriteList.get(i)));
-//        }
-    }
-
-    private synchronized void makeRequestFavorteRem(String url, HashMap<String, String> data) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(data),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.e("removeFAV", response.toString());
-                        jsonParsing(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("favremoveerr", "err");
-                    }
-                });
-        requestQueue.add(jsonObjectRequest);
-    }
-
-    private synchronized void makeRequestFavoriteReg(String url, HashMap data) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.e("url", url);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.e("responseeee", response.toString());
-                        applyJson(response);
-                        try {
-                            if (response.getBoolean("result")) {
-                                Log.e("favreg", "등록성공");
-                            }
-                        }
-                        catch(JSONException e){
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("favoriteRegerror", "err");
-                    }
-                });
-        requestQueue.add(jsonObjectRequest);
-    }
-    public void applyJson(final JSONObject result){
-        Boolean _result = false;
-        String _message = null;
-        try{
-            _result = result.getBoolean("result");
-//            if(_result) {
-//                favoriteListParsing = new FavoriteListParsing();
-//                favoriteListParsing.setStore_id(Integer.parseInt(storedIdStr));
-//                favoriteListParsing.setStore_info(storeDetail.getStoreInfo());
-//                favoriteListParsing.setStore_latitude(String.valueOf(storeDetail.getStoreLatitude()));
-//                favoriteListParsing.setStore_longitude(String.valueOf(storeDetail.getStoreLongitude()));
-//                favoriteListParsing.setStore_name(storeDetail.getName());
-//                favoriteListParsing.setStore_location(storeDetail.getStoreLocation());
-//                favoriteListParsing.setStore_image(storeDetail.getStore_image());
-//                favoriteList.add(favoriteListParsing);
-//                //리스트에 추가
-//                favoriteParsing.setFavorite(favoriteList);
-//
-//                String save = gson.toJson(favoriteParsing, FavoriteParsing.class);
-//                SharedPreferences.Editor editor = sp.edit();
-//                editor.putString("favorite", save);
-//                editor.apply();
-//                editor.commit();
-//            }
-            Log.e("result11", String.valueOf(_result));
-            _message = result.getString("message");
-        }
-        catch(JSONException e){
-            e.printStackTrace();
-        }
-    }
-    public void jsonParsing(JSONObject result){
-        Boolean _result = false;
-        String _message = null;
-        try{
-            _result = result.getBoolean("result");
-            _message = result.getString("message");
-        }
-        catch(JSONException e){
-            e.printStackTrace();
-        }
-    }
-
 }

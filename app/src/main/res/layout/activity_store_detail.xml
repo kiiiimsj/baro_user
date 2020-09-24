@@ -3,48 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".StoreDetailInfo">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="10">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-            <ImageView
-                android:id="@+id/back_pressed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:clickable="true"
-                android:onClick="onClickBack"
-                android:padding="10dp"
-                android:src="@drawable/general_back_icon" />
-
-            <TextView
-                android:id="@+id/title_content"
-                android:text="메머드 커피"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/bmhannapro"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="25dp" />
-        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8"
+            android:layout_weight="10"
             android:orientation="vertical"
+            android:paddingTop="20dp"
             android:paddingRight="20dp"
             android:paddingLeft="20dp"
             android:weightSum="10">
@@ -168,10 +139,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <fragment
-        android:name="com.example.wantchu.Fragment.BottomMenu"
-        android:id="@+id/bottom_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"/>
 </FrameLayout>

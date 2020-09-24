@@ -28,7 +28,6 @@
     <meta-data
         android:name="com.google.android.maps.v2.API_KEY"
         android:value="AIzaSyBCEYl5maaBv6WDhrGvrrFUeVCdMML8hwg" />
-
     <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
@@ -41,7 +40,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
         <activity android:name=".Events"/>
         <activity android:name=".Alerts" />
         <activity android:name=".OrderStatus" />
@@ -67,6 +65,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <activity android:name=".StoreInfoReNewer"/>
+        <activity android:name=".Events" />
+        <activity android:name=".Alerts" />
+        <activity android:name=".OrderStatus" />
 
         <activity android:name=".OrderProgressing" />
         <activity android:name=".ChangePass1Logging" />
@@ -86,7 +88,7 @@
         <activity android:name=".Register2" />
         <activity android:name=".Notice" />
         <activity android:name=".ChangeEmail2" />
-        <activity android:name=".StoreDetailInfo" />
+        <activity android:name=".StoreDetailInfoFragment" />
         <activity android:name=".ChangeEmail" />
         <activity android:name=".ListStorePage" />
         <activity android:name=".Login" />
@@ -94,7 +96,6 @@
         <activity
             android:name=".OrderHistory"
             android:launchMode="singleTask" />
-        <activity android:name=".StoreInfo" />
         <activity
             android:name=".MainPage"
             android:launchMode="singleTask"
