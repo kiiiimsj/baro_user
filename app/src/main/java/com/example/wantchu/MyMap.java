@@ -1,13 +1,17 @@
 package com.example.wantchu;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,9 +22,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Dialogs.MapSetPositionDialog;
+import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.JsonParsingHelper.MapListParsing;
 import com.example.wantchu.JsonParsingHelper.MapParsing;
 import com.example.wantchu.Url.UrlMaker;
@@ -35,6 +42,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
 
@@ -44,6 +53,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class MyMap extends AppCompatActivity implements AutoPermissionsListener, MapSetPositionDialog.isClickOkay {
 
@@ -57,10 +67,16 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
 
     Marker newMarker;
 
-
     LatLng oldLatLng;
 
     TextView address;
+    RelativeLayout storeDetail;
+    TextView storeTitle;
+    ImageView storePreview;
+    TextView distance;
+    TextView storeAddress;
+    StoreDetail storeDetailData;
+
 
     MapSetPositionDialog mapSetPositionDialog;
     SharedPreferences setMyNewLocation;
@@ -78,14 +94,20 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         address = findViewById(R.id.show_latlng_address);
         OverLayMarker = findViewById(R.id.over_lay_marker);
         setNewLatLng = findViewById(R.id.set_location);
-
+        storeDetail = findViewById(R.id.store_detail);
         setMyLocation = findViewById(R.id.location_change);
+
+        storeTitle = findViewById(R.id.store_title);
+        storePreview = findViewById(R.id.store_preview);
+        distance = findViewById(R.id.distance);
+        storeAddress = findViewById(R.id.address);
+
         GPSListener = new myGPSListener(MyMap.this);
         mapSetPositionDialog = new MapSetPositionDialog(this, this);
 
         makeRequest(setHashMapData());
         editor = setMyNewLocation.edit();
-
+        storeDetail.setVisibility(View.INVISIBLE);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         setMapFragmentGetMapAsync();
 
@@ -105,7 +127,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                 OverLayMarker.setVisibility(View.INVISIBLE);
                 setNewLatLng.setVisibility(View.INVISIBLE);
                 GPSListener.setMapLocationTextView(address, oldLatLng);
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(oldLatLng, 17));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(oldLatLng, 15));
                 map.getUiSettings().setMapToolbarEnabled(false);
                 oldMarkerOption.position(oldLatLng);
                 map.addMarker(oldMarkerOption);
@@ -113,10 +135,22 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                     map.moveCamera(CameraUpdateFactory.newLatLng(oldLatLng));
                     map.setContentDescription("현재 설정 위치");
                     map.setMyLocationEnabled(true);
-
+                    map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(Marker marker) {
+                            if(marker.getTag() == null) {
+                                storeDetail.setVisibility(View.INVISIBLE);
+                                return false;
+                            }
+                            storeDetail.setVisibility(View.VISIBLE);
+                            makeRequestForStoreDetail(marker.getTag()+"");
+                            return true;
+                        }
+                    });
                     setMyLocation.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            storeDetail.setVisibility(View.INVISIBLE);
                             setNewLatLng.setVisibility(View.VISIBLE);
                             OverLayMarker.setVisibility(View.VISIBLE);
                             final LatLng latLng = new LatLng(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
@@ -127,11 +161,11 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                             map.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
                                 @Override
                                 public void onCameraIdle() {
+                                    storeDetail.setVisibility(View.INVISIBLE);
                                     OverLayMarker.setVisibility(View.VISIBLE);
                                     LatLng latLng = new LatLng(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
                                     markerOptions.position(latLng);
                                     markerOptions.visible(false);
-
                                     GPSListener.setMapLocationTextView(address, latLng);
                                 }
                             });
@@ -139,7 +173,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                                 @Override
                                 public void onClick(View v) {
                                     mapSetPositionDialog.callFunction();
-
+                                    //http://15.165.22.64:8080/StoreFindById.do?store_id=가게id값
                                     newMarker = map.addMarker(markerOptions);
                                 }
                             });
@@ -157,11 +191,76 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             e.printStackTrace();
         }
     }
+
+    private void makeRequestForStoreDetail(String storeInfo) {
+        final StringTokenizer stringTokenizer = new StringTokenizer(storeInfo, ":");
+        String id =stringTokenizer.nextToken();
+        String url = new UrlMaker().UrlMake("StoreFindById.do?store_id=" + id);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                storeParsing(response, stringTokenizer.nextToken());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+
+    private void storeParsing(String response, String distance) {
+        Gson gson = new GsonBuilder().create();
+        storeDetailData = gson.fromJson(response, StoreDetail.class);
+        makeRequestForImage(distance);
+
+    }
+
+    public void makeRequestForImage(final String distanceStr) {
+        String url = new UrlMaker().UrlMake("ImageStore.do?image_name="+storeDetailData.getStore_image());
+        Log.i("store", url);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        ImageRequest request = new ImageRequest(url,
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        setStoreInfo(distanceStr, response);
+                    }
+                }, 200, 200, ImageView.ScaleType.FIT_XY, null,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("error", "error");
+                    }
+                });
+        requestQueue.add(request);
+    }
+
+    private void setStoreInfo(String distanceStr, Bitmap response) {
+        storePreview.setImageBitmap(response);
+        storeTitle.setText(storeDetailData.getStore_name());
+        storeAddress.setText(storeDetailData.getStore_location());
+        distance.setText(((int)Double.parseDouble(distanceStr))+"m");
+        storeDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+                    intent.putExtra("store_id", storeDetailData.getStore_id()+"");
+                    startActivity(intent);
+            }
+        });
+    }
+
     @Override
     public void clickOkay() {
         Location temp = new Location(LocationManager.GPS_PROVIDER);
         temp.setLatitude(newMarker.getPosition().latitude);
         temp.setLongitude(newMarker.getPosition().longitude);
+        OverLayMarker.setVisibility(View.INVISIBLE);
+        setNewLatLng.setVisibility(View.INVISIBLE);
         editor.putString("location", ":"+newMarker.getPosition().latitude+":"+newMarker.getPosition().longitude);
         editor.apply();
         editor.commit();
@@ -170,9 +269,15 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         setMapFragmentGetMapAsync();
         Log.i("location_temp", setMyNewLocation.getString("location", null));
     }
+
+    @Override
+    public void clickCancel() {
+        OverLayMarker.setVisibility(View.INVISIBLE);
+        setNewLatLng.setVisibility(View.INVISIBLE);
+    }
+
     public HashMap setHashMapData() {
         HashMap<String, Object> hash = new HashMap<>();
-
         LatLng setMyNewLatLng = GPSListener.startLocationService(null);
         hash.put("latitude", setMyNewLatLng.latitude);
         hash.put("longitude", setMyNewLatLng.longitude);
@@ -209,7 +314,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             Location storeLocation = new Location("");
             storeLocation.setLatitude(Double.parseDouble(mapListParsing.getStore_latitude()));
             storeLocation.setLongitude(Double.parseDouble(mapListParsing.getStore_longitude()));
-            mapListParsing = new MapListParsing(mapListParsing.getStore_name(), mapListParsing.getStore_latitude(), mapListParsing.getStore_longitude(), mapListParsing.getDistance());
+            mapListParsing = new MapListParsing(mapListParsing.getStore_id(), mapListParsing.getStore_name(), mapListParsing.getStore_latitude(), mapListParsing.getStore_longitude(), mapListParsing.getDistance());
             DataList.add(mapListParsing);
         }
         ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
@@ -220,10 +325,18 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             Double logi = Double.parseDouble(store.getStore_longitude());
             String name = store.getStore_name();
             MarkerOptions markerOption = new MarkerOptions().position(new LatLng(lati, logi)).title(name).snippet(((int)store.getDistance())+"m");
+            int height = 110;
+            int width = 80;
+            BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.map_marker_purple);
+            Bitmap b = bitmapdraw.getBitmap();
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+            markerOption.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
             markerOptions.add(markerOption);
         }
         for (int i = 0 ; i <markerOptions.size(); i++) {
-            map.addMarker(markerOptions.get(i)).showInfoWindow();
+            Marker marker =map.addMarker(markerOptions.get(i));
+            marker.setTag(mapParsing.getMapList().get(i).getStore_id()+":"+mapParsing.getMapList().get(i).getDistance());
+            marker.showInfoWindow();
         }
     }
 
@@ -237,11 +350,12 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
 
             for(int i = 0; i < jsonArray.length();i++){
                 JSONObject jObject = jsonArray.getJSONObject(i);
+                int store_id = jObject.optInt("store_id");
                 String store_name = jObject.optString("store_name");
                 String store_latitude = jObject.optString("store_latitude");
                 String store_longitude = jObject.optString("store_longitude");
                 float store_distance = (float)jObject.optDouble("distance");
-                MapListParsing mapListParsing = new MapListParsing(store_name, store_latitude, store_longitude, store_distance);
+                MapListParsing mapListParsing = new MapListParsing(store_id, store_name, store_latitude, store_longitude, store_distance);
                 mapListParsings.add(mapListParsing);
                 Log.e("realMap", result2.toString());
             }

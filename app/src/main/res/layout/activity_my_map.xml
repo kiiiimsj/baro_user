@@ -89,4 +89,54 @@
         android:textColor="@color/black"
         android:text="현재 위치로 설정하기"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/store_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        >
+        <ImageView
+            android:id="@+id/store_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/plus"
+            />
+        <TextView
+            android:id="@+id/store_title"
+            android:layout_toRightOf="@id/store_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="test cafe"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            />
+        <TextView
+            android:layout_below="@id/store_title"
+            android:id="@+id/address"
+            android:layout_toRightOf="@id/store_preview"
+            android:text="서울시 동작구 성수동"
+            android:maxLength="15"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            />
+        <TextView
+            android:id="@+id/distance"
+            android:layout_below="@id/store_title"
+            android:paddingRight="20dp"
+            android:text="350m"
+            android:layout_toRightOf="@id/address"
+            android:textAlignment="textEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </RelativeLayout>
 </RelativeLayout>

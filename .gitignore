@@ -12,3 +12,4 @@
 /captures
 .externalNativeBuild
 .cxx
+app/src/main/res/drawable/button_border_full.xml
