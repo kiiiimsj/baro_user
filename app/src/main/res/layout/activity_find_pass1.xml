@@ -1,90 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".FindPass1"
     android:background="@color/white"
-    android:padding="30dp">
-
-    <LinearLayout
+    tools:context=".FindPass1">
+    <fragment
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/top_bar"
+        android:name="com.example.wantchu.Fragment.TopBar"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/findPass_icon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:src="@drawable/forget_password_icon"
+        app:layout_constraintBottom_toTopOf="@+id/findPass_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/findPass_back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="callBackFromFindPass"
-            android:padding="5dp"
-            android:src="@drawable/general_back_icon"/>
+    <TextView
+        android:id="@+id/findPass_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/muli_black"
+        android:text="비밀번호찾기"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/forget_password_phone_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/findPass_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/forget_password_icon"/>
 
-        <TextView
-            android:id="@+id/findPass_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/muli_black"
-            android:text="비밀번호찾기"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            android:textColor="@color/black" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/forget_password_phone_number"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="휴대폰 번호 입력"
+        app:boxBackgroundColor="@color/lightWhite"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidthFocused="2dp"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/black"
+        app:hintTextColor="@color/black"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:startIconTint="@color/black">
 
-        <RelativeLayout
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/forget_password_phone_number_editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/muli_semibold"
+            android:inputType="phone"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@null" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/forget_password_phone_number"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="휴대폰 번호 입력"
-                app:boxStrokeColor="@color/black"
-                app:boxStrokeWidthFocused="2dp"
-                android:layout_marginTop="20dp"
-                app:endIconMode="clear_text"
-                app:endIconTint="@color/black"
-                app:hintTextColor="@color/black"
-                app:boxBackgroundColor="@color/lightWhite"
-                app:startIconTint="@color/black">
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/forget_password_phone_number_editText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/muli_semibold"
-                    android:inputType="phone"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@null" />
+    <Button
+        android:id="@+id/next_button"
+        android:layout_width="351dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:background="@color/black"
+        android:onClick="verifyPhone"
+        android:text="인증번호 요청"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forget_password_phone_number" />
 
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/next_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_below="@+id/forget_password_phone_number"
-                android:layout_gravity="center"
-                android:text="인증번호 요청"
-                android:onClick="verifyPhone"
-                android:textColor="@color/white"
-                android:background="@color/black"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

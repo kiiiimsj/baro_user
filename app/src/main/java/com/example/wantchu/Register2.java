@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.HelperDatabase.RegisterUser;
 import com.example.wantchu.Url.UrlMaker;
 import com.example.wantchu.helperClass.CheckInternet;
@@ -30,7 +31,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class Register2 extends AppCompatActivity {
+public class Register2 extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     //private final static String SERVER= "http://54.180.56.44:8080/";
     private String message;
 
@@ -160,17 +161,11 @@ public class Register2 extends AppCompatActivity {
         }
     }
 
-    private void storeNewPhoneData() {
-        FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
-        DatabaseReference reference = rootNode.getReference("Users");
-        reference.child(phone).setValue("");
-    }
-
-    public void callBackFromRegister2(View view) {
-        Intent intent = new Intent(getApplicationContext(), Login.class);
-        startActivity(intent);
-        finish();
-    }
+//    private void storeNewPhoneData() {
+//        FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
+//        DatabaseReference reference = rootNode.getReference("Users");
+//        reference.child(phone).setValue("");
+//    }
     public void makeRequestForRegister(String url, HashMap data) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Log.i("login", "request made to " + url);
@@ -194,5 +189,10 @@ public class Register2 extends AppCompatActivity {
                     }
                 });
         requestQueue.add(jsonObjectRequest);
+    }
+
+    @Override
+    public void onBack() {
+        super.onBackPressed();
     }
 }

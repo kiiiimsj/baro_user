@@ -18,6 +18,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wantchu.Fragment.TopBar;
+import com.example.wantchu.Url.UrlMaker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,14 +30,10 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Register1 extends AppCompatActivity {
-
+public class Register1 extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     private final static String KOREA = "+82";
-
-    private TextInputLayout phoneTextInput;
-
-    private Button nextButton;
-    private ImageView backButton;
+    public TextInputLayout phoneTextInput;
+    public Button nextButton;
 
     String _phone;
     @Override
@@ -43,9 +41,7 @@ public class Register1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register1);
         phoneTextInput = findViewById(R.id.register_phone_number);
-
         nextButton = findViewById(R.id.next_button);
-        backButton = findViewById(R.id.register_back_button);
     }
 
     public void verifyPhone(View view) {
@@ -60,7 +56,7 @@ public class Register1 extends AppCompatActivity {
         _phone = KOREA + _getUserEnteredPhoneNumber;
         Log.i("PHONE NUMBER : " , _phone);
 
-        makeRequestForCheckPhone(urlMaker());
+        makeRequestForCheckPhone();
 
     }
 
@@ -83,14 +79,8 @@ public class Register1 extends AppCompatActivity {
             return true;
         }
     }
-    public String urlMaker() {
-        StringBuilder urlBuilder =  new StringBuilder(getApplicationContext().getString(R.string.SERVER));
-        urlBuilder.append(getApplicationContext().getString(R.string.memberPhoneCheck));
-        urlBuilder.append(phoneTextInput.getEditText().getText().toString());
-
-        return urlBuilder.toString();
-    }
-    public void makeRequestForCheckPhone(String url) {
+    public void makeRequestForCheckPhone() {
+        String url = new UrlMaker().UrlMake("MemberPhoneCheck.do?phone="+phoneTextInput.getEditText().getText().toString());
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -128,10 +118,10 @@ public class Register1 extends AppCompatActivity {
             intent.putExtra("phone", _phone);
             startActivity(intent);
         }
-
     }
-    public void callBackFromRegister1(View view) {
-        startActivity(new Intent(getApplicationContext(), Login.class));
-        finish();
+
+    @Override
+    public void onBack() {
+        super.onBackPressed();
     }
 }
