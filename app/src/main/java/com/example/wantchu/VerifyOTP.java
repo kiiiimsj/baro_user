@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chaos.view.PinView;
+import com.example.wantchu.Fragment.TopBar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
@@ -22,7 +23,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
-public class VerifyOTP extends AppCompatActivity {
+public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
 
     private PinView pinFromUser;
     String phoneNumber;
@@ -45,13 +46,13 @@ public class VerifyOTP extends AppCompatActivity {
             public void run() {
                 while(sec != 0) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                         sec--;
                         min = sec / 60;
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                timer.setText(min + " : " +(sec / 2)+" 분");
+                                timer.setText(min + " : " +(sec / 2));
                             }
                         });
                     } catch (InterruptedException e) {
@@ -126,7 +127,6 @@ public class VerifyOTP extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Register2.class);
         intent.putExtra("phone", phoneNumber);
         startActivity(intent);
-        finish();
     }
 
     public void onClickVerify(View view) {
@@ -145,8 +145,8 @@ public class VerifyOTP extends AppCompatActivity {
         //인증버튼 클릭했을경우
     }
 
-    public void callBackFromFindPass(View view) {
+    @Override
+    public void onBack() {
         super.onBackPressed();
-        // 뒤로가기 클릭했을경우
     }
 }

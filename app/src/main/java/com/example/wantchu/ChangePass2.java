@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -24,20 +25,13 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class ChangePass2 extends AppCompatActivity {
-    //private final static String SERVER = "http://54.180.56.44:8080/";
-    private Button nextButton;
-    private ImageView backButton;
+public class ChangePass2 extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     TextInputLayout pass1, pass2;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pass2);
-
-        nextButton = findViewById(R.id.next_button);
-        backButton = findViewById(R.id.findPass_back_button);
         pass1 = findViewById(R.id.newPassword);
         pass2 = findViewById(R.id.newPasswordConfirm);
 
@@ -55,7 +49,7 @@ public class ChangePass2 extends AppCompatActivity {
         changePassUser.put("phone", _phone);
         changePassUser.put("pass", _newPass);
 
-        makeRequestForFindPass(urlMaker(), changePassUser);
+        makeRequestForFindPass(changePassUser);
     }
 
     private boolean validatePassword() {
@@ -105,7 +99,8 @@ public class ChangePass2 extends AppCompatActivity {
 
         return urlBuilder.toString();
     }
-    public void makeRequestForFindPass(String url, HashMap data) {
+    public void makeRequestForFindPass(HashMap data) {
+        String url = new UrlMaker().UrlMake("MemberPassUpdate.do");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Log.i("login", "request made to " + url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(data),
@@ -131,7 +126,6 @@ public class ChangePass2 extends AppCompatActivity {
         try {
             result =response.getBoolean("result");
             message = response.getString("message");
-
         }
         catch(JSONException e) {
             e.printStackTrace();
@@ -140,21 +134,16 @@ public class ChangePass2 extends AppCompatActivity {
     }
     public boolean check (boolean result, final String message) {
         if(result) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(ChangePass2.this, message, Toast.LENGTH_SHORT).show();
-                }
-            });
+            Toast.makeText(ChangePass2.this, message, Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getApplicationContext(), Login.class));
             finish();
         }
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(ChangePass2.this, message, Toast.LENGTH_SHORT).show();
-            }
-        });
+        Toast.makeText(ChangePass2.this, message, Toast.LENGTH_SHORT).show();
         return false;
+    }
+
+    @Override
+    public void onBack() {
+        super.onBackPressed();
     }
 }

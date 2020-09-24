@@ -35,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Url.UrlMaker;
 import com.example.wantchu.helperClass.CheckInternet;
+import com.example.wantchu.helperClass.myGPSListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -79,11 +80,12 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
                     }
                 });
         startLocationService();
+
         SharedPreferences shf = getApplicationContext().getSharedPreferences("basketList", MODE_PRIVATE);
         SharedPreferences.Editor editor = shf.edit();
         editor.clear().commit();
-        AutoPermissions.Companion.loadAllPermissions(this, 101);
 
+        AutoPermissions.Companion.loadAllPermissions(this, 101);
 
         userSession = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         phone = findViewById(R.id.login_phone);
@@ -91,6 +93,19 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
         rememberUser = findViewById(R.id.remember_user);
         phoneEditText = findViewById(R.id.login_phone_editText);
         passwordEditText =findViewById(R.id.login_password_editText);
+
+        phoneEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                phone.setError(null);
+            }
+        });
+        passwordEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                password.setError(null);
+            }
+        });
 
         sessionManager = new SessionManager(Login.this, SessionManager.SESSION_REMEMMBERME);
         if (sessionManager.checkRememberMe()) {
@@ -100,7 +115,6 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
             phoneEditText.setText(rememberMeDetails.get(SessionManager.KEY_SESSIONPHONENUMBER));
             passwordEditText.setText(rememberMeDetails.get(SessionManager.KEY_SESSIONPASSWORD));
         }
-
         rememberUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,94 +126,24 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
                 }
             }
         });
-
-        phoneEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                phone.setError(null);
-            }
-        });
-        passwordEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                password.setError(null);
-            }
-        });
-        //프로그래스바 실행
-
         progressApplication.progressOFF();
     }
-    //프로그래스바
-    private void startProgress(){
-        final ProgressApplication progressApplication = new ProgressApplication();
-
-        progressApplication.progressON(this);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressApplication.progressOFF();
-            }
-        },3500);
-    }
-
-
     private void startLocationService() {
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             return;
         }
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        try{
-            Location location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            location = manager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-            if(location != null){
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                String message = "latitude :" + latitude + "longitude" + longitude;
-                Log.e("message", message);
-
-                GPSListener gpsListener = new GPSListener();
-                long minTime = 10000;
-                float minDistance = 0;
-
-                manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, gpsListener);
-                manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,minTime,minDistance, gpsListener);
-                manager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,minTime,minDistance,gpsListener);
-            }
-        }
-        catch (SecurityException e){
-            e.printStackTrace();
-        }
-    }
-
-    class GPSListener implements LocationListener{
-        public void onLocationChanged(Location location){
-            Double latitude = location.getLatitude();
-            Double longitude = location.getLongitude();
-            String message = "내위치 -> latitude" + latitude + "logitude" + longitude;
-        }
-
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-
-        }
-
+        long minTime = 10000;
+        float minDistance = 0;
+        myGPSListener gpsListener = new myGPSListener(this);
+        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, gpsListener);
+        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,minTime,minDistance, gpsListener);
+        manager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,minTime,minDistance,gpsListener);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED
         && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             //권한이 없을경우 최초권한요청 또는 사용자에 의한 재요청 확인하는 코드
@@ -215,31 +159,22 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
             }
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         AutoPermissions.Companion.parsePermissions(this, requestCode, permissions, this);
     }
-
     public void onClickLogin(View view){
-
         CheckInternet checkInternet = new CheckInternet();
         if (!checkInternet.isConnected(this)) {
             showCustomDialog();
             return;
         }
-
         if(!validateFields()){
             return;
         }
-
-
         final String _phone = phone.getEditText().getText().toString().trim();
         final String _pass = password.getEditText().getText().toString().trim();
-        //remove 0 at the start if entered by the user
-
         if (rememberUser.isChecked()) {
             sessionManager.createRememberMeSession(_phone, _pass);
         }
@@ -249,8 +184,6 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
             sessionManager.getEditor().commit();
             sessionManager.clearRememberMeSession();
         }
-
-
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("phone", _phone);
         hashMap.put("pass", _pass);
@@ -268,7 +201,6 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("login", response.toString());
                         // {"result":true, afs}
                         applyJson(response);
                         try {
@@ -293,10 +225,7 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
                 });
         requestQueue.add(jsonObjectRequest);
     }
-    public synchronized void applyJson(final JSONObject result) {
-        jsonParsing(result);
-    }
-    private synchronized void jsonParsing(JSONObject result) {
+    public void applyJson(final JSONObject result) {
         String name = null;
         String phone = null;
         String createdDate = null;
@@ -313,20 +242,14 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
         catch(JSONException e ) {
             e.printStackTrace();
         }
-        Log.i("BOOLEAN TOSTRINg", result2+"");
         if(result2) {
-            logString();
             userSession.createLoginSession(name, phone, createdDate, email, userToken);
         }
-    }
-    public void logString() {
-        Log.i("LOGIN_SESSION",userSession.getUsersDetailFromSession().toString());
     }
     private boolean validateFields() {
         String _phone = phone.getEditText().getText().toString().trim();
         String _pass = password.getEditText().getText().toString().trim();
         String checkspaces = "\\A\\w{0,20}\\z";
-
         if(_phone.isEmpty()){
             phone.setError("휴대폰 번호를 입력해주세요");
             phone.requestFocus();
@@ -351,13 +274,10 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
     }
     public void onClickFindPass(View view){
         startActivity(new Intent(getApplicationContext(), FindPass1.class));
-        finish();
     }
 
     public void onClickRegister(View view){
-        Intent intent = new Intent(getApplicationContext(), Register1.class);
-        startActivity(intent);
-        finish();
+        startActivity(new Intent(getApplicationContext(), Register1.class));
     }
     private void showCustomDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
