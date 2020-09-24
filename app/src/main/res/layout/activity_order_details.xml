@@ -58,69 +58,93 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:orientation="horizontal">
-
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20px"
-                        android:layout_marginRight="20px"
-                        android:layout_weight="1"
-                        android:src="@drawable/shoplic_currency_won_featured"/>
-
-                    <TextView
-                        android:id="@+id/totalPrice"
-                        android:layout_width="0dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:textColor="@color/main"
-                        android:text="0"
-                        android:textSize="20sp"/>
-
+                        android:id="@+id/menu_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></ImageView>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1">
-
-                    <ImageButton
-                        android:id="@+id/itemMinus"
-                        android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="30px"
                         android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/minus"
-                        android:textStyle="bold"/>
+                        android:gravity="center">
+<!--                        <ImageView-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="15dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_margin="30px"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:src="@drawable/shoplic_currency_won_featured"/>-->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/totalPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_margin="10dp"
+                                android:layout_gravity="center"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/main"
+                                android:text="0"
+                                android:textSize="20sp"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="20sp"
+                                android:textColor="@color/main"
+                                android:layout_gravity="center"
+                                android:text=" 원 "></TextView>
+                        </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/itemCount"
-                        android:layout_width="wrap_content"
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_margin="20px"
-                        android:textColor="@color/main"
-                        android:textSize="20dp"
-                        android:text="1"/>
+                        android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/itemPlus"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="30px"
-                        android:background="@color/white"
-                        android:layout_weight="1"
-                        android:src="@drawable/plus" />
+                        <ImageButton
+                            android:id="@+id/itemMinus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:src="@drawable/minus"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/itemCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="10dp"
+                            android:textColor="@color/main"
+                            android:textSize="20dp"
+                            android:text="1"/>
+
+                        <ImageButton
+                            android:id="@+id/itemPlus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="10dp"
+                            android:background="@color/white"
+                            android:layout_weight="1"
+                            android:src="@drawable/plus" />
+                    </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

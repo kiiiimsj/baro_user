@@ -66,9 +66,6 @@
             </intent-filter>
         </service>
         <activity android:name=".StoreInfoReNewer"/>
-        <activity android:name=".Events" />
-        <activity android:name=".Alerts" />
-        <activity android:name=".OrderStatus" />
 
         <activity android:name=".OrderProgressing" />
         <activity android:name=".ChangePass1Logging" />
