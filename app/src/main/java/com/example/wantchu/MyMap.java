@@ -1,5 +1,6 @@
 package com.example.wantchu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,9 +22,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Dialogs.MapSetPositionDialog;
+import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.JsonParsingHelper.MapListParsing;
 import com.example.wantchu.JsonParsingHelper.MapParsing;
 import com.example.wantchu.Url.UrlMaker;
@@ -37,6 +42,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
 
@@ -46,6 +53,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class MyMap extends AppCompatActivity implements AutoPermissionsListener, MapSetPositionDialog.isClickOkay {
 
@@ -59,10 +67,16 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
 
     Marker newMarker;
 
-
     LatLng oldLatLng;
 
     TextView address;
+    RelativeLayout storeDetail;
+    TextView storeTitle;
+    ImageView storePreview;
+    TextView distance;
+    TextView storeAddress;
+    StoreDetail storeDetailData;
+
 
     MapSetPositionDialog mapSetPositionDialog;
     SharedPreferences setMyNewLocation;
@@ -80,14 +94,20 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         address = findViewById(R.id.show_latlng_address);
         OverLayMarker = findViewById(R.id.over_lay_marker);
         setNewLatLng = findViewById(R.id.set_location);
-
+        storeDetail = findViewById(R.id.store_detail);
         setMyLocation = findViewById(R.id.location_change);
+
+        storeTitle = findViewById(R.id.store_title);
+        storePreview = findViewById(R.id.store_preview);
+        distance = findViewById(R.id.distance);
+        storeAddress = findViewById(R.id.address);
+
         GPSListener = new myGPSListener(MyMap.this);
         mapSetPositionDialog = new MapSetPositionDialog(this, this);
 
         makeRequest(setHashMapData());
         editor = setMyNewLocation.edit();
-
+        storeDetail.setVisibility(View.INVISIBLE);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         setMapFragmentGetMapAsync();
 
@@ -115,19 +135,22 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                     map.moveCamera(CameraUpdateFactory.newLatLng(oldLatLng));
                     map.setContentDescription("현재 설정 위치");
                     map.setMyLocationEnabled(true);
-                    map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
-                        public void onInfoWindowClick(Marker marker) {
-                            Log.i("STORE_ID", marker.getTag()+"");
-                            Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
-                            intent.putExtra("store_id", marker.getTag()+"");
-                            startActivity(intent);
+                        public boolean onMarkerClick(Marker marker) {
+                            if(marker.getTag() == null) {
+                                storeDetail.setVisibility(View.INVISIBLE);
+                                return false;
+                            }
+                            storeDetail.setVisibility(View.VISIBLE);
+                            makeRequestForStoreDetail(marker.getTag()+"");
+                            return true;
                         }
                     });
-
                     setMyLocation.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            storeDetail.setVisibility(View.INVISIBLE);
                             setNewLatLng.setVisibility(View.VISIBLE);
                             OverLayMarker.setVisibility(View.VISIBLE);
                             final LatLng latLng = new LatLng(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
@@ -138,6 +161,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                             map.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
                                 @Override
                                 public void onCameraIdle() {
+                                    storeDetail.setVisibility(View.INVISIBLE);
                                     OverLayMarker.setVisibility(View.VISIBLE);
                                     LatLng latLng = new LatLng(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
                                     markerOptions.position(latLng);
@@ -167,6 +191,69 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             e.printStackTrace();
         }
     }
+
+    private void makeRequestForStoreDetail(String storeInfo) {
+        final StringTokenizer stringTokenizer = new StringTokenizer(storeInfo, ":");
+        String id =stringTokenizer.nextToken();
+        String url = new UrlMaker().UrlMake("StoreFindById.do?store_id=" + id);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                storeParsing(response, stringTokenizer.nextToken());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+
+    private void storeParsing(String response, String distance) {
+        Gson gson = new GsonBuilder().create();
+        storeDetailData = gson.fromJson(response, StoreDetail.class);
+        makeRequestForImage(distance);
+
+    }
+
+    public void makeRequestForImage(final String distanceStr) {
+        String url = new UrlMaker().UrlMake("ImageStore.do?image_name="+storeDetailData.getStore_image());
+        Log.i("store", url);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        ImageRequest request = new ImageRequest(url,
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        setStoreInfo(distanceStr, response);
+                    }
+                }, 200, 200, ImageView.ScaleType.FIT_XY, null,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("error", "error");
+                    }
+                });
+        requestQueue.add(request);
+    }
+
+    private void setStoreInfo(String distanceStr, Bitmap response) {
+        storePreview.setImageBitmap(response);
+        storeTitle.setText(storeDetailData.getStore_name());
+        storeAddress.setText(storeDetailData.getStore_location());
+        distance.setText(((int)Double.parseDouble(distanceStr))+"m");
+        storeDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+                    intent.putExtra("store_id", storeDetailData.getStore_id()+"");
+                    startActivity(intent);
+            }
+        });
+    }
+
     @Override
     public void clickOkay() {
         Location temp = new Location(LocationManager.GPS_PROVIDER);
@@ -182,6 +269,13 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         setMapFragmentGetMapAsync();
         Log.i("location_temp", setMyNewLocation.getString("location", null));
     }
+
+    @Override
+    public void clickCancel() {
+        OverLayMarker.setVisibility(View.INVISIBLE);
+        setNewLatLng.setVisibility(View.INVISIBLE);
+    }
+
     public HashMap setHashMapData() {
         HashMap<String, Object> hash = new HashMap<>();
         LatLng setMyNewLatLng = GPSListener.startLocationService(null);
@@ -241,9 +335,8 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         }
         for (int i = 0 ; i <markerOptions.size(); i++) {
             Marker marker =map.addMarker(markerOptions.get(i));
-            marker.setTag(mapParsing.getMapList().get(i).getStore_id()+"");
+            marker.setTag(mapParsing.getMapList().get(i).getStore_id()+":"+mapParsing.getMapList().get(i).getDistance());
             marker.showInfoWindow();
-
         }
     }
 

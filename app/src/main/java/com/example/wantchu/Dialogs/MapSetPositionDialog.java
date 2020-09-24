@@ -24,6 +24,7 @@ public class MapSetPositionDialog {
     }
     public interface isClickOkay {
         void clickOkay();
+        void clickCancel();
     }
     public void callFunction() {
         final Dialog dlg = new Dialog(context);
@@ -49,6 +50,7 @@ public class MapSetPositionDialog {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "취소 했습니다.", Toast.LENGTH_SHORT).show();
+                mListener.clickCancel();
                 dlg.dismiss();
             }
         });
