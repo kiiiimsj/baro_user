@@ -1,5 +1,6 @@
 package com.example.wantchu;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -106,7 +107,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                 OverLayMarker.setVisibility(View.INVISIBLE);
                 setNewLatLng.setVisibility(View.INVISIBLE);
                 GPSListener.setMapLocationTextView(address, oldLatLng);
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(oldLatLng, 14));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(oldLatLng, 15));
                 map.getUiSettings().setMapToolbarEnabled(false);
                 oldMarkerOption.position(oldLatLng);
                 map.addMarker(oldMarkerOption);
@@ -117,7 +118,10 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                     map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                         @Override
                         public void onInfoWindowClick(Marker marker) {
-                            Log.i("GETID", marker.getId());
+                            Log.i("STORE_ID", marker.getTag()+"");
+                            Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+                            intent.putExtra("store_id", marker.getTag()+"");
+                            startActivity(intent);
                         }
                     });
 
@@ -145,7 +149,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                                 @Override
                                 public void onClick(View v) {
                                     mapSetPositionDialog.callFunction();
-
+                                    //http://15.165.22.64:8080/StoreFindById.do?store_id=가게id값
                                     newMarker = map.addMarker(markerOptions);
                                 }
                             });
@@ -168,6 +172,8 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         Location temp = new Location(LocationManager.GPS_PROVIDER);
         temp.setLatitude(newMarker.getPosition().latitude);
         temp.setLongitude(newMarker.getPosition().longitude);
+        OverLayMarker.setVisibility(View.INVISIBLE);
+        setNewLatLng.setVisibility(View.INVISIBLE);
         editor.putString("location", ":"+newMarker.getPosition().latitude+":"+newMarker.getPosition().longitude);
         editor.apply();
         editor.commit();
@@ -178,7 +184,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
     }
     public HashMap setHashMapData() {
         HashMap<String, Object> hash = new HashMap<>();
-
         LatLng setMyNewLatLng = GPSListener.startLocationService(null);
         hash.put("latitude", setMyNewLatLng.latitude);
         hash.put("longitude", setMyNewLatLng.longitude);
@@ -215,7 +220,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             Location storeLocation = new Location("");
             storeLocation.setLatitude(Double.parseDouble(mapListParsing.getStore_latitude()));
             storeLocation.setLongitude(Double.parseDouble(mapListParsing.getStore_longitude()));
-            mapListParsing = new MapListParsing(mapListParsing.getStore_name(), mapListParsing.getStore_latitude(), mapListParsing.getStore_longitude(), mapListParsing.getDistance());
+            mapListParsing = new MapListParsing(mapListParsing.getStore_id(), mapListParsing.getStore_name(), mapListParsing.getStore_latitude(), mapListParsing.getStore_longitude(), mapListParsing.getDistance());
             DataList.add(mapListParsing);
         }
         ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
@@ -226,7 +231,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             Double logi = Double.parseDouble(store.getStore_longitude());
             String name = store.getStore_name();
             MarkerOptions markerOption = new MarkerOptions().position(new LatLng(lati, logi)).title(name).snippet(((int)store.getDistance())+"m");
-            int height = 130;
+            int height = 110;
             int width = 80;
             BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.map_marker_purple);
             Bitmap b = bitmapdraw.getBitmap();
@@ -235,7 +240,10 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             markerOptions.add(markerOption);
         }
         for (int i = 0 ; i <markerOptions.size(); i++) {
-            map.addMarker(markerOptions.get(i)).showInfoWindow();
+            Marker marker =map.addMarker(markerOptions.get(i));
+            marker.setTag(mapParsing.getMapList().get(i).getStore_id()+"");
+            marker.showInfoWindow();
+
         }
     }
 
@@ -249,11 +257,12 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
 
             for(int i = 0; i < jsonArray.length();i++){
                 JSONObject jObject = jsonArray.getJSONObject(i);
+                int store_id = jObject.optInt("store_id");
                 String store_name = jObject.optString("store_name");
                 String store_latitude = jObject.optString("store_latitude");
                 String store_longitude = jObject.optString("store_longitude");
                 float store_distance = (float)jObject.optDouble("distance");
-                MapListParsing mapListParsing = new MapListParsing(store_name, store_latitude, store_longitude, store_distance);
+                MapListParsing mapListParsing = new MapListParsing(store_id, store_name, store_latitude, store_longitude, store_distance);
                 mapListParsings.add(mapListParsing);
                 Log.e("realMap", result2.toString());
             }

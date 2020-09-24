@@ -2,17 +2,28 @@ package com.example.wantchu.JsonParsingHelper;
 
 public class MapListParsing implements Comparable<MapListParsing>{
 
+    int store_id;
     String store_name;
     String store_latitude;
     String store_longitude;
     double distance;
 
-    public MapListParsing(String store_name, String store_latitude, String store_longitude, double distance) {
+    public MapListParsing(int store_id, String store_name, String store_latitude, String store_longitude, double distance) {
+        this.store_id = store_id;
         this.store_name = store_name;
         this.store_latitude = store_latitude;
         this.store_longitude = store_longitude;
         this.distance = distance;
     }
+
+    public int getStore_id() {
+        return store_id;
+    }
+
+    public void setStore_id(int store_id) {
+        this.store_id = store_id;
+    }
+
     public  MapListParsing() {}
 
     public String getStore_name() {

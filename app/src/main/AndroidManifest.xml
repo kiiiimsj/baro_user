@@ -86,7 +86,6 @@
         <activity android:name=".Register2" />
         <activity android:name=".Notice" />
         <activity android:name=".ChangeEmail2" />
-        <activity android:name=".StoreDetailInfoFragment" />
         <activity android:name=".ChangeEmail" />
         <activity android:name=".ListStorePage" />
         <activity android:name=".Login" />

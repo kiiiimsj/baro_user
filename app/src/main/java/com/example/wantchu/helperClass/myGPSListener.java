@@ -76,16 +76,8 @@ public class myGPSListener implements LocationListener {
         Geocoder geocoder = new Geocoder(context, Locale.KOREA);
         try {
             List<Address> list = geocoder.getFromLocation(latitude, longitude, 10);
-            StringBuilder fAddress = new StringBuilder();
             Address address = list.get(0);
-            StringBuilder addressBuilder = new StringBuilder();
-            addressBuilder.append(address.getCountryName()+" ")
-                    .append(address.getAdminArea());
-            StringTokenizer stringTokenizer = new StringTokenizer(address.getAddressLine(0), addressBuilder.toString());
-            while(stringTokenizer.hasMoreTokens()) {
-                fAddress.append(stringTokenizer.nextToken()+" ");
-            }
-            Log.i("address", fAddress.toString());
+            String fAddress = address.getSubLocality()+ " "+address.getThoroughfare();
             getAddress.setText(fAddress); //--> 처리
         }
         catch(Exception e){
@@ -96,16 +88,9 @@ public class myGPSListener implements LocationListener {
         Geocoder geocoder = new Geocoder(context, Locale.KOREA);
         try {
             List<Address> list = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 10);
-            StringBuilder fAddress = new StringBuilder();
             Address address = list.get(0);
-            StringBuilder addressBuilder = new StringBuilder();
-            addressBuilder.append(address.getCountryName()+" ")
-                    .append(address.getAdminArea());
-            StringTokenizer stringTokenizer = new StringTokenizer(address.getAddressLine(0), addressBuilder.toString());
-            while(stringTokenizer.hasMoreTokens()) {
-                fAddress.append(stringTokenizer.nextToken()+" ");
-            }
-            Log.i("address", fAddress.toString());
+
+            String fAddress = address.getSubLocality()+ " "+address.getThoroughfare();
             getAddress.setText(fAddress); //--> 처리
         }
         catch(Exception e){
