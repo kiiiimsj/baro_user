@@ -40,7 +40,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".Events"/>
+        <activity android:name=".Alerts" />
+        <activity android:name=".OrderStatus" />
 
         <uses-library android:name="com.google.android.maps" />
         <uses-library
@@ -96,6 +98,7 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".MainPage"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MyPage"
