@@ -100,13 +100,19 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         sp = getSharedPreferences("favorite", MODE_PRIVATE);
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
-        menu = findViewById(R.id.menu_image);
+
+
+        //menu = findViewById(R.id.menu_image);
+
+
         glasses = findViewById(R.id.glasses);
         mSearch = findViewById(R.id.search);
         viewPager = findViewById(R.id.info_image);
         drawerLayout = findViewById(R.id.drawer_layout);
 
-        navigationView = findViewById(R.id.left_navi);
+       // navigationView = findViewById(R.id.left_navi);
+
+
         recycleBack = findViewById(R.id.background1);
         mapBar = findViewById(R.id.map_bar);
         //Fragment 생성
@@ -118,12 +124,14 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         storeSessionManager.setIsFavorite(false);
         startLocation();
         //orderListCart
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                navigationDrawer();
-            }
-        });
+
+
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                navigationDrawer();
+//            }
+//        });
 
 
         // 타입 버튼 동적으로 만드는 메소드
@@ -306,6 +314,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             }
         });
     }
+
     public void onClickBell(View view) {
         startActivity(new Intent(getApplicationContext(), Alerts.class));
     }

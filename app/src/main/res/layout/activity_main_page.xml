@@ -9,14 +9,14 @@
     tools:context=".MainPage"
     tools:openDrawer="start">
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/left_navi"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:background="@color/white"
-        app:headerLayout="@layout/main_left_header"
-        app:menu="@menu/main_left_side" />
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/left_navi"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="left"-->
+<!--        android:background="@color/white"-->
+<!--        app:headerLayout="@layout/main_left_header"-->
+<!--        app:menu="@menu/main_left_side" />-->
 
 <!--    <FrameLayout-->
 <!--        android:id="@+id/fragment_layout"-->
@@ -33,112 +33,95 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
 
-            <ImageView
+            <TextView
                 android:id="@+id/menu_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="10dp"
-                android:layout_marginStart="10dp"
-                
-                android:src="@drawable/menu_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/map_bar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BARO"
+                android:textSize="20dp"
+                android:fontFamily="@font/notosans_regular"
+                android:textColor="@color/main"/>
             <RelativeLayout
                 android:id="@+id/map_bar"
-                android:background="@drawable/button_border_full"
-                android:layout_width="250dp"
-                android:layout_height="40dp"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:layout_toStartOf="@+id/logo_image"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/logo_image"
-                app:layout_constraintStart_toEndOf="@+id/menu_image"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true">
 
                 <TextView
                     android:id="@+id/address"
                     android:fontFamily="@font/notosans_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="15dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
                     android:text="서울시 동작구" />
 
                 <ImageView
                     android:id="@+id/map_button"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/map_v"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/address"/>
+
+                <RelativeLayout
+                    android:id="@+id/search_bar"
+                    android:layout_width="180dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@id/map_button"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_border_full">
+
+                    <EditText
+                        android:id="@+id/search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:background="@null"
+                        android:hint="가게 검색"
+                        android:maxLines="1" />
+
+                    <ImageView
+                        android:id="@+id/glasses"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/search_icon" />
+                </RelativeLayout>
+
+                <fragment
+                    android:name="com.example.wantchu.Fragment.AlarmBell"
+                    android:id="@+id/logo_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/ic_baseline_location_on_24"/>
-
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:padding="5dp"/>
             </RelativeLayout>
 
-            <fragment
-                android:name="com.example.wantchu.Fragment.AlarmBell"
-                android:id="@+id/logo_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/map_bar"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <RelativeLayout
-            android:id="@+id/search_bar"
-            android:layout_below="@id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="40dp"
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
-            android:background="@drawable/button_border_full">
-
-            <EditText
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:background="@null"
-                android:hint="가게 검색"
-                android:maxLines="1" />
-
-            <ImageView
-                android:id="@+id/glasses"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/search_icon" />
-        </RelativeLayout>
+        </LinearLayout>
 
 
         <RelativeLayout
-            android:layout_below="@id/search_bar"
             android:layout_width="match_parent"
+            android:layout_below="@+id/header"
+            android:layout_marginTop="20dp"
             android:layout_height="match_parent">
             <LinearLayout
                 android:id="@+id/advertise"
@@ -152,20 +135,20 @@
                     android:id="@+id/info_image"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="4"/>
+                    android:layout_weight="3"/>
                 <LinearLayout
                     android:id="@+id/dots"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:orientation="horizontal" />
                 <RelativeLayout
                     android:id="@+id/background1"
                     android:layout_alignTop="@id/info_image"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="5"
+                    android:layout_weight="6.5"
                     android:orientation="vertical">
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
