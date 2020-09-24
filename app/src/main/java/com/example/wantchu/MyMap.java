@@ -106,7 +106,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                 OverLayMarker.setVisibility(View.INVISIBLE);
                 setNewLatLng.setVisibility(View.INVISIBLE);
                 GPSListener.setMapLocationTextView(address, oldLatLng);
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(oldLatLng, 17));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(oldLatLng, 14));
                 map.getUiSettings().setMapToolbarEnabled(false);
                 oldMarkerOption.position(oldLatLng);
                 map.addMarker(oldMarkerOption);
@@ -114,6 +114,12 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                     map.moveCamera(CameraUpdateFactory.newLatLng(oldLatLng));
                     map.setContentDescription("현재 설정 위치");
                     map.setMyLocationEnabled(true);
+                    map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick(Marker marker) {
+                            Log.i("GETID", marker.getId());
+                        }
+                    });
 
                     setMyLocation.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -132,7 +138,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                                     LatLng latLng = new LatLng(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
                                     markerOptions.position(latLng);
                                     markerOptions.visible(false);
-
                                     GPSListener.setMapLocationTextView(address, latLng);
                                 }
                             });
