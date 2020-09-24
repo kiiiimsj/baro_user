@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "188217718840-10ok4k6bd6lsjputdid3eiva2s82e66s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wantchu",
+            "certificate_hash": "92ce0d795a5fd845ea7e7744540a83051da8a36d"
+          }
+        },
+        {
           "client_id": "188217718840-pv77ulgj9palg1l7p9o9na5ntff4o37v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -28,6 +36,51 @@
           "android_info": {
             "package_name": "com.example.wantchu",
             "certificate_hash": "e876f1bec849eac55aa4535223801416f7f7dcf4"
+          }
+        },
+        {
+          "client_id": "188217718840-1hcc53r70bbapls1fii1eako6rsvg8rb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCEYl5maaBv6WDhrGvrrFUeVCdMML8hwg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "188217718840-1hcc53r70bbapls1fii1eako6rsvg8rb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188217718840:android:9125ba5e231529f53e8ecd",
+        "android_client_info": {
+          "package_name": "com.example.wantchuowner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "188217718840-muo14vm4stb1646h8ktv162onjahsc50.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wantchuowner",
+            "certificate_hash": "e876f1bec849eac55aa4535223801416f7f7dcf4"
+          }
+        },
+        {
+          "client_id": "188217718840-cms7dq1bithugbh6l60btudaf1ru6rsq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wantchuowner",
+            "certificate_hash": "95059b6f4aa56f916141a6e309a81fd5d9fa3261"
           }
         },
         {

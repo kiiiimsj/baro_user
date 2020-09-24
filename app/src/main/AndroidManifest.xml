@@ -41,7 +41,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Events"></activity>
+
+        <activity android:name=".Events"/>
         <activity android:name=".Alerts" />
         <activity android:name=".OrderStatus" />
 
@@ -96,6 +97,7 @@
         <activity android:name=".StoreInfo" />
         <activity
             android:name=".MainPage"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MyPage"

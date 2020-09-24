@@ -465,7 +465,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         if(storeSessionManager.getStoresSession() != null) {
             storeSessionManager.clearStoreSession();
         }
-        startActivity(new Intent(getApplicationContext(), Login.class));
+//        startActivity(new Intent(getApplicationContext(), Login.class));
         finish();
     }
 
