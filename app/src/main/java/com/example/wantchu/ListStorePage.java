@@ -2,7 +2,6 @@ package com.example.wantchu;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.ListStoreAdapter;
 import com.example.wantchu.AdapterHelper.ListStoreHelperClass;
 import com.example.wantchu.Database.StoreSessionManager;
-import com.example.wantchu.JsonParsingHelper.ListStoreListParsing;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.JsonParsingHelper.ListStoreParsing;
 import com.example.wantchu.Url.UrlMaker;
 import com.example.wantchu.helperClass.myGPSListener;
@@ -44,7 +44,7 @@ import java.util.HashMap;
 
 //import com.example.wantchu.Database.SendToServer;
 
-public class ListStorePage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface , AutoPermissionsListener {
+public class ListStorePage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface , AutoPermissionsListener, TopBar.OnBackPressedInParentActivity {
     private final static int FIRST = 1;
     private final static int AFTER_FIRST =2;
     private final static int ON_RESTART = 3;
@@ -66,17 +66,18 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     LatLng latLng;
 
     StoreSessionManager storeSessionManager;
-    ArrayList<ListStoreListParsing> listStoreListParsings;
     ProgressApplication progressApplication;
     SharedPreferences saveListSet;
 
     ListStoreParsing listStoreParsing;
 
+
+    FragmentManager fm;
+    TopBar topbar;
     static int count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("CREATE_LISTSTORE", 1+"");
         setContentView(R.layout.activity_list_store_page);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
@@ -88,6 +89,9 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         saveListSet = getSharedPreferences("saveList", MODE_PRIVATE);
         storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
         currentPos = 0;
+        fm = getSupportFragmentManager();
+        topbar = (TopBar) fm.findFragmentById(R.id.top_bar);
+
         myGPSListener myGPSListener = new myGPSListener(this);
         latLng = myGPSListener.startLocationService(null);
         chooseShowList(FIRST);
@@ -98,19 +102,13 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
                 makeRequestForTypeFind(setHashDataForTypeFind(), AFTER_FIRST);
             }
         });
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i("onPause", "onPause");
+        fm.beginTransaction().show(topbar);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if(count == 0){
-            Log.i("isPause", "11");
             chooseShowList(ON_RESTART);
         }
     }
@@ -130,19 +128,16 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
             }
             intent.putExtra("list_type", value);
         }
-        Log.i("intent.getString", intent.getStringExtra("list_type"));
         if(intent.getStringExtra("list_type").equals("search")){
             storeSearch = intent.getStringExtra("searchStore");
-            Log.i("storeSearchValue", storeSearch);
-            typeName.setText("검색 가게");
+            topbar.setTitleStringWhereUsedEventsAndListStore("검색 가게");
             makeRequestForSearch(urlMaker(storeSearch));
             return;
         }
         if(intent.getStringExtra("list_type").equals("find_type")) {
             type_code = intent.getStringExtra("type_code");
             type_name = intent.getStringExtra("type_name");
-            Log.i("TYPE_CODE", 1+"");
-            typeName.setText(type_name);
+            topbar.setTitleStringWhereUsedEventsAndListStore(type_name);
             makeRequestForTypeFind(setHashDataForTypeFind(), state);
         }
     }
@@ -160,7 +155,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         if(getStore.getInt("current", -1) != -1) {
             currentPos = getStore.getInt("current", -1);
         }
-        Log.i("GET_DATA", type_code +" : " + currentPos + " : " + latLng.latitude + " : " + latLng.longitude);
         HashMap<String, Object> data = new HashMap<>();
         data.put("type_code", type_code);
         data.put("startPoint", currentPos);
@@ -170,18 +164,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         return data;
     }
     private void makeRequestForTypeFind(HashMap data, final int state) {
-//        JSONObject jsonObject = new JSONObject();
-//        Log.e("type_code",type_code);
-//        try {
-//            jsonObject.put("type_code",type_code);
-//            jsonObject.put("latitude",latLng.latitude);
-//            jsonObject.put("longitude",latLng.longitude);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
         String lastUrl = "StoreInfoFindByType.do?";
-//        String lastUrl = "StoreInfoFindByType.do?type_code=" + type_code;
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -357,14 +340,8 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
         startActivity(intent);
     }
-
-    public void onClickBack(View view) {
+    @Override
+    public void onBack() {
         super.onBackPressed();
-    }
-
-    private double getDistance(Location myLocation, Location storeLocation){
-        double distance;
-        distance = myLocation.distanceTo(storeLocation);
-        return distance;
     }
 }

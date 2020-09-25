@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.ExpandAdapter;
 import com.example.wantchu.AdapterHelper.NoticeGroup;
 //import com.example.wantchu.Database.SendToServer;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.HelperDatabase.LoginUser;
 import com.example.wantchu.JsonParsingHelper.NoticeListParsing;
 import com.example.wantchu.JsonParsingHelper.NoticeParsing;
@@ -43,9 +44,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Notice extends AppCompatActivity {
-    TextView mainTitle;
-    String uri;
+public class Notice extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     ArrayList<NoticeGroup> DataList;
     private ExpandableListView listView;
     int width;
@@ -53,7 +52,7 @@ public class Notice extends AppCompatActivity {
     ProgressApplication progressApplication;
 
     @Override
-    public void  onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
         progressApplication = new ProgressApplication();
@@ -63,40 +62,20 @@ public class Notice extends AppCompatActivity {
         Point size = new Point();
         display.getSize(size);
         width = size.x;
-        
-        mainTitle = findViewById(R.id.mainTitle);
-
-        Intent intent = getIntent();
-        String type = intent.getExtras().getString("type");
 
         DataList = new ArrayList<NoticeGroup>();
+
         listView = (ExpandableListView)findViewById(R.id.NoticeList);
 
-        HashMap<String,NoticeGroup> hashMap = new HashMap<>();
-        hashMap.put("NoticeGroup",new NoticeGroup(""));
-
-        if(type.equals("NOTICE")){
-            mainTitle.setText("공지 사항");
-            uri="NoticeFindByCode.do?notice_code=NOTICE";
-            makeRequest(uri);
-        }
-        else if(type.equals("ALERT")){
-            mainTitle.setText("알 림");
-            uri="NoticeFindByCode.do?notice_code=ALERT";
-            makeRequest(uri);
-        }
-        else{
-            mainTitle.setText("딴 거");
-            uri="NoticeFindAll.do";
-            makeRequest(uri);
-        }
+        makeRequest();
     }
-
-    private synchronized NoticeParsing jsonParsing(String result) {
+    private NoticeParsing jsonParsing(String result) {
         NoticeParsing noticeParsing = new NoticeParsing();
         try {
-
             Boolean result1 = (Boolean)new JSONObject(result).getBoolean("result");
+            if(!result1) {
+                progressApplication.progressOFF();
+            }
             noticeParsing.setMessage(new JSONObject(result).getString("message"));
             JSONArray jsonArray = new JSONObject(result).getJSONArray("notice");
             ArrayList<NoticeListParsing> noticeListParsings = new ArrayList<NoticeListParsing>();
@@ -119,14 +98,11 @@ public class Notice extends AppCompatActivity {
         return noticeParsing;
     }
 
-    private synchronized void makeRequest(String uri) {
-        UrlMaker urlMaker = new UrlMaker();
-        String url = urlMaker.UrlMake("");
-        StringBuilder urlBuilder = new StringBuilder(url);
-        urlBuilder.append(uri);
+    private void makeRequest() {
+        String url = new UrlMaker().UrlMake("NoticeFindByCode.do?notice_code=NOTICE");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        StringRequest request = new StringRequest(Request.Method.GET, urlBuilder.toString(),
+        StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -174,10 +150,8 @@ public class Notice extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
                     }
                 }, animation.getDuration());
-
             }
         });
         listView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
@@ -190,8 +164,8 @@ public class Notice extends AppCompatActivity {
         });
         progressApplication.progressOFF();
     }
-
-    public void onClickBack(View view) {
+    @Override
+    public void onBack() {
         super.onBackPressed();
     }
 }

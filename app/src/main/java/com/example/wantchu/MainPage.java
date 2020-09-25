@@ -22,8 +22,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -37,9 +35,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.AdvertiseAdapter;
 import com.example.wantchu.Adapter.TypeAdapter;
 import com.example.wantchu.AdapterHelper.TypeHelperClass;
-import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Database.StoreSessionManager;
-import com.example.wantchu.Dialogs.IfLogoutDialog;
 import com.example.wantchu.JsonParsingHelper.EventHelperClass;
 import com.example.wantchu.JsonParsingHelper.TypeListParsing;
 import com.example.wantchu.JsonParsingHelper.TypeParsing;
@@ -57,7 +53,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, IfLogoutDialog.clickButton {
+public class MainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface {
 
     RecyclerView mRecyclerView;
     RecyclerView.Adapter adapter;
@@ -72,14 +68,10 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     int currentPos;
     AdvertiseAdapter advertiseAdapter;
 
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-
     SharedPreferences sp;
     Gson gson;
 
     RelativeLayout recycleBack;
-    RelativeLayout logoutLayout;
 
     StoreSessionManager storeSessionManager;
     ProgressApplication progressApplication;
@@ -101,17 +93,9 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
 
-
-        //menu = findViewById(R.id.menu_image);
-
-
         glasses = findViewById(R.id.glasses);
         mSearch = findViewById(R.id.search);
         viewPager = findViewById(R.id.info_image);
-        drawerLayout = findViewById(R.id.drawer_layout);
-
-       // navigationView = findViewById(R.id.left_navi);
-
 
         recycleBack = findViewById(R.id.background1);
         mapBar = findViewById(R.id.map_bar);
@@ -123,16 +107,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
         storeSessionManager.setIsFavorite(false);
         startLocation();
-        //orderListCart
-
-
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                navigationDrawer();
-//            }
-//        });
-
 
         // 타입 버튼 동적으로 만드는 메소드
         makeRequest();
@@ -263,7 +237,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
 
     private void mRecyclerView(String result) {
-
         mRecyclerView.setHasFixedSize(true);
         ArrayList<TypeHelperClass> DataList = new ArrayList<TypeHelperClass>();
         HashMap<String, TypeHelperClass> hashMap = new HashMap<>();
@@ -281,51 +254,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         }
         mRecyclerView.setAdapter(adapter);
         progressApplication.progressOFF();
-    }
-
-    private void navigationDrawer() {
-        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
-        sessionManager.getUsersDetailSession();
-        HashMap<String, String> getName = sessionManager.getUsersDetailFromSession();
-        TextView name = navigationView.getHeaderView(0).findViewById(R.id.userName);
-        logoutLayout = navigationView.getHeaderView(0).findViewById(R.id.logout_button);
-        logoutLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IfLogoutDialog ifLogoutDialog = new IfLogoutDialog(MainPage.this, MainPage.this);
-                ifLogoutDialog.callFunction();
-            }
-        });
-
-        navigationView.bringToFront();
-        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
-
-        name.setText(getName.get(SessionManager.KEY_USERNAME));
-        drawerLayout.setDrawerElevation(0);
-
-
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (drawerLayout.isDrawerVisible(GravityCompat.START))
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                else
-                    drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-    }
-
-    public void onClickBell(View view) {
-        startActivity(new Intent(getApplicationContext(), Alerts.class));
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else
-            super.onBackPressed();
     }
 
     //왼쪽 사이드바 메뉴 클릭시
@@ -458,23 +386,5 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         intent.putExtra("type_name", viewHolder.title.getText().toString());
         intent.putExtra("list_type", "find_type");
         startActivity(intent);
-    }
-
-    @Override
-    public void clickOkay() {
-        SessionManager sessionManager1 = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
-        if(sessionManager1.getUsersDetailFromSession() != null) {
-            sessionManager1.clearDetailUserSession();
-        }
-        if(storeSessionManager.getStoresSession() != null) {
-            storeSessionManager.clearStoreSession();
-        }
-//        startActivity(new Intent(getApplicationContext(), Login.class));
-        finish();
-    }
-
-    @Override
-    public void clickCancel() {
-
     }
 }

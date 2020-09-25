@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,16 +19,16 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.AlertsAdapter;
 import com.example.wantchu.AdapterHelper.AlertsHelperClass;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.JsonParsingHelper.AlertIsNewParsing;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.gson.Gson;
 
-public class Alerts extends AppCompatActivity {
+public class Alerts extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     RecyclerView eventsRecyclerView;
     ProgressApplication progressApplication;
     AlertsHelperClass eventsHelperData;
     AlertsAdapter alertsAdapter;
-    AlertIsNewParsing getAlertId;
     SharedPreferences saveAtUserSawAlarmList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,11 @@ public class Alerts extends AppCompatActivity {
     public void parsing(String response) {
         Gson gson = new Gson();
         eventsHelperData = gson.fromJson(response, AlertsHelperClass.class);
+        if(!eventsHelperData.result) {
+            Toast.makeText(this,"로딩 실패", Toast.LENGTH_LONG).show();
+            progressApplication.progressOFF();
+            return;
+        }
         setRecyclerView();
     }
     public void setRecyclerView(){
@@ -95,7 +101,8 @@ public class Alerts extends AppCompatActivity {
         eventsRecyclerView.setAdapter(alertsAdapter);
         progressApplication.progressOFF();
     }
-    public void onClickBack(View view) {
+    @Override
+    public void onBack() {
         super.onBackPressed();
     }
 }

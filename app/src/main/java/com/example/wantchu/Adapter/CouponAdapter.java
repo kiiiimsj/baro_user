@@ -18,7 +18,7 @@ import com.example.wantchu.R;
 import java.util.ArrayList;
 
 public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponViewHolder> {
-    private CouponList couponList;
+    static public CouponList couponList;
 
     public CouponAdapter(CouponList couponList) {
         this.couponList = couponList;
@@ -28,8 +28,13 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
     public CouponViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.my_coupon, parent, false);
-        CouponViewHolder couponViewHolder = new CouponViewHolder(view);
+        CouponViewHolder couponViewHolder = new CouponViewHolder(view, viewType);
         return couponViewHolder;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
@@ -37,7 +42,6 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
         Coupon coupon = couponList.coupon.get(position);
         holder.couponId.setText(Integer.toString(coupon.getCoupon_id()));
         holder.couponCondition.setText(coupon.getCoupon_condition()+" 원 이상 구매시 적용");
-
 //        if(coupon.getCoupon_content().length() >= 10) {
 //            holder.couponContent.setTextSize(25);
 //        }
@@ -100,7 +104,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
         TextView couponDate;
         TextView couponDiscount;
         TextView couponId;
-        public CouponViewHolder(@NonNull View itemView) {
+        public CouponViewHolder(@NonNull View itemView, int po) {
             super(itemView);
             couponName = itemView.findViewById(R.id.coupon_name);
             couponCondition = itemView.findViewById(R.id.coupon_condition);

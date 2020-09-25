@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,6 +27,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Dialogs.MapSetPositionDialog;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.JsonParsingHelper.MapListParsing;
 import com.example.wantchu.JsonParsingHelper.MapParsing;
@@ -53,13 +55,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-public class MyMap extends AppCompatActivity implements AutoPermissionsListener, MapSetPositionDialog.isClickOkay {
-
-    TextView title;
+public class MyMap extends AppCompatActivity implements AutoPermissionsListener, MapSetPositionDialog.isClickOkay, TopBar.OnBackPressedInParentActivity, TopBar.ClickButton {
     SupportMapFragment mapFragment;
     GoogleMap map;
     MarkerOptions oldMarkerOption;
-    Button setMyLocation;
+
     Button setNewLatLng;
     RelativeLayout OverLayMarker;
 
@@ -81,19 +81,21 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
     myGPSListener GPSListener;
     SharedPreferences.Editor editor;
 
+
+    FragmentManager fm;
+    TopBar topBar;
+
+    Button.OnClickListener clickListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_map);
+
         setMyNewLocation = getSharedPreferences("newLocation", MODE_PRIVATE);
-
-
-        title = findViewById(R.id.type_name);
         address = findViewById(R.id.show_latlng_address);
         OverLayMarker = findViewById(R.id.over_lay_marker);
         setNewLatLng = findViewById(R.id.set_location);
         storeDetail = findViewById(R.id.store_detail);
-        setMyLocation = findViewById(R.id.location_change);
 
         storeTitle = findViewById(R.id.store_title);
         storePreview = findViewById(R.id.store_preview);
@@ -109,6 +111,8 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         setMapFragmentGetMapAsync();
 
+        fm = getSupportFragmentManager();
+        topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
 
         Log.i("latLng", oldLatLng +"");
         AutoPermissions.Companion.loadAllPermissions(this, 101);
@@ -136,6 +140,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                     map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
+                            OverLayMarker.setVisibility(View.INVISIBLE);
                             if(marker.getTag() == null) {
                                 storeDetail.setVisibility(View.INVISIBLE);
                                 return false;
@@ -145,7 +150,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                             return true;
                         }
                     });
-                    setMyLocation.setOnClickListener(new View.OnClickListener() {
+                    clickListener = new Button.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             storeDetail.setVisibility(View.INVISIBLE);
@@ -160,7 +165,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                                 @Override
                                 public void onCameraIdle() {
                                     storeDetail.setVisibility(View.INVISIBLE);
-                                    OverLayMarker.setVisibility(View.VISIBLE);
                                     LatLng latLng = new LatLng(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
                                     markerOptions.position(latLng);
                                     markerOptions.visible(false);
@@ -176,7 +180,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                                 }
                             });
                         }
-                    });
+                    };
                 }
                 catch(SecurityException e){
                     e.printStackTrace();
@@ -250,6 +254,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                     startActivity(intent);
             }
         });
+        fm.beginTransaction().show(topBar);
     }
 
     @Override
@@ -257,15 +262,14 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         Location temp = new Location(LocationManager.GPS_PROVIDER);
         temp.setLatitude(newMarker.getPosition().latitude);
         temp.setLongitude(newMarker.getPosition().longitude);
-        OverLayMarker.setVisibility(View.INVISIBLE);
-        setNewLatLng.setVisibility(View.INVISIBLE);
         editor.putString("location", ":"+newMarker.getPosition().latitude+":"+newMarker.getPosition().longitude);
         editor.apply();
         editor.commit();
         map.clear();
         makeRequest(setHashMapData());
         setMapFragmentGetMapAsync();
-        Log.i("location_temp", setMyNewLocation.getString("location", null));
+        OverLayMarker.setVisibility(View.INVISIBLE);
+        setNewLatLng.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -405,7 +409,13 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         mapFragment.onLowMemory();
         super.onLowMemory();
     }
+    @Override
+    public void onBack() {
+        super.onBackPressed();
+    }
 
-    public void onClickBack(View view) {
+    @Override
+    public void clickButton() {
+        clickListener.onClick(null);
     }
 }

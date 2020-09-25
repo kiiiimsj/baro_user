@@ -1,4 +1,4 @@
-package com.example.wantchu;
+package com.example.wantchu.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,9 +27,13 @@ import com.example.wantchu.AdapterHelper.ListCategoryHelperClass;
 import com.example.wantchu.AdapterHelper.ListMenuHelperClass;
 import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Fragment.BottomMenu;
+import com.example.wantchu.Fragment.StoreDetailInfoFragment;
 import com.example.wantchu.HelperDatabase.StoreCategories;
 import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.HelperDatabase.StoreMenus;
+import com.example.wantchu.OrderDetails;
+import com.example.wantchu.ProgressApplication;
+import com.example.wantchu.R;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -87,10 +91,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //progressApplication = new ProgressApplication();
-        //progressApplication.progressON(getActivity());
-
-        //세션에서 휴대폰값 가져오기
         Log.i("onCreate", true+"");
         sessionManager = new SessionManager(getActivity().getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
@@ -102,8 +102,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
 
 
     }
-    ///UI 설정 구간 ---------------------------------------------------
-    //상점정보 UI 설정 ---------------------------------------------------
     private void setDrawStoreInfo() {
         new Thread(new Runnable() {
             @Override
@@ -123,12 +121,9 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
             }
         }).start();
     }
-    //상점정보 UI 설정 ---------------------------------------------------
-    //메뉴 UI ----------------------------------------------------------------
     private void setMRecyclerViewMenu(int number) {
         mRecyclerViewMenu.setHasFixedSize(true);
         ArrayList<ListMenuHelperClass> DataList = new ArrayList<>();
-        //처음 켯을때는 처음 카테고리의 메뉴들을 가져오게 설정
         for (int i = 0; i < saveMenus.size(); i++) {
 
             if(saveMenus.get(i).getCategoryId() == number) {
@@ -142,17 +137,12 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 listMenuHelperClass.storeMenusId.add(storeMenus.getMenuId());
 
                 DataList.add(listMenuHelperClass);
-                //params.height += 300;
             }
         }
         mMenuAdapter = new MenuListAdapter(DataList, this, this);
         mRecyclerViewMenu.setAdapter(mMenuAdapter);
-        //progressApplication.progressOFF();
     }
-    //메뉴 UI ----------------------------------------------------------------
-    ///동적할당 시도
     private void setMRecyclerViewCategory() {
-        ArrayList<ListCategoryHelperClass> DataList = new ArrayList<>();
         for(int i = 0; i < saveCategories.size(); i++){
             View tabView = LayoutInflater.from(getActivity()).inflate(R.layout.category_layout, null);
             StoreCategories storeCategories = saveCategories.get(i);
@@ -198,16 +188,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 textColor.setTextColor(getResources().getColor(R.color.main));
             }
         });
-        //mCategoryAdapter = new CategoryListAdapter(DataList, this, this);
-        //mCategoryTabLayout.setAdapter(mCategoryAdapter);
-        //mCategoryTabLayout.
     }
-    ///
-    ///UI 설정 구간 ----------------------------------------------------
-
-
-    ///메뉴 불러오는 구간 -----------------------------------------------------
-    //url 설정 및 volley 호출
     private void drawMenusInfo(int number) {
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("");
@@ -238,7 +219,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 menu_id = jobj.optInt("menu_id");
 
                 storeMenus = new StoreMenus(storeId, categoryId, menuInfo, name, menuDefaultprice, menu_id);
-                //int storeId, int categoryId, String menuInfo, String menuName, int menuDefaultprice, int menuId
                 saveMenus.add(storeMenus);
                 setMRecyclerViewMenu(saveCategories.get(0).getCategoryId());
             }
@@ -246,15 +226,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
             e.printStackTrace();
         }
     }
-    ///메뉴 불러오는 구간 -----------------------------------------------------
-
-
-
-
-
-
-    ///카테고리 불러오는 구간 ------------------------------------------------
-    //url 설정 및 volley 호출
     private void drawCategoryInfo(int number) {
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("");
@@ -302,10 +273,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
             e.printStackTrace();
         }
     }
-    ///카테고리 불러오는 구간 ------------------------------------------------
-
-
-    ///상점 불러오는 구간 ---------------------------------------------------
     //url 설정 및 volley 호출
     private void drawStoreInfo(final int number) {
         UrlMaker urlMaker = new UrlMaker();
@@ -322,36 +289,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         storeDetail = gson.fromJson(result, StoreDetail.class);
         setDrawStoreInfo();
     }
-    //상점 불러오는 구간 ---------------------------------------------------
-
-
-    //뒤로가기 버튼
-//    public void onClickBack(View view) {
-//        finish();
-//        this.onBackPressed();
-//    }
-
-    //가게정보 버튼
-    public void showDetailStoreInfo(View view) {
-        Intent intent = new Intent(getActivity(), StoreDetailInfoFragment.class);
-        //intent.putExtra("StoreDetail", storeDetail.toString());
-        intent.putExtra("StoreDetail", storeDetail.toString());
-        startActivity(intent);
-    }
-    //category onClick Listener 설정 ---------------------------------------------------
-//    @Override
-//    public void onItemSelectedForCategory(View v, int position) {
-//        CategoryListAdapter.CategoryViewHolder viewHolder = (CategoryListAdapter.CategoryViewHolder) mCategoryTabLayout.findViewHolderForAdapterPosition(position);
-//        TextView textView = (TextView)viewHolder.clickBack.getChildAt(0);
-//        String categoryIdStr = textView.getText().toString();
-//        setMRecyclerViewMenu(Integer.parseInt(categoryIdStr));
-//    }
-//    @Override
-//    public void onItemLongSelectedForCategory(View v, int adapterPosition) {
-//
-//    }
-//    //----------------------------------------------------------------------------------
-//    //menu onClick Listener 설정 ---------------------------------------------------------
     @Override
     public void onItemSelectedForMenu(View v, int position) {
         MenuListAdapter.MenuViewHolder viewHolder = (MenuListAdapter.MenuViewHolder)mRecyclerViewMenu.findViewHolderForAdapterPosition(position);

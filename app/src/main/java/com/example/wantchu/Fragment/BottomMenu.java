@@ -28,7 +28,6 @@ import java.util.StringTokenizer;
  * create an instance of this fragment.
  */
 public class BottomMenu extends Fragment {
-    BottomAppBar mBottomMenu;
     BottomNavigationView realBottom;
     public BottomMenu() {}
 
@@ -47,7 +46,6 @@ public class BottomMenu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_bottom_menu, container, false);
-        mBottomMenu = rootView.findViewById(R.id.menu_bottom);
         realBottom = rootView.findViewById(R.id.real_bottom);
         clickBottomMenu();
         return rootView;

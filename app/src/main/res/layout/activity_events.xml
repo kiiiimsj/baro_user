@@ -1,79 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Events">
-
-    <RelativeLayout
+    <fragment
         android:id="@+id/top_bar"
+        android:name="com.example.wantchu.Fragment.TopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp">
-
-        <ImageView
-            android:id="@+id/back_pressed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@color/white"
-            android:onClick="onClickBack"
-            android:padding="10dp"
-            android:src="@drawable/general_back_icon" />
-
-        <TextView
-            android:id="@+id/event_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/brandon_grotesque_black"
-            android:gravity="center"
-            android:text="새로운 가게들이 추가됩니다!"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-    </RelativeLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
-        android:layout_below="@id/top_bar"
         android:id="@+id/event_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:text="2020년 9월 12일 ~ 2020년 9월 15일"
         android:textColor="@color/black"
-        android:textSize="15sp" />
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"/>
 
-    <ScrollView
-        android:id="@+id/scroll_view"
-        android:layout_below="@id/event_date"
+
+    <ImageView
+        android:id="@+id/event_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_marginTop="10dp"
-                android:id="@+id/event_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_marginBottom="10dp"/>
-            <TextView
-                android:layout_below="@id/event_image"
-                android:id="@+id/event_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:text="맥도날드 숭실대점 버거킹 숭실대점 매머드 숭실대점
-등등 추가 완료"/>
-        </RelativeLayout>
-    </ScrollView>
-
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_date" />
+    <TextView
+        android:id="@+id/event_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:padding="10dp"
+        android:text="맥도날드 숭실대점 버거킹 숭실대점 매머드 숭실대점
+등등 추가 완료"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_image" />
+</androidx.constraintlayout.widget.ConstraintLayout>
