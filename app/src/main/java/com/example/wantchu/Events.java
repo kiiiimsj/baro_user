@@ -1,13 +1,13 @@
 package com.example.wantchu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,28 +18,29 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.JsonParsingHelper.EventDetailHelper;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.gson.Gson;
 
-public class Events extends AppCompatActivity {
+public class Events extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     int storeId;
-    TextView eventTitle;
     TextView eventDate;
     TextView eventContent;
     ImageView eventImage;
     EventDetailHelper eventDetailHelperData;
-
+    FragmentManager fm;
+    TopBar topBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
-        eventTitle = findViewById(R.id.event_title);
         eventDate = findViewById(R.id.event_date);
         eventImage = findViewById(R.id.event_image);
         eventContent = findViewById(R.id.event_content);
-
+        fm = getSupportFragmentManager();
+        topBar = (TopBar)fm.findFragmentById(R.id.top_bar);
         Intent intent =getIntent();
         storeId = intent.getIntExtra("event_id", 0);
         makeRequestForGetEvent();
@@ -69,21 +70,16 @@ public class Events extends AppCompatActivity {
     }
 
     private void setView() {
-        eventTitle.setText(eventDetailHelperData.event_title);
-        eventDate.setText(eventDetailHelperData.event_startdate + " " + eventDetailHelperData.event_enddate);
+        topBar.setTitleStringWhereUsedEventsAndListStore(eventDetailHelperData.event_title);
+        eventDate.setText(eventDetailHelperData.event_startdate + " ~ " + eventDetailHelperData.event_enddate);
         eventContent.setText(eventDetailHelperData.event_content);
+        fm.beginTransaction().show(topBar);
         makeRequestForgetImage(eventDetailHelperData.event_image, eventImage, this);
     }
     public void makeRequestForgetImage(String type_image, final ImageView imageView, Context context ) {
-        String lastUrl = "ImageEvent.do?image_name=";
-        UrlMaker urlMaker = new UrlMaker();
-        String url = urlMaker.UrlMake(lastUrl);
-        StringBuilder urlBuilder = new StringBuilder()
-                .append(url)
-                .append(type_image);
-        Log.i("url", urlBuilder.toString());
+        String url = new UrlMaker().UrlMake("ImageEvent.do?image_name="+type_image);
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        ImageRequest request = new ImageRequest(urlBuilder.toString(),
+        ImageRequest request = new ImageRequest(url,
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap response) {
@@ -100,7 +96,8 @@ public class Events extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    public void onClickBack(View view) {
+    @Override
+    public void onBack() {
         super.onBackPressed();
     }
 }

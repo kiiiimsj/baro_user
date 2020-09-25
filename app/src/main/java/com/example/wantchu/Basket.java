@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,7 @@ import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Dialogs.OrderCancelDialog;
 import com.example.wantchu.Dialogs.OrderDoneDialog;
 import com.example.wantchu.Dialogs.OrderLimitExcessDialog;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.JsonParsingHelper.ClarityIsOpenStoreParsing;
 import com.example.wantchu.JsonParsingHelper.OrderInsertParsing;
 import com.example.wantchu.JsonParsingHelper.OrderInsertParsingChild;
@@ -84,20 +86,19 @@ import kr.co.bootpay.rest.BootpayRestImplement;
 import kr.co.bootpay.rest.model.RestEasyPayUserTokenData;
 import kr.co.bootpay.rest.model.RestTokenData;
 
-public class Basket extends AppCompatActivity implements BootpayRestImplement {
+public class Basket extends AppCompatActivity implements BootpayRestImplement, TopBar.OnBackPressedInParentActivity {
     public static Basket basket;
     public static final String IN_MY_BASEKT = "inMyBasket";
     public static final String BasketList = "basketList";
     ArrayList<DetailsFixToBasket> detailsFixToBaskets;
     DetailsFixToBasket detailsFixToBasket;
     RecyclerView recyclerView;
-    TextView StoreName;
-    TextView BasketPrice;
     LinearLayout recyclerViewShell;
     Button button;
 
     private WebSocketClient webSocketClient;
     int store_id;
+    TextView storeNameTextView;
     String storeName;
     String storeNumber;
     String phone;
@@ -126,15 +127,12 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         setContentView(R.layout.activity_basket);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
-        if(getFragmentManager().isDestroyed()){
-            Log.e("시발사라졌다고 ","mm");
-        }
+
         basket = Basket.this;
         button = findViewById(R.id.pay);
         recyclerView = findViewById(R.id.basketList);
         recyclerViewShell = findViewById(R.id.linearLayout2);
-        StoreName = findViewById(R.id.store_name);
-//        BasketPrice = findViewById(R.id.basket_price);
+        storeNameTextView = findViewById(R.id.store_name);
         SharedPreferences sharedPreferences = getSharedPreferences(BasketList, MODE_PRIVATE);
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
@@ -144,6 +142,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         user_name = userData.get(SessionManager.KEY_USERNAME);
         Gson gson = new Gson();
         storeName = sharedPreferences.getString("currentStoreName", "");
+        StringTokenizer stringTokenizer = new StringTokenizer(storeName, "\"");
         store_id = Integer.parseInt(sharedPreferences.getString("currentStoreId", "0"));
         storeNumber = sharedPreferences.getString("currentStoreNumber", "");
         if (store_id == 0) {
@@ -151,7 +150,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
         }
         String inMyBasket = sharedPreferences.getString(IN_MY_BASEKT, "");
         Log.i("inmy", inMyBasket);
-        StoreName.setText(storeName);
+        storeNameTextView.setText(stringTokenizer.nextToken());
         detailsFixToBaskets = new ArrayList<>();
         if (!(inMyBasket.equals(""))) {
             try {
@@ -262,21 +261,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
             e.printStackTrace();
         }
     }
-
-    public void onClickBack(View view) {
-//        if (!pay) {
-//            SharedPreferences sharedPreferences = getSharedPreferences("basketList", MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            Gson gson = new Gson();
-//            String json = gson.toJson(detailsFixToBaskets);
-//            Log.i("json", json);
-//            editor.putString(IN_MY_BASEKT, json);
-//            editor.putInt("orderCnt", detailsFixToBaskets.size());
-//            editor.commit();
-//        }
-        super.onBackPressed();
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -319,23 +303,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
             ;
         }
     }
-
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        if (!pay) {
-//            SharedPreferences sharedPreferences = getSharedPreferences("basketList", MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            Gson gson = new Gson();
-//            String json = gson.toJson(detailsFixToBaskets);
-//            Log.i("시바련아", json);
-//            editor.putString(IN_MY_BASEKT, json);
-//            Log.i("ondesDETAIL_SIZE", detailsFixToBaskets.size()+"");
-//            editor.putInt("orderCnt", (detailsFixToBaskets.size()));
-//            editor.commit();
-//        }
-//    }
-
     private void findUserForm() {
         final String phoneNumber = phone;
         final String user_id = phone;
@@ -758,6 +725,11 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement {
     public void callbackEasyPayUserToken(RestEasyPayUserTokenData userToken) {
         Log.e("2222222","2222222");
         startBootPay(user_token);
+    }
+
+    @Override
+    public void onBack() {
+        super.onBackPressed();
     }
     //결제==================================
 }

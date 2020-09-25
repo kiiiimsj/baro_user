@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,76 +7,41 @@
     android:background="@color/white"
     tools:context=".ListStorePage">
 
-    <LinearLayout
-        android:id="@+id/linear"
+    <fragment
+        android:id="@+id/top_bar"
+        android:name="com.example.wantchu.Fragment.TopBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content" />
 
-        <RelativeLayout
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="10dp"
+    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+        android:id="@+id/refresh_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_bar"
+        android:layout_above="@id/bottom_menu"
+        app:srl_direction="bottom">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 
-            <ImageView
-                android:id="@+id/back_pressed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClickBack"
-                android:layout_centerVertical="true"
-                android:padding="10dp"
-                android:src="@drawable/general_back_icon" />
+    <fragment
+        android:id="@+id/bottom_menu"
+        android:name="com.example.wantchu.Fragment.BottomMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        />
 
-            <TextView
-                android:id="@+id/type_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/notosans_black"
-                android:gravity="center"
-                android:text="카페"
-                android:textColor="@color/black"
-                android:textSize="25dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/back"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-                android:id="@+id/refresh_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srl_direction="bottom"
-                >
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"/>
-            </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
-            <fragment
-                android:name="com.example.wantchu.Fragment.BottomMenu"
-                android:id="@+id/bottom_menu"
-                android:backgroundDimEnabled="false"
-                android:windowBackground="@android:color/transparent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"/>
-            <fragment
-                android:name="com.example.wantchu.Fragment.OrderListCart"
-                android:id="@+id/cart_click_button"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="@dimen/order_list_cart_dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                />
-        </RelativeLayout>
-    </LinearLayout>
-</androidx.drawerlayout.widget.DrawerLayout>
+    <fragment
+        android:id="@+id/cart_click_button"
+        android:name="com.example.wantchu.Fragment.OrderListCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>

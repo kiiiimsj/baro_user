@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Database.SessionManager;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -27,8 +28,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class ChangeEmail extends AppCompatActivity {
-    //private final static String SERVER = "http://54.180.56.44:8080/";
+public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     String email;
     String phone;
     HashMap<String ,String> sessionUserdata;
@@ -48,8 +48,6 @@ public class ChangeEmail extends AppCompatActivity {
 
         email = sessionUserdata.get(SessionManager.KEY_EMAIL);
         phone = sessionUserdata.get(SessionManager.KEY_PHONENUMBER);
-
-
         oldEmail.setText(email);
     }
     private boolean checkInputEmail() {
@@ -73,16 +71,8 @@ public class ChangeEmail extends AppCompatActivity {
         }
         return true;
     }
-
-    public String urlMaker() {
-        UrlMaker urlMaker = new UrlMaker();
-        String url = urlMaker.UrlMake("");
-        StringBuilder urlBuilder = new StringBuilder(url);
-        urlBuilder.append(getApplicationContext().getString(R.string.emailUpdate));
-
-        return urlBuilder.toString();
-    }
-    public void makeRequestForEmail(String url, HashMap data) {
+    public void makeRequestForEmail(HashMap data) {
+        String url = new UrlMaker().UrlMake("MemberEmailUpdate.do");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Log.i("login", "request made to " + url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(data),
@@ -134,19 +124,20 @@ public class ChangeEmail extends AppCompatActivity {
             });
         }
     }
-
-    public void callBackFromChangeEmail(View view) { super.onBackPressed(); }
-
     public void onClickEmail(View view) {
         if(!checkInputEmail()) {
             return;
         }
-
         String newEmailString = newEmailInput.getEditText().getText().toString();
         HashMap<String, String> changeEmailUser = new HashMap<>();
 
         changeEmailUser.put("phone", phone);
         changeEmailUser.put("email", newEmailString);
-        makeRequestForEmail(urlMaker(), changeEmailUser);
+        makeRequestForEmail(changeEmailUser);
+    }
+
+    @Override
+    public void onBack() {
+        super.onBackPressed();
     }
 }

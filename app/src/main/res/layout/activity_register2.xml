@@ -25,11 +25,10 @@
         android:text="회원가입"
         android:textColor="@color/black"
         android:textSize="40sp"
-
+        android:layout_marginLeft="10dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="@id/user_name"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/user_name"
@@ -102,7 +101,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_password"
-        app:layout_constraintBottom_toTopOf="@id/signup_email"
         app:startIconTint="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -132,7 +130,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_password_confirm"
-        app:layout_constraintBottom_toTopOf="@id/button3"
         app:startIconTint="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -156,7 +153,6 @@
         android:text="회원가입 완료"
         android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/signup_email"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
