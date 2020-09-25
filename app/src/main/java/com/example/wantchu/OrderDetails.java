@@ -57,6 +57,7 @@ public class OrderDetails extends AppCompatActivity {
     static final int FLEX_EXPAND_HEIGHT = 300;
     public static OrderDetails orderDetails;
     ImageView imageView;
+    TextView store_name_text;
     TableLayout tableLayout;
     TableLayout tableLayout2;
     LinearLayout linearLayout;
@@ -114,6 +115,7 @@ public class OrderDetails extends AppCompatActivity {
         nonEssentialOptions = new HashMap<>();
         makeRequest();
         //--------------------------------------------------------
+        store_name_text = findViewById(R.id.store_name);
         imageView = findViewById(R.id.menu_image);
         expandableListView = findViewById(R.id.menuExpand_NotEssential);
         itemName = findViewById(R.id.menuName);
@@ -130,6 +132,7 @@ public class OrderDetails extends AppCompatActivity {
 //        v = findViewById(R.id.cart_click_button);
         //--------------------------------------------------------
         itemName.setText(menu_name);
+        store_name_text.setText(store_name);
 //        v.bringToFront();
         // 이벤트 심는곳
         fix.setOnClickListener(new View.OnClickListener() {
