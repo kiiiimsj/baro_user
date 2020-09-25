@@ -7,11 +7,7 @@
     android:gravity="center"
     android:id="@+id/optionTableRow"
     android:orientation="horizontal">
-    <ToggleButton
-        android:text="a"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"></ToggleButton>
+
     <LinearLayout
         android:layout_gravity="center"
         android:layout_width="wrap_content"
@@ -21,11 +17,9 @@
         android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:orientation="vertical"
-        android:id="@+id/optionElementLayout">
+        android:orientation="vertical">
 
         <ToggleButton
-            android:id="@+id/optionElementButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -47,20 +41,122 @@
             android:background="@color/white"
             android:textSize="15sp"/>
         <TextView
-            android:id="@+id/id_Storage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"/>
     </LinearLayout>
-    <Button
-    android:text="a"
-    android:layout_weight="1"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"></Button>
-    <Button
-        android:text="a"
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"></Button>
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:shadowRadius="10"
+            android:background="@drawable/button_border_empty"
+            android:gravity="center"
+            android:text="옵 션"
+            android:textColor="@color/main"
+            android:textSize="12sp"
+            android:textStyle="bold">
+        </ToggleButton>
+
+        <TextView
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="가격"
+            android:background="@color/white"
+            android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:shadowRadius="10"
+            android:background="@drawable/button_border_empty"
+            android:gravity="center"
+            android:text="옵 션"
+            android:textColor="@color/main"
+            android:textSize="12sp"
+            android:textStyle="bold">
+        </ToggleButton>
+
+        <TextView
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="가격"
+            android:background="@color/white"
+            android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:shadowRadius="10"
+            android:background="@drawable/button_border_empty"
+            android:gravity="center"
+            android:text="옵 션"
+            android:textColor="@color/main"
+            android:textSize="12sp"
+            android:textStyle="bold">
+        </ToggleButton>
+
+        <TextView
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="가격"
+            android:background="@color/white"
+            android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+
 
 </LinearLayout>
