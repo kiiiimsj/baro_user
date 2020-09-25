@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.wantchu.R;
 
@@ -40,7 +41,12 @@ public class TopBar extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mListener = (OnBackPressedInParentActivity)getActivity();
+        try {
+            this.mListener = (OnBackPressedInParentActivity)getActivity();
+        }
+        catch (ClassCastException e) {
+
+        }
         try {
             this.clickButtonListener = (ClickButton)getActivity();
         }
@@ -157,22 +163,39 @@ public class TopBar extends Fragment {
                 });
                 button.setVisibility(View.INVISIBLE);
                 break;
-            case "OrderDetail" :
-                break;
-            case "Basket" :
-                break;
-
-
-            case "ListStoreFavoritePage" :
-                //no top bar activity
+            case "OrderProgressing" :
+                title.setText("주문현황");
+                button.setVisibility(View.INVISIBLE);
+                backButton.setVisibility(View.INVISIBLE);
+                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "OrderHistory" :
-                //no top bar activity
-                break;
-            case "OrderProgressing" :
-                //no top bar activity
+                title.setText("주문내역");
+                button.setVisibility(View.INVISIBLE);
+                backButton.setVisibility(View.INVISIBLE);
+                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "MyPage":
+                title.setText("마이페이지");
+                backButton.setVisibility(View.INVISIBLE);
+                button.setVisibility(View.INVISIBLE);
+                etcImage.setVisibility(View.INVISIBLE);
+                break;
+            case "Basket" :
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onBack();
+                    }
+                });
+                title.setText("장바구니");
+                button.setVisibility(View.INVISIBLE);
+                etcImage.setVisibility(View.INVISIBLE);
+                break;
+            case "OrderDetail" :
+
+                break;
+            case "ListStoreFavoritePage" :
                 //no top bar activity
                 break;
             case "MainPage" :

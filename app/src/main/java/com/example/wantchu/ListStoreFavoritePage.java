@@ -49,8 +49,6 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
     RecyclerView mRecyclerView;
     ListStoreAdapter adapter;
 
-    TextView typeName;
-
     LatLng latLng;
 
     //즐겨찾기
@@ -68,8 +66,6 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         progressApplication.progressON(this);
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
-        typeName = findViewById(R.id.type_name);
-
 
         gson = new GsonBuilder().create();
         sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);

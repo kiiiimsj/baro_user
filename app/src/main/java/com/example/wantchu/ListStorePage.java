@@ -85,7 +85,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         refreshLayout = findViewById(R.id.refresh_list);
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
-        typeName = findViewById(R.id.type_name);
         saveListSet = getSharedPreferences("saveList", MODE_PRIVATE);
         storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
         currentPos = 0;

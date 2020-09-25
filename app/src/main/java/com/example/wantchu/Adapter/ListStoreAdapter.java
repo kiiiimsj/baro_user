@@ -146,8 +146,6 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             store = itemView.findViewById(R.id.store);
             ListStoreHelperClass list =listStoreLocations.get(po);
             makeRequest(list.storeImage, context, storeImage);
-
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -6,10 +6,18 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".MyPage">
+    <fragment
+        android:id="@+id/top_bar"
+        android:name="com.example.wantchu.Fragment.TopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
     <ScrollView
+        android:layout_below="@id/top_bar"
         android:layout_width="match_parent"
         android:scrollbarSize="0dp"
         android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_menu"
         android:padding="30dp">
         <LinearLayout
             android:id="@+id/table_size"
@@ -62,12 +70,6 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
-<!--                    <ImageView-->
-<!--                        android:id="@+id/phone_icon"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginRight="10dp"-->
-<!--                        android:src="@drawable/ic_baseline_smartphone_24" />-->
 
                     <TextView
                         android:layout_width="wrap_content"
