@@ -7,15 +7,28 @@
     android:orientation="vertical"
     android:layout_margin="10dp"
     tools:context=".OrderDetails">
-    <TextView
-        android:id="@+id/essentialOptionName"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15sp"
-        android:paddingLeft="30dp"
-        android:textSize="15sp"
-        android:background="@color/white"
-        android:text="옵션 종류명"/>
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:id="@+id/essentialOptionName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:textSize="15sp"
+            android:background="@color/white"
+            android:text="옵션 종류명"/>
+        <TextView
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/main"
+            android:text="ddddd"
+            ></TextView>
+    </RelativeLayout>
     <LinearLayout
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
