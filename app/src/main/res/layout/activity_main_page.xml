@@ -17,16 +17,6 @@
         android:background="@color/white"
         app:headerLayout="@layout/main_left_header"
         app:menu="@menu/main_left_side" />
-
-<!--    <FrameLayout-->
-<!--        android:id="@+id/fragment_layout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:foregroundGravity="right"-->
-<!--        android:orientation="vertical"-->
-<!--        android:transitionName="com.example.wantchu.MyPage" />-->
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

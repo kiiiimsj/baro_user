@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Database.SessionManager;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -22,12 +23,11 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class ChangePass1Logging extends AppCompatActivity {
-    //private final static String SERVER = "http://54.180.56.44:8080/";
+public class ChangePass1Logging extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     private TextInputLayout passInput;
     private String phone;
-
     private HashMap<String, String> sessionUserdata;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,27 +36,14 @@ public class ChangePass1Logging extends AppCompatActivity {
 
         SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionUserdata = sessionManager.getUsersDetailFromSession();
-
         phone = sessionUserdata.get(SessionManager.KEY_PHONENUMBER);
-
     }
-    public String urlMaker() {
-        UrlMaker urlMaker = new UrlMaker();
-        String url = urlMaker.UrlMake("");
-        StringBuilder urlBuilder = new StringBuilder(url);
-        urlBuilder.append(getApplicationContext().getString(R.string.login));
-
-        return urlBuilder.toString();
-    }
-
-    public void callBackFromUpdatePass(View view) {
-        super.onBackPressed();
-    }
-
     public void verifyPass(View view) {
         checkPassRight();
     }
-    public void makeRequestForCheckPass(String url, HashMap data) {
+
+    public void makeRequestForCheckPass(HashMap data) {
+        String url = new UrlMaker().UrlMake("MemberLogin.do");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Log.i("login", "request made to " + url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
@@ -93,7 +80,7 @@ public class ChangePass1Logging extends AppCompatActivity {
         userData.put("phone", phone);
         userData.put("pass", passInput.getEditText().getText().toString());
 
-        makeRequestForCheckPass(urlMaker(), userData);
+        makeRequestForCheckPass(userData);
     }
     public boolean checkPass(boolean getBool) {
         String inputPass = passInput.getEditText().getText().toString();
@@ -114,5 +101,10 @@ public class ChangePass1Logging extends AppCompatActivity {
             finish();
         }
         return true;
+    }
+
+    @Override
+    public void onBack() {
+        super.onBackPressed();
     }
 }

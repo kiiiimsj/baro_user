@@ -51,6 +51,8 @@ public class TopBar extends Fragment {
             case "FindPass1" :
             case "VerifyOTP" :
             case "ChangePass2" :
+            case "ChangeEmail" :
+            case "ChangePass1Logging" :
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -93,14 +95,13 @@ public class TopBar extends Fragment {
                 break;
             case "Notice" :
                 break;
-            case "ChangeEmail" :
-                break;
             case "ChangeEmail2" :
+                //no top bar activity
                 break;
             case "ChangePass3" :
+                //no top bar activity
                 break;
-            case "ChangePass1Logging" :
-                break;
+
         }
         return rootView;
     }
