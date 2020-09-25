@@ -490,6 +490,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         String url = new UrlMaker().UrlMake("OrderSendMessage.do");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("store_id",store_id);
+        jsonObject.put("receipt_id",receiptId);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
                         new Response.Listener<JSONObject>() {

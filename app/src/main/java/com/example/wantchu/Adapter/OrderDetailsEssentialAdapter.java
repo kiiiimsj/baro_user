@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,7 +70,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         ArrayList<String> nameList = new ArrayList<>();
         ArrayList<Integer> priceList = new ArrayList<>();
         ArrayList<Integer> option_ids = new ArrayList<>();
@@ -87,10 +88,10 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
             ArrayList<ExtraOrder> extraOrders = mTableData.get(text);
             resolveExtraOrdersToArrayList(extraOrders,nameList,priceList,option_ids);
             Log.i("size",String.valueOf(nameList.size()));
-            ArrayList<TableRow> tableRows = new ArrayList<>(nameList.size()/3 + 1);
-            TableRow tableRow = null;
+            ArrayList<LinearLayout> tableRows = new ArrayList<>(nameList.size()/3 + 1);
+            LinearLayout tableRow = null;
             for(int i =0;i<extraOrders.size();i++){
-                tableRows.add(i, (TableRow) inflater.inflate(R.layout.activity_order_details_essential_table_child, null, false));
+                tableRows.add(i, (LinearLayout) inflater.inflate(R.layout.activity_order_details_essential_table_child, null, false));
             }
             while(count !=extraOrders.size()){
                 if(count % 3==0 ){
@@ -116,13 +117,15 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                         if(name.isChecked()){
 
                             for(int i =0;i<toggleButtons.size();i++){
-                                if(toggleButtons.get(i) != name && toggleButtons.get(i).isChecked()){
+                                if(toggleButtons.get(i) != name && toggleButtons.get(i).isChecked()) {
                                     must--;
-                                    deletePrice = Integer.parseInt(((TextView)(((ViewGroup) toggleButtons.get(i).getParent()).getChildAt(1))).getText().toString());
+                                    deletePrice = Integer.parseInt(((TextView) (((ViewGroup) toggleButtons.get(i).getParent()).getChildAt(1))).getText().toString());
                                 }
+                                toggleButtons.get(i).setTextColor(ContextCompat.getColor(context,R.color.main));
                                 toggleButtons.get(i).setChecked(false);
                                 toggleButtons.get(i).setBackgroundResource(R.drawable.button_border_empty);
                             }
+                            holder.selectedOptions.setText(name.getText().toString()+"(+"+changePrice+"원)");
                             must++;
                             HashMap<String,Integer> selectOption = new HashMap<>();
                             ExtraOrder select = new ExtraOrder(Integer.parseInt(id.getText().toString()),Integer.parseInt(price.getText().toString()),name.getText().toString(),1);
@@ -132,10 +135,13 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                             priceTotal.setText(String.valueOf(originPrice+(itemCount*(changePrice-deletePrice))));
                             name.setChecked(true);
                             name.setBackgroundResource(R.drawable.button_border_full);
+                            name.setTextColor(ContextCompat.getColor(context,R.color.white));
                         }else{
                             must--;
+                            holder.selectedOptions.setText("");
                             priceTotal.setText(String.valueOf(originPrice-(itemCount*changePrice)));
                             name.setBackgroundResource(R.drawable.button_border_empty);
+                            name.setTextColor(ContextCompat.getColor(context,R.color.main));
                         }
                     }
                 });
@@ -203,11 +209,11 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView optionName;
+        TextView selectedOptions;
         LinearLayout essentialOptionTableShell;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            selectedOptions = itemView.findViewById(R.id.selectedOptions);
             optionName = itemView.findViewById(R.id.essentialOptionName);
             essentialOptionTableShell = itemView.findViewById(R.id.tableShell);
         }
