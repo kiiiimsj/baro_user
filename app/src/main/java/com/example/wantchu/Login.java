@@ -207,7 +207,6 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
                             if (response.getBoolean("result")) {
 
                                 startActivity(new Intent(getApplicationContext(), MainPage.class));
-                                finish();
                             }
                             else {
                                 Toast.makeText(Login.this, response.getString("message"), Toast.LENGTH_LONG).show();

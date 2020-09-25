@@ -2,6 +2,8 @@ package com.example.wantchu;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
@@ -27,6 +30,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.OrderDetailsEssentialAdapter;
@@ -52,6 +56,7 @@ import java.util.HashMap;
 public class OrderDetails extends AppCompatActivity {
     static final int FLEX_EXPAND_HEIGHT = 300;
     public static OrderDetails orderDetails;
+    ImageView imageView;
     TableLayout tableLayout;
     TableLayout tableLayout2;
     LinearLayout linearLayout;
@@ -72,6 +77,7 @@ public class OrderDetails extends AppCompatActivity {
     String store_number;
     int menu_count;
     int totalPrice;
+    String pictureInfo;
     HashMap<String, HashMap<String, ArrayList<ExtraOrder>>> essentialOrNot;
     HashMap<String, ArrayList<ExtraOrder>> extraOptions;
     ArrayList<String> arrayList;
@@ -108,6 +114,7 @@ public class OrderDetails extends AppCompatActivity {
         nonEssentialOptions = new HashMap<>();
         makeRequest();
         //--------------------------------------------------------
+        imageView = findViewById(R.id.menu_image);
         expandableListView = findViewById(R.id.menuExpand_NotEssential);
         itemName = findViewById(R.id.menuName);
         itemMinus = findViewById(R.id.itemMinus);
@@ -414,6 +421,7 @@ public class OrderDetails extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         applyAdapters(response);
+                        getMenuPicture();
                     }
                 },
                 new Response.ErrorListener() {
@@ -423,6 +431,25 @@ public class OrderDetails extends AppCompatActivity {
                     }
                 });
         requestQueue.add(request);
+    }
+
+    private void getMenuPicture() {
+        String url = new UrlMaker().UrlMake("ImageMenu.do?image_name="+menu_code+".png&store_id="+store_id);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        ImageRequest imageRequest = new ImageRequest(url,
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        imageView.setImageBitmap(response);
+                    }
+                },1000,1000,ImageView.ScaleType.FIT_CENTER,null,
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("error", "error");
+                    }
+                });
+        requestQueue.add(imageRequest);
     }
 
     private void jsonParsing(String result, OrderDetailsParsing orderDetailsParsing) {
