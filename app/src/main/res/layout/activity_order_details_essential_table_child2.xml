@@ -2,30 +2,31 @@
     android:layout_gravity="center"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="옵 션"
+    android:layout_weight="1"
     android:textStyle="bold"
     android:gravity="center"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/black"
     android:id="@+id/optionElementLayout">
 
     <ToggleButton
         android:id="@+id/optionElementButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:shadowRadius="10"
         android:background="@drawable/button_border_empty"
         android:gravity="center"
         android:text="옵 션"
-        android:textColor="@color/black"
+        android:textColor="@color/main"
         android:textSize="12sp"
         android:textStyle="bold">
     </ToggleButton>
 
     <TextView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
