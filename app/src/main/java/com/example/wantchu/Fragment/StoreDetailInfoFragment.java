@@ -1,18 +1,21 @@
 package com.example.wantchu.Fragment;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,30 +30,28 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class StoreDetailInfoFragment extends Fragment {
     SupportMapFragment mapFragment;
     GoogleMap map;
-    MarkerOptions myLocationMarker;
 
     //
     StoreDetail storeDetailData;
 
-    //
-    TextView title;
     TextView storeInfo;
     TextView openCloseTime;
     TextView daysOff;
     TextView storePhone;
     TextView storeLocation;
+
+    TextView storeIntro;
+    TextView eventBenefit;
+    TextView storeInfoTitle;
 
     //
     View rootView;
@@ -65,6 +66,11 @@ public class StoreDetailInfoFragment extends Fragment {
         daysOff = rootView.findViewById(R.id.days_off);
         storePhone = rootView.findViewById(R.id.store_phone);
         storeLocation = rootView.findViewById(R.id.store_location);
+
+        storeIntro = rootView.findViewById(R.id.store_intro_title);
+        eventBenefit = rootView.findViewById(R.id.events_benefits_title);
+        storeInfoTitle = rootView.findViewById(R.id.store_info_title);
+
 
         return rootView;
     }
@@ -91,16 +97,18 @@ public class StoreDetailInfoFragment extends Fragment {
         StringBuilder closeOpenTime = new StringBuilder(storeDetailData.getStore_opentime()+" ~ "
                 +storeDetailData.getStore_closetime());
         storeInfo.setText(storeDetailData.getStore_info());
-        openCloseTime.setText(closeOpenTime.toString());
+        openCloseTime.setText("운영시간\t\t"+closeOpenTime.toString());
         daysOff.setText(storeDetailData.getStore_daysoff());
         storePhone.setText(storeDetailData.getStore_phone());
         storeLocation.setText(storeDetailData.getStore_location());
+
+        storeIntro.setPaintFlags(storeIntro.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        eventBenefit.setPaintFlags(eventBenefit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        storeInfoTitle.setPaintFlags(eventBenefit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         mapReady();
     }
     public void mapReady() {
         latLng = new LatLng(storeDetailData.getStore_latitude(), storeDetailData.getStore_longitude());
-        myLocationMarker = new MarkerOptions();
-        myLocationMarker.position(latLng).title(storeDetailData.getStore_name());
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -113,8 +121,15 @@ public class StoreDetailInfoFragment extends Fragment {
                 catch(SecurityException e){
                     e.printStackTrace();
                 }
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
-                map.addMarker(myLocationMarker).showInfoWindow();
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+                MarkerOptions markerOption = new MarkerOptions().position(latLng);
+                int height = 110;
+                int width = 80;
+                BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.map_marker_purple);
+                Bitmap b = bitmapdraw.getBitmap();
+                Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+                markerOption.icon(BitmapDescriptorFactory.fromBitmap(smallMarker)).title(storeDetailData.getStore_location());
+                map.addMarker(markerOption).showInfoWindow();
             }
         });
     }

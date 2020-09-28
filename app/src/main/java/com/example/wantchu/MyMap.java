@@ -175,7 +175,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                                 @Override
                                 public void onClick(View v) {
                                     mapSetPositionDialog.callFunction();
-                                    //http://15.165.22.64:8080/StoreFindById.do?store_id=가게id값
                                     newMarker = map.addMarker(markerOptions);
                                 }
                             });
