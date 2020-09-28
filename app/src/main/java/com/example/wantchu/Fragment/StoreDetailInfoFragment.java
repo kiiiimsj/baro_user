@@ -1,15 +1,18 @@
 package com.example.wantchu.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.text.Html;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -122,16 +125,42 @@ public class StoreDetailInfoFragment extends Fragment {
                     e.printStackTrace();
                 }
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+
                 MarkerOptions markerOption = new MarkerOptions().position(latLng);
-                int height = 110;
-                int width = 80;
+                int height = 86;
+                int width = 69;
                 BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.map_marker_purple);
                 Bitmap b = bitmapdraw.getBitmap();
                 Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
                 markerOption.icon(BitmapDescriptorFactory.fromBitmap(smallMarker)).title(storeDetailData.getStore_location());
+
+                View marker = ((LayoutInflater) getContext().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE)).inflate(R.layout.map_marker_textview, null);
+                TextView storeNameOfMarker = (TextView) marker.findViewById(R.id.store_title);
+                TextView storeLocationOfMarker = (TextView) marker.findViewById(R.id.store_location_content);
+                storeNameOfMarker.setText(storeDetailData.getStore_name());
+                storeLocationOfMarker.setText(storeDetailData.getStore_location());
+
+                MarkerOptions markerOptions2 = new MarkerOptions().position(latLng);
+                markerOptions2.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker)));
                 map.addMarker(markerOption).showInfoWindow();
+                map.addMarker(markerOptions2).showInfoWindow();
             }
         });
+    }
+    private Bitmap createDrawableFromView(Context context, View view) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
+        view.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+
+        return bitmap;
     }
     public void makeRequestGetStore(final int number) {
         String url = new UrlMaker().UrlMake("StoreFindById.do?store_id="+ number);
