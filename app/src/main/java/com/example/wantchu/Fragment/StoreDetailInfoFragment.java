@@ -39,6 +39,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.StringTokenizer;
+
 public class StoreDetailInfoFragment extends Fragment {
     SupportMapFragment mapFragment;
     GoogleMap map;
@@ -132,18 +134,33 @@ public class StoreDetailInfoFragment extends Fragment {
                 BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.map_marker_purple);
                 Bitmap b = bitmapdraw.getBitmap();
                 Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-                markerOption.icon(BitmapDescriptorFactory.fromBitmap(smallMarker)).title(storeDetailData.getStore_location());
+                markerOption.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
                 View marker = ((LayoutInflater) getContext().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE)).inflate(R.layout.map_marker_textview, null);
                 TextView storeNameOfMarker = (TextView) marker.findViewById(R.id.store_title);
                 TextView storeLocationOfMarker = (TextView) marker.findViewById(R.id.store_location_content);
-                storeNameOfMarker.setText(storeDetailData.getStore_name());
-                storeLocationOfMarker.setText(storeDetailData.getStore_location());
 
-                MarkerOptions markerOptions2 = new MarkerOptions().position(latLng);
+                storeNameOfMarker.setText(storeDetailData.getStore_name());
+                String locationName = storeDetailData.getStore_location();
+                StringTokenizer stringTokenizer = new StringTokenizer(locationName, " ");
+                StringBuilder stringBuilder = new StringBuilder();
+                int i = 0;
+                while(stringTokenizer.hasMoreElements()) {
+                    stringBuilder.append(stringTokenizer.nextElement()+" ");
+                    i++;
+                    if(i > 4){
+                        stringBuilder.append("\n");
+                    }
+                }
+                storeNameOfMarker.setText(storeDetailData.getStore_name());
+                storeLocationOfMarker.setText(stringBuilder.toString());
+
+                MarkerOptions markerOptions2 = new MarkerOptions().position(latLng).anchor(0f, 0.1f);
                 markerOptions2.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker)));
-                map.addMarker(markerOption).showInfoWindow();
+
                 map.addMarker(markerOptions2).showInfoWindow();
+                map.addMarker(markerOption).showInfoWindow();
+
             }
         });
     }

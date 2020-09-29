@@ -3,6 +3,11 @@
     android:layout_width="112dp"
     android:layout_height="59dp"
     android:id="@+id/store_marker_textview"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:background="@color/map_marker_content_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
         android:id="@+id/store_title"

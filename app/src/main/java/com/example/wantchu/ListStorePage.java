@@ -130,7 +130,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         if(intent.getStringExtra("list_type").equals("search")){
             storeSearch = intent.getStringExtra("searchStore");
             topbar.setTitleStringWhereUsedEventsAndListStore("검색 가게");
-            makeRequestForSearch(urlMaker(storeSearch));
+            makeRequestForSearch(setHashDataForTypeFind(), urlMaker(storeSearch));
             return;
         }
         if(intent.getStringExtra("list_type").equals("find_type")) {

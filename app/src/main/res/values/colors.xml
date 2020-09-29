@@ -13,6 +13,7 @@
 
     <color name="bottom_icon_color_select">#8333e6</color>
     <color name="bottom_icon_unselect">#c7a9ed</color>
+    <color name="map_marker_content_background">#CFFFFFFF</color>
 
     <color name="nearWhite">#FCF7FF</color>
     <color name="littleGray">#EDEDED</color>
