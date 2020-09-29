@@ -13,11 +13,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -36,6 +38,7 @@ import com.example.wantchu.Adapter.AdvertiseAdapter;
 import com.example.wantchu.Adapter.TypeAdapter;
 import com.example.wantchu.AdapterHelper.TypeHelperClass;
 import com.example.wantchu.Database.StoreSessionManager;
+import com.example.wantchu.Dialogs.SearchDialog;
 import com.example.wantchu.JsonParsingHelper.EventHelperClass;
 import com.example.wantchu.JsonParsingHelper.TypeListParsing;
 import com.example.wantchu.JsonParsingHelper.TypeParsing;
@@ -83,6 +86,9 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
     LatLng latLng;
     myGPSListener myGPSListener;
+    ///////// 태영
+    Button call_search;
+    /////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,8 +99,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
 
-        glasses = findViewById(R.id.glasses);
-        mSearch = findViewById(R.id.search);
+//        glasses = findViewById(R.id.glasses);
+//        mSearch = findViewById(R.id.search);
         viewPager = findViewById(R.id.info_image);
 
         recycleBack = findViewById(R.id.background1);
@@ -106,6 +112,9 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         // 왼쪽 사이드바
         storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
         storeSessionManager.setIsFavorite(false);
+        ///////// 태영
+        call_search = findViewById(R.id.search_dialog);
+        /////////
         startLocation();
 
         // 타입 버튼 동적으로 만드는 메소드
@@ -122,42 +131,51 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(intent);
             }
         });
-        mSearch.setOnKeyListener(new View.OnKeyListener() {
+        ///////// 태영
+        call_search.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                //This is the filter
-                if (event.getAction()!=KeyEvent.ACTION_DOWN)
-                    return true;
-                if(keyCode == KeyEvent.KEYCODE_ENTER) {
-
-                    String message = mSearch.getText().toString();
-                    Intent intent = new Intent(MainPage.this, ListStorePage.class);
-                    intent.putExtra("isSearchOrder", true);
-                    intent.putExtra("searchStore", message);
-                    intent.putExtra("list_type", "search");
-                    Log.i("MESSAGE", message);
-                    //mSearch.setText("");
-                    startActivity(intent);
-                    return true;
-                }
-                else {
-                    return false;
-                }
+            public void onClick(View view) {
+                SearchDialog searchDialog = new SearchDialog(MainPage.this);
+                searchDialog.callFunction();
             }
         });
-        glasses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = mSearch.getText().toString();
-                Intent intent = new Intent(MainPage.this, ListStorePage.class);
-                intent.putExtra("isSearchOrder", true);
-                intent.putExtra("searchStore", message);
-                intent.putExtra("list_type", "search");
-                Log.i("MESSAGE", message);
-                //mSearch.setText("");
-                startActivity(intent);
-            }
-        });
+        /////////
+//        mSearch.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                //This is the filter
+//                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+//                    return true;
+//                if(keyCode == KeyEvent.KEYCODE_ENTER) {
+//
+//                    String message = mSearch.getText().toString();
+//                    Intent intent = new Intent(MainPage.this, ListStorePage.class);
+//                    intent.putExtra("isSearchOrder", true);
+//                    intent.putExtra("searchStore", message);
+//                    intent.putExtra("list_type", "search");
+//                    Log.i("MESSAGE", message);
+//                    //mSearch.setText("");
+//                    startActivity(intent);
+//                    return true;
+//                }
+//                else {
+//                    return false;
+//                }
+//            }
+//        });
+//        glasses.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String message = mSearch.getText().toString();
+//                Intent intent = new Intent(MainPage.this, ListStorePage.class);
+//                intent.putExtra("isSearchOrder", true);
+//                intent.putExtra("searchStore", message);
+//                intent.putExtra("list_type", "search");
+//                Log.i("MESSAGE", message);
+//                //mSearch.setText("");
+//                startActivity(intent);
+//            }
+//        });
         makeRequestForEventThread();
     }
 

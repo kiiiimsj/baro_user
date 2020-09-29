@@ -147,6 +147,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         StringBuilder urlBuilder = new StringBuilder(url);
         urlBuilder.append("StoreSearch.do?keyword=");
         urlBuilder.append(keyword);
+        urlBuilder.append("&startPoint=0");
         return urlBuilder.toString();
     }
     public HashMap setHashDataForTypeFind() {
