@@ -163,6 +163,7 @@
         android:layout_below="@id/content_layout"
         android:id="@+id/scroll_back"
         android:layout_weight="1"
+        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -207,29 +208,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray"></View>
-                <TextView
-                    android:background="@color/white"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:layout_margin="3dp"
-                    android:text=" 퍼스널 옵션"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/black"/>
+<!--                <TextView-->
+<!--                    android:background="@color/white"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="15sp"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:layout_margin="3dp"-->
+<!--                    android:text=" 퍼스널 옵션"/>-->
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1px"-->
+<!--                    android:background="@color/black"/>-->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/menuRecyler_nonEssential"
                     android:scrollbars="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </androidx.recyclerview.widget.RecyclerView>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/black"/>
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1px"-->
+<!--                    android:background="@color/black"/>-->
                 <ExpandableListView
                     android:id="@+id/menuExpand_NotEssential"
                     android:scrollbarThumbVertical="@color/black"
