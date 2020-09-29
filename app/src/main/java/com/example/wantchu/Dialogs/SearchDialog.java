@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.wantchu.Basket;
 import com.example.wantchu.ListStorePage;
@@ -36,6 +37,10 @@ public class SearchDialog {
             @Override
             public void onClick(View view) {
                 String message = body.getText().toString();
+                if(message.equals("")){
+                    Toast.makeText(context,"키워드를 입력해주세요",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(context, ListStorePage.class);
                 intent.putExtra("isSearchOrder", true);
                 intent.putExtra("searchStore", message);
