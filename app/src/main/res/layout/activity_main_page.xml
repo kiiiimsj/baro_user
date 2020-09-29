@@ -56,35 +56,48 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/address"
                     android:src="@drawable/map_v" />
-
-                <RelativeLayout
-                    android:id="@+id/search_bar"
-                    android:layout_width="180dp"
+                <Button
+                    android:id="@+id/search_dialog"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/notosans_bold"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:background="@color/main"
+                    android:layout_marginRight="15dp"
+                    android:drawablePadding="15dp"
+                    android:text="가게 검색"
+                    android:drawableRight="@drawable/search_icon_small_32"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="25dp"
-                    android:layout_toRightOf="@id/map_button"
-                    android:background="@drawable/button_border_full">
+                    android:layout_toLeftOf="@id/logo_image"></Button>
+<!--                <RelativeLayout-->
+<!--                    android:id="@+id/search_bar"-->
+<!--                    android:layout_width="180dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginLeft="25dp"-->
+<!--                    android:layout_toRightOf="@id/map_button"-->
+<!--                    android:background="@drawable/button_border_full">-->
 
-                    <EditText
-                        android:id="@+id/search"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
-                        android:background="@null"
-                        android:hint="가게 검색"
-                        android:maxLines="1" />
+<!--                    <EditText-->
+<!--                        android:id="@+id/search"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:layout_marginLeft="15dp"-->
+<!--                        android:background="@null"-->
+<!--                        android:hint="가게 검색"-->
+<!--                        android:maxLines="1" />-->
 
-                    <ImageView
-                        android:id="@+id/glasses"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/search_icon" />
-                </RelativeLayout>
+<!--                    <ImageView-->
+<!--                        android:id="@+id/glasses"-->
+<!--                        android:layout_width="30dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:layout_alignParentRight="true"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:layout_marginRight="15dp"-->
+<!--                        android:src="@drawable/search_icon" />-->
+<!--                </RelativeLayout>-->
 
                 <fragment
                     android:id="@+id/logo_image"
