@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -177,9 +178,9 @@ public class OrderDetails extends AppCompatActivity {
 //                    nonEssentialOptionsFixed = nonEssentialAdapter.getNonEssentialOptions();
 //
 //                }
-                if (newNonEssentialAdapter != null) {
-                    nonEssentialOptionsFixed = newNonEssentialAdapter.getNonEssentialOptions();
-
+                if (nonEssentialAdapter != null) {
+//                    nonEssentialOptionsFixed = newNonEssentialAdapter.getNonEssentialOptions();
+                    nonEssentialOptionsFixed = nonEssentialAdapter.getNonEssentialOptions();
                 }
 
                 detailsFixToBasket = new DetailsFixToBasket(menu_name, Integer.parseInt(menu_code), menu_count, defaultPrice, totalPrice, essentialOptionFixed, nonEssentialOptionsFixed);
@@ -262,25 +263,25 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-                params.height = params.height - FLEX_EXPAND_HEIGHT;
-                expandableListView.setLayoutParams(params);
-                expandableListView.requestLayout();
-            }
-        });
-
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-                params.height = params.height + FLEX_EXPAND_HEIGHT;
-                expandableListView.setLayoutParams(params);
-                expandableListView.requestLayout();
-            }
-        });
+//        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//            @Override
+//            public void onGroupCollapse(int groupPosition) {
+//                ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+//                params.height = params.height - FLEX_EXPAND_HEIGHT;
+//                expandableListView.setLayoutParams(params);
+//                expandableListView.requestLayout();
+//            }
+//        });
+//
+//        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//            @Override
+//            public void onGroupExpand(int groupPosition) {
+//                ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+//                params.height = params.height + FLEX_EXPAND_HEIGHT;
+//                expandableListView.setLayoutParams(params);
+//                expandableListView.requestLayout();
+//            }
+//        });
     }
     private void addNewMenuToBasket(ArrayList<DetailsFixToBasket> detailsFixToBaskets,SharedPreferences.Editor editor){
         Gson gson = new Gson();
@@ -396,15 +397,16 @@ public class OrderDetails extends AppCompatActivity {
             recyclerViewShell.setVisibility(View.GONE);
         }
         if (NonEssentialOptionList.size() != 0) {
-//            Log.i("sizeeeeeeeeeeeee", NonEssentialOptionList.size() + "");
-//            nonEssentialAdapter =
-//                    new OrderDetailsNonEssentialAdapter(getApplicationContext(), R.layout.activity_order_details_nonessential_group_parent,
-//                            R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount);
-//            expandableListView.setAdapter(nonEssentialAdapter);
-//            setListViewHeightBasedOnChildren(expandableListView);
+            Log.i("sizeeeeeeeeeeeee", NonEssentialOptionList.size() + "");
+            nonEssentialAdapter =
+                    new OrderDetailsNonEssentialAdapter(getApplicationContext(), R.layout.activity_order_details_nonessential_group_parent,
+                            R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount);
+            expandableListView.setAdapter(nonEssentialAdapter);
+            setListIndicator();
+//            setListViewHeightBasedOnChildren(expandableListView,NonEssentialOptionList);
             ////////////////////////////////////////////////////////////////////////
-            newNonEssentialAdapter = new OrderDetailsNewNonEssentailAdapter(OrderDetails.this,totalPriceText,itemCount,NonEssentialOptionList);
-            newNonEssentailRecyclerView.setAdapter(newNonEssentialAdapter);
+//            newNonEssentialAdapter = new OrderDetailsNewNonEssentailAdapter(OrderDetails.this,totalPriceText,itemCount,NonEssentialOptionList);
+//            newNonEssentailRecyclerView.setAdapter(newNonEssentialAdapter);
         } else {
 //            expandListViewShell.setVisibility(View.GONE);
             ////////////////////////////////////////////////////////////////////////
@@ -412,6 +414,27 @@ public class OrderDetails extends AppCompatActivity {
         }
         progressApplication.progressOFF();
     }
+    private void setListIndicator()
+    {
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        OrderDetails.this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2)
+            expandableListView.setIndicatorBounds(width - GetPixelFromDips(55), width - GetPixelFromDips(25));
+        else
+            expandableListView.setIndicatorBoundsRelative(width - GetPixelFromDips(55), width - GetPixelFromDips(25));
+    }
+
+
+    public int GetPixelFromDips(float pixels)
+
+
+    {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (pixels * scale + 0.5f);
+    }
+
 
     private synchronized void makeRequest() {
         UrlMaker urlMaker = new UrlMaker();
@@ -485,7 +508,7 @@ public class OrderDetails extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public static void setListViewHeightBasedOnChildren(ExpandableListView expandableListView) {
+    public static void setListViewHeightBasedOnChildren(ExpandableListView expandableListView,ArrayList<OrderDetailsNonEssential> NonEssentialOptionList) {
         ListAdapter orderDetailsNonEssentialAdapter = expandableListView.getAdapter();
         if (expandableListView == null) {
             // pre-condition
@@ -495,14 +518,14 @@ public class OrderDetails extends AppCompatActivity {
         int totalHeight = 0;
         int desiredWidth = View.MeasureSpec.makeMeasureSpec(expandableListView.getWidth(), View.MeasureSpec.AT_MOST);
 
-        for (int i = 0; i < orderDetailsNonEssentialAdapter.getCount(); i++) {
+        for (int i = 0; i < NonEssentialOptionList.size(); i++) {
             View listItem = orderDetailsNonEssentialAdapter.getView(i, null, expandableListView);
             listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
             totalHeight += listItem.getMeasuredHeight();
         }
 
         ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-        params.height = totalHeight + (expandableListView.getDividerHeight() * (orderDetailsNonEssentialAdapter.getCount() - 1));
+        params.height = totalHeight + (expandableListView.getDividerHeight() * (NonEssentialOptionList.size() - 1));
         expandableListView.setLayoutParams(params);
         expandableListView.requestLayout();
     }
