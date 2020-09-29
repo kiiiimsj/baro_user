@@ -99,11 +99,6 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
             menuId = itemView.findViewById(R.id.menu_id);
             background = itemView.findViewById(R.id.background);
 
-            if(listMenuHelperClasses.size() == po + 1) {
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 480);
-                itemView.setLayoutParams(layoutParams);
-            }
-
             background.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -117,19 +112,6 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
                     return false;
                 }
             });
-//            menuPrice.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
-//            menuName.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
-
         }
     }
 }

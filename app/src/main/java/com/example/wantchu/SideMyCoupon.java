@@ -22,15 +22,14 @@ import com.example.wantchu.Adapter.CouponAdapter;
 import com.example.wantchu.AdapterHelper.Coupon;
 import com.example.wantchu.AdapterHelper.CouponList;
 import com.example.wantchu.Database.SessionManager;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 
-public class SideMyCoupon extends AppCompatActivity {
-    //private final static String SERVER ="http://54.180.56.44:8080/";
-    private final static int HEIGHT = 600;
+public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     CouponAdapter couponAdapter;
     CouponList couponListData;
     RecyclerView recyclerView;
@@ -42,23 +41,17 @@ public class SideMyCoupon extends AppCompatActivity {
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         recyclerView = findViewById(R.id.coupon_list);
-
-        makeRequestForCoupon(urlMaker());
+        makeRequestForCoupon(urlData());
     }
-    public String urlMaker() {
+    public String urlData() {
         SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersDetailSession();
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
-
-        UrlMaker urlMaker = new UrlMaker();
-        String url = urlMaker.UrlMake("");
-        StringBuilder urlBuilder = new StringBuilder(url);
-        urlBuilder.append(getApplicationContext().getString(R.string.couponFindByPhone));
-        urlBuilder.append(userData.get(SessionManager.KEY_PHONENUMBER));
-
-        return urlBuilder.toString();
+        userData.get(SessionManager.KEY_PHONENUMBER);
+        return userData.get(SessionManager.KEY_PHONENUMBER);
     }
-    public void makeRequestForCoupon(String url) {
+    public void makeRequestForCoupon(String phone) {
+        String url = new UrlMaker().UrlMake("CouponFindByPhone.do?phone="+ phone);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -74,10 +67,8 @@ public class SideMyCoupon extends AppCompatActivity {
                         Log.i("type", "error");
                     }
                 });
-        //request.setShouldCache(false);
         requestQueue.add(request);
     }
-
     private void ParsingCoupon(String response) {
         Gson gson = new Gson();
         couponListData = gson.fromJson(response, CouponList.class);
@@ -86,6 +77,7 @@ public class SideMyCoupon extends AppCompatActivity {
                 @Override
                 public void run() {
                     Toast.makeText(SideMyCoupon.this, "사용자 쿠폰이 존재하지 않습니다.", Toast.LENGTH_LONG);
+                    progressApplication.progressOFF();
                 }
             });
             return;
@@ -95,19 +87,12 @@ public class SideMyCoupon extends AppCompatActivity {
 
     private void setCouponList(CouponList couponListData) {
         couponAdapter = new CouponAdapter(couponListData);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(couponAdapter);
         progressApplication.progressOFF();
     }
-
-    private void setHeight() {
-        LinearLayout.LayoutParams params= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.height = (couponListData.coupon.size() * HEIGHT);
-        recyclerView.setLayoutParams(params);
-    }
-
-    public void onClickBack(View view) {
+    @Override
+    public void onBack() {
         super.onBackPressed();
     }
 }

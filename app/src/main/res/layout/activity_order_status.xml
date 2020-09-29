@@ -12,34 +12,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <fragment
+            android:id="@+id/top_bar"
+            android:name="com.example.wantchu.Fragment.TopBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp">
-
-            <ImageView
-                android:id="@+id/back_pressed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:onClick="onClickBack"
-                android:padding="10dp"
-                android:src="@drawable/general_back_icon" />
-
-            <TextView
-                android:id="@+id/type_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/brandon_grotesque_black"
-                android:gravity="center"
-                android:text="주문 현황"
-                android:textColor="@color/black"
-                android:textSize="25dp" />
-        </RelativeLayout>
+            android:layout_height="wrap_content" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

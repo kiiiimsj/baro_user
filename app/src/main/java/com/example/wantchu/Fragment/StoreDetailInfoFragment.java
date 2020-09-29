@@ -1,4 +1,4 @@
-package com.example.wantchu;
+package com.example.wantchu.Fragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.HelperDatabase.StoreDetail;
+import com.example.wantchu.R;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

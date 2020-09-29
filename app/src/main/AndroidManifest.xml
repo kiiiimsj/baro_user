@@ -76,7 +76,6 @@
         <activity android:name=".Basket" />
         <activity android:name=".MyMap" />
         <activity android:name=".SideMyCoupon" />
-        <activity android:name=".SideMyCard" />
         <activity android:name=".VerifyOTP" />
         <activity android:name=".ChangePass3" />
         <activity android:name=".ChangePass2" />
@@ -102,7 +101,6 @@
         <activity android:name=".FirstPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

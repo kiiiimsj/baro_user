@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -26,6 +28,8 @@ import com.example.wantchu.Adapter.MyPageButtonListAdapter;
 import com.example.wantchu.Adapter.MyPageExpandAdapter;
 import com.example.wantchu.AdapterHelper.MyPageListbuttons;
 import com.example.wantchu.Database.SessionManager;
+import com.example.wantchu.Dialogs.IfLogoutDialog;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.Url.UrlMaker;
 
 import org.json.JSONException;
@@ -34,10 +38,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter.OnListItemLongSelectedInterfaceForMyPage, MyPageButtonListAdapter.OnListItemSelectedInterfaceForMyPage {
-    //private final static String SERVER = "http://54.180.56.44:8080/";
-    private final static int ORDER = 1;
-    private final static int COUPON = 2;
+public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter.OnListItemLongSelectedInterfaceForMyPage, MyPageButtonListAdapter.OnListItemSelectedInterfaceForMyPage, IfLogoutDialog.clickButton{
     int[] counts;
     RecyclerView mButtonlist;
     MyPageButtonListAdapter buttonAdapter;
@@ -50,11 +51,11 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
     ExpandableListView expandableListView;
     LinearLayout tableSize;
 
-    //TextView nameSpace;
     TextView emailSpace;
     TextView phoneSpace;
     MyPageExpandAdapter myPageExpandAdapter;
     ProgressApplication progressApplication;
+    RelativeLayout logout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,29 +65,37 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         counts = new int[3];
 
         getPhoneNumber();
-        makeRequestForOrderCount(urlMaker());
+        makeRequestForOrderCount();
 
 
         mButtonlist = findViewById(R.id.button_list);
         expandableListView = findViewById(R.id.expandable_list);
 
         tableSize = findViewById(R.id.table_size);
-
-        //nameSpace = findViewById(R.id.name_space);
         emailSpace = findViewById(R.id.email_space);
         phoneSpace = findViewById(R.id.phone_number);
-
+        logout =findViewById(R.id.logout_button);
+        setEvent();
         setMyInfo();
         setList();
         setExpandableListView();
         setExpandListener();
     }
 
+    private void setEvent() {
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               new IfLogoutDialog(MyPage.this, MyPage.this).callFunction();
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         getPhoneNumber();
-        makeRequestForOrderCount(urlMaker());
+        makeRequestForOrderCount();
     }
 
     private void setMyInfo() {
@@ -96,7 +105,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         String name = userData.get(SessionManager.KEY_USERNAME);
         String email = userData.get(SessionManager.KEY_EMAIL);
         StringBuilder nameString = new StringBuilder(name + "님\n안녕하세요!");
-        //nameSpace.setText(nameString.toString());
         emailSpace.setText(email);
         phoneSpace.setText(phone);
     }
@@ -109,9 +117,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
                     startActivity(new Intent(getApplicationContext(), SideMyCoupon.class));
                 }
                 if(groupPosition == 2) {
-                    Intent intent = new Intent(getApplicationContext(), Notice.class);
-                    intent.putExtra("type", "NOTICE");
-                    startActivity(intent);
+                    startActivity(new Intent(getApplicationContext(), Notice.class));
                 }
                 if(groupPosition == 3) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
@@ -153,20 +159,14 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         MyPageListbuttons list4;
 
         list = new MyPageListbuttons("내 정보 변경");
-
         list.childText.add("비밀번호 변경");
         list.childText.add("이메일 변경");
 
         list1 = new MyPageListbuttons("쿠폰");
-
         list2 = new MyPageListbuttons("공지사항");
-
         list3 = new MyPageListbuttons("입점요청");
-
         list4= new MyPageListbuttons("1:1문의");
-
         lists = new ArrayList<MyPageListbuttons>();
-
         lists.add(0, list);
         lists.add(1, list1);
         lists.add(2, list2);
@@ -181,11 +181,8 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
     }
     public void setRecyclerView(boolean result, int[] setCounts) {
         mButtonlist.setHasFixedSize(true);
-
         mButtonlist.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
         if(result) {
-            Log.i("VIEW", result+"");
-            Log.i("VIEW", setCounts+"");
             buttonAdapter = new MyPageButtonListAdapter(this, buttons, setCounts, this);
         }
         else {
@@ -213,26 +210,8 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
             }
         }
     }
-    public String urlMaker() {
-        UrlMaker urlMaker = new UrlMaker();
-        String url = urlMaker.UrlMake("");
-        StringBuilder urlBuilder = new StringBuilder(url);
-        urlBuilder.append(getApplicationContext().getString(R.string.orderTotalCountByPhone));
-        urlBuilder.append(phone);
-
-        return urlBuilder.toString();
-    }
-    public String urlMaker2() {
-        UrlMaker urlMaker = new UrlMaker();
-        String url = urlMaker.UrlMake("");
-        StringBuilder urlBuilder = new StringBuilder(url);
-        urlBuilder.append(getApplicationContext().getString(R.string.couponCountByPhone));
-        urlBuilder.append(phone);
-
-        return urlBuilder.toString();
-    }
-    public void makeRequestForOrderCount(final String url) {
-        //http://54.180.56.44:8080/OrderTotalCountByPhone.do?phone=?
+    public void makeRequestForOrderCount() {
+        String url = new UrlMaker().UrlMake("OrderTotalCountByPhone.do?phone="+phone);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Log.i("type", "request made to " + url);
         StringRequest request = new StringRequest(Request.Method.GET, url,
@@ -252,8 +231,8 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         //request.setShouldCache(false);
         requestQueue.add(request);
     }
-    public void makeRequestForCouponCount(final String url) {
-        //http://54.180.56.44:8080/CouponCountByPhone.do?phone=전화번호
+    public void makeRequestForCouponCount() {
+        String url = new UrlMaker().UrlMake("CouponCountByPhone.do?phone="+phone);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Log.i("type", "request made to " + url);
         StringRequest request = new StringRequest(Request.Method.GET, url,
@@ -274,7 +253,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         requestQueue.add(request);
     }
 
-
     private void jsonParsingOrderCount(String response) {
         boolean result = false;
         int count = 0;
@@ -287,7 +265,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
             e.printStackTrace();
         }
         counts[0] = count;
-        makeRequestForCouponCount(urlMaker2());
+        makeRequestForCouponCount();
     }
     private void jsonParsingCouponCount(String response) {
         boolean result = false;
@@ -302,5 +280,18 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         }
         counts[1] = count;
         setRecyclerView(result ,counts);
+    }
+    @Override
+    public void clickOkay() {
+        SessionManager sessionManager1 = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        if(sessionManager1.getUsersDetailFromSession() != null) {
+            sessionManager1.clearDetailUserSession();
+        }
+        finish();
+    }
+
+    @Override
+    public void clickCancel() {
+
     }
 }

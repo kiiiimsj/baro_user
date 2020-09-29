@@ -1,38 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout
+    <fragment
         android:id="@+id/top_bar"
-        android:layout_marginTop="30dp"
+        android:name="com.example.wantchu.Fragment.TopBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/back_pressed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClickBack"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:src="@drawable/general_back_icon" />
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/menuName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/brandon_grotesque_black"
-            android:gravity="center"
-            android:text="소식"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
-    </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@id/top_bar"
         android:id="@+id/alert_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
-</RelativeLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar" />
+</androidx.constraintlayout.widget.ConstraintLayout>

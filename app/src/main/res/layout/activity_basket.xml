@@ -7,68 +7,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Basket">
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
+    <fragment
+        android:id="@+id/top_bar"
+        android:name="com.example.wantchu.Fragment.TopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_below="@id/top_bar"
+        android:id="@+id/store_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/back_pressed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="onClickBack"
-            android:padding="15dp"
-            android:src="@drawable/general_back_icon" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/brandon_grotesque_black"
-            android:gravity="center"
-            android:text="장 바 구 니"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/store_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="30sp"
-            android:fontFamily="@font/baloo"
-            android:gravity="center"
-            android:text="가게 이름"
-            android:textSize="20dp" />
-    </RelativeLayout>
-
+        android:textAlignment="center"
+        android:text="test cafe"
+        />
     <LinearLayout
-        android:layout_below="@id/relativeLayout2"
+        android:layout_below="@id/store_name"
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar"
         tools:layout_editor_absoluteX="10dp">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/basketList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-
     <LinearLayout
-
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,12 +42,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="horizontal"
         tools:layout_editor_absoluteX="10dp">
-
-<!--        <TextView-->
-<!--            android:id="@+id/basket_price"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="총 금액 : 5000원"/>-->
         <Button
             android:id="@+id/pay"
             android:layout_width="match_parent"

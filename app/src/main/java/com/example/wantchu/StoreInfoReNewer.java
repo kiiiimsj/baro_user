@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,6 +21,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Dialogs.AddFavoriteDialog;
 import com.example.wantchu.Dialogs.DeleteFavoriteDialog;
+import com.example.wantchu.Fragment.StoreDetailInfoFragment;
+import com.example.wantchu.Fragment.StoreMenuFragment;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.JsonParsingHelper.FavoriteListParsing;
 import com.example.wantchu.JsonParsingHelper.FavoriteParsing;
@@ -36,9 +38,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class StoreInfoReNewer extends AppCompatActivity {
-    ImageView mFavorite;
-    TextView titleName;
+public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity, TopBar.ClickImage {
     SessionManager sessionManager;
     String _phone;
     String storedIdStr;
@@ -49,13 +49,18 @@ public class StoreInfoReNewer extends AppCompatActivity {
     StoreDetailInfoFragment storeDetailInfoFragment;
     StoreDetail storeDetailData;
     Intent myIntent;
+
+    FragmentManager fm;
+    TopBar topBar;
+    ImageView.OnClickListener heartClickListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_info_re_newer);
 
-        mFavorite = findViewById(R.id.favorite);
-        titleName = findViewById(R.id.type_name);
+        fm = getSupportFragmentManager();
+        topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
         tabs = findViewById(R.id.tab_tabs);
 
         sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
@@ -67,6 +72,8 @@ public class StoreInfoReNewer extends AppCompatActivity {
         checkFavorite();
         setTabEvent();
         makeRequestGetStore(Integer.parseInt(storedIdStr));
+
+        setOnClickFavorite();
     }
     @Override
     protected void onResume() {
@@ -78,42 +85,47 @@ public class StoreInfoReNewer extends AppCompatActivity {
     public void onClickBack(View view) {
         super.onBackPressed();
     }
+    public void setOnClickFavorite() {
+        heartClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(result) {
+                    //등록 - > 미등록
+                    String phone = _phone;
+                    String storeId = storedIdStr;
 
-    public void onClickFavorite(View view) {
-        if(result) {
-            //등록 - > 미등록
-            String phone = _phone;
-            String storeId = storedIdStr;
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("phone", phone);
+                    hashMap.put("store_id", storeId);
+                    String url = "http://15.165.22.64:8080/FavoriteDelete.do";
 
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("phone", phone);
-            hashMap.put("store_id", storeId);
-            String url = "http://15.165.22.64:8080/FavoriteDelete.do";
+                    makeRequestFavorteRem(url, hashMap);
+                    //mFavorite.setImageResource(R.drawable.heart_empty);
+                    topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_empty);
+                    DeleteFavoriteDialog deleteFavoriteDialog = new DeleteFavoriteDialog(getApplicationContext());
+                    deleteFavoriteDialog.callFunction();
+                    //true 등록되어있을때
+                }
+                else {
+                    //미등록 -> 등록
+                    String phone = _phone;
+                    String storeId = storedIdStr;
 
-            makeRequestFavorteRem(url, hashMap);
-            mFavorite.setImageResource(R.drawable.heart_empty);
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("phone", phone);
+                    hashMap.put("store_id", storeId);
 
-            DeleteFavoriteDialog deleteFavoriteDialog = new DeleteFavoriteDialog(getApplicationContext());
-            deleteFavoriteDialog.callFunction();
-            //true 등록되어있을때
-        }
-        else {
-            //미등록 -> 등록
-            String phone = _phone;
-            String storeId = storedIdStr;
+                    String url = "http://15.165.22.64:8080/FavoriteSave.do";
+                    makeRequestFavoriteReg(url, hashMap);
 
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("phone", phone);
-            hashMap.put("store_id", storeId);
-
-            String url = "http://15.165.22.64:8080/FavoriteSave.do";
-            makeRequestFavoriteReg(url, hashMap);
-
-            mFavorite.setImageResource(R.drawable.heart_full);
-            AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(getApplicationContext());
-            addFavoriteDialog.callFunction();
-            //false 등록되어있지 않을 때
-        }
+                    //mFavorite.setImageResource(R.drawable.heart_full);
+                    topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_full);
+                    AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(getApplicationContext());
+                    addFavoriteDialog.callFunction();
+                    //false 등록되어있지 않을 때
+                }
+            }
+        };
     }
     private void getFavoriteStoreId() {
         sp =getSharedPreferences("favorite", Context.MODE_PRIVATE);
@@ -165,10 +177,10 @@ public class StoreInfoReNewer extends AppCompatActivity {
             e.printStackTrace();
         }
         if(result) {
-            mFavorite.setImageResource(R.drawable.heart_full);
+            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_full);
         }
         else {
-            mFavorite.setImageResource(R.drawable.heart_empty);
+            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_empty);
         }
     }
     private synchronized void makeRequestFavorteRem(String url, HashMap<String, String> data) {
@@ -289,6 +301,16 @@ public class StoreInfoReNewer extends AppCompatActivity {
     }
 
     private void setTitleName() {
-        titleName.setText(storeDetailData.getStore_name());
+        topBar.setTitleStringWhereUsedEventsAndListStore(storeDetailData.getStore_name());
+    }
+
+    @Override
+    public void onBack() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public void clickImage() {
+        heartClickListener.onClick(null);
     }
 }

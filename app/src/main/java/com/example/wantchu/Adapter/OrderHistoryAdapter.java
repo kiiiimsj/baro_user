@@ -79,13 +79,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                 bundle.putString("storeName",reverse.getStore_name());
                 bundle.putString("orderedDate",reverse.getOrder_date());
                 bundle.putInt("totalPrice",reverse.getTotal_price());
-//                HistoryDetail fragment = new HistoryDetail(context);
-//                fragment.setArguments(bundle);
-//                FragmentManager manager = ((AppCompatActivity)context).getSupportFragmentManager();
-//                FragmentTransaction transaction = manager.beginTransaction();
-//                transaction.replace(R.id.frameLayout,fragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
                 fragment.show(((AppCompatActivity)context).getSupportFragmentManager(),"dialog");
             }
         });
@@ -142,10 +135,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             linearLayout =(itemView).findViewById(R.id.shellHistoryItem);
             receipt_id = (itemView).findViewById(R.id.orderGroup_id);
             order_state = (itemView).findViewById(R.id.order_state);
-            if(order.size() == po + 1) {
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 450);
-                itemView.setLayoutParams(layoutParams);
-            }
         }
 
     }
