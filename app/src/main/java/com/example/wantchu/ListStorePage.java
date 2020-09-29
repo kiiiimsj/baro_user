@@ -130,7 +130,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         if(intent.getStringExtra("list_type").equals("search")){
             storeSearch = intent.getStringExtra("searchStore");
             topbar.setTitleStringWhereUsedEventsAndListStore("검색 가게");
-            makeRequestForSearch(setHashDataForTypeFind(), urlMaker(storeSearch));
+            makeRequestForSearch(state);
             return;
         }
         if(intent.getStringExtra("list_type").equals("find_type")) {
@@ -139,16 +139,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
             topbar.setTitleStringWhereUsedEventsAndListStore(type_name);
             makeRequestForTypeFind(setHashDataForTypeFind(), state);
         }
-    }
-
-    public String urlMaker(String keyword) {
-        UrlMaker urlMaker = new UrlMaker();
-        String url = urlMaker.UrlMake("");
-        StringBuilder urlBuilder = new StringBuilder(url);
-        urlBuilder.append("StoreSearch.do?keyword=");
-        urlBuilder.append(keyword);
-        urlBuilder.append("&startPoint=0");
-        return urlBuilder.toString();
     }
     public HashMap setHashDataForTypeFind() {
         SharedPreferences getStore = getSharedPreferences("storeID", MODE_PRIVATE);
@@ -186,8 +176,10 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         requestQueue.add(request);
     }
 
-    private void makeRequestForSearch(String url){
+    private void makeRequestForSearch(final int state){
         //String url = "http://54.180.56.44:8080/StoreSearch.do?keyword="+storeSearch;
+        //URL : http://15.165.22.64:8080/StoreSearch.do?keyword=test&startPoint=0
+        String url = new UrlMaker().UrlMake("StoreSearch.do?keyword="+ storeSearch+"&startPoint=" +currentPos);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         Log.e("searchStore", url); //ok
         StringRequest request = new StringRequest(Request.Method.GET, url,
@@ -195,7 +187,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
                     @Override
                     public void onResponse(String response) {
                         Log.e("searchStore", response);
-                        //jsonParsing(response);
+                        jsonParsing(response, state);
                     }
                 },
                 new Response.ErrorListener() {
