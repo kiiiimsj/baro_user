@@ -39,7 +39,10 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_email);
-
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
         oldEmail = findViewById(R.id.old_email);
         newEmailInput = findViewById(R.id.new_email);
 

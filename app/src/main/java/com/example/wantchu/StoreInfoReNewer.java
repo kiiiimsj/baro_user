@@ -59,6 +59,11 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_info_re_newer);
 
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
         fm = getSupportFragmentManager();
         topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
         tabs = findViewById(R.id.tab_tabs);

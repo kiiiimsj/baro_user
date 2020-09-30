@@ -64,6 +64,10 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         //firebase messaging을 이용하기위해 가져오는 회원 기기의 토큰값

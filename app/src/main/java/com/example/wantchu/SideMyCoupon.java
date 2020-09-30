@@ -38,6 +38,10 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_side_my_coupon);
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         recyclerView = findViewById(R.id.coupon_list);

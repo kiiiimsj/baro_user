@@ -23,6 +23,7 @@ public class ProgressApplication extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
+
         progressApplication = this;
     }
 

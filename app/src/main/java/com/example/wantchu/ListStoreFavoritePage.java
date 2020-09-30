@@ -62,6 +62,10 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_store_favorite_page);
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         mRecyclerView = findViewById(R.id.recyclerView);

@@ -127,7 +127,10 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         setContentView(R.layout.activity_basket);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
-
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
         basket = Basket.this;
         button = findViewById(R.id.pay);
         recyclerView = findViewById(R.id.basketList);
