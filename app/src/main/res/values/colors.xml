@@ -5,8 +5,8 @@
     <color name="colorPrimaryDark">#ffa600</color>
     <color name="colorAccent">#272727</color>
     <color name="lightWhite">#f2f5f8</color>
-    <color name="white">#fff</color>
-    <color name="black">#000</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
     <color name="gray">#40000000</color>
     <color name="main">#8333e6</color>
     <color name="text_info_color">#82828282</color>
