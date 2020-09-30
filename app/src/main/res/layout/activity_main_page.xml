@@ -35,6 +35,7 @@
 
             <RelativeLayout
                 android:id="@+id/map_bar"
+                android:background="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true">
@@ -45,6 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/notosans_bold"
+                    android:background="@color/white"
                     android:text="서울시 동작구"
                     android:textSize="15dp" />
 
@@ -55,21 +57,22 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/address"
+                    android:background="@color/white"
                     android:src="@drawable/map_v" />
                 <Button
                     android:id="@+id/search_dialog"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray"
                     android:fontFamily="@font/notosans_bold"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:background="@color/main"
                     android:layout_marginRight="15dp"
-                    android:drawablePadding="15dp"
+                    android:background="#00ff0000"
+                    android:drawablePadding="5dp"
                     android:text="가게 검색"
                     android:drawableRight="@drawable/search_icon_small_32"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/logo_image"></Button>
+                    android:layout_toLeftOf="@id/logo_image"/>
 <!--                <RelativeLayout-->
 <!--                    android:id="@+id/search_bar"-->
 <!--                    android:layout_width="180dp"-->
