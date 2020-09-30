@@ -99,13 +99,13 @@ public class myGPSListener implements LocationListener {
     }
     public LatLng startLocationService(TextView getAdress) {
         LocationManager manager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-        Log.e("err", "???");
         LatLng latLng= null;
+
         if(saveLocation != null ) {
             Log.i("RRRRR", 1+"");
             double[] ll = new double[2];
             int i = 0;
-            if(saveLocation.getString("location", null) != null) {
+            if(saveLocation.getString("location", "").equals("")) {
                 Log.i("LLLLL", 2+"");
                 String locationStr =saveLocation.getString("location", null);
                 //Location[gps 37.493879,126.956373 hAcc=??? t=?!? et=?!? vAcc=??? sAcc=??? bAcc=???]

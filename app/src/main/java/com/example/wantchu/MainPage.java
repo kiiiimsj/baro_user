@@ -139,43 +139,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 searchDialog.callFunction();
             }
         });
-        /////////
-//        mSearch.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                //This is the filter
-//                if (event.getAction()!=KeyEvent.ACTION_DOWN)
-//                    return true;
-//                if(keyCode == KeyEvent.KEYCODE_ENTER) {
-//
-//                    String message = mSearch.getText().toString();
-//                    Intent intent = new Intent(MainPage.this, ListStorePage.class);
-//                    intent.putExtra("isSearchOrder", true);
-//                    intent.putExtra("searchStore", message);
-//                    intent.putExtra("list_type", "search");
-//                    Log.i("MESSAGE", message);
-//                    //mSearch.setText("");
-//                    startActivity(intent);
-//                    return true;
-//                }
-//                else {
-//                    return false;
-//                }
-//            }
-//        });
-//        glasses.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String message = mSearch.getText().toString();
-//                Intent intent = new Intent(MainPage.this, ListStorePage.class);
-//                intent.putExtra("isSearchOrder", true);
-//                intent.putExtra("searchStore", message);
-//                intent.putExtra("list_type", "search");
-//                Log.i("MESSAGE", message);
-//                //mSearch.setText("");
-//                startActivity(intent);
-//            }
-//        });
         makeRequestForEventThread();
     }
 
