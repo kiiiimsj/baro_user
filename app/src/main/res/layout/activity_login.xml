@@ -107,7 +107,7 @@
         app:layout_constraintTop_toBottomOf="@id/login_password"
         app:layout_constraintBottom_toTopOf="@id/login_button"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="#00ff0000"
         android:onClick="onClickFindPass"
         android:text="비밀번호 찾기"
         android:textColor="@color/black" />
@@ -117,7 +117,7 @@
         android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_border_full"
+        android:background="@drawable/button_border_empty"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -139,7 +139,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_border_full"
+        android:background="@drawable/button_border_empty"
         android:onClick="onClickRegister"
         android:text="회원가입"
         android:textColor="@color/black" />
