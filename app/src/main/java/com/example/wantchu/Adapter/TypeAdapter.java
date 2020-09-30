@@ -130,10 +130,6 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
             image = itemView.findViewById(R.id.type_image);
             type_design_back = itemView.findViewById(R.id.type_design_back);
             TypeHelperClass typeHelperClass = typeLocations.get(po);
-            if(typeLocations.size() == po + 1) {
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 500);
-                itemView.setLayoutParams(layoutParams);
-            }
 
             makeRequest(typeHelperClass.typeImage, image, context);
 

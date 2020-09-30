@@ -118,6 +118,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/bottom_menu"
             android:layout_below="@+id/header"
             android:layout_marginTop="20dp">
 
@@ -125,16 +126,14 @@
                 android:id="@+id/advertise"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@id/advertise"
+
                 android:orientation="vertical"
                 android:weightSum="10">
-
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/info_image"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3" />
-
                 <LinearLayout
                     android:id="@+id/dots"
                     android:layout_width="wrap_content"
@@ -160,29 +159,27 @@
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
+        <fragment
+            android:id="@+id/cart_click_button"
+            android:name="com.example.wantchu.Fragment.OrderListCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="80dp"
+            />
+        <fragment
+            android:id="@+id/bottom_menu"
+            android:name="com.example.wantchu.Fragment.BottomMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:backgroundDimEnabled="false"
+            android:windowBackground="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </RelativeLayout>
-    <fragment
-        android:id="@+id/cart_click_button"
-        android:name="com.example.wantchu.Fragment.OrderListCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/bottom_menu"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="@dimen/order_list_cart_dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-    <fragment
-        android:id="@+id/bottom_menu"
-        android:name="com.example.wantchu.Fragment.BottomMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:backgroundDimEnabled="false"
-        android:windowBackground="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

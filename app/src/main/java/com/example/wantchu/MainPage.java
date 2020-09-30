@@ -106,6 +106,15 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         recycleBack = findViewById(R.id.background1);
         mapBar = findViewById(R.id.map_bar);
         //Fragment 생성
+        View decorView = getWindow().getDecorView();
+        // Hide both the navigation bar and the status bar.
+        // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
+        // a general rule, you should design your app to hide the status bar whenever you
+        // hide the navigation bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
         dotsLayout = findViewById(R.id.dots);
         context = this;
         mAddress = findViewById(R.id.address);
@@ -139,43 +148,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 searchDialog.callFunction();
             }
         });
-        /////////
-//        mSearch.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                //This is the filter
-//                if (event.getAction()!=KeyEvent.ACTION_DOWN)
-//                    return true;
-//                if(keyCode == KeyEvent.KEYCODE_ENTER) {
-//
-//                    String message = mSearch.getText().toString();
-//                    Intent intent = new Intent(MainPage.this, ListStorePage.class);
-//                    intent.putExtra("isSearchOrder", true);
-//                    intent.putExtra("searchStore", message);
-//                    intent.putExtra("list_type", "search");
-//                    Log.i("MESSAGE", message);
-//                    //mSearch.setText("");
-//                    startActivity(intent);
-//                    return true;
-//                }
-//                else {
-//                    return false;
-//                }
-//            }
-//        });
-//        glasses.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String message = mSearch.getText().toString();
-//                Intent intent = new Intent(MainPage.this, ListStorePage.class);
-//                intent.putExtra("isSearchOrder", true);
-//                intent.putExtra("searchStore", message);
-//                intent.putExtra("list_type", "search");
-//                Log.i("MESSAGE", message);
-//                //mSearch.setText("");
-//                startActivity(intent);
-//            }
-//        });
         makeRequestForEventThread();
     }
 

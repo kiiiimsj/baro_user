@@ -309,7 +309,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
     private void mapInfo(MapParsing mapParsing){
         ArrayList<MapListParsing> DataList = new ArrayList<>();
         MapListParsing mapListParsing = new MapListParsing();
-
         for(int i = 0; i < mapParsing.getMapList().size();i++){
             mapListParsing = mapParsing.getMapList().get(i);
             Location storeLocation = new Location("");
@@ -322,8 +321,8 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         //마커 여러개 만들기
         for(int i = 0; i< DataList.size(); i++){
             MapListParsing store = DataList.get(i);
-            Double lati = Double.parseDouble(store.getStore_latitude());
             Double logi = Double.parseDouble(store.getStore_longitude());
+            Double lati = Double.parseDouble(store.getStore_latitude());
             String name = store.getStore_name();
             MarkerOptions markerOption = new MarkerOptions().position(new LatLng(lati, logi)).title(name).snippet(((int)store.getDistance())+"m");
             int height = 110;

@@ -7,17 +7,31 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".Login">
-    <ImageView
+    <TextView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content"
         android:paddingTop="50dp"
+        android:layout_margin="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/categories_restaurant_background" />
+        android:fontFamily="@font/notosans_regular"
+        android:text="BARO"
+        android:textAlignment="center"
+        android:textColor="@color/main"
+        android:textSize="80sp"
+        />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:src="@drawable/categories_restaurant_background" />-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/login_phone"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -31,9 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/login_password"
-        android:layout_margin="10dp"
-        app:errorEnabled="true">
-
+        android:layout_margin="10dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_phone_editText"
             android:layout_width="match_parent"
@@ -60,10 +72,8 @@
         app:boxStrokeWidthFocused="2dp"
         app:endIconMode="password_toggle"
         app:endIconTint="@color/black"
-        app:errorEnabled="true"
         app:hintTextColor="@color/black"
         app:startIconTint="@color/black">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_password_editText"
             android:layout_width="match_parent"
