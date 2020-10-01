@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,7 @@ public class StoreDetailInfoFragment extends Fragment {
     TextView eventBenefit;
     TextView storeInfoTitle;
 
+    LinearLayout eventsBenefitsLayout;
     //
     View rootView;
 
@@ -75,6 +77,7 @@ public class StoreDetailInfoFragment extends Fragment {
         storeIntro = rootView.findViewById(R.id.store_intro_title);
         eventBenefit = rootView.findViewById(R.id.events_benefits_title);
         storeInfoTitle = rootView.findViewById(R.id.store_info_title);
+        eventsBenefitsLayout = rootView.findViewById(R.id.events_benefits_layout);
 
 
         return rootView;
@@ -109,6 +112,8 @@ public class StoreDetailInfoFragment extends Fragment {
 
         storeIntro.setPaintFlags(storeIntro.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         eventBenefit.setPaintFlags(eventBenefit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        eventsBenefitsLayout.setVisibility(View.INVISIBLE);
+
         storeInfoTitle.setPaintFlags(eventBenefit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         mapReady();
     }

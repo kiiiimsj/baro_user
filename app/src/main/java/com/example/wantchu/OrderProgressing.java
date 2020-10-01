@@ -40,6 +40,7 @@ public class OrderProgressing extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_progressing);
+
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
 
@@ -58,6 +59,16 @@ public class OrderProgressing extends AppCompatActivity {
 
         makeRequest(phone);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
     private void makeRequest(String phone) {
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("OrderProgressing.do?phone=")+phone;

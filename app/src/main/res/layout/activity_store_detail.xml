@@ -4,157 +4,172 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-        <LinearLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarSize="0dp"
+        android:fillViewport="true"
+        >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:orientation="vertical"
-            android:weightSum="10">
-            <fragment
-                android:id="@+id/map"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5"
-                class="com.google.android.gms.maps.SupportMapFragment" />
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+
+            />
+        <LinearLayout
+            android:layout_below="@id/map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:layout_margin="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                android:layout_weight="5">
-                <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/store_intro_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="가게소개"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/store_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="많은 양과 낮은 가격 메머드에 중독되다"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/events_benefits_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/events_benefits_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="안내/혜택"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="- 콜롬비아 원두콩 ~~" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/store_intro_title"
-                        android:layout_marginBottom="10dp"
-                        android:text="가게소개"
-                        android:textSize="18sp"
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:id="@+id/store_info"
-                        android:layout_marginBottom="10dp"
-                        android:text="많은 양과 낮은 가격 메머드에 중독되다"
-                        android:textSize="13sp"
+                        android:id="@+id/store_info_title"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="vertical"
-                    >
-                    <TextView
-                        android:id="@+id/events_benefits_title"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="영업정보"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:text="안내/혜택"
-                        android:textSize="18sp"
-                        android:textColor="@color/black"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="- 콜롬비아 원두콩 ~~"/>
-                </LinearLayout>
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="운영시간" />
+
+                        <TextView
+                            android:id="@+id/open_close"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="09:00 ~ 21:00"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="휴무일" />
+
+                        <TextView
+                            android:id="@+id/days_off"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="매주 월, 금 " />
+                    </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:orientation="vertical">
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
                         <TextView
-                            android:id="@+id/store_info_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:text="영업정보"
-                            android:textSize="18sp"
-                            android:textColor="@color/black"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="운영시간"
-                                />
-                            <TextView
-                                android:textAlignment="center"
-                                android:id="@+id/open_close"
-                                android:text="09:00 ~ 21:00"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="휴무일"
-                                />
-                            <TextView
-                                android:id="@+id/days_off"
-                                android:text="매주 월, 금 "
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
+                            android:text="전화번호 : " />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="10dp"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="전화번호 : "
-                                />
-                            <TextView
-                                android:id="@+id/store_phone"
-                                android:text="02-882-9592"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/store_phone"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="가게 위치 : "
-                                />
-                            <TextView
-                                android:id="@+id/store_location"
-                                android:text="서울시 성북구 종암로 25길 30"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-                        </LinearLayout>
+                            android:text="02-882-9592" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/store_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="서울시 성북구 종암로 25길 30" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="가게 위치 : " />
 
                     </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+    </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

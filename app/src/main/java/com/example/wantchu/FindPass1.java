@@ -35,10 +35,16 @@ public class FindPass1 extends AppCompatActivity implements TopBar.OnBackPressed
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_pass1);
-
         phoneTextInput = findViewById(R.id.forget_password_phone_number);
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
     public void verifyPhone(View view) {
         Log.i("getInside", "VerifyPhone_Button_Click");
         if(!validateFields()){

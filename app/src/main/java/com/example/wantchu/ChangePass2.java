@@ -36,7 +36,14 @@ public class ChangePass2 extends AppCompatActivity implements TopBar.OnBackPress
         pass2 = findViewById(R.id.newPasswordConfirm);
 
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
     public void onClickPassword(View view) {
         //새로 변경할 비밀번호2개를 클릭하고 확인버튼 누를시
         if (!validatePassword() | !validateConfirmPassword()) {

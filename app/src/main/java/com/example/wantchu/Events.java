@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ public class Events extends AppCompatActivity implements TopBar.OnBackPressedInP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+
         eventDate = findViewById(R.id.event_date);
         eventImage = findViewById(R.id.event_image);
         eventContent = findViewById(R.id.event_content);
@@ -44,6 +46,14 @@ public class Events extends AppCompatActivity implements TopBar.OnBackPressedInP
         Intent intent =getIntent();
         storeId = intent.getIntExtra("event_id", 0);
         makeRequestForGetEvent();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
     }
     private void makeRequestForGetEvent() {
         String url = new UrlMaker().UrlMake("EventDetail.do?event_id="+storeId);

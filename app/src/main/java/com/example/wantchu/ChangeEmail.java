@@ -50,6 +50,16 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
         phone = sessionUserdata.get(SessionManager.KEY_PHONENUMBER);
         oldEmail.setText(email);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
     private boolean checkInputEmail() {
         String emailString = newEmailInput.getEditText().getText().toString();
         String checkEmail = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";

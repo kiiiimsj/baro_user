@@ -80,6 +80,10 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
     @Override
     protected void onResume() {
         super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
         sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();

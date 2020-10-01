@@ -37,9 +37,20 @@ public class Alerts extends AppCompatActivity implements TopBar.OnBackPressedInP
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         eventsRecyclerView = findViewById(R.id.alert_list);
+
         makeRequestForAlerts();
         makeRequestForAlertsGetId();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
     private void makeRequestForAlerts() {
         UrlMaker urlMaker = new UrlMaker();
         String url=urlMaker.UrlMake("AlertFindAll.do");
