@@ -127,10 +127,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         setContentView(R.layout.activity_basket);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
+
         basket = Basket.this;
         button = findViewById(R.id.pay);
         recyclerView = findViewById(R.id.basketList);
@@ -267,6 +264,11 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     @Override
     protected void onResume() {
         super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
+
         SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Log.i("onresDETAIL_SIZE", detailsFixToBaskets.size()+"");

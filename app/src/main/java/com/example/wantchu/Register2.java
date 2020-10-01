@@ -43,10 +43,6 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
         userName = findViewById(R.id.user_name);
         pass1 = findViewById(R.id.login_password);
         pass2 = findViewById(R.id.login_password_confirm);
@@ -54,6 +50,15 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
 
         Intent intent = getIntent();
         phone = intent.getStringExtra("phone");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private boolean checkInput() {

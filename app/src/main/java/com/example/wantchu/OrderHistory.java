@@ -53,10 +53,6 @@ public class OrderHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
         refreshLayout = findViewById(R.id.refresh_list);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
@@ -82,6 +78,16 @@ public class OrderHistory extends AppCompatActivity {
         recyclerView = findViewById(R.id.orderHistorylist);
         makeRequest(FIRST);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
     private synchronized void makeRequest(final int state) {
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "OrderListFindByPhone.do?phone=" + phoneNumber + "&startPoint=" + currentPos;

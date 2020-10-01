@@ -107,11 +107,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         mapBar = findViewById(R.id.map_bar);
         //Fragment 생성
 
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
-
         dotsLayout = findViewById(R.id.dots);
         context = this;
         mAddress = findViewById(R.id.address);
@@ -151,6 +146,11 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     protected void onResume() {
         super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
+
         latLng = myGPSListener.startLocationService(mAddress);
         if(latLng == null) {
             mAddress.setText("GPS를 설정 해 주세요");

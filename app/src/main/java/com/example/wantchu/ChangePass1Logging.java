@@ -33,13 +33,18 @@ public class ChangePass1Logging extends AppCompatActivity implements TopBar.OnBa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pass1_logging);
         passInput = findViewById(R.id.input_current_pass);
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
+
         SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionUserdata = sessionManager.getUsersDetailFromSession();
         phone = sessionUserdata.get(SessionManager.KEY_PHONENUMBER);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
     }
     public void verifyPass(View view) {
         checkPassRight();

@@ -60,10 +60,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         counts = new int[3];
@@ -98,6 +94,10 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
     @Override
     protected void onResume() {
         super.onResume();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
         getPhoneNumber();
         makeRequestForOrderCount();
     }

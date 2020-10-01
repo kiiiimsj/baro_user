@@ -164,13 +164,13 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
 
 
         TextView firstTextView = mCategoryTabLayout.getTabAt(0).view.findViewById(R.id.category_button);
-        firstTextView.setTextColor(getResources().getColor(R.color.main));
-
+        firstTextView.setTextColor(getResources().getColor(R.color.white));
+        mCategoryTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.button_border_full));
         mCategoryTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 TextView textColor = tab.view.findViewById(R.id.category_button);
-                textColor.setTextColor(getResources().getColor(R.color.main));
+                textColor.setTextColor(getResources().getColor(R.color.white));
 
                 int categroyId = Integer.parseInt(((TextView)tab.view.findViewById(R.id.category_id)).getText().toString());
                 setMRecyclerViewMenu(categroyId);
@@ -179,7 +179,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 TextView textColor = tab.view.findViewById(R.id.category_button);
-                textColor.setTextColor(getResources().getColor(R.color.black));
+                textColor.setTextColor(getResources().getColor(R.color.main));
             }
 
             @Override
