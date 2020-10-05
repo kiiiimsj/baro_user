@@ -153,8 +153,8 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
             categoryId.setText(Integer.toString(storeCategories.getCategoryId()));
             categoryName.setText(storeCategories.getCategoryName());
             categoryName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-            ViewGroup.LayoutParams width = new ViewGroup.LayoutParams(storeCategories.getCategoryName().length() * 60, ViewGroup.LayoutParams.WRAP_CONTENT);
+            
+            ViewGroup.LayoutParams width = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             tabView.setLayoutParams(width);
             TabLayout.Tab myTab = mCategoryTabLayout.newTab().setCustomView(tabView);
 
