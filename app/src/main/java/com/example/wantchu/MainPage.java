@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -37,11 +38,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.AdvertiseAdapter;
+import com.example.wantchu.Adapter.ListStoreAdapter;
 import com.example.wantchu.Adapter.TypeAdapter;
+import com.example.wantchu.Adapter.UltraStoreListAdapter;
+import com.example.wantchu.AdapterHelper.ListStoreHelperClass;
 import com.example.wantchu.AdapterHelper.TypeHelperClass;
 import com.example.wantchu.Database.StoreSessionManager;
 import com.example.wantchu.Dialogs.SearchDialog;
 import com.example.wantchu.JsonParsingHelper.EventHelperClass;
+import com.example.wantchu.JsonParsingHelper.ListStoreParsing;
 import com.example.wantchu.JsonParsingHelper.TypeListParsing;
 import com.example.wantchu.JsonParsingHelper.TypeParsing;
 import com.example.wantchu.Url.UrlMaker;
@@ -58,9 +63,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface {
+public class MainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, UltraStoreListAdapter.OnListItemLongSelectedInterface, UltraStoreListAdapter.OnListItemSelectedInterface {
 
     RecyclerView mRecyclerView;
+
+    //울트라store recycler
+    RecyclerView ultraStoreRecyclerView;
+    ListStoreParsing listStoreParsing;
+    UltraStoreListAdapter ultraAdapter;
+
     RecyclerView.Adapter adapter;
     ImageView menu, glasses;
     EditText mSearch;
@@ -76,7 +87,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     SharedPreferences sp;
     Gson gson;
 
-    RelativeLayout recycleBack;
 
     StoreSessionManager storeSessionManager;
     ProgressApplication progressApplication;
@@ -91,6 +101,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     ///////// 태영
     Button call_search;
     /////////
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,11 +112,13 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
 
+        ultraStoreRecyclerView = findViewById(R.id.ultra_store);
+
+
 //        glasses = findViewById(R.id.glasses);
 //        mSearch = findViewById(R.id.search);
         viewPager = findViewById(R.id.info_image);
 
-        recycleBack = findViewById(R.id.background1);
         mapBar = findViewById(R.id.map_bar);
         //Fragment 생성
 
@@ -122,6 +135,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
         // 타입 버튼 동적으로 만드는 메소드
         makeRequest();
+        makeRequestUltraStore();
         myGPSListener = new myGPSListener(this);
         latLng = myGPSListener.startLocationService(mAddress);
         if(latLng == null) {
@@ -195,6 +209,26 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         }
     }
 
+    public void makeRequestUltraStore() {
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "StoreSearch.do?keyword=test&startPoint=0";
+        String url = urlMaker.UrlMake(lastUrl);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        jsonParsingUltraStore(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("ultralisterror", "error");
+                    }
+                });
+        requestQueue.add(request);
+    }
 
     public void makeRequest() {
         UrlMaker urlMaker = new UrlMaker();
@@ -222,7 +256,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
     private void mRecyclerView(String result) {
         mRecyclerView.setHasFixedSize(true);
-        ArrayList<TypeHelperClass> DataList = new ArrayList<TypeHelperClass>();
+        ArrayList<TypeHelperClass> DataList = new ArrayList<>();
         HashMap<String, TypeHelperClass> hashMap = new HashMap<>();
         hashMap.put("TypeHelperClass", new TypeHelperClass("", "", ""));
         TypeParsing typeParsing = new TypeParsing();
@@ -238,6 +272,52 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         }
         mRecyclerView.setAdapter(adapter);
         progressApplication.progressOFF();
+    }
+
+    //ultrastore 가져오기 위한 recyclerview
+    private void ultraStoreRecyclerView() {
+        ultraStoreRecyclerView.setHasFixedSize(true);
+        ultraStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        ArrayList<ListStoreHelperClass> DataList = new ArrayList<>();
+        ArrayList<ListStoreHelperClass> DataListForIsOpen = new ArrayList<>();
+        ultraStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        int [] storeIds = new int[listStoreParsing.store.size()];
+        for(int i = 0; i< listStoreParsing.store.size();i++){
+
+            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(listStoreParsing.store.get(i).getStore_name(), listStoreParsing.store.get(i).getStore_location(), listStoreParsing.store.get(i).getStore_image(), listStoreParsing.store.get(i).getDistance(), listStoreParsing.store.get(i).getStore_id(), listStoreParsing.store.get(i).getIs_open());
+
+            Log.e("hey", listStoreParsing.store.get(i).getStore_image());
+
+            listStoreHelperClass.storeNames.add(listStoreParsing.store.get(i).getStore_name());
+            listStoreHelperClass.storeLocations.add(listStoreParsing.store.get(i).getStore_location());
+            listStoreHelperClass.storeImages.add(listStoreParsing.store.get(i).getStore_image());
+            listStoreHelperClass.storeDistances.add(listStoreParsing.store.get(i).getDistance());
+            listStoreHelperClass.storeIds.add(listStoreParsing.store.get(i).getStore_id());
+            storeIds[i] = listStoreParsing.store.get(i).getStore_id();
+
+            listStoreHelperClass.storesIsOpen.add(listStoreParsing.store.get(i).getIs_open());
+            if(listStoreParsing.store.get(i).getIs_open().equals("Y")) {
+                DataListForIsOpen.add(listStoreHelperClass);
+                continue;
+            }
+            DataList.add(listStoreHelperClass);
+        }
+        DataListForIsOpen.addAll(DataList);
+        SharedPreferences getStoreId = getSharedPreferences("storeID", MODE_PRIVATE);
+        getStoreId.edit().putString("listStore", listStoreParsing.toString()).apply();
+        getStoreId.edit().putInt("currentPos", currentPos);
+        getStoreId.edit().apply();
+        getStoreId.edit().commit();
+
+        ultraAdapter = new UltraStoreListAdapter(DataList, this, this, getApplicationContext());
+        mRecyclerView.setAdapter(ultraAdapter);
+    }
+
+    private void jsonParsingUltraStore(String result){
+        Gson gson = new Gson();
+        listStoreParsing = gson.fromJson(result, ListStoreParsing.class);
+        ultraStoreRecyclerView();
     }
 
     //왼쪽 사이드바 메뉴 클릭시
