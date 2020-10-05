@@ -52,15 +52,6 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         phone = intent.getStringExtra("phone");
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-
     private boolean checkInput() {
         boolean result = false;
         String userNameStr = userName.getEditText().getText().toString().trim();
