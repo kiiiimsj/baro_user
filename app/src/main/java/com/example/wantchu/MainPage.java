@@ -211,7 +211,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
     public void makeRequestUltraStore() {
         UrlMaker urlMaker = new UrlMaker();
-        String lastUrl = "StoreSearch.do?keyword=test&startPoint=0";
+        String lastUrl = "StoreFindByUltra.do";
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.GET, url,
