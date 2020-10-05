@@ -130,7 +130,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 StoreMenus storeMenus = saveMenus.get(i);
 
                 mRecyclerViewMenu.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                ListMenuHelperClass listMenuHelperClass = new ListMenuHelperClass(storeMenus.getMenuName(), storeMenus.getMenuDefaultprice(), storeMenus.getMenuId());
+                ListMenuHelperClass listMenuHelperClass = new ListMenuHelperClass(storeMenus.getMenuName(), storeMenus.getMenuDefaultprice(), storeMenus.getMenuId(), storeMenus.getMenuImage());
 
                 listMenuHelperClass.storeMenusName.add(storeMenus.getMenuName());
                 listMenuHelperClass.storeMenusPrice.add(storeMenus.getMenuDefaultprice());
@@ -139,7 +139,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 DataList.add(listMenuHelperClass);
             }
         }
-        mMenuAdapter = new MenuListAdapter(DataList, this, this);
+        mMenuAdapter = new MenuListAdapter(DataList, this, this, getContext(), storedIdStr);
         mRecyclerViewMenu.setAdapter(mMenuAdapter);
     }
     private void setMRecyclerViewCategory() {
@@ -205,6 +205,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         String name = null;
         int menuDefaultprice = 0;
         int menu_id = 0;
+        String menu_image = null;
 
         try {
             JSONArray jsonArray = new JSONObject(result).getJSONArray("menu");
@@ -217,8 +218,9 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 name =jobj.optString("menu_name");
                 menuDefaultprice = jobj.optInt("menu_defaultprice");
                 menu_id = jobj.optInt("menu_id");
+                menu_image = jobj.optString("menu_image");
 
-                storeMenus = new StoreMenus(storeId, categoryId, menuInfo, name, menuDefaultprice, menu_id);
+                storeMenus = new StoreMenus(storeId, categoryId, menuInfo, name, menuDefaultprice, menu_id, menu_image);
                 saveMenus.add(storeMenus);
                 setMRecyclerViewMenu(saveCategories.get(0).getCategoryId());
             }
