@@ -13,6 +13,15 @@ public class OrderInsertParsing {
     private int coupon_id;
     private String order_date;
     private int each_count;
+    private String requests;
+
+    public String getRequest() {
+        return requests;
+    }
+
+    public void setRequest(String request) {
+        this.requests = request;
+    }
 
     public int getEach_count() {
         return each_count;
