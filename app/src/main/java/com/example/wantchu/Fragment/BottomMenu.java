@@ -38,6 +38,11 @@ public class BottomMenu extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -56,6 +61,7 @@ public class BottomMenu extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.bottomIconHome:
+                        item.
                         if (getTokenActivityName(getActivity().toString()).equals("MainPage")) {
                             break;
                         }

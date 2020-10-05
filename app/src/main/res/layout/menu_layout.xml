@@ -3,48 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
         <RelativeLayout
             android:id="@+id/background"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:orientation="horizontal"
-            android:padding="5dp"
-            android:layout_margin="20dp"
-            android:weightSum="10">
+            >
 
             <ImageView
                 android:id="@+id/menu_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_alignParentLeft="true"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"/>
 
             <TextView
                 android:id="@+id/menu_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="117dp"
-                android:layout_weight="5"
-                android:fontFamily="@font/baloo"
+                android:layout_toRightOf="@id/menu_image"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/notosans_regular"
                 android:gravity="center_vertical"
-                android:paddingLeft="5dp"
+                android:padding="5dp"
                 android:text="아메리카노"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/menu_price"
+                android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/menu_button"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
-                android:fontFamily="@font/baloo"
+                android:fontFamily="@font/notosans_regular"
                 android:text="1500원"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
@@ -56,12 +56,10 @@
                 android:visibility="invisible"/>
 
         </RelativeLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:background="@color/main"/>
 
     </RelativeLayout>
-
 </androidx.cardview.widget.CardView>
