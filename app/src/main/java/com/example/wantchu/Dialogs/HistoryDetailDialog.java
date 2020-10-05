@@ -35,6 +35,7 @@ public class HistoryDetailDialog extends DialogFragment {
     RecyclerView recyclerView;
     TextView totals;
     TextView store;
+    TextView requests;
     HistoryDetailAdapter historyDetailAdapter;
 
     public static HistoryDetailDialog newInstance(Context context) {
@@ -67,6 +68,7 @@ public class HistoryDetailDialog extends DialogFragment {
         int total_Price = getArguments().getInt("totalPrice");
         orderDetail.setVisibility(View.VISIBLE);
         recyclerView = orderDetail.findViewById(R.id.historyDetailList);
+        requests = orderDetail.findViewById(R.id.request);
         store = orderDetail.findViewById(R.id.store_name);
         totals = orderDetail.findViewById(R.id.totals);
         recyclerView.setLayoutManager(new LinearLayoutManager(orderDetail.getContext()));
@@ -91,6 +93,7 @@ public class HistoryDetailDialog extends DialogFragment {
         String lastUrl = "OrderFindByReceiptId.do?receipt_id=" +receipt_id;
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
+        Log.e("url",url);
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         StringRequest request = new StringRequest(Request.Method.GET, url,
@@ -101,6 +104,7 @@ public class HistoryDetailDialog extends DialogFragment {
                         ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> historyDetailParsingHelpers
                                 = jsonParsing(response);
                         applyAdapter(historyDetailParsingHelpers,context);
+
 //                        new Thread(new Runnable() {
 //                            @Override
 //                            public void run() {
@@ -127,6 +131,11 @@ public class HistoryDetailDialog extends DialogFragment {
     private ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> jsonParsing(String result){
         Gson gson = new Gson();
         HistoryDetailParsing historyDetailParsing = gson.fromJson(result,HistoryDetailParsing.class);
+        if (historyDetailParsing.getRequests()==null) {
+            requests.setText("요청사항이 없었습니다.");
+        } else {
+            requests.setText(historyDetailParsing.getRequests());
+        }
         return historyDetailParsing.getOrders();
     }
     private void applyAdapter(ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> historyDetailParsingHelpers,Context context){

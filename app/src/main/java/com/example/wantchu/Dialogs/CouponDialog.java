@@ -5,7 +5,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.AvailableCouponsAdapter;
+import com.example.wantchu.AdapterHelper.Coupon;
 import com.example.wantchu.JsonParsingHelper.AvailableCouponsParsing;
 import com.example.wantchu.JsonParsingHelper.AvailableCouponsParsingHelper;
 import com.example.wantchu.R;
@@ -39,23 +43,31 @@ public class CouponDialog extends DialogFragment {
     TextView realTotal;
     TextView totalPriceText;
     TextView discountMoney;
+    TextView request;
     Button pay;
-    public static CouponDialog newInstance(Context context,CouponDialogListener couponDialogListener){
+    EditTextfocusListener editTextfocusListener;
+    View coupons;
+    static CouponDialog couponDialog;
+    public static CouponDialog newInstance(Context context,CouponDialogListener couponDialogListener,EditTextfocusListener editTextfocusListener){
         Bundle bundle = new Bundle();
-        CouponDialog couponDialog = new CouponDialog();
+        couponDialog = new CouponDialog();
         couponDialog.setArguments(bundle);
         couponDialog.context = context;
         couponDialog.couponDialogListener = couponDialogListener;
+        couponDialog.editTextfocusListener = editTextfocusListener;
         return couponDialog;
     }
     public interface CouponDialogListener{
-        void clickBtn(int discountTotal,int dc,int coupon_id);
+        void clickBtn(int discountTotal,int dc,int coupon_id,String orderRequest);
+    }
+    public interface EditTextfocusListener{
+        void isfocus(Boolean hasFocus);
     }
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View coupons = getActivity().getLayoutInflater().inflate(R.layout.fragment_dialog_coupon,null);
+        coupons = getActivity().getLayoutInflater().inflate(R.layout.fragment_dialog_coupon,null);
         Bundle bundle = getArguments();
 
         ////////////////////////////////////////////////////////////////////////
@@ -65,6 +77,7 @@ public class CouponDialog extends DialogFragment {
         totalPriceText = coupons.findViewById(R.id.total);
         discountMoney = coupons.findViewById(R.id.discount_money);
         pay =coupons.findViewById(R.id.pay);
+        request = coupons.findViewById(R.id.request);
         ImageButton close = coupons.findViewById(R.id.close_coupon);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,12 +145,27 @@ public class CouponDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
                 if(availableCouponsAdapter.getItemCount()!=0) {
-                    couponDialogListener.clickBtn(availableCouponsAdapter.getDiscountTotal(), availableCouponsAdapter.getDc(), availableCouponsAdapter.getCoupon_id());
+                    couponDialogListener.clickBtn(availableCouponsAdapter.getDiscountTotal(), availableCouponsAdapter.getDc(),
+                            availableCouponsAdapter.getCoupon_id(),request.getText().toString());
                 }
                 else{
-                    couponDialogListener.clickBtn(Integer.parseInt(totalPriceText.getText().toString()),-1,-1);
+                    couponDialogListener.clickBtn(Integer.parseInt(totalPriceText.getText().toString()),-1,-1,request.getText().toString());
                 }
                 dismissDialog();
+            }
+        });
+        request.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                if (focus){
+                    WindowManager.LayoutParams lp = couponDialog.getActivity().getWindow().getAttributes();
+                    lp.y = Gravity.TOP - 80;
+                    couponDialog.getActivity().getWindow().setAttributes(lp);
+                }else{
+                    WindowManager.LayoutParams lp = couponDialog.getActivity().getWindow().getAttributes();
+                    lp.y = Gravity.CENTER;
+                    couponDialog.getActivity().getWindow().setAttributes(lp);
+                }
             }
         });
     }

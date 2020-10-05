@@ -6,11 +6,16 @@ public class HistoryDetailParsing {
     Boolean result;
     ArrayList<HistoryDetailParsingHelper> orders;
     String message;
+    String requests;
 
     public HistoryDetailParsing(Boolean result, ArrayList<HistoryDetailParsingHelper> orders, String message) {
         this.result = result;
         this.orders = orders;
         this.message = message;
+    }
+
+    public String getRequests() {
+        return requests;
     }
 
     public Boolean getResult() {

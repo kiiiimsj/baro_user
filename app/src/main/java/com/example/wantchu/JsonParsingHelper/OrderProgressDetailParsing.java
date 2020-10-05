@@ -6,11 +6,15 @@ public class OrderProgressDetailParsing {
     Boolean result;
     ArrayList<OrderProgressDetailParsingHelper> orders;
     String message;
+    String requests;
 
     public OrderProgressDetailParsing(Boolean result, ArrayList<OrderProgressDetailParsingHelper> orders, String message) {
         this.result = result;
         this.orders = orders;
         this.message = message;
+    }
+    public String getRequests() {
+        return requests;
     }
 
     public Boolean getResult() {

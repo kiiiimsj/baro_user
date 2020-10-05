@@ -7,15 +7,17 @@ public class StoreMenus {
     private String menuName;
     private int menuDefaultprice;
     private int menuId;
+    private String menuImage;
 
     public StoreMenus() { }
-    public StoreMenus(int storeId, int categoryId, String menuInfo, String menuName, int menuDefaultprice, int menuId) {
+    public StoreMenus(int storeId, int categoryId, String menuInfo, String menuName, int menuDefaultprice, int menuId, String menuImage) {
         this.storeId = storeId;
         this.categoryId = categoryId;
         this.menuInfo = menuInfo;
         this.menuName = menuName;
         this.menuDefaultprice = menuDefaultprice;
         this.menuId = menuId;
+        this.menuImage = menuImage;
     }
 
     public int getStoreId() {
@@ -66,6 +68,11 @@ public class StoreMenus {
         this.menuId = menuId;
     }
 
+    public String getMenuImage(){return menuImage;}
+    public void setMenuImage(String menuImage){
+        this.menuImage = menuImage;
+    }
+
     @Override
     public String toString() {
         return "StoreMenus{" +
@@ -75,6 +82,7 @@ public class StoreMenus {
                 ", menuName='" + menuName + '\'' +
                 ", menuDefaultprice=" + menuDefaultprice +
                 ", menuId=" + menuId +
+                ", menuImage='" + menuImage +
                 '}';
     }
 }

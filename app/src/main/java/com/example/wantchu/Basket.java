@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -45,6 +47,7 @@ import com.example.wantchu.Dialogs.CouponDialog;
 import com.example.wantchu.Url.UrlMaker;
 import com.example.wantchu.helperClass.DetailsFixToBasket;
 import com.example.wantchu.Dialogs.StoreCloseDialog;
+import com.google.firebase.database.annotations.NotNull;
 import com.google.gson.Gson;
 
 import org.java_websocket.client.WebSocketClient;
@@ -117,6 +120,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     int totalOrderCount = 0;
     int used_coupon_id;
     int discount_price ;
+    String request;
     boolean isOpen = true;
     BasketAdapter basketAdapter =null;
 
@@ -249,6 +253,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             orderInsertParsingChild.setExtras(orderInsertParsingChild2s);
             orderInsertParsing.getOrders().add(orderInsertParsingChild);
             orderInsertParsing.setEach_count(eachCount);
+            orderInsertParsing.setRequest(request);
         }
 
         String result = gson.toJson(orderInsertParsing, OrderInsertParsing.class);
@@ -368,15 +373,24 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
         recalculateTotalPrice();
 
-        CouponDialog couponDialog = CouponDialog.newInstance(Basket.this, new CouponDialog.CouponDialogListener() {
+        final CouponDialog couponDialog = CouponDialog.newInstance(Basket.this, new CouponDialog.CouponDialogListener() {
             @Override
-            public void clickBtn(int discountTotal, int dc, int coupon_id) {
+            public void clickBtn(int discountTotal, int dc, int coupon_id, String orderRequest) {
                 realTotalPrice = discountTotal;
                 discount_price = dc;
                 used_coupon_id = coupon_id;
+                request = orderRequest;
 //                clarityIsOpenStore();
-                if(isOpen==true) {
+                if (isOpen == true) {
                     findUserForm();
+                }
+            }
+        }, new CouponDialog.EditTextfocusListener() {
+            @Override
+            public void isfocus(Boolean hasFocus) {
+                if(hasFocus){
+                    WindowManager.LayoutParams window = Basket.this.getWindow().getAttributes();
+                    window.y = Gravity.TOP - 80;
                 }
             }
         });

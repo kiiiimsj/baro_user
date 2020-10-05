@@ -37,7 +37,7 @@ public class ProgressingDetailDialog extends DialogFragment {
 
     TextView store_name;
     TextView totals;
-
+    TextView request;
     ImageButton delete_this;
     RecyclerView progressDetail;
     Gson gson;
@@ -73,7 +73,7 @@ public class ProgressingDetailDialog extends DialogFragment {
         //////////////////////////////
         store_name = progressingDetail.findViewById(R.id.store_name);
         totals = progressingDetail.findViewById(R.id.totals);
-
+        request = progressingDetail.findViewById(R.id.request);
         delete_this = progressingDetail.findViewById(R.id.deleteThis);
         progressDetail = progressingDetail.findViewById(R.id.ProgressDetailList);
 
@@ -104,9 +104,14 @@ public class ProgressingDetailDialog extends DialogFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("success",response);
+                        Log.e("success", response);
                         jsonParsing(response);
                         applyAdapter(orderProgressDetailParsing.getOrders());
+                        if (orderProgressDetailParsing.getRequests()==null) {
+                            request.setText("요청사항이 없었습니다.");
+                        } else {
+                            request.setText(orderProgressDetailParsing.getRequests());
+                        }
                     }
                 },
                 new Response.ErrorListener() {

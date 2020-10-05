@@ -44,7 +44,7 @@
             android:textSize="14dp"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/button_border_full"
+            android:background="@drawable/button_border_empty"
             android:fontFamily="@font/bmhannapro"
             />
 
@@ -59,7 +59,7 @@
             android:textSize="14dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="60dp"
-            android:background="@drawable/button_border_full"
+            android:background="@drawable/button_border_empty"
             android:fontFamily="@font/bmhannapro"/>
 
     </LinearLayout>
