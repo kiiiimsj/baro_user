@@ -154,7 +154,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
             categoryName.setText(storeCategories.getCategoryName());
             categoryName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-            ViewGroup.LayoutParams width = new ViewGroup.LayoutParams(storeCategories.getCategoryName().length() * 60, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ViewGroup.LayoutParams width = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             tabView.setLayoutParams(width);
             TabLayout.Tab myTab = mCategoryTabLayout.newTab().setCustomView(tabView);
 
@@ -185,7 +185,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 TextView textColor = tab.view.findViewById(R.id.category_button);
-                textColor.setTextColor(getResources().getColor(R.color.main));
+                textColor.setTextColor(getResources().getColor(R.color.white));
             }
         });
     }

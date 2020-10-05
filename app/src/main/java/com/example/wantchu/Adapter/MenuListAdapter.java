@@ -154,7 +154,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
                     public void onResponse(Bitmap response) {
                         image.setImageBitmap(response);
                     }
-                }, 100, 100, ImageView.ScaleType.FIT_CENTER, null,
+                }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {

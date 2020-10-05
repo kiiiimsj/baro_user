@@ -50,6 +50,7 @@ public class OrderProgressing extends AppCompatActivity {
         SessionManager sessionManager = new SessionManager(this,SessionManager.SESSION_USERSESSION);
         HashMap<String,String> hashMap = sessionManager.getUsersDetailFromSession();
         phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
+        refreshLayout.setDistanceToTriggerSync(20);
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
@@ -59,16 +60,6 @@ public class OrderProgressing extends AppCompatActivity {
 
         makeRequest(phone);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-
     private void makeRequest(String phone) {
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("OrderProgressing.do?phone=")+phone;
