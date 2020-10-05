@@ -47,14 +47,6 @@ public class Events extends AppCompatActivity implements TopBar.OnBackPressedInP
         storeId = intent.getIntExtra("event_id", 0);
         makeRequestForGetEvent();
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
     private void makeRequestForGetEvent() {
         String url = new UrlMaker().UrlMake("EventDetail.do?event_id="+storeId);
         RequestQueue requestQueue = Volley.newRequestQueue(this);

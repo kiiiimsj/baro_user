@@ -90,10 +90,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_map);
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
         setMyNewLocation = getSharedPreferences("newLocation", MODE_PRIVATE);
         address = findViewById(R.id.show_latlng_address);
         OverLayMarker = findViewById(R.id.over_lay_marker);
@@ -395,10 +391,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
 
     @Override
     protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        decorView.setSystemUiVisibility(uiOptions);
         mapFragment.onResume();
         super.onResume();
     }
