@@ -50,6 +50,7 @@ public class OrderProgressing extends AppCompatActivity {
         SessionManager sessionManager = new SessionManager(this,SessionManager.SESSION_USERSESSION);
         HashMap<String,String> hashMap = sessionManager.getUsersDetailFromSession();
         phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
+        refreshLayout.setDistanceToTriggerSync(20);
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
