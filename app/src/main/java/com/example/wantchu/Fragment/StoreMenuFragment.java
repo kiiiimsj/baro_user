@@ -185,7 +185,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 TextView textColor = tab.view.findViewById(R.id.category_button);
-                textColor.setTextColor(getResources().getColor(R.color.main));
+                textColor.setTextColor(getResources().getColor(R.color.white));
             }
         });
     }
