@@ -49,7 +49,7 @@
             android:fontFamily="@font/muli"
             android:textSize="15sp"
             android:onClick="onClick_onestore"
-            android:background="@drawable/button_border_full"
+            android:background="@drawable/button_border_empty"
             android:textColor="@color/black"
             android:text="결 제  하 기"/>
     </LinearLayout>
