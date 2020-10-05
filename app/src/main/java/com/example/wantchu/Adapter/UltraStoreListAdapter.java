@@ -3,18 +3,15 @@ package com.example.wantchu.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
@@ -28,7 +25,7 @@ import com.example.wantchu.Url.UrlMaker;
 
 import java.util.ArrayList;
 
-public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.ListStoreViewHolder> {
+public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAdapter.UltraStoreListViewHolder> {
 
     static public Context context;
 
@@ -40,14 +37,13 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
         void onItemSelected(View v, int position);
     }
 
-    private static ListStoreAdapter.OnListItemSelectedInterface mListener;
-    private static ListStoreAdapter.OnListItemLongSelectedInterface mLongListener;
+    private static UltraStoreListAdapter.OnListItemLongSelectedInterface mLongListener;
+    private static UltraStoreListAdapter.OnListItemSelectedInterface mListener;
 
+    static ArrayList<ListStoreHelperClass> listStoreHelperClasses;
 
-    static ArrayList<ListStoreHelperClass> listStoreLocations;
-
-    public ListStoreAdapter(ArrayList<ListStoreHelperClass> listStoreLocations, ListStoreAdapter.OnListItemSelectedInterface listener, ListStoreAdapter.OnListItemLongSelectedInterface longListener, Context context){
-        this.listStoreLocations = listStoreLocations; //DataList
+    public UltraStoreListAdapter(ArrayList<ListStoreHelperClass> listStoreHelperClasses, UltraStoreListAdapter.OnListItemSelectedInterface listener, UltraStoreListAdapter.OnListItemLongSelectedInterface longListener, Context context){
+        this.listStoreHelperClasses = listStoreHelperClasses;
         this.mListener = listener;
         this.mLongListener = longListener;
         this.context = context;
@@ -60,63 +56,54 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
 
     @NonNull
     @Override
-    public ListStoreAdapter.ListStoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public UltraStoreListAdapter.UltraStoreListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.store_design, parent, false);
-        ListStoreViewHolder listStoreViewHolder = new ListStoreViewHolder(view, viewType);
-        return listStoreViewHolder;
+        View view = inflater.inflate(R.layout.ultra_store_design, parent, false);
+        UltraStoreListViewHolder ultraStoreListViewHolder = new UltraStoreListViewHolder(view, viewType);
+        return ultraStoreListViewHolder;
     }
 
     @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(@NonNull ListStoreAdapter.ListStoreViewHolder holder, int position) {
-        ListStoreHelperClass listStoreHelperClass = listStoreLocations.get(position);
+    public void onBindViewHolder(@NonNull UltraStoreListAdapter.UltraStoreListViewHolder holder, int position) {
+        ListStoreHelperClass listStoreHelperClass = listStoreHelperClasses.get(position);
 
         holder.storeImage.setBackgroundDrawable(Drawable.createFromPath(listStoreHelperClass.storeImage));
         holder.storeName.setText(listStoreHelperClass.storeName);
         holder.storeLocation.setText(listStoreHelperClass.storeLocation);
         holder.mDistance.setText(String.valueOf((int)listStoreHelperClass.storeDistance + "m"));
         holder.storeId.setText(String.valueOf(listStoreHelperClass.storeId));
-        if(listStoreHelperClass.storeIsOpen != null) {
-            if(listStoreHelperClass.storeIsOpen.equals("N")) {
-                holder.isOpen.setText("준비중");
-                holder.store.setBackgroundColor(Color.rgb(237,237,237));
-                
-            }
-            if(listStoreHelperClass.storeIsOpen.equals("Y")) {
-                holder.isOpen.setText("영업중");
-            }
-        }
     }
 
     @Override
     public int getItemCount() {
-        return listStoreLocations == null ? 0 : listStoreLocations.size();
+        return listStoreHelperClasses == null ? 0 : listStoreHelperClasses.size();
     }
+
     @Override
     public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
     }
 
     @Override
-    public boolean onFailedToRecycleView(@NonNull ListStoreAdapter.ListStoreViewHolder holder) {
+    public boolean onFailedToRecycleView(@NonNull UltraStoreListAdapter.UltraStoreListViewHolder holder) {
         return super.onFailedToRecycleView(holder);
     }
 
     @Override
-    public void onViewAttachedToWindow(@NonNull ListStoreAdapter.ListStoreViewHolder  holder) {
+    public void onViewAttachedToWindow(@NonNull UltraStoreListAdapter.UltraStoreListViewHolder  holder) {
         super.onViewAttachedToWindow(holder);
     }
 
     @Override
-    public void onViewRecycled(@NonNull ListStoreAdapter.ListStoreViewHolder  holder) {
+    public void onViewRecycled(@NonNull UltraStoreListAdapter.UltraStoreListViewHolder  holder) {
         super.onViewRecycled(holder);
     }
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull ListStoreAdapter.ListStoreViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull UltraStoreListAdapter.UltraStoreListViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
     }
 
@@ -124,28 +111,25 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
-    public static class ListStoreViewHolder extends RecyclerView.ViewHolder {
+
+    public static class UltraStoreListViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView storeImage;
         public TextView storeName;
         public TextView storeLocation;
         public TextView mDistance;
         public TextView storeId;
-        public TextView isOpen;
-        public LinearLayout store;
 
-        public ListStoreViewHolder(@NonNull View itemView, int po) {
+        public UltraStoreListViewHolder(@NonNull View itemView, int po) {
             super(itemView);
 
             storeName = itemView.findViewById(R.id.store_name);
-            storeLocation = itemView.findViewById(R.id.store_location);
             storeImage = itemView.findViewById(R.id.store_image);
-            mDistance = itemView.findViewById(R.id.distance);
+            storeLocation = itemView.findViewById(R.id.store_location);
+            mDistance = itemView.findViewById(R.id.store_distance);
             storeId = itemView.findViewById(R.id.store_id);
-            isOpen = itemView.findViewById(R.id.is_open);
-            store = itemView.findViewById(R.id.store);
-            ListStoreHelperClass list =listStoreLocations.get(po);
-            makeRequest(list.storeImage, context, storeImage);
+            ListStoreHelperClass list = listStoreHelperClasses.get(po);
+            makeRequestUltraStore(list.storeImage, context, storeImage);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -155,15 +139,14 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
-                    mLongListener.onItemLongSelected(v, getAdapterPosition());
+                public boolean onLongClick(View view) {
+                    mLongListener.onItemLongSelected(view, getAdapterPosition());
                     return false;
                 }
             });
         }
 
-        public void makeRequest(String store_image, Context context, final ImageView image) {
-            //makeRequest(storeHelperClass.storeImages.get(viewType), listStoreViewHolder, context);
+        public void makeRequestUltraStore(String store_image, Context context, final ImageView image){
             UrlMaker urlMaker = new UrlMaker();
             String lastUrl = "ImageStore.do?image_name=";
             String url = urlMaker.UrlMake(lastUrl);
