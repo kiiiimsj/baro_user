@@ -135,7 +135,9 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
         // 타입 버튼 동적으로 만드는 메소드
         makeRequest();
-        makeRequestUltraStore();
+
+        //makeRequestUltraStore();
+
         myGPSListener = new myGPSListener(this);
         latLng = myGPSListener.startLocationService(mAddress);
         if(latLng == null) {
