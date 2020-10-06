@@ -97,7 +97,11 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         getPhoneNumber();
         makeRequestForOrderCount();
     }
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+    }
     private void setMyInfo() {
         SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersDetailSession();

@@ -111,6 +111,11 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
             chooseShowList(ON_RESTART);
         }
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+    }
     public void chooseShowList(int state) {
         Intent intent = getIntent();
         if(intent != null) {
@@ -323,6 +328,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     public void onItemLongSelected(View v, int adapterPosition) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
         Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
         intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
         startActivity(intent);
@@ -332,6 +338,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     public void onItemSelected(View v, int position) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         if(listStoreViewHolder.storeId == null) {
             runOnUiThread(new Runnable() {
                 @Override
