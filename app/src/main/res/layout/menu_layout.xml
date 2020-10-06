@@ -32,22 +32,23 @@
                 android:gravity="center_vertical"
                 android:padding="5dp"
                 android:text="아메리카노"
+                android:includeFontPadding="false"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
             <TextView
                 android:id="@+id/subscription"
                 android:padding="5dp"
+                android:includeFontPadding="false"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/menu_image"
                 android:layout_toLeftOf="@id/menu_price"
                 android:layout_below="@id/menu_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="abcdefg"></TextView>
+                android:text="abcdefg"/>
 
             <TextView
                 android:id="@+id/menu_price"
-                android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/menu_button"
@@ -55,6 +56,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
                 android:fontFamily="@font/notosans_regular"
+                android:includeFontPadding="false"
                 android:text="1500원"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
@@ -64,6 +66,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"/>
+            <TextView
+                android:id="@+id/sold_out"
+                android:layout_marginTop="5dp"
+                android:layout_alignTop="@id/menu_price"
+                android:includeFontPadding="false"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:text="품절"
+                android:textColor="@color/red"/>
 
         </RelativeLayout>
         <View

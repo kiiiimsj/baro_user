@@ -11,12 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -405,7 +408,14 @@ public class OrderDetails extends AppCompatActivity {
                             R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount);
             expandableListView.setAdapter(nonEssentialAdapter);
             setListIndicator();
-//            setListViewHeightBasedOnChildren(expandableListView,NonEssentialOptionList);
+            setExpandableListViewHeight(expandableListView,-1);
+            expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                @Override
+                public boolean onGroupClick(ExpandableListView parent, View v, int position, long id) {
+                    setExpandableListViewHeight(parent, position);
+                    return false;
+                }
+            });
             ////////////////////////////////////////////////////////////////////////
 //            newNonEssentialAdapter = new OrderDetailsNewNonEssentailAdapter(OrderDetails.this,totalPriceText,itemCount,NonEssentialOptionList);
 //            newNonEssentailRecyclerView.setAdapter(newNonEssentialAdapter);
@@ -510,25 +520,38 @@ public class OrderDetails extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public static void setListViewHeightBasedOnChildren(ExpandableListView expandableListView,ArrayList<OrderDetailsNonEssential> NonEssentialOptionList) {
-        ListAdapter orderDetailsNonEssentialAdapter = expandableListView.getAdapter();
-        if (expandableListView == null) {
-            // pre-condition
+    private void setExpandableListViewHeight(ExpandableListView listView, int group) {
+        ExpandableListAdapter listAdapter = listView.getExpandableListAdapter();
+        if (listAdapter == null) {
             return;
         }
 
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
         int totalHeight = 0;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(expandableListView.getWidth(), View.MeasureSpec.AT_MOST);
-
-        for (int i = 0; i < NonEssentialOptionList.size(); i++) {
-            View listItem = orderDetailsNonEssentialAdapter.getView(i, null, expandableListView);
-            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += listItem.getMeasuredHeight();
+        View view = null;
+        for (int i = 0; i < listAdapter.getGroupCount(); i++) {
+            view = listAdapter.getGroupView(i, false, view, listView);
+            if (i == 0) {
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+            if(((listView.isGroupExpanded(i)) && (i != group)) || ((!listView.isGroupExpanded(i)) && (i == group))) {
+                View listItem = null;
+                for (int j = 0; j < listAdapter.getChildrenCount(i); j++) {
+                    listItem = listAdapter.getChildView(i, j, false, listItem, listView);
+                    listItem.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, View.MeasureSpec.UNSPECIFIED));
+                    listItem.measure(
+                            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                    totalHeight += listItem.getMeasuredHeight();
+                }
+            }
         }
-
-        ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-        params.height = totalHeight + (expandableListView.getDividerHeight() * (NonEssentialOptionList.size() - 1));
-        expandableListView.setLayoutParams(params);
-        expandableListView.requestLayout();
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight +100+ (listView.getDividerHeight() * (listAdapter.getGroupCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
+
 }
