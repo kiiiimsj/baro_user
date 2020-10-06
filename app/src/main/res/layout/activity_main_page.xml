@@ -115,6 +115,7 @@
             </RelativeLayout>
 
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -126,14 +127,15 @@
                 android:id="@+id/advertise"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:orientation="vertical"
                 android:weightSum="10">
+
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/info_image"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3" />
+
                 <LinearLayout
                     android:id="@+id/dots"
                     android:layout_width="wrap_content"
@@ -143,21 +145,30 @@
                     android:orientation="horizontal" />
 
                 <RelativeLayout
-                    android:id="@+id/background1"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_alignTop="@id/info_image"
-                    android:layout_weight="6.5"
-                    android:orientation="vertical">
+                    android:layout_weight="6.5">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/home_background"
-                        android:backgroundTint="@color/white"/>
+                        android:layout_height="wrap_content"/>
                 </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/ultra_store"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
             </LinearLayout>
+
         </RelativeLayout>
         <fragment
             android:id="@+id/cart_click_button"
