@@ -28,11 +28,11 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
     static public Context context;
 
     public interface OnListItemLongSelectedInterface{
-        void onItemLongSelected(View v, int adapterPosition);
+        void onUltraStoreLongSelected(View v, int adapterPosition);
     }
 
     public interface OnListItemSelectedInterface {
-        void onItemSelected(View v, int position);
+        void onUltraStoreSelected(View v, int position);
     }
 
     private static UltraStoreListAdapter.OnListItemLongSelectedInterface mLongListener;
@@ -126,14 +126,14 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemSelected(view, getAdapterPosition());
+                    mListener.onUltraStoreSelected(view, getAdapterPosition());
                 }
             });
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    mLongListener.onItemLongSelected(view, getAdapterPosition());
+                    mLongListener.onUltraStoreLongSelected(view, getAdapterPosition());
                     return false;
                 }
             });

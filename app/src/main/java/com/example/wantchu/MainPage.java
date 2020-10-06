@@ -440,11 +440,28 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public void onNewStoreItemSelected(View v, int position) {
-
+        NewStoreListAdapter.NewStoreViewHolder viewHolder= (NewStoreListAdapter.NewStoreViewHolder) newStoreRecyclerView.findViewHolderForAdapterPosition(position);
+        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+        intent.putExtra("store_id", viewHolder.storeId.getText().toString());
+        startActivity(intent);
     }
 
     @Override
     public void onLongNewStoreItemSelected(View v, int adapterPosition) {
 
+    }
+
+
+    @Override
+    public void onUltraStoreLongSelected(View v, int adapterPosition) {
+
+    }
+
+    @Override
+    public void onUltraStoreSelected(View v, int position) {
+        UltraStoreListAdapter.UltraStoreListViewHolder viewHolder= (UltraStoreListAdapter.UltraStoreListViewHolder) ultraStoreRecyclerView.findViewHolderForAdapterPosition(position);
+        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+        intent.putExtra("store_id", viewHolder.storeId.getText().toString());
+        startActivity(intent);
     }
 }
