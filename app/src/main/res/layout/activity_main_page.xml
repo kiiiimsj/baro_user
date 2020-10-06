@@ -48,6 +48,7 @@
                     android:letterSpacing="-0.02"
                     android:background="@color/white"
                     android:fontFamily="@font/notosans_bold"
+                    android:includeFontPadding="false"
                     android:text="서울시 동작구"
                     android:textSize="14sp" />
 
@@ -129,6 +130,7 @@
                     android:layout_below="@id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
                     android:text="여기 어때요?"
                     android:padding="10dp"
                     android:textSize="20sp"
@@ -150,6 +152,7 @@
                     android:layout_below="@id/ultra_store"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
                     android:text="신규 매장"
                     android:padding="10dp"
                     android:textSize="20sp"
