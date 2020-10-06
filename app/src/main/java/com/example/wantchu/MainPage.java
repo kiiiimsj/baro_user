@@ -164,6 +164,12 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         makeRequestUltraStore(setHashMapData());
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+    }
+
     private void startLocation() {
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
@@ -432,6 +438,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     public void onItemSelected(View v, int position) {
         TypeAdapter.TypeViewHolder viewHolder = (TypeAdapter.TypeViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(getApplicationContext(), ListStorePage.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("type_code", viewHolder.code.getText().toString());
         intent.putExtra("type_name", viewHolder.title.getText().toString());
         intent.putExtra("list_type", "find_type");
@@ -442,6 +449,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     public void onNewStoreItemSelected(View v, int position) {
         NewStoreListAdapter.NewStoreViewHolder viewHolder= (NewStoreListAdapter.NewStoreViewHolder) newStoreRecyclerView.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", viewHolder.storeId.getText().toString());
         startActivity(intent);
     }
@@ -461,6 +469,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     public void onUltraStoreSelected(View v, int position) {
         UltraStoreListAdapter.UltraStoreListViewHolder viewHolder= (UltraStoreListAdapter.UltraStoreListViewHolder) ultraStoreRecyclerView.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", viewHolder.storeId.getText().toString());
         startActivity(intent);
     }
