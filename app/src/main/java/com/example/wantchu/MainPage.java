@@ -112,10 +112,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
         ultraStoreRecyclerView = findViewById(R.id.ultra_store);
-
-
-//        glasses = findViewById(R.id.glasses);
-//        mSearch = findViewById(R.id.search);
         viewPager = findViewById(R.id.info_image);
 
         mapBar = findViewById(R.id.map_bar);
@@ -131,7 +127,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         call_search = findViewById(R.id.search_dialog);
         /////////
         startLocation();
-
+        makeRequestForEventThread();
         // 타입 버튼 동적으로 만드는 메소드
         makeRequest();
         makeRequestUltraStore();
@@ -155,7 +151,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 searchDialog.callFunction();
             }
         });
-        makeRequestForEventThread();
     }
 
     @Override
