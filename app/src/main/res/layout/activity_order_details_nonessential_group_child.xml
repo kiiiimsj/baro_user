@@ -2,7 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:baselineAligned="false" android:padding="30dp"
+    android:baselineAligned="false"
+    android:paddingLeft="11dp"
+    android:paddingRight="11dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:background="@color/white"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -16,25 +20,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="돼지고기 추가(100g)"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:fontFamily="@font/notosans_regular"
+            android:textSize="12sp"
+            android:letterSpacing="-0.02"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/notosans_regular"
+            android:textSize="12sp"
+            android:letterSpacing="-0.02"
             android:text="(+"/>
         <TextView
             android:id="@+id/optionPrice"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:fontFamily="@font/notosans_regular"
+            android:textSize="12sp"
+            android:letterSpacing="-0.02"
             android:text="300">
         </TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/notosans_regular"
+            android:textSize="12sp"
+            android:letterSpacing="-0.02"
             android:text="원)">
         </TextView>
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginRight="20dp"
         android:layout_width="0dp"
         android:background="@color/white"
         android:layout_height="wrap_content"
@@ -59,6 +77,9 @@
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/notosans_regular"
+            android:textSize="12sp"
+            android:letterSpacing="-0.02"
             android:text="0"/>
         <ImageButton
             android:id="@+id/plus"

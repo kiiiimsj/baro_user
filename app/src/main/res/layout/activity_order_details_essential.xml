@@ -5,29 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginBottom="10dp"
+    android:paddingLeft="11dp"
+    android:paddingRight="11dp"
     tools:context=".OrderDetails">
-    <View
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray"></View>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
         <TextView
             android:layout_alignParentLeft="true"
             android:id="@+id/essentialOptionName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:textSize="15sp"
+            android:textSize="12sp"
+            android:textColor="#343434"
+            android:letterSpacing="-0.02"
             android:background="@color/white"
+            android:fontFamily="@font/notosans_regular"
             android:text="옵션 종류명"/>
         <TextView
             android:id="@+id/selectedOptions"
@@ -35,20 +31,24 @@
             android:gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:textColor="@color/main"
-            android:paddingRight="30dp"
+            android:letterSpacing="-0.02"
+            android:fontFamily="@font/notosans_bold"
+            android:paddingRight="18dp"
             />
     </RelativeLayout>
     <LinearLayout
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
         android:orientation="vertical"
         android:id="@+id/tableShell"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="29dp"
         >
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
 
 </LinearLayout>

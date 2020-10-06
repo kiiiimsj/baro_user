@@ -387,8 +387,8 @@ public class OrderDetails extends AppCompatActivity {
         ArrayList<OrderDetailsNonEssential> NonEssentialOptionList = ConvertNonEssential(nonEssentialOptions);
         RecyclerView essentailRecyclerView = findViewById(R.id.menuRecyler_Essential);
         essentailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerView newNonEssentailRecyclerView = findViewById(R.id.menuRecyler_nonEssential);
-        newNonEssentailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        RecyclerView newNonEssentailRecyclerView = findViewById(R.id.menuRecyler_nonEssential);
+//        newNonEssentailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 //        expandListViewShell.getLayoutParams().height = ((arrayList2.size()) * FLEX_EXPAND_HEIGHT) + 600;
         // 리사이클러뷰에 SimpleTextAdapter )객체 지정.
@@ -423,9 +423,9 @@ public class OrderDetails extends AppCompatActivity {
         OrderDetails.this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int width = metrics.widthPixels;
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2)
-            expandableListView.setIndicatorBounds(width - GetPixelFromDips(55), width - GetPixelFromDips(25));
+            expandableListView.setIndicatorBounds(width - GetPixelFromDips(70), width - GetPixelFromDips(40));
         else
-            expandableListView.setIndicatorBoundsRelative(width - GetPixelFromDips(55), width - GetPixelFromDips(25));
+            expandableListView.setIndicatorBoundsRelative(width - GetPixelFromDips(70), width - GetPixelFromDips(40));
     }
 
 

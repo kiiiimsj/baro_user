@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:text="커피"
             android:lineSpacingExtra="-0.7sp"
+            android:includeFontPadding="false"
             android:fontFamily="@font/notosans_regular"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/black"/>
