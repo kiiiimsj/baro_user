@@ -68,6 +68,11 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         holder.menuId.setText(Integer.toString(listMenuHelperClass.menuId));
         holder.menuImage.setBackground(Drawable.createFromPath(listMenuHelperClass.menuImage));
         holder.subscription.setText(listMenuHelperClass.menu_info);
+        if(listMenuHelperClass.is_soldout.equals("Y")){
+            holder.sold_out.setVisibility(View.VISIBLE);
+            holder.background.setClickable(false);
+            holder.background.setBackgroundColor(context.getResources().getColor(R.color.lightGray));
+        }
     }
     @Override
     public int getItemViewType(int position) {
@@ -113,6 +118,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         public RelativeLayout background;
         public ImageView menuImage;
         public TextView subscription;
+        public TextView sold_out;
         public MenuViewHolder(@NonNull View itemView, int po) {
             super(itemView);
             menuName = itemView.findViewById(R.id.menu_button);
@@ -121,6 +127,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
             background = itemView.findViewById(R.id.background);
             menuImage = itemView.findViewById(R.id.menu_image);
             subscription = itemView.findViewById(R.id.subscription);
+            sold_out = itemView.findViewById(R.id.sold_out);
 
             ListMenuHelperClass list = listMenuHelperClasses.get(po);
             makeRequest(list.menuImage, context, menuImage);

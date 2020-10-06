@@ -73,14 +73,16 @@
                     android:layout_weight="3"
                     android:orientation="vertical">
                     <LinearLayout
+                        android:layout_marginLeft="30dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <TextView
+                            android:includeFontPadding="false"
                             android:id="@+id/menuName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/notosans_regular"
+                            android:fontFamily="@font/notosans_black"
                             android:text="카페"
                             android:textSize="14sp"
                             android:textColor="#343434"
@@ -97,6 +99,7 @@
                             <!--                            android:layout_weight="1"-->
                             <!--                            android:src="@drawable/shoplic_currency_won_featured"/>-->
                             <LinearLayout
+                                android:layout_marginBottom="14dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
                                 <TextView
@@ -115,6 +118,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:fontFamily="@font/notosans_bold"
+                                    android:includeFontPadding="false"
                                     android:letterSpacing="-0.02"
                                     android:text="원"
                                     android:textColor="@color/main"
@@ -137,12 +141,15 @@
                                 android:textStyle="bold"/>
 
                             <TextView
+                                android:layout_marginRight="10dp"
+                                android:layout_marginLeft="10dp"
                                 android:id="@+id/itemCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@color/main"
                                 android:textSize="14dp"
+                                android:includeFontPadding="false"
                                 android:letterSpacing="-0.02"
                                 android:fontFamily="@font/notosans_bold"
                                 android:text="1"/>
@@ -164,6 +171,8 @@
     </LinearLayout>
 
     <ScrollView
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_above="@id/fix"
         android:layout_below="@id/content_layout"
         android:id="@+id/scroll_back"
@@ -184,13 +193,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:background="@color/white"
                     android:padding="10dp"
-                    android:text=" 필수 옵션"
+                    android:text="필수 옵션"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/notosans_bold"
-                    android:textSize="1sp" />
+                    android:fontFamily="@font/notosans_regular"
+                    android:textSize="12sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -205,10 +213,9 @@
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/expandListViewShell"
-                android:layout_marginTop="20px"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 <!--                <View-->
 <!--                    android:layout_marginRight="10dp"-->
 <!--                    android:layout_marginLeft="10dp"-->

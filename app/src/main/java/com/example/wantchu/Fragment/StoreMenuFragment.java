@@ -131,7 +131,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
 
                 mRecyclerViewMenu.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                 ListMenuHelperClass listMenuHelperClass = new ListMenuHelperClass(storeMenus.getMenuName(),
-                        storeMenus.getMenuDefaultprice(), storeMenus.getMenuId(), storeMenus.getMenuImage(),storeMenus.getMenu_info());
+                        storeMenus.getMenuDefaultprice(), storeMenus.getMenuId(), storeMenus.getMenuImage(),storeMenus.getMenu_info(),storeMenus.getIs_soldout());
                 listMenuHelperClass.storeMenusName.add(storeMenus.getMenuName());
                 listMenuHelperClass.storeMenusPrice.add(storeMenus.getMenuDefaultprice());
                 listMenuHelperClass.storeMenusId.add(storeMenus.getMenuId());
@@ -207,6 +207,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         int menu_id = 0;
         String menu_image = null;
         String menu_info = null;
+        String is_soldout = null;
 
         try {
             JSONArray jsonArray = new JSONObject(result).getJSONArray("menu");
@@ -221,8 +222,9 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 menu_id = jobj.optInt("menu_id");
                 menu_image = jobj.optString("menu_image");
                 menu_info = jobj.optString("menu_info");
+                is_soldout = jobj.optString("is_soldout");
 
-                storeMenus = new StoreMenus(storeId, categoryId, menuInfo, name, menuDefaultprice, menu_id, menu_image,menu_info);
+                storeMenus = new StoreMenus(storeId, categoryId, menuInfo, name, menuDefaultprice, menu_id, menu_image,menu_info,is_soldout);
                 saveMenus.add(storeMenus);
                 setMRecyclerViewMenu(saveCategories.get(0).getCategoryId());
             }
