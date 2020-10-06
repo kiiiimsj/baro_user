@@ -91,7 +91,7 @@ public class AdvertiseAdapter extends PagerAdapter {
                         Log.i("response1", "response succeeded.");
                         imageView.setImageBitmap(response);
                     }
-                }, 100, 100, ImageView.ScaleType.FIT_CENTER, null,
+                }, 100, 100, ImageView.ScaleType.FIT_XY, null,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {

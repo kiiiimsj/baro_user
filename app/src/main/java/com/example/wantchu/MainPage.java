@@ -111,7 +111,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         sp = getSharedPreferences("favorite", MODE_PRIVATE);
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
-
         ultraStoreRecyclerView = findViewById(R.id.ultra_store);
 
 
@@ -255,7 +254,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
 
     private void mRecyclerView(String result) {
-        mRecyclerView.setHasFixedSize(true);
         ArrayList<TypeHelperClass> DataList = new ArrayList<>();
         HashMap<String, TypeHelperClass> hashMap = new HashMap<>();
         hashMap.put("TypeHelperClass", new TypeHelperClass("", "", ""));
@@ -276,11 +274,9 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
     //ultrastore 가져오기 위한 recyclerview
     private void ultraStoreRecyclerView() {
-        ultraStoreRecyclerView.setHasFixedSize(true);
         ultraStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         ArrayList<ListStoreHelperClass> DataList = new ArrayList<>();
         ArrayList<ListStoreHelperClass> DataListForIsOpen = new ArrayList<>();
-        ultraStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         int [] storeIds = new int[listStoreParsing.store.size()];
         for(int i = 0; i< listStoreParsing.store.size();i++){
@@ -311,7 +307,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         getStoreId.edit().commit();
 
         ultraAdapter = new UltraStoreListAdapter(DataList, this, this, getApplicationContext());
-        mRecyclerView.setAdapter(ultraAdapter);
+        ultraStoreRecyclerView.setAdapter(ultraAdapter);
     }
 
     private void jsonParsingUltraStore(String result){

@@ -7,14 +7,15 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".MainPage">
+
     <RelativeLayout
         android:id="@+id/relativeLayout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
@@ -35,18 +36,18 @@
 
             <RelativeLayout
                 android:id="@+id/map_bar"
-                android:background="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true">
+                android:layout_centerVertical="true"
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:fontFamily="@font/notosans_bold"
                     android:background="@color/white"
+                    android:fontFamily="@font/notosans_bold"
                     android:text="서울시 동작구"
                     android:textSize="15dp" />
 
@@ -59,48 +60,21 @@
                     android:layout_toRightOf="@id/address"
                     android:background="@color/white"
                     android:src="@drawable/map_v" />
+
                 <Button
                     android:id="@+id/search_dialog"
-                    android:textColor="@color/gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@id/logo_image"
+                    android:background="#00ff0000"
+                    android:drawableRight="@drawable/search_icon_small_32"
+                    android:drawablePadding="5dp"
                     android:fontFamily="@font/notosans_bold"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="#00ff0000"
-                    android:drawablePadding="5dp"
                     android:text="가게 검색"
-                    android:drawableRight="@drawable/search_icon_small_32"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/logo_image"/>
-<!--                <RelativeLayout-->
-<!--                    android:id="@+id/search_bar"-->
-<!--                    android:layout_width="180dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_marginLeft="25dp"-->
-<!--                    android:layout_toRightOf="@id/map_button"-->
-<!--                    android:background="@drawable/button_border_full">-->
-
-<!--                    <EditText-->
-<!--                        android:id="@+id/search"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:layout_marginLeft="15dp"-->
-<!--                        android:background="@null"-->
-<!--                        android:hint="가게 검색"-->
-<!--                        android:maxLines="1" />-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/glasses"-->
-<!--                        android:layout_width="30dp"-->
-<!--                        android:layout_height="30dp"-->
-<!--                        android:layout_alignParentRight="true"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:layout_marginRight="15dp"-->
-<!--                        android:src="@drawable/search_icon" />-->
-<!--                </RelativeLayout>-->
+                    android:textColor="@color/gray" />
 
                 <fragment
                     android:id="@+id/logo_image"
@@ -116,71 +90,55 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <ScrollView
+            android:id="@+id/advertise"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@id/bottom_menu"
-            android:layout_below="@+id/header"
-            android:layout_marginTop="20dp">
+            android:layout_below="@id/header">
 
-            <LinearLayout
-                android:id="@+id/advertise"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:weightSum="10">
+                android:layout_height="wrap_content">
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/info_image"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3" />
+                    android:layout_height="60dp" />
 
                 <LinearLayout
                     android:id="@+id/dots"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/info_image"
+                    android:layout_centerHorizontal="true"
                     android:orientation="horizontal" />
 
-                <RelativeLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="6.5">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dots" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </RelativeLayout>
-
-
-                <RelativeLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_below="@id/recyclerView"
+                    android:id="@+id/ultra_store"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0">
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </ScrollView>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/ultra_store"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </RelativeLayout>
         <fragment
             android:id="@+id/cart_click_button"
             android:name="com.example.wantchu.Fragment.OrderListCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="80dp"
-            />
+            android:layout_marginBottom="80dp" />
+
         <fragment
             android:id="@+id/bottom_menu"
             android:name="com.example.wantchu.Fragment.BottomMenu"
@@ -189,8 +147,8 @@
             android:layout_alignParentBottom="true"
             android:backgroundDimEnabled="false"
             android:windowBackground="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
