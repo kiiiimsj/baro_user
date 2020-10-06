@@ -135,7 +135,9 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
         // 타입 버튼 동적으로 만드는 메소드
         makeRequest();
-        makeRequestUltraStore();
+
+        //makeRequestUltraStore();
+
         myGPSListener = new myGPSListener(this);
         latLng = myGPSListener.startLocationService(mAddress);
         if(latLng == null) {
@@ -211,7 +213,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
     public void makeRequestUltraStore() {
         UrlMaker urlMaker = new UrlMaker();
-        String lastUrl = "StoreSearch.do?keyword=test&startPoint=0";
+        String lastUrl = "StoreFindByUltra.do";
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.GET, url,
