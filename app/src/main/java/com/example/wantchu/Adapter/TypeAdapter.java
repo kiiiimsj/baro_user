@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -121,7 +122,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
         public TextView title;
         public TextView code;
         public ImageView image;
-        public LinearLayout type_design_back;
+        public RelativeLayout type_design_back;
         public TypeViewHolder(@NonNull View itemView, int po) {
             super(itemView);
 
@@ -166,7 +167,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
                             Log.i("response", "response succeeded.");
                             image.setImageBitmap(response);
                         }
-                    }, 100, 100, ImageView.ScaleType.FIT_CENTER, null,
+                    }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {

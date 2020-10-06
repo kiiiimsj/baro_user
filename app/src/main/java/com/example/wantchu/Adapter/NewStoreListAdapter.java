@@ -1,6 +1,5 @@
 package com.example.wantchu.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -23,49 +22,39 @@ import com.example.wantchu.JsonParsingHelper.ViewPagersListStoreParsing;
 import com.example.wantchu.R;
 import com.example.wantchu.Url.UrlMaker;
 
-public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAdapter.UltraStoreListViewHolder> {
-
-    static public Context context;
+public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapter.NewStoreViewHolder> {
+    public static Context context;
 
     public interface OnListItemLongSelectedInterface{
-        void onItemLongSelected(View v, int adapterPosition);
+        void onLongNewStoreItemSelected(View v, int adapterPosition);
     }
 
     public interface OnListItemSelectedInterface {
-        void onItemSelected(View v, int position);
+        void onNewStoreItemSelected(View v, int position);
     }
 
-    private static UltraStoreListAdapter.OnListItemLongSelectedInterface mLongListener;
-    private static UltraStoreListAdapter.OnListItemSelectedInterface mListener;
+    private static NewStoreListAdapter.OnListItemLongSelectedInterface mLongListener;
+    private static NewStoreListAdapter.OnListItemSelectedInterface mListener;
 
     static ViewPagersListStoreParsing listStoreHelperClasses;
-
-    public UltraStoreListAdapter(ViewPagersListStoreParsing listStoreHelperClasses, UltraStoreListAdapter.OnListItemSelectedInterface listener, UltraStoreListAdapter.OnListItemLongSelectedInterface longListener, Context context){
-        this.listStoreHelperClasses = listStoreHelperClasses;
-        this.mListener = listener;
-        this.mLongListener = longListener;
-        this.context = context;
+    public NewStoreListAdapter(ViewPagersListStoreParsing listStoreHelperClasses, Context context, NewStoreListAdapter.OnListItemLongSelectedInterface mLongListener, NewStoreListAdapter.OnListItemSelectedInterface mListener) {
+        this.listStoreHelperClasses =listStoreHelperClasses;
+        this.mLongListener = mLongListener;
+        this.mListener = mListener;
+        this.context =context;
     }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position;
-    }
-
     @NonNull
     @Override
-    public UltraStoreListAdapter.UltraStoreListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NewStoreListAdapter.NewStoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View view = inflater.inflate(R.layout.ultra_store_design, parent, false);
-        UltraStoreListViewHolder ultraStoreListViewHolder = new UltraStoreListViewHolder(view, viewType);
-        return ultraStoreListViewHolder;
+        View view = inflater.inflate(R.layout.new_store_design, parent, false);
+        NewStoreViewHolder newStoreViewHolder = new NewStoreViewHolder(view, viewType);
+        return newStoreViewHolder;
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(@NonNull UltraStoreListAdapter.UltraStoreListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NewStoreListAdapter.NewStoreViewHolder holder, int position) {
         ViewPagersListStoreParsing.ViewPagerStoreParsing viewPagerStoreParsing = listStoreHelperClasses.store.get(position);
         holder.storeName.setText(viewPagerStoreParsing.getStore_name());
         holder.mInfo.setText(viewPagerStoreParsing.getStore_info());
@@ -78,27 +67,22 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
     }
 
     @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-    }
-
-    @Override
-    public boolean onFailedToRecycleView(@NonNull UltraStoreListAdapter.UltraStoreListViewHolder holder) {
-        return super.onFailedToRecycleView(holder);
-    }
-
-    @Override
-    public void onViewAttachedToWindow(@NonNull UltraStoreListAdapter.UltraStoreListViewHolder  holder) {
-        super.onViewAttachedToWindow(holder);
-    }
-
-    @Override
-    public void onViewRecycled(@NonNull UltraStoreListAdapter.UltraStoreListViewHolder  holder) {
+    public void onViewRecycled(@NonNull NewStoreViewHolder holder) {
         super.onViewRecycled(holder);
     }
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull UltraStoreListAdapter.UltraStoreListViewHolder holder) {
+    public boolean onFailedToRecycleView(@NonNull NewStoreViewHolder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull NewStoreViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull NewStoreViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
     }
 
@@ -107,39 +91,42 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public static class UltraStoreListViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+    }
 
+    public class NewStoreViewHolder extends RecyclerView.ViewHolder {
         public ImageView storeImage;
         public TextView storeName;
         public TextView mInfo;
         public TextView storeId;
 
-        public UltraStoreListViewHolder(@NonNull View itemView, int po) {
+        public NewStoreViewHolder(@NonNull View itemView, int po) {
             super(itemView);
-
             storeName = itemView.findViewById(R.id.store_name);
             storeImage = itemView.findViewById(R.id.store_image);
             mInfo = itemView.findViewById(R.id.store_info);
             storeId = itemView.findViewById(R.id.store_id);
             ViewPagersListStoreParsing.ViewPagerStoreParsing list = listStoreHelperClasses.store.get(po);
-            makeRequestUltraStore(list.getStore_image(), context, storeImage);
+            makeRequestNewStore(list.getStore_image(), context, storeImage);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemSelected(view, getAdapterPosition());
+                    mListener.onNewStoreItemSelected(view, getAdapterPosition());
                 }
             });
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    mLongListener.onItemLongSelected(view, getAdapterPosition());
+                    mLongListener.onLongNewStoreItemSelected(view, getAdapterPosition());
                     return false;
                 }
             });
         }
 
-        public void makeRequestUltraStore(String store_image, Context context, final ImageView image){
+        public void makeRequestNewStore(String store_image, Context context, final ImageView image){
             UrlMaker urlMaker = new UrlMaker();
             String lastUrl = "ImageStore.do?image_name=";
             String url = urlMaker.UrlMake(lastUrl);
