@@ -12,8 +12,9 @@ public class ListMenuHelperClass {
     public String menus;
     public int menuId;
     public String menuImage;
+    public String menu_info;
 
-    public ListMenuHelperClass(String menus, int menuPrice, int menuId, String menuImage) {
+    public ListMenuHelperClass(String menus, int menuPrice, int menuId, String menuImage,String menu_info) {
         this.storeMenusName = new ArrayList<>();
         this.storeMenusPrice = new ArrayList<>();
         this.storeMenusId = new ArrayList<>();
@@ -22,5 +23,6 @@ public class ListMenuHelperClass {
         this.menus = menus;
         this.menuId = menuId;
         this.menuImage = menuImage;
+        this.menu_info = menu_info;
     }
 }

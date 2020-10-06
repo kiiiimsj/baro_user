@@ -130,8 +130,8 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 StoreMenus storeMenus = saveMenus.get(i);
 
                 mRecyclerViewMenu.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                ListMenuHelperClass listMenuHelperClass = new ListMenuHelperClass(storeMenus.getMenuName(), storeMenus.getMenuDefaultprice(), storeMenus.getMenuId(), storeMenus.getMenuImage());
-
+                ListMenuHelperClass listMenuHelperClass = new ListMenuHelperClass(storeMenus.getMenuName(),
+                        storeMenus.getMenuDefaultprice(), storeMenus.getMenuId(), storeMenus.getMenuImage(),storeMenus.getMenu_info());
                 listMenuHelperClass.storeMenusName.add(storeMenus.getMenuName());
                 listMenuHelperClass.storeMenusPrice.add(storeMenus.getMenuDefaultprice());
                 listMenuHelperClass.storeMenusId.add(storeMenus.getMenuId());
@@ -206,6 +206,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         int menuDefaultprice = 0;
         int menu_id = 0;
         String menu_image = null;
+        String menu_info = null;
 
         try {
             JSONArray jsonArray = new JSONObject(result).getJSONArray("menu");
@@ -219,8 +220,9 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 menuDefaultprice = jobj.optInt("menu_defaultprice");
                 menu_id = jobj.optInt("menu_id");
                 menu_image = jobj.optString("menu_image");
+                menu_info = jobj.optString("menu_info");
 
-                storeMenus = new StoreMenus(storeId, categoryId, menuInfo, name, menuDefaultprice, menu_id, menu_image);
+                storeMenus = new StoreMenus(storeId, categoryId, menuInfo, name, menuDefaultprice, menu_id, menu_image,menu_info);
                 saveMenus.add(storeMenus);
                 setMRecyclerViewMenu(saveCategories.get(0).getCategoryId());
             }
