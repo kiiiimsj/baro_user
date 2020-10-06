@@ -23,6 +23,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="11dp"
         android:fontFamily="@font/notosans_regular"
+        android:includeFontPadding="false"
         android:letterSpacing="-0.03"
         android:text="커피"
         android:textAlignment="center"

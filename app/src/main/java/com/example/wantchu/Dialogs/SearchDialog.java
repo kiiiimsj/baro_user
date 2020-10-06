@@ -28,6 +28,7 @@ public class SearchDialog {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dlg.setContentView(R.layout.fragment_search);
+        dlg.setCanceledOnTouchOutside(false);
         dlg.show();
 
         final Button search = (Button) dlg.findViewById(R.id.search);
