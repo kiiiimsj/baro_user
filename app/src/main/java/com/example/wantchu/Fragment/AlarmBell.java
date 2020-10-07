@@ -33,7 +33,6 @@ import com.google.gson.Gson;
 public class AlarmBell extends Fragment {
     public Context context;
     public ViewGroup rootView;
-    public TextView isNewAlarm;
     public ImageView alarmBell;
 
     int saveAlertNumber = 0 ;
@@ -67,7 +66,6 @@ public class AlarmBell extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         context = getActivity();
         rootView = (ViewGroup) inflater.inflate(R.layout.alarm_bell, container, false);
-        isNewAlarm = rootView.findViewById(R.id.get_alarm);
         alarmBell = rootView.findViewById(R.id.alarm_bell);
         makeRequestForAlerts();
 
@@ -82,10 +80,10 @@ public class AlarmBell extends Fragment {
 
     private void compareNumber() {
         if(saveNewAlertNumber == saveAlertNumber) {
-            isNewAlarm.setVisibility(View.INVISIBLE);
+            alarmBell.setImageResource(R.drawable.alert_off);
         }
         else {
-            isNewAlarm.setVisibility(View.VISIBLE);
+            alarmBell.setImageResource(R.drawable.alert_on);
         }
     }
 

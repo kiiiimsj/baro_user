@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -41,7 +42,7 @@ public class AdvertiseAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == (ConstraintLayout) object;
+        return view == (RelativeLayout) object;
     }
 
     @Override
@@ -91,7 +92,7 @@ public class AdvertiseAdapter extends PagerAdapter {
                         Log.i("response1", "response succeeded.");
                         imageView.setImageBitmap(response);
                     }
-                }, 100, 100, ImageView.ScaleType.FIT_CENTER, null,
+                }, imageView.getWidth(), imageView.getHeight(), ImageView.ScaleType.FIT_XY, null,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {

@@ -95,11 +95,9 @@ public class OrderProgressing extends AppCompatActivity {
     private void jsonparsing(String response) {
         orderProgressingParsing = gson.fromJson(response,OrderProgressingParsing.class);
     }
-
-
     @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
     }
 }

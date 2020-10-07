@@ -1,13 +1,19 @@
 package com.example.wantchu.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.wantchu.ListStoreFavoritePage;
@@ -28,6 +34,7 @@ import java.util.StringTokenizer;
  * create an instance of this fragment.
  */
 public class BottomMenu extends Fragment {
+    Bundle saveButton;
     BottomNavigationView realBottom;
     public BottomMenu() {}
 
@@ -40,11 +47,13 @@ public class BottomMenu extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        clickBottomMenu();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        saveButton = savedInstanceState;
     }
 
     @Override
@@ -53,8 +62,30 @@ public class BottomMenu extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_bottom_menu, container, false);
         realBottom = rootView.findViewById(R.id.real_bottom);
         clickBottomMenu();
+        setBottomButtonColor();
         return rootView;
     }
+
+    private void setBottomButtonColor() {
+        switch (getTokenActivityName(getActivity().toString())) {
+            case "MainPage" :
+                realBottom.getMenu().getItem(0).setChecked(true);
+                break;
+            case "OrderProgressing" :
+                realBottom.getMenu().getItem(1).setChecked(true);
+                break;
+            case "ListStoreFavoritePage" :
+                realBottom.getMenu().getItem(2).setChecked(true);
+                break;
+            case "OrderHistory" :
+                realBottom.getMenu().getItem(3).setChecked(true);
+                break;
+            case "MyPage" :
+                realBottom.getMenu().getItem(4).setChecked(true);
+                break;
+        }
+    }
+
     public void clickBottomMenu() {
         realBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -64,32 +95,41 @@ public class BottomMenu extends Fragment {
                         if (getTokenActivityName(getActivity().toString()).equals("MainPage")) {
                             break;
                         }
-                        startActivity(new Intent(getActivity(), MainPage.class));
+                        Intent intent = new Intent(getActivity(), MainPage.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
                         break;
                     case R.id.bottomIconClock:
                         if (getTokenActivityName(getActivity().toString()).equals("OrderProgressing")) {
                             break;
                         }
-                        startActivity(new Intent(getActivity(), OrderProgressing.class));
+                        Intent intent2 = new Intent(getActivity(), OrderProgressing.class);
+                        intent2.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent2);
                         break;
                     case R.id.bottomIconMyStore:
                         if (getTokenActivityName(getActivity().toString()).equals("ListStoreFavoritePage")) {
                             break;
                         }
-                        Intent intent = new Intent(getActivity(), ListStoreFavoritePage.class);
-                        startActivity(intent);
+                        Intent intent3 = new Intent(getActivity(), ListStoreFavoritePage.class);
+                        intent3.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent3);
                         break;
                     case R.id.bottomIconOrderList:
                         if (getTokenActivityName(getActivity().toString()).equals("OrderHistory")) {
                             break;
                         }
-                        startActivity(new Intent(getActivity(), OrderHistory.class));
+                        Intent intent4 = new Intent(getActivity(), OrderHistory.class);
+                        intent4.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent4);
                         break;
                     case R.id.bottomIconMyPage:
                         if (getTokenActivityName(getActivity().toString()).equals("MyPage")) {
                             break;
                         }
-                        startActivity(new Intent(getActivity(), MyPage.class));
+                        Intent intent5 = new Intent(getActivity(), MyPage.class);
+                        intent5.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent5);
                         break;
                 }
                 return false;
