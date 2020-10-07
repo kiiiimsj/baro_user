@@ -2,13 +2,9 @@ package com.example.wantchu;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -25,11 +22,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.MyPageButtonListAdapter;
-import com.example.wantchu.Adapter.MyPageExpandAdapter;
-import com.example.wantchu.AdapterHelper.MyPageListbuttons;
+import com.example.wantchu.Adapter.MyPageButtonAdapter;
 import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Dialogs.IfLogoutDialog;
-import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.Url.UrlMaker;
 
 import org.json.JSONException;
@@ -43,17 +38,18 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
     RecyclerView mButtonlist;
     MyPageButtonListAdapter buttonAdapter;
 
-    String[] buttons = {"주문내역", "내 쿠폰", "장바구니"};
+    ArrayList<String> buttons;
+    ArrayList<String> lists;
 
     String phone = null;
-    ArrayList<MyPageListbuttons> lists;
 
-    ExpandableListView expandableListView;
+
+    RecyclerView buttonRecyclerViews;
     LinearLayout tableSize;
 
     TextView emailSpace;
     TextView phoneSpace;
-    MyPageExpandAdapter myPageExpandAdapter;
+    MyPageButtonAdapter myPageButtonAdapter;
     ProgressApplication progressApplication;
     RelativeLayout logout;
     @Override
@@ -62,14 +58,15 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         setContentView(R.layout.activity_my_page);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
-        counts = new int[3];
+        setLists();
+        counts = new int[buttons.size()];
 
         getPhoneNumber();
         makeRequestForOrderCount();
 
 
         mButtonlist = findViewById(R.id.button_list);
-        expandableListView = findViewById(R.id.expandable_list);
+        buttonRecyclerViews = findViewById(R.id.menu_list);
 
         tableSize = findViewById(R.id.table_size);
         emailSpace = findViewById(R.id.email_space);
@@ -77,11 +74,20 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         logout =findViewById(R.id.logout_button);
         setEvent();
         setMyInfo();
-        setList();
-        setExpandableListView();
+        setMyPageButtonRecyclerView();
         setExpandListener();
     }
+    public void setLists() {
+        buttons.add("주문내역");
+        buttons.add("내 쿠폰");
+        buttons.add("장바구니");
 
+        lists.add("공지사항");
+        lists.add("입점요청");
+        lists.add("1:1 문의");
+        lists.add("이용약관");
+        lists.add("개인정보 처리방침");
+    }
     private void setEvent() {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,38 +120,9 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
     }
 
     private void setExpandListener() {
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if(groupPosition == 1) {
-                    startActivity(new Intent(getApplicationContext(), SideMyCoupon.class));
-                }
-                if(groupPosition == 2) {
-                    startActivity(new Intent(getApplicationContext(), Notice.class));
-                }
-                if(groupPosition == 3) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
-                }
-                if(groupPosition == 4) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
-                }
-                return false;
-            }
-        });
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                if(groupPosition == 0 ) {
-                    if (childPosition == 0) {
-                        startActivity(new Intent(getApplicationContext(), ChangePass1Logging.class));
-                    }
-                    if (childPosition == 1) {
-                        startActivity(new Intent(getApplicationContext(), ChangeEmail.class));
-                    }
-                }
-                return false;
-            }
-        });
+        myPageButtonAdapter = new MyPageButtonAdapter(this, lists);
+        buttonRecyclerViews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        buttonRecyclerViews.setAdapter(myPageButtonAdapter);
     }
 
     private void getPhoneNumber() {
@@ -154,36 +131,12 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         phone = userData.get(SessionManager.KEY_PHONENUMBER);
     }
-
-    public void setList() {
-        MyPageListbuttons list;
-        MyPageListbuttons list1;
-        MyPageListbuttons list2;
-        MyPageListbuttons list3;
-        MyPageListbuttons list4;
-
-        list = new MyPageListbuttons("내 정보 변경");
-        list.childText.add("비밀번호 변경");
-        list.childText.add("이메일 변경");
-
-        list1 = new MyPageListbuttons("쿠폰");
-        list2 = new MyPageListbuttons("공지사항");
-        list3 = new MyPageListbuttons("입점요청");
-        list4= new MyPageListbuttons("1:1문의");
-        lists = new ArrayList<MyPageListbuttons>();
-        lists.add(0, list);
-        lists.add(1, list1);
-        lists.add(2, list2);
-        lists.add(3, list3);
-        lists.add(4, list4);
-    }
-    public void setExpandableListView() {
-        myPageExpandAdapter = new MyPageExpandAdapter(getApplicationContext(), R.layout.my_page_parent_view, R.layout.my_page_expandable, lists);
-        expandableListView.setGroupIndicator(null);
-        expandableListView.setAdapter(myPageExpandAdapter);
+    public void setMyPageButtonRecyclerView() {
+        myPageButtonAdapter = new MyPageButtonAdapter(getApplicationContext(), lists);
+        buttonRecyclerViews.setAdapter(myPageButtonAdapter);
         progressApplication.progressOFF();
     }
-    public void setRecyclerView(boolean result, int[] setCounts) {
+    public void setMyPageButtonListRecyclerView(boolean result, int[] setCounts) {
         mButtonlist.setHasFixedSize(true);
         mButtonlist.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
         if(result) {
@@ -283,7 +236,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
             e.printStackTrace();
         }
         counts[1] = count;
-        setRecyclerView(result ,counts);
+        setMyPageButtonListRecyclerView(result ,counts);
     }
     @Override
     public void clickOkay() {
@@ -293,7 +246,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         }
         finish();
     }
-
     @Override
     public void clickCancel() {
 

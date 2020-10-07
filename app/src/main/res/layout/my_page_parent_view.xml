@@ -15,12 +15,13 @@
         android:weightSum="10">
 
         <TextView
-            android:id="@+id/my_page_expandable"
+            android:id="@+id/my_page_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_weight="5"
-            android:fontFamily="@font/muli"
+            android:fontFamily="@font/notosans_regular"
+            android:includeFontPadding="false"
             android:text="sampleText"
             android:textColor="@color/black"
             android:textSize="20sp"/>
@@ -31,7 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:fontFamily="@font/baloo"
+            android:fontFamily="@font/notosans_regular"
+            android:text=">"
+            android:includeFontPadding="false"
             android:textColor="@color/black"
             android:textSize="20sp" />
     </RelativeLayout>

@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wantchu.R;
 
+import java.util.ArrayList;
+
 import static android.content.Context.MODE_PRIVATE;
 
-public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonListAdapter.MypageViewHoder>{
+public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonListAdapter.MyPageButtonsViewHolder>{
     SharedPreferences shf;
     Context context;
     public interface OnListItemLongSelectedInterfaceForMyPage {
@@ -29,28 +31,28 @@ public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonLi
     private static MyPageButtonListAdapter.OnListItemLongSelectedInterfaceForMyPage mLongListener;
 
     int[] setCount;
-    String[] list;
-    public MyPageButtonListAdapter(MyPageButtonListAdapter.OnListItemSelectedInterfaceForMyPage mListener, String[] list, int[] setCount, Context context) {
+    ArrayList<String> list;
+    public MyPageButtonListAdapter(MyPageButtonListAdapter.OnListItemSelectedInterfaceForMyPage mListener, ArrayList<String> list, int[] setCount, Context context) {
         this.mListener = mListener;
         this.setCount = setCount;
         this.list = list;
         this.context =context;
     }
-    public MyPageButtonListAdapter(String[] list) {
+    public MyPageButtonListAdapter(ArrayList<String> list) {
         this.list = list;
     }
     @NonNull
     @Override
-    public MypageViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyPageButtonsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext() ;
         View view = LayoutInflater.from(context).inflate(R.layout.mypage_button, parent, false);
-        MypageViewHoder mypageViewHoder = new MypageViewHoder(view);
-        return mypageViewHoder;
+        MyPageButtonsViewHolder myPageButtonsViewHolder = new MyPageButtonsViewHolder(view);
+        return myPageButtonsViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MypageViewHoder holder, int position) {
-        String strS = list[position];
+    public void onBindViewHolder(@NonNull MyPageButtonsViewHolder holder, int position) {
+        String strS = list.get(position);
         holder.buttonName.setText(strS);
         if(strS.equals("주문내역")) {
             holder.count.setText(Integer.toString(setCount[0]));
@@ -67,7 +69,7 @@ public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonLi
 
     @Override
     public int getItemCount() {
-        return list == null? 0 : list.length;
+        return list == null? 0 : list.size();
     }
     @Override
     public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -75,22 +77,22 @@ public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonLi
     }
 
     @Override
-    public boolean onFailedToRecycleView(@NonNull MyPageButtonListAdapter.MypageViewHoder holder) {
+    public boolean onFailedToRecycleView(@NonNull MyPageButtonsViewHolder holder) {
         return super.onFailedToRecycleView(holder);
     }
 
     @Override
-    public void onViewAttachedToWindow(@NonNull MyPageButtonListAdapter.MypageViewHoder  holder) {
+    public void onViewAttachedToWindow(@NonNull MyPageButtonsViewHolder holder) {
         super.onViewAttachedToWindow(holder);
     }
 
     @Override
-    public void onViewRecycled(@NonNull MyPageButtonListAdapter.MypageViewHoder  holder) {
+    public void onViewRecycled(@NonNull MyPageButtonsViewHolder holder) {
         super.onViewRecycled(holder);
     }
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull MyPageButtonListAdapter.MypageViewHoder holder) {
+    public void onViewDetachedFromWindow(@NonNull MyPageButtonsViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
     }
 
@@ -98,10 +100,10 @@ public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonLi
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
-    public class MypageViewHoder extends RecyclerView.ViewHolder {
+    public class MyPageButtonsViewHolder extends RecyclerView.ViewHolder {
         public TextView buttonName;
         public TextView count;
-        public MypageViewHoder(@NonNull View itemView) {
+        public MyPageButtonsViewHolder(@NonNull View itemView) {
             super(itemView);
             buttonName = itemView.findViewById(R.id.button_string);
             count = itemView.findViewById(R.id.itemCount);
