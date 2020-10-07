@@ -20,95 +20,213 @@
         android:layout_above="@id/bottom_menu"
         android:layout_below="@id/top_bar"
         android:scrollbarSize="0dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="15dp">
+            android:layout_height="match_parent">
+
             <LinearLayout
                 android:id="@+id/table_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="15dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
+                    android:layout_margin="8dp">
 
-                    <TextView
-                        android:id="@+id/email_space_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="이메일  "
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                    <ImageView
+                        android:id="@+id/user_picture"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/mypage_on" />
 
-                    <TextView
-                        android:id="@+id/email_space"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/user_picture"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/email_space_title"
-                        android:text="sky_Batt"
-                        android:textSize="13sp" />
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/user_name_space"
+                            android:layout_alignParentTop="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/notosans_bold"
+                            android:includeFontPadding="false"
+                            android:text="홍길동님 >"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_below="@id/user_name_space"
+                            android:id="@+id/phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans_bold"
+                            android:includeFontPadding="false"
+                            android:textSize="11sp"
+                            android:text="01093756927"
+                            />
+                        <TextView
+                            android:layout_below="@id/phone"
+                            android:id="@+id/email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans_bold"
+                            android:includeFontPadding="false"
+                            android:textSize="11sp"
+                            android:text="sky_battle@naver.com"
+                            />
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/recycler_view_border_line"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:weightSum="9">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="휴대폰 번호  "
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                    <RelativeLayout
+                        android:id="@+id/order_history_button"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="3">
 
-                    <TextView
-                        android:id="@+id/phone_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="01093756666"
-                        android:textSize="13sp" />
+                        <TextView
+                            android:id="@+id/order_history_button_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"
+                            android:text="주문내역"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/order_history_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/order_history_button_title"
+                            android:layout_marginTop="5dp"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"
+                            android:text="0"
+                            android:textSize="11sp"
+                            android:textColor="@color/main" />
+
+                        <View
+                            android:id="@+id/side_line1"
+                            android:layout_width="2dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/order_history_button_title"
+                            android:layout_alignBottom="@id/order_history_count"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/gray" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/my_coupon_button"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="3">
+
+                        <TextView
+                            android:id="@+id/my_coupon_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"
+                            android:text="주문내역"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/my_coupon_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/my_coupon_title"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"
+                            android:layout_marginTop="5dp"
+                            android:text="0"
+                            android:textSize="11sp"
+                            android:textColor="@color/main" />
+
+                        <View
+                            android:id="@+id/side_lin2"
+                            android:layout_width="2dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/my_coupon_title"
+                            android:layout_alignBottom="@id/my_coupon_count"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/gray" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/my_order_cart_button"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="3">
+
+                        <TextView
+                            android:id="@+id/my_order_cart_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"
+                            android:text="주문내역"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/my_order_cart_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/my_order_cart_title"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"
+                            android:layout_marginTop="5dp"
+                            android:text="0"
+                            android:textSize="11sp"
+                            android:textColor="@color/main" />
+                    </RelativeLayout>
                 </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/button_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_below="@id/table_size"
                 android:id="@+id/menu_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:layout_below="@id/table_size"
+                android:background="@color/text_info_color" />
 
-            <RelativeLayout
-                android:layout_below="@id/menu_list"
-                android:id="@+id/logout_button"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right">
-
-                <ImageView
-                    android:id="@+id/image_logout"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    android:src="@mipmap/ic_logout_foreground" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/image_logout"
-                    android:text="로그아웃"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/black" />
-            </RelativeLayout>
+                android:layout_below="@id/menu_list"
+                android:layout_marginBottom="20dp"
+                android:background="@color/white"
+                android:text="로그아웃"
+                android:textAlignment="center"
+                android:textColor="@color/red" />
         </RelativeLayout>
 
     </ScrollView>
