@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/button_border_full"
+        android:background="@drawable/button_border_empty"
         android:fontFamily="@font/muli"
         android:text="현재 위치로 설정하기"
         android:textColor="@color/black"

@@ -51,7 +51,7 @@
             android:letterSpacing="0.2"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:background="@drawable/button_border_full"
+            android:background="@drawable/button_border_empty"
             android:fontFamily="@font/bmhannapro"/>
     </LinearLayout>
 
