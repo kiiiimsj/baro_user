@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.wantchu.Adapter.MyPageButtonListAdapter;
 import com.example.wantchu.Adapter.MyPageButtonAdapter;
 import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Dialogs.IfLogoutDialog;
@@ -34,23 +32,27 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter.OnListItemLongSelectedInterfaceForMyPage, MyPageButtonListAdapter.OnListItemSelectedInterfaceForMyPage, MyPageButtonAdapter.OnItemCilckListener, IfLogoutDialog.clickButton{
+public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnItemCilckListener, IfLogoutDialog.clickButton{
     int[] counts;
-    RecyclerView mButtonList;
-    MyPageButtonListAdapter buttonAdapter;
-
-    ArrayList<String> buttons;
     ArrayList<String> lists;
 
     String phone = null;
-
 
     RecyclerView buttonRecyclerViews;
     LinearLayout tableSize;
 
     TextView nameSpace;
-    TextView emailSpace;
     TextView phoneSpace;
+    TextView emailSpace;
+
+    TextView orderHistoryCount;
+    TextView myCouponCount;
+    TextView orderCartCount;
+
+    TextView orderHistoryTitle;
+    TextView myCouponTitle;
+    TextView orderCartTitle;
+
     MyPageButtonAdapter myPageButtonAdapter;
     ProgressApplication progressApplication;
     Button logout;
@@ -61,42 +63,73 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         setLists();
-        counts = new int[buttons.size()];
+        counts = new int[3];
 
         getPhoneNumber();
         makeRequestForOrderCount();
 
 
-        mButtonList = findViewById(R.id.button_list);
         buttonRecyclerViews = findViewById(R.id.menu_list);
 
         tableSize = findViewById(R.id.table_size);
-        emailSpace = findViewById(R.id.email_space);
-        phoneSpace = findViewById(R.id.phone_number);
+
         nameSpace= findViewById(R.id.user_name_space);
+        phoneSpace = findViewById(R.id.phone);
+        emailSpace = findViewById(R.id.email);
+
+        orderHistoryCount = findViewById(R.id.order_history_count);
+        myCouponCount = findViewById(R.id.my_coupon_count);
+        orderCartCount = findViewById(R.id.my_order_cart_count);
+
+        orderHistoryTitle = findViewById(R.id.order_history_button_title);
+        myCouponTitle = findViewById(R.id.my_coupon_title);
+        orderCartTitle =findViewById(R.id.my_order_cart_title);
+
         logout = findViewById(R.id.logout);
         setEvent();
         setMyInfo();
         setExpandListener();
     }
-    public void setLists() {
-        buttons = new ArrayList<>();
-        buttons.add("주문내역");
-        buttons.add("내 쿠폰");
-        buttons.add("장바구니");
 
+    private void setButtons() {
+        SharedPreferences shf = getSharedPreferences("basketList", MODE_PRIVATE);
+        counts[2] = shf.getInt("orderCnt", 0);
+
+        orderHistoryCount.setText(counts[0]+" 건");
+        myCouponCount.setText(counts[1]+ " 건");
+        orderCartCount.setText(counts[2]+ " 건");
+    }
+
+    public void setLists() {
         lists = new ArrayList<>();
         lists.add("공지사항");
         lists.add("입점요청");
         lists.add("1:1 문의");
+        lists.add("비밀번호 변경");
+        lists.add("이메일 변경");
         lists.add("이용약관");
         lists.add("개인정보 처리방침");
     }
     private void setEvent() {
-        nameSpace.setOnClickListener(new View.OnClickListener() {
+        orderHistoryTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MyInfoView.class));
+                startActivity(new Intent(getApplicationContext(), OrderHistory.class));
+            }
+        });
+        myCouponTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SideMyCoupon.class));
+            }
+        });
+        orderCartTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences shf = getSharedPreferences("basketList", MODE_PRIVATE);
+                if(shf.getInt("orderCnt", 0) > 0) {
+                    startActivity(new Intent(getApplicationContext(), Basket.class));
+                }
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {
@@ -125,9 +158,10 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         String name = userData.get(SessionManager.KEY_USERNAME);
         String email = userData.get(SessionManager.KEY_EMAIL);
         StringBuilder nameString = new StringBuilder(name + "님 >");
+
+        nameSpace.setText(nameString.toString());
         emailSpace.setText(email);
         phoneSpace.setText(phone);
-        nameSpace.setText(nameString.toString());
     }
 
     private void setExpandListener() {
@@ -142,35 +176,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         sessionManager.getUsersDetailSession();
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         phone = userData.get(SessionManager.KEY_PHONENUMBER);
-    }
-    public void setMyPageButtonListRecyclerView(boolean result, int[] setCounts) {
-        mButtonList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
-        if(result) {
-            buttonAdapter = new MyPageButtonListAdapter(this, buttons, setCounts, this);
-        }
-        else {
-            buttonAdapter = new MyPageButtonListAdapter(buttons);
-        }
-        mButtonList.setAdapter(buttonAdapter);
-    }
-    @Override
-    public void onItemLongSelectedForMyPage(View v, int adapterPosition) {
-
-    }
-    @Override
-    public void onItemSelectedForMyPage(View v, int position) {
-        if(position == 0) {
-            startActivity(new Intent(getApplicationContext(), OrderHistory.class));
-        }
-        if(position == 1) {
-            startActivity(new Intent(getApplicationContext(), SideMyCoupon.class));
-        }
-        if(position == 2) {
-            SharedPreferences shf = getSharedPreferences("basketList", MODE_PRIVATE);
-            if(shf.getInt("orderCnt", 0) > 0) {
-                startActivity(new Intent(getApplicationContext(), Basket.class));
-            }
-        }
     }
     public void makeRequestForOrderCount() {
         String url = new UrlMaker().UrlMake("OrderTotalCountByPhone.do?phone="+phone);
@@ -241,7 +246,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
             e.printStackTrace();
         }
         counts[1] = count;
-        setMyPageButtonListRecyclerView(result ,counts);
+        setButtons();
     }
     @Override
     public void clickOkay() {
@@ -266,9 +271,15 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
             case 2 :
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
                 break;
-            case 3 :
+            case 3:
+                startActivity(new Intent(getApplicationContext(), ChangePass1Logging.class));
                 break;
-            case 4 :
+            case 4:
+                startActivity(new Intent(getApplicationContext(), ChangeEmail.class));
+                break;
+            case 5 :
+            case 6 :
+                startActivity(new Intent(getApplicationContext(), TermsOfUse.class));
                 break;
         }
     }

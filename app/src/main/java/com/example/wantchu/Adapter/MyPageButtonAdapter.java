@@ -15,7 +15,7 @@ import com.example.wantchu.R;
 import java.util.ArrayList;
 
 public class MyPageButtonAdapter extends RecyclerView.Adapter<MyPageButtonAdapter.MyPageViewHolder> {
-    ArrayList<String> buttonList;
+    static ArrayList<String> buttonList;
     static Context context;
     public interface OnItemCilckListener {
         void itemClick(int position);
@@ -82,6 +82,7 @@ public class MyPageButtonAdapter extends RecyclerView.Adapter<MyPageButtonAdapte
 
     public class MyPageViewHolder extends RecyclerView.ViewHolder {
         View bottomLine;
+        View topLine;
         TextView buttonText;
         LinearLayout backSize;
         public MyPageViewHolder(@NonNull View itemView, final int po) {
@@ -89,18 +90,32 @@ public class MyPageButtonAdapter extends RecyclerView.Adapter<MyPageButtonAdapte
             buttonText = itemView.findViewById(R.id.my_page_button);
             backSize = itemView.findViewById(R.id.my_page_expandable_layout);
             bottomLine = itemView.findViewById(R.id.bottom_line);
+            topLine = itemView.findViewById(R.id.top_line);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mListener.itemClick(po);
                 }
             });
-            if(po == 2) {
-                bottomLine.setVisibility(View.GONE);
+            if(po == 0) {
+                topLine.setVisibility(View.VISIBLE);
+            }
+            if(po == 3) {
                 LinearLayout.MarginLayoutParams vl = new LinearLayout.MarginLayoutParams(backSize.getLayoutParams());
-                vl.setMargins(0,0,0, 20);
+                vl.setMargins(0,20,0, 0);
                 backSize.setLayoutParams(new LinearLayout.LayoutParams(vl));
             }
+            if(po == 5) {
+                LinearLayout.MarginLayoutParams vl = new LinearLayout.MarginLayoutParams(backSize.getLayoutParams());
+                vl.setMargins(0,20,0, 0);
+                backSize.setLayoutParams(new LinearLayout.LayoutParams(vl));
+            }
+//            if(buttonList.size() == po + 1) {
+//                bottomLine.setVisibility(View.GONE);
+//                LinearLayout.MarginLayoutParams vl = new LinearLayout.MarginLayoutParams(backSize.getLayoutParams());
+//                vl.setMargins(0,0,0, 20);
+//                backSize.setLayoutParams(new LinearLayout.LayoutParams(vl));
+//            }
         }
     }
 }

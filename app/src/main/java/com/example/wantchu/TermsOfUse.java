@@ -7,7 +7,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class TermsOfUse extends AppCompatActivity {
+import com.example.wantchu.Fragment.TopBar;
+
+public class TermsOfUse extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     WebView mWebView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,5 +29,10 @@ public class TermsOfUse extends AppCompatActivity {
         });
 
         mWebView.loadUrl("file:///android_asset/www/privacyPolicy.html");
+    }
+
+    @Override
+    public void onBack() {
+        super.onBackPressed();
     }
 }

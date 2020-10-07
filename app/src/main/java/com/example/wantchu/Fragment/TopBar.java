@@ -28,12 +28,15 @@ public class TopBar extends Fragment {
     public interface OnBackPressedInParentActivity {
         void onBack();
     }
+
     public interface ClickButton {
         void clickButton();
     }
+
     public interface ClickImage {
         void clickImage();
     }
+
     OnBackPressedInParentActivity mListener;
     ClickButton clickButtonListener;
     ClickImage clickImageListener;
@@ -42,21 +45,18 @@ public class TopBar extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            this.mListener = (OnBackPressedInParentActivity)getActivity();
-        }
-        catch (ClassCastException e) {
+            this.mListener = (OnBackPressedInParentActivity) getActivity();
+        } catch (ClassCastException e) {
 
         }
         try {
-            this.clickButtonListener = (ClickButton)getActivity();
-        }
-        catch (ClassCastException e) {
+            this.clickButtonListener = (ClickButton) getActivity();
+        } catch (ClassCastException e) {
 
         }
         try {
-            this.clickImageListener = (ClickImage)getActivity();
-        }
-        catch(ClassCastException e) {
+            this.clickImageListener = (ClickImage) getActivity();
+        } catch (ClassCastException e) {
 
         }
     }
@@ -64,19 +64,19 @@ public class TopBar extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.top_bar ,container, false);
+        rootView = inflater.inflate(R.layout.top_bar, container, false);
         title = rootView.findViewById(R.id.title);
         backButton = rootView.findViewById(R.id.back_pressed);
         button = rootView.findViewById(R.id.when_has_button);
         etcImage = rootView.findViewById(R.id.when_has_image);
         switch (getTokenActivityName(getActivity().toString())) {
-            case "Register1" :
-            case "Register2" :
-            case "FindPass1" :
-            case "VerifyOTP" :
-            case "ChangePass2" :
-            case "ChangeEmail" :
-            case "ChangePass1Logging" :
+            case "Register1":
+            case "Register2":
+            case "FindPass1":
+            case "VerifyOTP":
+            case "ChangePass2":
+            case "ChangeEmail":
+            case "ChangePass1Logging":
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -87,7 +87,7 @@ public class TopBar extends Fragment {
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
-            case "SideMyCoupon" :
+            case "SideMyCoupon":
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -98,7 +98,7 @@ public class TopBar extends Fragment {
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
-            case "Notice" :
+            case "Notice":
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -109,8 +109,8 @@ public class TopBar extends Fragment {
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
-            case "Events" :
-            case "ListStorePage" :
+            case "Events":
+            case "ListStorePage":
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -120,7 +120,7 @@ public class TopBar extends Fragment {
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
-            case "Alerts" :
+            case "Alerts":
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -131,7 +131,7 @@ public class TopBar extends Fragment {
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
-            case "MyMap" :
+            case "MyMap":
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -148,7 +148,7 @@ public class TopBar extends Fragment {
                 button.setText("위치 설정");
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
-            case "StoreInfoReNewer" :
+            case "StoreInfoReNewer":
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -163,13 +163,13 @@ public class TopBar extends Fragment {
                 });
                 button.setVisibility(View.INVISIBLE);
                 break;
-            case "OrderProgressing" :
+            case "OrderProgressing":
                 title.setText("주문현황");
                 button.setVisibility(View.INVISIBLE);
                 backButton.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
-            case "OrderHistory" :
+            case "OrderHistory":
                 title.setText("주문내역");
                 button.setVisibility(View.INVISIBLE);
                 backButton.setVisibility(View.INVISIBLE);
@@ -181,7 +181,7 @@ public class TopBar extends Fragment {
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
-            case "Basket" :
+            case "Basket":
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -192,37 +192,61 @@ public class TopBar extends Fragment {
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
-            case "ListStoreFavoritePage" :
+            case "ListStoreFavoritePage":
                 backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onBack();
-                }
-            });
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onBack();
+                    }
+                });
                 title.setText("찜한 가게");
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
-            case "OrderDetail" :
+            case "TermsOfUse":
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onBack();
+                    }
+                });
+                title.setText("이용약관");
+                button.setVisibility(View.INVISIBLE);
+                etcImage.setVisibility(View.INVISIBLE);
+                break;
+            case "MyInfoView":
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onBack();
+                    }
+                });
+                title.setText("내 정보 수정");
+                button.setVisibility(View.INVISIBLE);
+                etcImage.setVisibility(View.INVISIBLE);
+                break;
+            case "OrderDetail":
 
                 break;
 
-            case "MainPage" :
+            case "MainPage":
                 //no top bar activity
                 break;
-            case "ChangeEmail2" :
+            case "ChangeEmail2":
                 //no top bar activity
                 break;
-            case "ChangePass3" :
+            case "ChangePass3":
                 //no top bar activity
                 break;
+
 
         }
         return rootView;
     }
+
     public String getTokenActivityName(String activityName) {
         String m = activityName.substring(20);
-        StringTokenizer stringTokenizer = new StringTokenizer(m,"@");
+        StringTokenizer stringTokenizer = new StringTokenizer(m, "@");
         String getName = stringTokenizer.nextToken();
 
         return getName;
@@ -230,10 +254,11 @@ public class TopBar extends Fragment {
 
     public void setTitleStringWhereUsedEventsAndListStore(String title_name) {
         title.setText(title_name);
-        if(title.getText().toString().length() > 6) {
+        if (title.getText().toString().length() > 6) {
             title.setTextSize(20);
         }
     }
+
     public void setEtcImageWhereUsedStoreInfo(int image) {
         etcImage.setImageResource(image);
     }
