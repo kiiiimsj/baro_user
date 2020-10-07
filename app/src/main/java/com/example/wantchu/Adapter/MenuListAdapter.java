@@ -71,6 +71,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         if(listMenuHelperClass.is_soldout.equals("Y")){
             holder.sold_out.setVisibility(View.VISIBLE);
             holder.background.setClickable(false);
+            holder.background.setEnabled(false);
             holder.background.setBackgroundColor(context.getResources().getColor(R.color.lightGray));
         }
     }
