@@ -6,64 +6,51 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".MyPage">
+
     <fragment
         android:id="@+id/top_bar"
         android:name="com.example.wantchu.Fragment.TopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true" />
+
     <ScrollView
-        android:layout_below="@id/top_bar"
         android:layout_width="match_parent"
-        android:scrollbarSize="0dp"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_menu"
-        android:padding="30dp">
-        <LinearLayout
-            android:id="@+id/table_size"
+        android:layout_below="@id/top_bar"
+        android:scrollbarSize="0dp">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:id="@+id/logout_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                >
-                <ImageView
-                    android:id="@+id/image_logout"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    android:src="@mipmap/ic_logout_foreground"/>
-                <TextView
-                    android:textAlignment="textEnd"
-                    android:layout_toRightOf="@id/image_logout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="로그아웃"
-                    android:textColor="@color/black" />
-            </RelativeLayout>
-            <RelativeLayout
+            android:layout_height="match_parent"
+            android:padding="15dp">
+            <LinearLayout
+                android:id="@+id/table_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-                <TextView
-                    android:id="@+id/email_space_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:text="이메일  "/>
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/email_space"
-                    android:layout_toRightOf="@id/email_space_title"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="sky_Batt"
-                    android:textSize="13sp" />
-            </RelativeLayout>
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:id="@+id/email_space_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="이메일  "
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/email_space"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/email_space_title"
+                        android:text="sky_Batt"
+                        android:textSize="13sp" />
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -74,9 +61,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="18sp"
+                        android:text="휴대폰 번호  "
                         android:textColor="@color/black"
-                        android:text="휴대폰 번호  "/>
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/phone_number"
@@ -90,32 +77,58 @@
                     android:id="@+id/button_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                </androidx.recyclerview.widget.RecyclerView>
-                <ExpandableListView
-                    android:id="@+id/expandable_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="350dp"
-                    android:layout_marginTop="20dp">
-                </ExpandableListView>
-        </LinearLayout>
+                    android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@id/table_size"
+                android:id="@+id/menu_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <RelativeLayout
+                android:layout_below="@id/menu_list"
+                android:id="@+id/logout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right">
+
+                <ImageView
+                    android:id="@+id/image_logout"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/ic_logout_foreground" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/image_logout"
+                    android:text="로그아웃"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+        </RelativeLayout>
+
     </ScrollView>
+
     <fragment
         android:id="@+id/cart_click_button"
         android:name="com.example.wantchu.Fragment.OrderListCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_menu"
-        android:layout_gravity="bottom"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="@dimen/order_list_cart_dp"/>
+        android:layout_marginBottom="@dimen/order_list_cart_dp" />
+
     <fragment
         android:id="@+id/bottom_menu"
         android:name="com.example.wantchu.Fragment.BottomMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        />
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>
