@@ -79,7 +79,11 @@ public class OrderHistory extends AppCompatActivity {
         makeRequest(FIRST);
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+    }
     private synchronized void makeRequest(final int state) {
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "OrderListFindByPhone.do?phone=" + phoneNumber + "&startPoint=" + currentPos;

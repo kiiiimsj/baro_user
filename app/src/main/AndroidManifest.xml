@@ -40,7 +40,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Events"/>
+        <activity android:name=".TermsOfUse"></activity>
+        <activity android:name=".Events" />
         <activity android:name=".Alerts" />
         <activity android:name=".OrderStatus" />
 
@@ -65,9 +66,11 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".StoreInfoReNewer"/>
 
-        <activity android:name=".OrderProgressing" />
+        <activity android:name=".StoreInfoReNewer" />
+        <activity
+            android:name=".OrderProgressing"
+            android:launchMode="singleTask" />
         <activity android:name=".ChangePass1Logging" />
         <activity android:name=".UpdateEmail" />
         <activity
@@ -101,6 +104,7 @@
         <activity android:name=".FirstPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

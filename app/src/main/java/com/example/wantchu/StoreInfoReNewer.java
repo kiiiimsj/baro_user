@@ -81,6 +81,11 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         getFavoriteStoreId();
         checkFavorite();
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+    }
 
     public void onClickBack(View view) {
         super.onBackPressed();
