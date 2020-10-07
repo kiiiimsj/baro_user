@@ -98,7 +98,7 @@
                 android:textSize="14sp"
                 android:textColor="@color/black"
                 android:letterSpacing="-0.02"
-                android:text="휴대폰 번호"
+                android:text="비밀번호"
                 android:fontFamily="@font/notosans_bold"
                 android:includeFontPadding="false"
                 android:layout_marginTop="30dp"
@@ -175,7 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textColor="#dbdbdb"
+                    android:textColor="#AFAFAF"
                     android:letterSpacing="-0.02"
                     android:text="아직 회원이 아니신가요?  "/>
                 <Button

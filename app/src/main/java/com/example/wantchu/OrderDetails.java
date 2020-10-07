@@ -3,25 +3,17 @@ package com.example.wantchu;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -38,7 +30,6 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.OrderDetailsEssentialAdapter;
-import com.example.wantchu.Adapter.OrderDetailsNewNonEssentailAdapter;
 import com.example.wantchu.Adapter.OrderDetailsNonEssentialAdapter;
 import com.example.wantchu.AdapterHelper.ExtraOrder;
 import com.example.wantchu.AdapterHelper.OrderDetailsNonEssential;
@@ -58,16 +49,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class OrderDetails extends AppCompatActivity {
-    static final int FLEX_EXPAND_HEIGHT = 300;
     public static OrderDetails orderDetails;
     ImageView imageView;
     TextView store_name_text;
-    TableLayout tableLayout;
-    TableLayout tableLayout2;
-    LinearLayout linearLayout;
     LinearLayout expandListViewShell;
     LinearLayout recyclerViewShell;
-    LayoutInflater inflater;
     ExpandableListView expandableListView;
     ImageButton itemPlus;
     ImageButton itemMinus;
@@ -82,18 +68,15 @@ public class OrderDetails extends AppCompatActivity {
     String store_number;
     int menu_count;
     int totalPrice;
-    String pictureInfo;
     HashMap<String, HashMap<String, ArrayList<ExtraOrder>>> essentialOrNot;
     HashMap<String, ArrayList<ExtraOrder>> extraOptions;
     ArrayList<String> arrayList;
     ArrayList<String> arrayList2;
     HashMap<String, ArrayList<ExtraOrder>> essentialOptions;
     HashMap<String, ArrayList<ExtraOrder>> nonEssentialOptions;
-    RelativeLayout fix_details;
     DetailsFixToBasket detailsFixToBasket;
     OrderDetailsEssentialAdapter adapter;
     OrderDetailsNonEssentialAdapter nonEssentialAdapter;
-    OrderDetailsNewNonEssentailAdapter newNonEssentialAdapter;
     View v;
     Button fix;
 
@@ -129,16 +112,12 @@ public class OrderDetails extends AppCompatActivity {
         itemCount = findViewById(R.id.itemCount);
         totalPriceText = findViewById(R.id.totalPrice);
         totalPriceText.setText(String.valueOf(defaultPrice));
-        toggleButton = findViewById(R.id.optionElementButton);
         expandListViewShell = findViewById(R.id.expandListViewShell);
         recyclerViewShell = findViewById(R.id.essentialOptionShell);
-        //fix_details = findViewById(R.id.order_details_fix);
         fix = findViewById(R.id.fix);
-//        v = findViewById(R.id.cart_click_button);
         //--------------------------------------------------------
         itemName.setText(menu_name);
         store_name_text.setText(store_name);
-//        v.bringToFront();
         // 이벤트 심는곳
         fix.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,10 +131,8 @@ public class OrderDetails extends AppCompatActivity {
                 } else {
                     must = adapter.getMust();
                 }
-
                 if (arrayList.size() != must) {
                     Toast.makeText(OrderDetails.this, "필수 옵션을 모두 선택하셔야 합니다", Toast.LENGTH_LONG).show();
-                    Log.i("dh", "Asdf");
                     return;
                 }
                 menu_count = Integer.parseInt(itemCount.getText().toString());
@@ -164,26 +141,9 @@ public class OrderDetails extends AppCompatActivity {
                 if (adapter != null) {
                     essentialOptionFixed = adapter.getSelectOptions();
                 }
-//                HashMap<String,Integer> refinedEssentialOptionFixed = new HashMap<>();
-//                Iterator<String> essentialIterator = essentialOptionFixed.keySet().iterator();
-//                while(essentialIterator.hasNext()){
-//                    String kind = essentialIterator.next();
-//                    HashMap<String,Integer> opt = essentialOptionFixed.get(kind);
-//                    Iterator<String> childIterator = opt.keySet().iterator();
-//                    while(childIterator.hasNext()){
-//                        String optName = childIterator.next();
-//                        int optPrice = opt.get(optName);
-//                        refinedEssentialOptionFixed.put(optName,optPrice);
-//                        break;
-//                    }
-//                }
                 HashMap<String, ExtraOrder> nonEssentialOptionsFixed = new HashMap<>();
-//                if (nonEssentialAdapter != null) {
-//                    nonEssentialOptionsFixed = nonEssentialAdapter.getNonEssentialOptions();
-//
-//                }
+
                 if (nonEssentialAdapter != null) {
-//                    nonEssentialOptionsFixed = newNonEssentialAdapter.getNonEssentialOptions();
                     nonEssentialOptionsFixed = nonEssentialAdapter.getNonEssentialOptions();
                 }
 
@@ -267,32 +227,12 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
-//        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-//            @Override
-//            public void onGroupCollapse(int groupPosition) {
-//                ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-//                params.height = params.height - FLEX_EXPAND_HEIGHT;
-//                expandableListView.setLayoutParams(params);
-//                expandableListView.requestLayout();
-//            }
-//        });
-//
-//        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//            @Override
-//            public void onGroupExpand(int groupPosition) {
-//                ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-//                params.height = params.height + FLEX_EXPAND_HEIGHT;
-//                expandableListView.setLayoutParams(params);
-//                expandableListView.requestLayout();
-//            }
-//        });
     }
 
     private void addNewMenuToBasket(ArrayList<DetailsFixToBasket> detailsFixToBaskets, SharedPreferences.Editor editor){
         Gson gson = new Gson();
         detailsFixToBaskets.add(detailsFixToBasket);
         String json = gson.toJson(detailsFixToBaskets);
-        Log.i("굿보이", json);
         int count = 0;
         for(int i =0;i<detailsFixToBaskets.size();i++){
             count += detailsFixToBaskets.get(i).getCount();
@@ -318,15 +258,6 @@ public class OrderDetails extends AppCompatActivity {
             orderDetailsNonEssential.justCount.add(0);
             convertMapList.add(orderDetailsNonEssential);
         }
-//        Iterator<String> iterator = data.keySet().iterator();
-//
-//        while(iterator.hasNext()){
-//            String name = iterator.next();
-//            int price = data.get(name);
-//            OrderDetailsNonEssential orderDetailsNonEssential = new OrderDetailsNonEssential(name,price);
-//            orderDetailsNonEssential.justCount.add(0);
-//            convertMapList.add(orderDetailsNonEssential);
-//        }
         return convertMapList;
     }
 
@@ -390,11 +321,7 @@ public class OrderDetails extends AppCompatActivity {
         ArrayList<OrderDetailsNonEssential> NonEssentialOptionList = ConvertNonEssential(nonEssentialOptions);
         RecyclerView essentailRecyclerView = findViewById(R.id.menuRecyler_Essential);
         essentailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        RecyclerView newNonEssentailRecyclerView = findViewById(R.id.menuRecyler_nonEssential);
-//        newNonEssentailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-//        expandListViewShell.getLayoutParams().height = ((arrayList2.size()) * FLEX_EXPAND_HEIGHT) + 600;
-        // 리사이클러뷰에 SimpleTextAdapter )객체 지정.
         if (arrayList.size() != 0) {
             adapter = new OrderDetailsEssentialAdapter(arrayList, essentialOptions, this, totalPriceText, itemCount);
             essentailRecyclerView.setAdapter(adapter);
@@ -416,12 +343,7 @@ public class OrderDetails extends AppCompatActivity {
                     return false;
                 }
             });
-            ////////////////////////////////////////////////////////////////////////
-//            newNonEssentialAdapter = new OrderDetailsNewNonEssentailAdapter(OrderDetails.this,totalPriceText,itemCount,NonEssentialOptionList);
-//            newNonEssentailRecyclerView.setAdapter(newNonEssentialAdapter);
         } else {
-//            expandListViewShell.setVisibility(View.GONE);
-            ////////////////////////////////////////////////////////////////////////
             expandListViewShell.setVisibility(View.GONE);
         }
         progressApplication.progressOFF();

@@ -62,7 +62,7 @@
             android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:textColor="@color/black"
             android:letterSpacing="-0.02"
             android:text="휴대폰 번호 입력"
@@ -72,17 +72,14 @@
             />
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/register_phone_number"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="휴대폰 번호 입력"
-            app:boxBackgroundColor="@color/lightWhite"
+            app:boxBackgroundColor="@color/white"
             app:boxStrokeColor="@color/black"
             app:boxStrokeWidthFocused="2dp"
             app:endIconMode="clear_text"
             app:endIconTint="@color/black"
             app:hintTextColor="@color/black"
-            android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/register_title"
@@ -91,7 +88,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/muli_semibold"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosans_regular"
                 android:inputType="phone"
                 android:textColor="@color/black"
                 android:textCursorDrawable="@null" />
@@ -99,16 +97,15 @@
 
         <Button
             android:id="@+id/next_button"
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="21dp"
-            android:background="@color/black"
+            android:background="@drawable/button_border_full"
             android:onClick="verifyPhone"
-            android:text="인증번호 요청"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_phone_number" />
+            android:text="입력하기"
+            android:textSize="16dp"
+            android:fontFamily="@font/notosans_bold"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
 

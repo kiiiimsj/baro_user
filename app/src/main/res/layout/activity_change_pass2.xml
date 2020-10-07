@@ -5,7 +5,7 @@
     android:id="@+id/scrollView4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/main"
     tools:context=".ChangePass2">
     <fragment
         android:id="@+id/top_bar"
@@ -13,92 +13,126 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <ImageView
-        android:id="@+id/findPass_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/forget_password_icon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/findPass_title"/>
     <TextView
-        android:id="@+id/findPass_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/muli_black"
-        android:text="비밀번호 변경"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/newPassword"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="316dp"
-        app:boxStrokeColor="@color/black"
-        app:boxStrokeWidthFocused="2dp"
-        app:endIconMode="password_toggle"
-        app:endIconTint="@color/black"
-        app:errorEnabled="true"
-        android:layout_margin="10dp"
-        app:layout_constraintTop_toBottomOf="@id/findPass_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:startIconTint="@color/black"
-        tools:ignore="NotSibling">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/muli"
-            android:hint="비밀번호 입력"
-            android:inputType="textPassword"
-            android:textColor="@color/black" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/newPasswordConfirm"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:includeFontPadding="false"
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/black"
-        app:boxStrokeWidthFocused="2dp"
-        app:endIconMode="password_toggle"
-        app:endIconTint="@color/black"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/black"
-        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/newPassword"
-        app:startIconTint="@color/black">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_confirm_editText"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/notosans_regular"
+        android:text="BARO"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        />
+
+    <TextView
+        android:id="@+id/register_title"
+        android:textSize="24sp"
+        android:layout_below="@id/imageView"
+        android:text="비밀번호 재설정"
+        android:letterSpacing="-0.02"
+        android:textColor="@color/white"
+        android:fontFamily="@font/notosans_black"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/register_title"
+        android:layout_marginTop="27dp"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/login_background">
+        <TextView
+            android:id="@+id/findPass_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:letterSpacing="-0.02"
+            android:text="새 비밀 번호 입력"
+            android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"
+            android:layout_marginTop="58dp"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/muli"
-            android:hint="비밀번호 재입력"
-            android:inputType="textPassword"
-            android:textColor="@color/black" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <Button
-        android:id="@+id/next_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/black"
-        android:onClick="onClickPassword"
-        android:text="완료"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:layout_margin="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/newPasswordConfirm"/>
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/black"
+            app:errorEnabled="true"
+            app:startIconTint="@color/black"
+            tools:ignore="NotSibling">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosans_regular"
+                android:inputType="textPassword"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:letterSpacing="-0.02"
+            android:text="새 비밀 번호 확인"
+            android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"
+            android:layout_marginTop="30dp"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newPasswordConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/black"
+            app:errorEnabled="true"
+            app:hintTextColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newPassword"
+            app:startIconTint="@color/black">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_confirm_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/notosans_regular"
+                android:inputType="textPassword"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/next_button"
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_border_full"
+            android:onClick="onClickPassword"
+            android:text="완료"
+            android:textSize="16dp"
+            android:fontFamily="@font/notosans_bold"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
