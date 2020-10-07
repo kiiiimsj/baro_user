@@ -35,10 +35,8 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
     private ArrayList<String> mData = null ;
     private HashMap<String,ArrayList<ExtraOrder>> mTableData;
     private Context context;
-    private Iterator<String> iterator;
     private TextView priceTotal;
     private TextView itemCountText;
-//    private HashMap <String,Integer> selectOption;
     HashMap<String,ExtraOrder> selectOptions;
     int must;
     int memory;
@@ -82,10 +80,8 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
         final ArrayList<Integer> priceList = new ArrayList<>();
         ArrayList<Integer> option_ids = new ArrayList<>();
         LinearLayout parent = null;
-        Log.i("p",String.valueOf(position));
         final ArrayList<ToggleButton> toggleButtons = new ArrayList<>();
         int count = 0;
-        int rowCount = 0;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
         TableLayout tableLayout = (TableLayout) inflater.inflate(R.layout.activity_order_details_essential_table,null,false);
         final String text = mData.get(position);
@@ -100,13 +96,6 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
             if(extraOrders.size() > ONE_ROW){
                 parent = (LinearLayout) inflater.inflate(R.layout.activity_order_details_radio, null, false);
                 for(int i = 0;i<extraOrders.size();i++){
-//                    RadioButton radioButton = new RadioButton(context);
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                        radioButton.setButtonTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.main)));
-//                        radioButton.setTextColor(context.getResources().getColor(R.color.main));
-//                    }
-//                    radioButton.setText();
-//                    ((LinearLayout)parent.getChildAt(0)).addView(radioButton);
                     final ExtraOrder extraOrder = extraOrders.get(i);
                     final RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.activity_order_details_radio_child,null,false);
                     radioButton.setText( extraOrder.getExtra_name()+"  (+"+extraOrder.getExtra_price()+"원)");
@@ -183,7 +172,6 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                             }
                         }
                     });
-
                     price.setText(String.valueOf(priceList.get(count)));
                     id.setText("" + option_ids.get(count));
                     count++;
@@ -192,69 +180,6 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                     LinearLayout trash = (LinearLayout) parent.getChildAt(i);
                     trash.setVisibility(View.GONE);
                 }
-                ///////////////////////////
-//            for(int i =0;i<extraOrders.size();i++){
-//                tableRows.add(i, (LinearLayout) inflater.inflate(R.layout.activity_order_details_essential_table_child, null, false));
-//            }
-//            while(count !=extraOrders.size()){
-//                if(count % 3==0 ){
-//                    tableRow =tableRows.get(rowCount);
-//                    rowCount++;
-//                }
-//                LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.activity_order_details_essential_table_child2,null,false);
-//                final ToggleButton name = (ToggleButton) linearLayout.getChildAt(0);
-//                final TextView price = (TextView) linearLayout.getChildAt(1);
-//                final TextView id = (TextView) linearLayout.getChildAt(2);
-//
-//                name.setText(nameList.get(count));
-//                name.setTextOn(nameList.get(count));
-//                name.setTextOff(nameList.get(count));
-//                toggleButtons.add(name);
-//                name.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        int itemCount = Integer.parseInt(itemCountText.getText().toString());
-//                        int changePrice = Integer.parseInt(price.getText().toString());
-//                        int originPrice = Integer.valueOf(priceTotal.getText().toString());
-//                        int deletePrice = 0;
-//                        if(name.isChecked()){
-//
-//                            for(int i =0;i<toggleButtons.size();i++){
-//                                if(toggleButtons.get(i) != name && toggleButtons.get(i).isChecked()) {
-//                                    must--;
-//                                    deletePrice = Integer.parseInt(((TextView) (((ViewGroup) toggleButtons.get(i).getParent()).getChildAt(1))).getText().toString());
-//                                }
-//                                toggleButtons.get(i).setTextColor(ContextCompat.getColor(context,R.color.main));
-//                                toggleButtons.get(i).setChecked(false);
-//                                toggleButtons.get(i).setBackgroundResource(R.drawable.button_border_empty);
-//                            }
-//                            holder.selectedOptions.setText(name.getText().toString()+"(+"+changePrice+"원)");
-//                            must++;
-//                            HashMap<String,Integer> selectOption = new HashMap<>();
-//                            ExtraOrder select = new ExtraOrder(Integer.parseInt(id.getText().toString()),Integer.parseInt(price.getText().toString()),name.getText().toString(),1);
-//                            select.setExtra_count(1);
-//                            selectOption.put(name.getText().toString(),Integer.parseInt(price.getText().toString()));
-//                            selectOptions.put(text,select);
-//                            priceTotal.setText(String.valueOf(originPrice+(itemCount*(changePrice-deletePrice))));
-//                            name.setChecked(true);
-//                            name.setBackgroundResource(R.drawable.button_border_full);
-//                            name.setTextColor(ContextCompat.getColor(context,R.color.white));
-//                        }else{
-//                            must--;
-//                            holder.selectedOptions.setText("");
-//                            priceTotal.setText(String.valueOf(originPrice-(itemCount*changePrice)));
-//                            name.setBackgroundResource(R.drawable.button_border_empty);
-//                            name.setTextColor(ContextCompat.getColor(context,R.color.main));
-//                        }
-//                    }
-//                });
-//                price.setText(String.valueOf(priceList.get(count)));
-//                id.setText(""+option_ids.get(count));
-//                tableRow.addView(linearLayout);
-//                count++;
-//
-//            }
-
             }
             tableLayout.addView(parent);
             holder.essentialOptionTableShell.addView(tableLayout);

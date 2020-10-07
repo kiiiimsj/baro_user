@@ -7,56 +7,93 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="30dp"
+    android:background="@color/main"
     tools:context=".ChangePass3">
-
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/muli_black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center"
-        android:text="비밀번호 변경 완료!"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
-        android:textSize="30sp" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textView3"
-        android:layout_height="wrap_content"
-        android:src="@drawable/password_updated_icon" />
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView2"
-        android:fontFamily="@font/muli"
-        android:gravity="center"
-        android:text="새로운 비밀번호로 로그인해주세요"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="15sp" />
-
-    <Button
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView5"
-        android:id="@+id/login_button"
-        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:includeFontPadding="false"
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:onClick="goToLogin"
-        android:text="로그인하러가기"
-        android:textColor="@color/white" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/notosans_regular"
+        android:text="BARO"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        />
+
+    <TextView
+        android:id="@+id/register_title"
+        android:textSize="24sp"
+        android:layout_below="@id/imageView"
+        android:text="비밀번호 변경 완료"
+        android:letterSpacing="-0.02"
+        android:textColor="@color/white"
+        android:fontFamily="@font/notosans_black"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView"/>
+
+
+    <LinearLayout
+        android:layout_marginTop="27dp"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="@drawable/login_background"
+        app:layout_constraintTop_toBottomOf="@id/register_title"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginTop="58dp"
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/notosans_regular"
+            android:gravity="center"
+            android:text="새로운 비밀번호로 로그인해주세요"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <Button
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView5"
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_border_full"
+            android:onClick="goToLogin"
+            android:text="로그인 페이지로 돌아가기"
+            android:textSize="16dp"
+            android:fontFamily="@font/notosans_bold"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+<!--    <TextView-->
+<!--        android:id="@+id/textView3"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/muli_black"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:gravity="center"-->
+<!--        android:text="비밀번호 변경 완료!"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textAllCaps="true"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="30sp" />-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
