@@ -9,9 +9,10 @@ public class StoreMenus {
     private int menuId;
     private String menuImage;
     private String menu_info;
+    private String is_soldout;
 
     public StoreMenus() { }
-    public StoreMenus(int storeId, int categoryId, String menuInfo, String menuName, int menuDefaultprice, int menuId, String menuImage,String menu_info) {
+    public StoreMenus(int storeId, int categoryId, String menuInfo, String menuName, int menuDefaultprice, int menuId, String menuImage,String menu_info,String is_soldout) {
         this.storeId = storeId;
         this.categoryId = categoryId;
         this.menuInfo = menuInfo;
@@ -20,6 +21,12 @@ public class StoreMenus {
         this.menuId = menuId;
         this.menuImage = menuImage;
         this.menu_info = menu_info;
+        this.is_soldout = is_soldout;
+
+    }
+
+    public String getIs_soldout() {
+        return is_soldout;
     }
 
     public String getMenu_info() {
