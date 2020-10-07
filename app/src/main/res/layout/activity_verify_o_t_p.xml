@@ -68,6 +68,7 @@
         <com.chaos.view.PinView
             android:layout_marginTop="40dp"
             android:gravity="center"
+            style="@style/PinWidget.PinView"
             android:layout_below="@id/otp_text"
             android:layout_centerHorizontal="true"
             android:id="@+id/pin_view"
@@ -77,7 +78,6 @@
             android:inputType="number"
             android:itemBackground="@color/white"
             app:cursorColor="@color/black"
-            app:hideLineWhenFilled="true"
             app:itemCount="6"
             app:itemHeight="50dp"
             app:itemRadius="5dp"
