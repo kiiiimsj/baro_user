@@ -20,95 +20,95 @@
         android:layout_above="@id/bottom_menu"
         android:layout_below="@id/top_bar"
         android:scrollbarSize="0dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="15dp">
+            android:layout_height="match_parent">
+
             <LinearLayout
                 android:id="@+id/table_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="15dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/email_space_title"
+                    <ImageView
+                        android:id="@+id/user_picture"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/mypage_on" />
+
+                    <LinearLayout
+                        android:layout_toRightOf="@id/user_picture"
+                        android:paddingHorizontal="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="이메일  "
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/user_name_space"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans_bold"
+                            android:includeFontPadding="false"
+                            android:text="홍길동님 >"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/email_space"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/email_space_title"
-                        android:text="sky_Batt"
-                        android:textSize="13sp" />
+                        <TextView
+                            android:id="@+id/email_space"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"
+                            android:text="sky_battle@naver.com"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/phone_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"
+                            android:text="01093756666"
+                            android:textSize="13sp" />
+                    </LinearLayout>
                 </RelativeLayout>
-
                 <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:padding="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="휴대폰 번호  "
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/phone_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="01093756666"
-                        android:textSize="13sp" />
-                </LinearLayout>
-
+                    android:orientation="vertical"
+                    android:background="@drawable/recycler_view_border_line"
+                    >
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/button_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
+                </LinearLayout>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_below="@id/table_size"
                 android:id="@+id/menu_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:layout_below="@id/table_size"
+                android:background="@color/gray" />
 
-            <RelativeLayout
-                android:layout_below="@id/menu_list"
-                android:id="@+id/logout_button"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right">
-
-                <ImageView
-                    android:id="@+id/image_logout"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    android:src="@mipmap/ic_logout_foreground" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/image_logout"
-                    android:text="로그아웃"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/black" />
-            </RelativeLayout>
+                android:layout_below="@id/menu_list"
+                android:background="@color/white"
+                android:text="로그아웃"
+                android:textAlignment="center"
+                android:textColor="@color/red" />
         </RelativeLayout>
 
     </ScrollView>

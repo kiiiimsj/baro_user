@@ -31,7 +31,7 @@ public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonLi
     private static MyPageButtonListAdapter.OnListItemLongSelectedInterfaceForMyPage mLongListener;
 
     int[] setCount;
-    ArrayList<String> list;
+    static ArrayList<String> list;
     public MyPageButtonListAdapter(MyPageButtonListAdapter.OnListItemSelectedInterfaceForMyPage mListener, ArrayList<String> list, int[] setCount, Context context) {
         this.mListener = mListener;
         this.setCount = setCount;
@@ -46,8 +46,13 @@ public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonLi
     public MyPageButtonsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext() ;
         View view = LayoutInflater.from(context).inflate(R.layout.mypage_button, parent, false);
-        MyPageButtonsViewHolder myPageButtonsViewHolder = new MyPageButtonsViewHolder(view);
+        MyPageButtonsViewHolder myPageButtonsViewHolder = new MyPageButtonsViewHolder(view, viewType);
         return myPageButtonsViewHolder;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
@@ -55,15 +60,15 @@ public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonLi
         String strS = list.get(position);
         holder.buttonName.setText(strS);
         if(strS.equals("주문내역")) {
-            holder.count.setText(Integer.toString(setCount[0]));
+            holder.count.setText(Integer.toString(setCount[0]) +" 건");
         }
         if(strS.equals("내 쿠폰")) {
-            holder.count.setText(Integer.toString(setCount[1]));
+            holder.count.setText(Integer.toString(setCount[1])+" 건");
         }
         if(strS.equals("장바구니")) {
             shf = context.getSharedPreferences("basketList", MODE_PRIVATE);
             int count = shf.getInt("orderCnt", 0);
-            holder.count.setText(Integer.toString(count));
+            holder.count.setText(Integer.toString(count)+" 건");
         }
     }
 
@@ -103,11 +108,15 @@ public class MyPageButtonListAdapter extends RecyclerView.Adapter<MyPageButtonLi
     public class MyPageButtonsViewHolder extends RecyclerView.ViewHolder {
         public TextView buttonName;
         public TextView count;
-        public MyPageButtonsViewHolder(@NonNull View itemView) {
+        public View sideLine;
+        public MyPageButtonsViewHolder(@NonNull View itemView, int po) {
             super(itemView);
             buttonName = itemView.findViewById(R.id.button_string);
             count = itemView.findViewById(R.id.itemCount);
-
+            sideLine = itemView.findViewById(R.id.side_line);
+            if(po + 1 == list.size()) {
+                sideLine.setVisibility(View.GONE);
+            }
             buttonName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

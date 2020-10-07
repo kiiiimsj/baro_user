@@ -2,11 +2,12 @@ package com.example.wantchu;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -33,9 +34,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter.OnListItemLongSelectedInterfaceForMyPage, MyPageButtonListAdapter.OnListItemSelectedInterfaceForMyPage, IfLogoutDialog.clickButton{
+public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter.OnListItemLongSelectedInterfaceForMyPage, MyPageButtonListAdapter.OnListItemSelectedInterfaceForMyPage, MyPageButtonAdapter.OnItemCilckListener, IfLogoutDialog.clickButton{
     int[] counts;
-    RecyclerView mButtonlist;
+    RecyclerView mButtonList;
     MyPageButtonListAdapter buttonAdapter;
 
     ArrayList<String> buttons;
@@ -47,11 +48,12 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
     RecyclerView buttonRecyclerViews;
     LinearLayout tableSize;
 
+    TextView nameSpace;
     TextView emailSpace;
     TextView phoneSpace;
     MyPageButtonAdapter myPageButtonAdapter;
     ProgressApplication progressApplication;
-    RelativeLayout logout;
+    Button logout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,23 +67,25 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         makeRequestForOrderCount();
 
 
-        mButtonlist = findViewById(R.id.button_list);
+        mButtonList = findViewById(R.id.button_list);
         buttonRecyclerViews = findViewById(R.id.menu_list);
 
         tableSize = findViewById(R.id.table_size);
         emailSpace = findViewById(R.id.email_space);
         phoneSpace = findViewById(R.id.phone_number);
-        logout =findViewById(R.id.logout_button);
+        nameSpace= findViewById(R.id.user_name_space);
+        logout = findViewById(R.id.logout);
         setEvent();
         setMyInfo();
-        setMyPageButtonRecyclerView();
         setExpandListener();
     }
     public void setLists() {
+        buttons = new ArrayList<>();
         buttons.add("주문내역");
         buttons.add("내 쿠폰");
         buttons.add("장바구니");
 
+        lists = new ArrayList<>();
         lists.add("공지사항");
         lists.add("입점요청");
         lists.add("1:1 문의");
@@ -89,6 +93,12 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         lists.add("개인정보 처리방침");
     }
     private void setEvent() {
+        nameSpace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), MyInfoView.class));
+            }
+        });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,15 +124,17 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         String name = userData.get(SessionManager.KEY_USERNAME);
         String email = userData.get(SessionManager.KEY_EMAIL);
-        StringBuilder nameString = new StringBuilder(name + "님\n안녕하세요!");
+        StringBuilder nameString = new StringBuilder(name + "님 >");
         emailSpace.setText(email);
         phoneSpace.setText(phone);
+        nameSpace.setText(nameString.toString());
     }
 
     private void setExpandListener() {
-        myPageButtonAdapter = new MyPageButtonAdapter(this, lists);
+        myPageButtonAdapter = new MyPageButtonAdapter(this, lists, this);
         buttonRecyclerViews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         buttonRecyclerViews.setAdapter(myPageButtonAdapter);
+        progressApplication.progressOFF();
     }
 
     private void getPhoneNumber() {
@@ -131,21 +143,15 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         phone = userData.get(SessionManager.KEY_PHONENUMBER);
     }
-    public void setMyPageButtonRecyclerView() {
-        myPageButtonAdapter = new MyPageButtonAdapter(getApplicationContext(), lists);
-        buttonRecyclerViews.setAdapter(myPageButtonAdapter);
-        progressApplication.progressOFF();
-    }
     public void setMyPageButtonListRecyclerView(boolean result, int[] setCounts) {
-        mButtonlist.setHasFixedSize(true);
-        mButtonlist.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
+        mButtonList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         if(result) {
             buttonAdapter = new MyPageButtonListAdapter(this, buttons, setCounts, this);
         }
         else {
             buttonAdapter = new MyPageButtonListAdapter(buttons);
         }
-        mButtonlist.setAdapter(buttonAdapter);
+        mButtonList.setAdapter(buttonAdapter);
     }
     @Override
     public void onItemLongSelectedForMyPage(View v, int adapterPosition) {
@@ -153,7 +159,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
     }
     @Override
     public void onItemSelectedForMyPage(View v, int position) {
-
         if(position == 0) {
             startActivity(new Intent(getApplicationContext(), OrderHistory.class));
         }
@@ -249,5 +254,22 @@ public class MyPage extends AppCompatActivity implements MyPageButtonListAdapter
     @Override
     public void clickCancel() {
 
+    }
+
+    @Override
+    public void itemClick(int position) {
+        switch (position) {
+            case 0 :
+                startActivity(new Intent(getApplicationContext(), Notice.class));
+                break;
+            case 1 :
+            case 2 :
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
+                break;
+            case 3 :
+                break;
+            case 4 :
+                break;
+        }
     }
 }

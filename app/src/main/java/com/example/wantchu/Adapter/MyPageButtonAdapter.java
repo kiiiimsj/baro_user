@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +17,14 @@ import java.util.ArrayList;
 public class MyPageButtonAdapter extends RecyclerView.Adapter<MyPageButtonAdapter.MyPageViewHolder> {
     ArrayList<String> buttonList;
     static Context context;
-    public MyPageButtonAdapter(Context context, ArrayList<String> buttons) {
+    public interface OnItemCilckListener {
+        void itemClick(int position);
+    }
+    OnItemCilckListener mListener;
+    public MyPageButtonAdapter(Context context, ArrayList<String> buttons, OnItemCilckListener mListener) {
         this.context = context;
         this.buttonList = buttons;
+        this.mListener = mListener;
     }
     @NonNull
     @Override
@@ -35,21 +41,65 @@ public class MyPageButtonAdapter extends RecyclerView.Adapter<MyPageButtonAdapte
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         return buttonList == null? 0 : buttonList.size();
     }
 
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull MyPageViewHolder holder) {
+        super.onViewRecycled(holder);
+    }
+
+    @Override
+    public boolean onFailedToRecycleView(@NonNull MyPageViewHolder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull MyPageViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull MyPageViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
+
     public class MyPageViewHolder extends RecyclerView.ViewHolder {
+        View bottomLine;
         TextView buttonText;
-        public MyPageViewHolder(@NonNull View itemView, int po) {
+        LinearLayout backSize;
+        public MyPageViewHolder(@NonNull View itemView, final int po) {
             super(itemView);
             buttonText = itemView.findViewById(R.id.my_page_button);
-            if(buttonText.getText().toString().equals("1:1 문의")) {
-                View view = new View(context);
-                view.setMinimumWidth(itemView.getWidth());
-                view.setMinimumHeight(2);
-                view.setBackgroundColor(context.getResources().getColor(R.color.main));
-                view.setX(buttonText.getBottom());
+            backSize = itemView.findViewById(R.id.my_page_expandable_layout);
+            bottomLine = itemView.findViewById(R.id.bottom_line);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.itemClick(po);
+                }
+            });
+            if(po == 2) {
+                bottomLine.setVisibility(View.GONE);
+                LinearLayout.MarginLayoutParams vl = new LinearLayout.MarginLayoutParams(backSize.getLayoutParams());
+                vl.setMargins(0,0,0, 20);
+                backSize.setLayoutParams(new LinearLayout.LayoutParams(vl));
             }
         }
     }
