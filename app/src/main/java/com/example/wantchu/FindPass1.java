@@ -90,7 +90,7 @@ public class FindPass1 extends AppCompatActivity implements TopBar.OnBackPressed
             });
         }
         else {
-            Intent intent = new Intent(getApplicationContext(), ChangePass2.class);
+            Intent intent = new Intent(getApplicationContext(), VerifyOTP.class);
             intent.putExtra("phone", phoneTextInput.getEditText().getText().toString());
             startActivity(intent);
         }
