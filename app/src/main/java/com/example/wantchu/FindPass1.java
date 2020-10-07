@@ -81,11 +81,11 @@ public class FindPass1 extends AppCompatActivity implements TopBar.OnBackPressed
         catch (JSONException e) {
             e.printStackTrace();
         }
-        if(!result) {
+        if(result) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(FindPass1.this, "이미 존재하는 핸드폰 입니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(FindPass1.this, "존재하지 않는 핸드폰 입니다.", Toast.LENGTH_LONG).show();
                 }
             });
         }
