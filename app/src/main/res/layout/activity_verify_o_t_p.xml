@@ -71,7 +71,7 @@
             android:layout_below="@id/otp_text"
             android:layout_centerHorizontal="true"
             android:id="@+id/pin_view"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:cursorVisible="true"
             android:inputType="number"
