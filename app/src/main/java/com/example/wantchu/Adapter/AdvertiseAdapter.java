@@ -76,7 +76,6 @@ public class AdvertiseAdapter extends PagerAdapter {
         container.removeView((ConstraintLayout) object);
     }
     public void makeRequestForgetImage(String type_image, final ImageView imageView, Context context ) {
-        //ImageEvent.do?image_name=이미지명
         String lastUrl = "ImageEvent.do?image_name=";
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
