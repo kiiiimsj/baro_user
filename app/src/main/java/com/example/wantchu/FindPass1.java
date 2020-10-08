@@ -91,7 +91,8 @@ public class FindPass1 extends AppCompatActivity implements TopBar.OnBackPressed
         }
         else {
             Intent intent = new Intent(getApplicationContext(), VerifyOTP.class);
-            intent.putExtra("phone", phoneTextInput.getEditText().getText().toString());
+            intent.putExtra("phone", "+82" + phoneTextInput.getEditText().getText().toString());
+            intent.putExtra("pageType",FindPass1.this.getClass().getSimpleName());
             startActivity(intent);
         }
     }

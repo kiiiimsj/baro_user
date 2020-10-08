@@ -79,9 +79,9 @@
             android:itemBackground="@color/white"
             app:cursorColor="@color/black"
             app:itemCount="6"
-            app:itemHeight="50dp"
+            app:itemHeight="40dp"
             app:itemRadius="5dp"
-            app:itemWidth="50dp"
+            app:itemWidth="35dp"
             app:lineColor="@color/main"
             app:lineWidth="1dp" />
 
