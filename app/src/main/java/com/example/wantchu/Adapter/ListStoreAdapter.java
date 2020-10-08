@@ -73,16 +73,13 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
     @Override
     public void onBindViewHolder(@NonNull ListStoreAdapter.ListStoreViewHolder holder, int position) {
         ListStoreHelperClass listStoreHelperClass = listStoreLocations.get(position);
-
-        holder.storeImage.setBackgroundDrawable(Drawable.createFromPath(listStoreHelperClass.storeImage));
         holder.storeName.setText(listStoreHelperClass.storeName);
-        holder.storeLocation.setText(listStoreHelperClass.storeLocation);
         holder.mDistance.setText(String.valueOf((int)listStoreHelperClass.storeDistance + "m"));
         holder.storeId.setText(String.valueOf(listStoreHelperClass.storeId));
         if(listStoreHelperClass.storeIsOpen != null) {
             if(listStoreHelperClass.storeIsOpen.equals("N")) {
                 holder.isOpen.setText("준비중");
-                holder.store.setBackgroundColor(Color.rgb(237,237,237));
+                //holder.store.setBackgroundColor(Color.rgb(237,237,237));
                 
             }
             if(listStoreHelperClass.storeIsOpen.equals("Y")) {
@@ -138,7 +135,6 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             super(itemView);
 
             storeName = itemView.findViewById(R.id.store_name);
-            storeLocation = itemView.findViewById(R.id.store_location);
             storeImage = itemView.findViewById(R.id.store_image);
             mDistance = itemView.findViewById(R.id.distance);
             storeId = itemView.findViewById(R.id.store_id);

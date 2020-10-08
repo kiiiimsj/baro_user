@@ -1,101 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:backgroundTint="@color/white"
+    android:padding="5dp"
     app:cardCornerRadius="4dp"
-    app:cardElevation="0dp"
-    android:padding="5dp">
+    app:cardElevation="0dp">
 
     <LinearLayout
+        android:id="@+id/store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/store"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="18dp">
 
             <ImageView
                 android:id="@+id/store_image"
-                android:layout_width="70dp"
-                android:layout_height="70dp" />
+                android:layout_width="54dp"
+                android:layout_height="54dp" />
 
-            <LinearLayout
-                android:id="@+id/store_title"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
+            <TextView
+                android:layout_marginStart="30dp"
+                android:id="@+id/store_name"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/notosans_bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:letterSpacing="-0.03"
+                android:text="커피만"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/store_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="커피만"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/notosans_bold"
-                    android:padding="5dp"/>
-
-                <TextView
-                    android:id="@+id/store_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="숭실대학교 4번출구"
-                    android:fontFamily="@font/metropolis_extralight"
-                    android:textSize="13sp"
-                    android:maxLength="15"
-                    android:padding="5dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_gravity="center_horizontal"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingRight="10dp"
-                android:orientation="vertical">
-
-
+                >
                 <TextView
                     android:id="@+id/is_open"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:padding="10dp"
-                    android:textStyle="bold"
-                    android:text="준비중" />
+                    android:layout_alignParentRight="true"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="3dp"
+                    android:text="영업중"
+                    android:textSize="10sp"
+                    android:background="@drawable/border_3dp_in_list_store"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/notosans_regular"
+                    android:includeFontPadding="false"
+                    />
 
                 <TextView
+                    android:layout_below="@id/is_open"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentEnd="true"
                     android:id="@+id/distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:padding="5dp"
+                    android:fontFamily="@font/notosans_regular"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/more_bright_gray"
+                    android:textSize="12sp"
                     android:text="500m" />
 
                 <TextView
                     android:id="@+id/store_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
-            </LinearLayout>
+                    android:visibility="gone" />
+            </RelativeLayout>
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/main"/>
+            android:background="@color/text_info_color" />
 
     </LinearLayout>
-
 
 
 </androidx.cardview.widget.CardView>
