@@ -63,7 +63,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
         tabs = findViewById(R.id.tab_tabs);
 
-        sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        sessionManager = new SessionManager(StoreInfoReNewer.this, SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
@@ -107,7 +107,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
                     makeRequestFavorteRem(url, hashMap);
                     //mFavorite.setImageResource(R.drawable.heart_empty);
                     topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_empty);
-                    DeleteFavoriteDialog deleteFavoriteDialog = new DeleteFavoriteDialog(getApplicationContext());
+                    DeleteFavoriteDialog deleteFavoriteDialog = new DeleteFavoriteDialog(StoreInfoReNewer.this);
                     deleteFavoriteDialog.callFunction();
                     //true 등록되어있을때
                 }
@@ -125,7 +125,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
 
                     //mFavorite.setImageResource(R.drawable.heart_full);
                     topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_full);
-                    AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(getApplicationContext());
+                    AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(StoreInfoReNewer.this);
                     addFavoriteDialog.callFunction();
                     //false 등록되어있지 않을 때
                 }

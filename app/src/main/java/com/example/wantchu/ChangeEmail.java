@@ -113,6 +113,7 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
 
     private void nextActivity(boolean getResult, final String message) {
         if(getResult) {
+//            sessionUserdata.put(SessionManager.KEY_EMAIL,)
             startActivity(new Intent(getApplicationContext(), ChangeEmail2.class));
             finish();
         }
