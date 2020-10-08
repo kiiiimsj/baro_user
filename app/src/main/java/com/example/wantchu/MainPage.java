@@ -37,6 +37,7 @@ import com.example.wantchu.Adapter.TypeAdapter;
 import com.example.wantchu.Adapter.UltraStoreListAdapter;
 import com.example.wantchu.AdapterHelper.TypeHelperClass;
 import com.example.wantchu.Database.StoreSessionManager;
+import com.example.wantchu.Dialogs.AppStartAdDialog;
 import com.example.wantchu.Dialogs.SearchDialog;
 import com.example.wantchu.JsonParsingHelper.EventHelperClass;
 import com.example.wantchu.JsonParsingHelper.TypeListParsing;
@@ -117,6 +118,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         //Fragment 생성
 
         eventCountSet = findViewById(R.id.event_count);
+        AppStartAdDialog appStartAdDialog = new AppStartAdDialog(MainPage.this);
+        appStartAdDialog.callFunction();
         context = this;
         mAddress = findViewById(R.id.address);
         // 왼쪽 사이드바
@@ -379,6 +382,44 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         });
         requestQueue.add(stringRequest);
     }
+//    public void makeRequestForGetEventId() {
+//        String url = new UrlMaker().UrlMake("EventFindAdvertising.do");
+//        RequestQueue requestQueue = Volley.newRequestQueue(context);
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                Log.i("getPictureForEvent", response);
+//                parsing(response);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//        requestQueue.add(stringRequest);
+//    }
+//
+//    private void parsing(String response) {
+//        boolean result = false;
+//        int eventId = 0;
+//        try {
+//            JSONObject jsonObject = new JSONObject(response);
+//            result =jsonObject.getBoolean("result");
+//            if(result) {
+//                SharedPreferences sf = getSharedPreferences("saveEventId", MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sf.edit();
+//                eventId=jsonObject.getInt("event_id");
+//                editor.putInt("event_Id", eventId);
+//                editor.apply();
+//                editor.commit();
+//            }
+//        }
+//        catch(JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     private void setAdvertiseAdapter() {
         changeListener = new ViewPager.OnPageChangeListener() {
             @Override

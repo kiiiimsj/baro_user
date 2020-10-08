@@ -133,7 +133,7 @@
                     android:includeFontPadding="false"
                     android:text="여기 어때요?"
                     android:padding="10dp"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textColor="@color/main"
                     android:fontFamily="@font/notosans_regular"
                     />
@@ -155,7 +155,7 @@
                     android:includeFontPadding="false"
                     android:text="신규 매장"
                     android:padding="10dp"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textColor="@color/main"
                     android:fontFamily="@font/notosans_regular"
                     />
