@@ -149,7 +149,7 @@
                             android:layout_marginTop="12dp"
                             android:fontFamily="@font/notosans_regular"
                             android:includeFontPadding="false"
-                            android:text="주문내역"
+                            android:text="쿠 폰"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
 
@@ -190,7 +190,7 @@
                             android:layout_marginTop="12dp"
                             android:fontFamily="@font/notosans_regular"
                             android:includeFontPadding="false"
-                            android:text="주문내역"
+                            android:text="장바구니"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
 

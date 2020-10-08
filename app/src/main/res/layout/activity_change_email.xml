@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/main"
     tools:context=".ChangeEmail">
 
     <fragment
@@ -15,87 +15,130 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-    <ImageView
-        android:id="@+id/findPass_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/forget_password_icon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/change_email"/>
-
     <TextView
-        android:id="@+id/change_email"
-        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:includeFontPadding="false"
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/muli_black"
-        android:text="이메일 변경"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
+        android:fontFamily="@font/notosans_regular"
+        android:text="BARO"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        />
 
     <TextView
-        android:id="@+id/old_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sample_email"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/change_email"
-         />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/new_email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/register_title"
+        android:textSize="24sp"
+        android:layout_below="@id/imageView"
+        android:text="비밀번호 재설정"
+        android:letterSpacing="-0.02"
+        android:textColor="@color/white"
+        android:fontFamily="@font/notosans_black"
+        android:gravity="center"
+        android:includeFontPadding="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        app:boxStrokeColor="@color/black"
-        app:boxStrokeWidthFocused="2dp"
-        app:endIconMode="clear_text"
-        app:endIconTint="@color/black"
-        app:errorEnabled="true"
-        app:hintTextColor="@color/black"
-        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/old_email"
-        app:startIconTint="@color/black"
-        tools:ignore="NotSibling">
+        app:layout_constraintTop_toBottomOf="@id/imageView"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/register_title"
+        android:layout_marginTop="27dp"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/login_background">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/new_email_input"
+        <TextView
+            android:id="@+id/change_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:letterSpacing="-0.02"
+            android:text="이메일 변경"
+            android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"
+            android:layout_marginTop="58dp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 이메일 : "
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:letterSpacing="-0.02"
+            android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"
+            android:layout_marginTop="58dp"
+            />
+            <TextView
+                android:id="@+id/old_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sample_email"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:letterSpacing="-0.02"
+                android:fontFamily="@font/notosans_bold"
+                android:includeFontPadding="false"
+                android:layout_marginTop="58dp"
+                />
+        </LinearLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/new_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/muli"
-            android:hint="변경할 이메일 입력"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/black" />
+            android:layout_marginTop="1dp"
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/black"
+            app:errorEnabled="true"
+            app:hintTextColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/old_email"
+            app:startIconTint="@color/black"
+            tools:ignore="NotSibling">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/new_email_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/muli"
+                android:hint="변경할 이메일 입력"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <Button
-        android:id="@+id/next_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/black"
-        android:onClick="onClickEmail"
-        android:text="변경하기"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:layout_margin="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/new_email"/>
+        <Button
+            android:id="@+id/next_button"
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_border_full"
+            android:onClick="onClickEmail"
+            android:text="변경하기"
+            android:textSize="16dp"
+            android:fontFamily="@font/notosans_bold"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
