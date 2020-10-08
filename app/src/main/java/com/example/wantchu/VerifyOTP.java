@@ -28,6 +28,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     private PinView pinFromUser;
     String phoneNumber;
     String codeBySystem;
+    String pageType;
     TextView timer;
     int sec = 120;
     int min;
@@ -39,7 +40,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
         timer = findViewById(R.id.timer);
         pinFromUser = findViewById(R.id.pin_view);
         Intent intent = getIntent();
-
+        pageType = intent.getStringExtra("pageType");
         phoneNumber = intent.getStringExtra("phone");
         sendVerificationCodeToUser(phoneNumber);
         new Thread(new Runnable() {
@@ -47,13 +48,13 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
             public void run() {
                 while(sec != 0) {
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                         sec--;
                         min = sec / 60;
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                timer.setText(min + " : " +(sec / 2));
+                                timer.setText(min + " : " +(sec % 60));
                             }
                         });
                     } catch (InterruptedException e) {
@@ -125,9 +126,16 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     }
 
     private void okayToMoveNextStep() {
-        Intent intent = new Intent(getApplicationContext(), Register2.class);
-        intent.putExtra("phone", phoneNumber);
-        startActivity(intent);
+        if(pageType.equals("FindPass1")){
+            Intent intent = new Intent(getApplicationContext(), ChangePass2.class);
+            intent.putExtra("phone", phoneNumber);
+            startActivity(intent);
+        }else if(pageType.equals("Register1")){
+            Intent intent = new Intent(getApplicationContext(), Register2.class);
+            intent.putExtra("phone", phoneNumber);
+            startActivity(intent);
+        }
+
     }
 
     public void onClickVerify(View view) {
