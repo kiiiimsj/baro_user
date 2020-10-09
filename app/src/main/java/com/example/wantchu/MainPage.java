@@ -430,12 +430,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if(currentPos == viewPager.getOffscreenPageLimit()) {
-                    viewPager.setCurrentItem(0);
-                    setEventCountSet(0);
-                    currentPos = 0;
-
-                }
+                currentPos = position;
             }
             @Override
             public void onPageSelected(int position) {
@@ -445,6 +440,13 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             }
             @Override
             public void onPageScrollStateChanged(int state) {
+//                if(state == ViewPager.SCROLL_STATE_DRAGGING) {
+//                    if(currentPos+1 == viewPager.getChildCount()) {
+//                        viewPager.setCurrentItem(0);
+//                        setEventCountSet(0);
+//                        currentPos = 0;
+//                    }
+//                }
             }
         });
     }
