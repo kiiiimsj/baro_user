@@ -610,7 +610,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                     @Override
                     public void onDone(@Nullable String message) {
                         Log.d("done", message);
-                        SharedPreferences shf = getApplicationContext().getSharedPreferences("basketList", MODE_PRIVATE);
+                        SharedPreferences shf = Basket.this.getSharedPreferences("basketList", MODE_PRIVATE);
                         SharedPreferences.Editor editor = shf.edit();
                         editor.clear().commit();
                         HashMap<String, String> hashMap = new HashMap<>();

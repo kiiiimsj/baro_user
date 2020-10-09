@@ -1,5 +1,6 @@
 package com.example.wantchu.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,7 +52,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     //RecyclerView 설정
     TabLayout mCategoryTabLayout;
     RecyclerView mRecyclerViewMenu;
-
+    Context mContext;
     //JSONparsing
     StoreDetail storeDetail = null;
     StoreCategories storeCategories = null;
@@ -78,6 +79,12 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
 
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,7 +99,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("onCreate", true+"");
-        sessionManager = new SessionManager(getActivity().getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        sessionManager = new SessionManager(mContext, SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);

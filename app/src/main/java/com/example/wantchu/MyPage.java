@@ -114,13 +114,13 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         orderHistoryTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), OrderHistory.class));
+                startActivity(new Intent(MyPage.this, OrderHistory.class));
             }
         });
         myCouponTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), SideMyCoupon.class));
+                startActivity(new Intent(MyPage.this, SideMyCoupon.class));
             }
         });
         orderCartTitle.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +128,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
             public void onClick(View v) {
                 SharedPreferences shf = getSharedPreferences("basketList", MODE_PRIVATE);
                 if(shf.getInt("orderCnt", 0) > 0) {
-                    startActivity(new Intent(getApplicationContext(), Basket.class));
+                    startActivity(new Intent(MyPage.this, Basket.class));
                 }
             }
         });
@@ -145,6 +145,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         super.onResume();
         getPhoneNumber();
         makeRequestForOrderCount();
+        setMyInfo();
     }
     @Override
     protected void onPause() {
@@ -152,13 +153,12 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         overridePendingTransition(0, 0);
     }
     private void setMyInfo() {
-        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(MyPage.this, SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersDetailSession();
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         String name = userData.get(SessionManager.KEY_USERNAME);
         String email = userData.get(SessionManager.KEY_EMAIL);
         StringBuilder nameString = new StringBuilder(name + "님 >");
-
         nameSpace.setText(nameString.toString());
         emailSpace.setText(email);
         phoneSpace.setText(phone);
@@ -172,7 +172,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     }
 
     private void getPhoneNumber() {
-        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(MyPage.this, SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersDetailSession();
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         phone = userData.get(SessionManager.KEY_PHONENUMBER);
@@ -250,7 +250,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     }
     @Override
     public void clickOkay() {
-        SessionManager sessionManager1 = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager1 = new SessionManager(MyPage.this, SessionManager.SESSION_USERSESSION);
         if(sessionManager1.getUsersDetailFromSession() != null) {
             sessionManager1.clearDetailUserSession();
         }
@@ -265,21 +265,21 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     public void itemClick(int position) {
         switch (position) {
             case 0 :
-                startActivity(new Intent(getApplicationContext(), Notice.class));
+                startActivity(new Intent(MyPage.this, Notice.class));
                 break;
             case 1 :
             case 2 :
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
                 break;
             case 3:
-                startActivity(new Intent(getApplicationContext(), ChangePass1Logging.class));
+                startActivity(new Intent(MyPage.this,ChangePass1Logging.class));
                 break;
             case 4:
-                startActivity(new Intent(getApplicationContext(), ChangeEmail.class));
+                startActivity(new Intent(MyPage.this, ChangeEmail.class));
                 break;
             case 5 :
             case 6 :
-                startActivity(new Intent(getApplicationContext(), TermsOfUse.class));
+                startActivity(new Intent(MyPage.this, TermsOfUse.class));
                 break;
         }
     }

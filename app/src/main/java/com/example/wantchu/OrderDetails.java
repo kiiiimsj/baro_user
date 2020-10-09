@@ -331,7 +331,7 @@ public class OrderDetails extends AppCompatActivity {
         if (NonEssentialOptionList.size() != 0) {
             Log.i("sizeeeeeeeeeeeee", NonEssentialOptionList.size() + "");
             nonEssentialAdapter =
-                    new OrderDetailsNonEssentialAdapter(getApplicationContext(), R.layout.activity_order_details_nonessential_group_parent,
+                    new OrderDetailsNonEssentialAdapter(OrderDetails.this, R.layout.activity_order_details_nonessential_group_parent,
                             R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount);
             expandableListView.setAdapter(nonEssentialAdapter);
             setListIndicator();
