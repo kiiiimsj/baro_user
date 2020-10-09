@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,6 +30,7 @@ import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.JsonParsingHelper.FavoriteListParsing;
 import com.example.wantchu.JsonParsingHelper.FavoriteParsing;
 import com.example.wantchu.Url.UrlMaker;
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,6 +46,9 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     String _phone;
     String storedIdStr;
     TabLayout tabs;
+    TextView tabMenu;
+    TextView tabStoreInfo;
+
     boolean result =false;
     SharedPreferences sp;
     StoreMenuFragment storeMenuFragment;
@@ -62,6 +68,8 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         fm = getSupportFragmentManager();
         topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
         tabs = findViewById(R.id.tab_tabs);
+        tabMenu = (TextView)findViewById(R.id.order_history_list);
+        tabStoreInfo = (TextView)findViewById(R.id.calc_history_list);
 
         sessionManager = new SessionManager(StoreInfoReNewer.this, SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
@@ -283,11 +291,18 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         storeDetailInfoFragment = (StoreDetailInfoFragment) fm.findFragmentById(R.id.store_detail_info_fragment);
         fm.beginTransaction().show(storeMenuFragment).commit();
         fm.beginTransaction().hide(storeDetailInfoFragment).commit();
+
+        TextView tv = (TextView)(((LinearLayout)((LinearLayout)tabs.getChildAt(0)).getChildAt(0)).getChildAt(1));
+        tv.setTextColor(getResources().getColor(R.color.main));
+        Log.i("tabsTabItem", tv.getText().toString());
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                TextView tv = (TextView)(((LinearLayout)((LinearLayout)tabs.getChildAt(0)).getChildAt(tab.getPosition())).getChildAt(1));
+                tv.setTextColor(getResources().getColor(R.color.main));
                 switch (tab.getPosition()) {
                     case 0 :
+                        tabs.getChildAt(0);
                         fm.beginTransaction().show(storeMenuFragment).commit();
                         fm.beginTransaction().hide(storeDetailInfoFragment).commit();
                         break;
@@ -300,12 +315,14 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                TextView tv = (TextView)(((LinearLayout)((LinearLayout)tabs.getChildAt(0)).getChildAt(tab.getPosition())).getChildAt(1));
+                tv.setTextColor(getResources().getColor(R.color.text_info_color));
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                TextView tv = (TextView)(((LinearLayout)((LinearLayout)tabs.getChildAt(0)).getChildAt(tab.getPosition())).getChildAt(1));
+                tv.setTextColor(getResources().getColor(R.color.main));
             }
         });
     }

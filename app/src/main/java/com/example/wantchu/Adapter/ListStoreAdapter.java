@@ -2,9 +2,12 @@ package com.example.wantchu.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.icu.text.Normalizer2;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
@@ -69,7 +73,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
         return listStoreViewHolder;
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint({"ResourceAsColor", "NewApi"})
     @Override
     public void onBindViewHolder(@NonNull ListStoreAdapter.ListStoreViewHolder holder, int position) {
         ListStoreHelperClass listStoreHelperClass = listStoreLocations.get(position);
@@ -79,8 +83,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
         if(listStoreHelperClass.storeIsOpen != null) {
             if(listStoreHelperClass.storeIsOpen.equals("N")) {
                 holder.isOpen.setText("준비중");
-                //holder.store.setBackgroundColor(Color.rgb(237,237,237));
-                
+                holder.isOpen.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.text_info_color)));
             }
             if(listStoreHelperClass.storeIsOpen.equals("Y")) {
                 holder.isOpen.setText("영업중");

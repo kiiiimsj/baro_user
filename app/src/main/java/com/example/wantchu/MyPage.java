@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -49,9 +50,9 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     TextView myCouponCount;
     TextView orderCartCount;
 
-    TextView orderHistoryTitle;
-    TextView myCouponTitle;
-    TextView orderCartTitle;
+    RelativeLayout orderHistoryButton;
+    RelativeLayout myCouponButton;
+    RelativeLayout orderCartButton;
 
     MyPageButtonAdapter myPageButtonAdapter;
     ProgressApplication progressApplication;
@@ -81,9 +82,9 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         myCouponCount = findViewById(R.id.my_coupon_count);
         orderCartCount = findViewById(R.id.my_order_cart_count);
 
-        orderHistoryTitle = findViewById(R.id.order_history_button_title);
-        myCouponTitle = findViewById(R.id.my_coupon_title);
-        orderCartTitle =findViewById(R.id.my_order_cart_title);
+        orderHistoryButton = findViewById(R.id.order_history_button);
+        myCouponButton = findViewById(R.id.my_coupon_button);
+        orderCartButton = findViewById(R.id.my_order_cart_button);
 
         logout = findViewById(R.id.logout);
         setEvent();
@@ -111,19 +112,19 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         lists.add("개인정보 처리방침");
     }
     private void setEvent() {
-        orderHistoryTitle.setOnClickListener(new View.OnClickListener() {
+        orderHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MyPage.this, OrderHistory.class));
             }
         });
-        myCouponTitle.setOnClickListener(new View.OnClickListener() {
+        myCouponButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MyPage.this, SideMyCoupon.class));
             }
         });
-        orderCartTitle.setOnClickListener(new View.OnClickListener() {
+        orderCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences shf = getSharedPreferences("basketList", MODE_PRIVATE);

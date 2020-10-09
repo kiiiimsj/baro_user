@@ -427,14 +427,11 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 //    }
 
     private void setAdvertiseAdapter() {
-        changeListener = new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if(position == eventHelperClass.event.size()) {
-                    position = 0;
-                }
+                currentPos = position;
             }
-
             @Override
             public void onPageSelected(int position) {
                 Log.i("onPageSelected", position+"");
@@ -443,8 +440,15 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             }
             @Override
             public void onPageScrollStateChanged(int state) {
+//                if(state == ViewPager.SCROLL_STATE_DRAGGING) {
+//                    if(currentPos+1 == viewPager.getChildCount()) {
+//                        viewPager.setCurrentItem(0);
+//                        setEventCountSet(0);
+//                        currentPos = 0;
+//                    }
+//                }
             }
-        };
+        });
     }
     private void eventParsing(String response) {
         Gson gson = new Gson();
@@ -455,7 +459,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         setEventCountSet(0);
 
         setAdvertiseAdapter();
-        viewPager.addOnPageChangeListener(changeListener);
         new Thread(new Runnable() {
             @Override
             public void run() {
