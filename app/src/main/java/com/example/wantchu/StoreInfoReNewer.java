@@ -88,6 +88,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         super.onResume();
         getFavoriteStoreId();
         checkFavorite();
+        setOnClickFavorite();
     }
     @Override
     protected void onPause() {
@@ -115,6 +116,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
                     makeRequestFavorteRem(url, hashMap);
                     //mFavorite.setImageResource(R.drawable.heart_empty);
                     topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_empty);
+                    result = false;
                     DeleteFavoriteDialog deleteFavoriteDialog = new DeleteFavoriteDialog(StoreInfoReNewer.this);
                     deleteFavoriteDialog.callFunction();
                     //true 등록되어있을때
@@ -133,6 +135,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
 
                     //mFavorite.setImageResource(R.drawable.heart_full);
                     topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_full);
+                    result = true;
                     AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(StoreInfoReNewer.this);
                     addFavoriteDialog.callFunction();
                     //false 등록되어있지 않을 때
@@ -165,6 +168,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         makeRequestForCheckFavorite(setHashDataForCheckFavorite());
     }
     private void makeRequestForCheckFavorite(HashMap data) {
+        Log.e("comein?", "aaaa");
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("FavoriteExist.do");
         RequestQueue requestQueue = Volley.newRequestQueue(StoreInfoReNewer.this);
@@ -198,7 +202,8 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     }
     private synchronized void makeRequestFavorteRem(String url, HashMap<String, String> data) {
         RequestQueue requestQueue = Volley.newRequestQueue(StoreInfoReNewer.this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(data),
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
+
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
