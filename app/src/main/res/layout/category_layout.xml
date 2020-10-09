@@ -4,6 +4,7 @@
     android:id="@+id/background"
     android:background="@color/invisible"
     android:layout_width="wrap_content"
+    android:paddingHorizontal="10dp"
     android:layout_height="wrap_content">
 
     <RelativeLayout

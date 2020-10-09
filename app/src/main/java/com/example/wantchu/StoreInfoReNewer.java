@@ -322,7 +322,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 TextView tv = (TextView)(((LinearLayout)((LinearLayout)tabs.getChildAt(0)).getChildAt(tab.getPosition())).getChildAt(1));
-                tv.setTextColor(getResources().getColor(R.color.text_info_color));
+                tv.setTextColor(getResources().getColor(R.color.main));
             }
         });
     }

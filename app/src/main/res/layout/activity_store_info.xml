@@ -29,10 +29,11 @@
                     android:id="@+id/category_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:tabGravity="start"
+                    app:tabGravity="fill"
                     app:tabIndicatorColor="@color/main"
-                    app:tabIndicatorGravity="stretch"
-                    app:tabMaxWidth="0dp"
+                    app:tabIndicatorGravity="center"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabIndicatorHeight="25dp"
                     app:tabMode="scrollable"
                     app:tabRippleColor="@color/invisible" />
             </RelativeLayout>
