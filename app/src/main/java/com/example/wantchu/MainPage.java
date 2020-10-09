@@ -425,7 +425,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if(position == eventHelperClass.event.size()) {
-                    position = 0;
+                    currentPos = 0;
                 }
             }
 

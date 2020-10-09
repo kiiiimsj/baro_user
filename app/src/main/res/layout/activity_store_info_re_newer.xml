@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             app:tabIndicatorGravity="top"
             app:tabIndicatorColor="@color/bottom_icon_color_select"
-            app:tabTextColor="@color/main"
+            app:tabTextColor="@color/text_info_color"
             app:cardBackgroundColor="@color/black"
             app:cardCornerRadius="5dp">
             <com.google.android.material.tabs.TabItem
