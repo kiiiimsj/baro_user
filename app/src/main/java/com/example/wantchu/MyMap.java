@@ -85,6 +85,8 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
     FragmentManager fm;
     TopBar topBar;
 
+    boolean firstRedMarker = true;
+
     Button.OnClickListener clickListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,8 +132,10 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                 GPSListener.setMapLocationTextView(address, oldLatLng);
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(oldLatLng, 15));
                 map.getUiSettings().setMapToolbarEnabled(false);
-                oldMarkerOption.position(oldLatLng);
-                map.addMarker(oldMarkerOption);
+                if(!firstRedMarker){
+                    oldMarkerOption.position(oldLatLng);
+                    map.addMarker(oldMarkerOption);
+                }
                 try {
                     map.moveCamera(CameraUpdateFactory.newLatLng(oldLatLng));
                     map.setContentDescription("현재 설정 위치");
@@ -265,6 +269,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         editor.commit();
         map.clear();
         makeRequest(setHashMapData());
+        firstRedMarker = false;
         setMapFragmentGetMapAsync();
         OverLayMarker.setVisibility(View.INVISIBLE);
         setNewLatLng.setVisibility(View.GONE);

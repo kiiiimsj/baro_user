@@ -88,8 +88,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     EventHelperClass eventHelperClass;
     ViewPager.OnPageChangeListener changeListener;
 
-    RelativeLayout mapBar;
     TextView mAddress;
+    ImageView mMapButton;
 
     LatLng latLng;
     myGPSListener myGPSListener;
@@ -108,20 +108,16 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         mRecyclerView = findViewById(R.id.recyclerView);
 
         ultraStoreRecyclerView = findViewById(R.id.ultra_store);
-
         newStoreRecyclerView = findViewById(R.id.new_store);
 
-
         viewPager = findViewById(R.id.info_image);
-
-        mapBar = findViewById(R.id.map_bar);
-        //Fragment 생성
 
         eventCountSet = findViewById(R.id.event_count);
         AppStartAdDialog appStartAdDialog = new AppStartAdDialog(MainPage.this);
         appStartAdDialog.callFunction();
         context = this;
         mAddress = findViewById(R.id.address);
+        mMapButton = findViewById(R.id.map_button);
         // 왼쪽 사이드바
         storeSessionManager = new StoreSessionManager(MainPage.this, StoreSessionManager.STORE_SESSION);
         storeSessionManager.setIsFavorite(false);
@@ -140,13 +136,23 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         }
         makeRequestUltraStore(setHashMapData());
         makeRequestNewStore(setHashMapData());
-        mapBar.setOnClickListener(new View.OnClickListener() {
+
+        mAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MyMap.class);
+                startActivity(intent);
+            }
+        });
+        mMapButton.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainPage.this, MyMap.class);
                 startActivity(intent);
             }
         });
+
         ///////// 태영
         call_search.setOnClickListener(new View.OnClickListener() {
             @Override
