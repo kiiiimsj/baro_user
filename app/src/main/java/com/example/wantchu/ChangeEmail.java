@@ -3,8 +3,10 @@ package com.example.wantchu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +34,7 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
     String email;
     String phone;
     HashMap<String ,String> sessionUserdata;
-
+    SharedPreferences.Editor editor;
     TextInputLayout newEmailInput;
     TextView oldEmail;
     @Override
@@ -43,8 +45,9 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
         oldEmail = findViewById(R.id.old_email);
         newEmailInput = findViewById(R.id.new_email);
 
-        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(ChangeEmail.this, SessionManager.SESSION_USERSESSION);
         sessionUserdata = sessionManager.getUsersDetailFromSession();
+        editor = sessionManager.getDetailEditor();
 
         email = sessionUserdata.get(SessionManager.KEY_EMAIL);
         phone = sessionUserdata.get(SessionManager.KEY_PHONENUMBER);
@@ -113,7 +116,11 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
 
     private void nextActivity(boolean getResult, final String message) {
         if(getResult) {
-//            sessionUserdata.put(SessionManager.KEY_EMAIL,)
+            String newEmailString = newEmailInput.getEditText().getText().toString();
+            editor.putString(SessionManager.KEY_EMAIL,newEmailString);
+            editor.commit();
+            SessionManager sessionManager = new SessionManager(ChangeEmail.this,SessionManager.SESSION_USERSESSION);
+            Log.e("email",sessionManager.getUsersDetailFromSession().get(SessionManager.KEY_EMAIL));
             startActivity(new Intent(getApplicationContext(), ChangeEmail2.class));
             finish();
         }
