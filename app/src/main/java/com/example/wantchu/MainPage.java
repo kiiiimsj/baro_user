@@ -518,6 +518,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", viewHolder.storeId.getText().toString());
+        Log.e("ultraid", viewHolder.storeId.getText().toString());
         startActivity(intent);
     }
 }
