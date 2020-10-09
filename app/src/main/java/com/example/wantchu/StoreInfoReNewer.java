@@ -190,9 +190,9 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         }
     }
     private synchronized void makeRequestFavorteRem(String url, HashMap<String, String> data) {
-
         RequestQueue requestQueue = Volley.newRequestQueue(StoreInfoReNewer.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(data),
+
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
