@@ -267,6 +267,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
             if(!jsonObject.getBoolean("result")) {
                 Toast.makeText(this, "가게정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
                 progressApplication.progressOFF();
+                refreshLayout.setRefreshing(false);
                 return;
             }
         }

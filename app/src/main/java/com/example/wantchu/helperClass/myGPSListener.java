@@ -56,6 +56,7 @@ public class myGPSListener implements LocationListener {
         Log.d("Map", message);
     }
 
+
     public void onProviderDisabled(String provider) { }
 
     public void onProviderEnabled(String provider) { }

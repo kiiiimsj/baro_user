@@ -8,6 +8,8 @@
         android:layout_height="wrap_content"
         >
         <RelativeLayout
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
             android:id="@+id/background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,50 +18,65 @@
             >
 
             <ImageView
+                android:layout_marginLeft="18dp"
                 android:id="@+id/menu_image"
                 android:layout_alignParentLeft="true"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_marginRight="32dp"
                 android:padding="5dp"/>
-
-            <TextView
-                android:id="@+id/menu_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/linear"
                 android:layout_toRightOf="@id/menu_image"
                 android:layout_centerVertical="true"
-                android:fontFamily="@font/notosans_regular"
-                android:gravity="center_vertical"
-                android:padding="5dp"
-                android:text="아메리카노"
-                android:includeFontPadding="false"
-                android:textColor="@color/black"
-                android:textSize="15dp" />
-            <TextView
-                android:id="@+id/subscription"
-                android:padding="5dp"
-                android:includeFontPadding="false"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/menu_image"
-                android:layout_toLeftOf="@id/menu_price"
-                android:layout_below="@id/menu_button"
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="abcdefg"/>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/menu_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/menu_image"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/notosans_bold"
+                    android:gravity="center_vertical"
+                    android:text="아메리카노"
+                    android:includeFontPadding="false"
+                    android:textSize="11sp"
+                    android:textColor="#343434"
+                    android:letterSpacing="-0.03" />
+                <TextView
+                    android:id="@+id/subscription"
+                    android:layout_marginTop="10dp"
+                    android:includeFontPadding="false"
+                    android:layout_toRightOf="@id/menu_image"
+                    android:layout_toLeftOf="@id/menu_price"
+                    android:layout_below="@id/menu_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosans_light"
+                    android:textSize="11sp"
+                    android:textColor="#343434"
+                    android:letterSpacing="-0.03"
+                    android:text="abcdefg"/>
+            </LinearLayout>
+
 
             <TextView
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/sold_out"
                 android:id="@+id/menu_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/menu_button"
+                android:layout_toLeftOf="@id/linear"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
-                android:fontFamily="@font/notosans_regular"
+                android:fontFamily="@font/notosans_black"
                 android:includeFontPadding="false"
                 android:text="1500원"
-                android:textColor="@color/black"
-                android:textSize="15dp" />
+                android:textSize="11sp"
+                android:textColor="#343434"
+                android:letterSpacing="-0.03" />
 
             <TextView
                 android:id="@+id/menu_id"
@@ -67,17 +84,20 @@
                 android:layout_height="wrap_content"
                 android:visibility="invisible"/>
             <TextView
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="3dp"
                 android:id="@+id/sold_out"
-                android:layout_marginTop="5dp"
-                android:layout_alignTop="@id/menu_price"
                 android:includeFontPadding="false"
                 android:layout_marginRight="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
+                android:background="@drawable/border_3dp_in_list_store"
+                android:fontFamily="@font/notosans_regular"
                 android:text="품절"
-                android:textColor="@color/red"/>
+                android:textSize="10sp"
+                android:textColor="@color/white"/>
 
         </RelativeLayout>
         <View
