@@ -127,11 +127,11 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
 
     private void okayToMoveNextStep() {
         if(pageType.equals("FindPass1")){
-            Intent intent = new Intent(getApplicationContext(), ChangePass2.class);
+            Intent intent = new Intent(VerifyOTP.this, ChangePass2.class);
             intent.putExtra("phone", phoneNumber);
             startActivity(intent);
         }else if(pageType.equals("Register1")){
-            Intent intent = new Intent(getApplicationContext(), Register2.class);
+            Intent intent = new Intent(VerifyOTP.this, Register2.class);
             intent.putExtra("phone", phoneNumber);
             startActivity(intent);
         }

@@ -15,7 +15,7 @@ public class ChangePass3 extends AppCompatActivity {
     }
 
     public void goToLogin(View view) {
-        startActivity(new Intent(getApplicationContext(),Login.class));
+        startActivity(new Intent(ChangePass3.this,Login.class));
         finish();
     }
 }

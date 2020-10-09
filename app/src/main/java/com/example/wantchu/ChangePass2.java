@@ -94,7 +94,7 @@ public class ChangePass2 extends AppCompatActivity implements TopBar.OnBackPress
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("");
         StringBuilder urlBuilder = new StringBuilder(url);
-        urlBuilder.append(getApplicationContext().getString(R.string.passUpdate));
+        urlBuilder.append(ChangePass2.this.getString(R.string.passUpdate));
 
         return urlBuilder.toString();
     }
@@ -134,7 +134,7 @@ public class ChangePass2 extends AppCompatActivity implements TopBar.OnBackPress
     public boolean check (boolean result, final String message) {
         if(result) {
             Toast.makeText(ChangePass2.this, message, Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getApplicationContext(), Login.class));
+            startActivity(new Intent(ChangePass2.this, Login.class));
             finish();
         }
         Toast.makeText(ChangePass2.this, message, Toast.LENGTH_SHORT).show();
