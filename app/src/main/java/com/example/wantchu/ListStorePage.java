@@ -86,7 +86,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
         saveListSet = getSharedPreferences("saveList", MODE_PRIVATE);
-        storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
+        storeSessionManager = new StoreSessionManager(ListStorePage.this, StoreSessionManager.STORE_SESSION);
         currentPos = 0;
         fm = getSupportFragmentManager();
         topbar = (TopBar) fm.findFragmentById(R.id.top_bar);
@@ -162,7 +162,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         String lastUrl = "StoreInfoFindByType.do?";
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(ListStorePage.this);
         Log.i("storesList", "request made to " + url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
@@ -328,7 +328,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     @Override
     public void onItemLongSelected(View v, int adapterPosition) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
-        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+        Intent intent = new Intent(ListStorePage.this, StoreInfoReNewer.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
         intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
@@ -338,7 +338,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     @Override
     public void onItemSelected(View v, int position) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
-        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+        Intent intent = new Intent(ListStorePage.this, StoreInfoReNewer.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         if(listStoreViewHolder.storeId == null) {
             runOnUiThread(new Runnable() {

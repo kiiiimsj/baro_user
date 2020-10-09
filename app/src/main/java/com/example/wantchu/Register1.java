@@ -115,7 +115,7 @@ public class Register1 extends AppCompatActivity implements TopBar.OnBackPressed
             });
         }
         else {
-            Intent intent = new Intent(getApplicationContext(), VerifyOTP.class);
+            Intent intent = new Intent(Register1.this, VerifyOTP.class);
             intent.putExtra("phone", _phone);
             intent.putExtra("pageType",Register1.this.getClass().getSimpleName());
             startActivity(intent);

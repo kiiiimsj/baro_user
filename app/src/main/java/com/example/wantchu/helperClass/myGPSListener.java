@@ -56,7 +56,6 @@ public class myGPSListener implements LocationListener {
         Log.d("Map", message);
     }
 
-
     public void onProviderDisabled(String provider) { }
 
     public void onProviderEnabled(String provider) { }
@@ -121,7 +120,7 @@ public class myGPSListener implements LocationListener {
                 latitude = ll[0];
                 longitude = ll[1];
                 setMapLocationTextView(getAdress);
-                Toast.makeText(context.getApplicationContext(), "내 위치확인 요청함",
+                Toast.makeText(context, "내 위치확인 요청함",
                         Toast.LENGTH_SHORT).show();
                 return latLng1;
             }
@@ -163,7 +162,7 @@ public class myGPSListener implements LocationListener {
             }
             if(getAdress != null) {
                 setMapLocationTextView(getAdress);
-                Toast.makeText(context.getApplicationContext(), "내 위치확인 요청함",
+                Toast.makeText(context, "내 위치확인 요청함",
                         Toast.LENGTH_SHORT).show();
 
             }

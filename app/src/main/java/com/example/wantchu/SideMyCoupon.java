@@ -45,7 +45,7 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
     }
 
     public String urlData() {
-        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(SideMyCoupon.this, SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersDetailSession();
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         userData.get(SessionManager.KEY_PHONENUMBER);
@@ -88,7 +88,7 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
 
     private void setCouponList(CouponList couponListData) {
         couponAdapter = new CouponAdapter(couponListData);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(SideMyCoupon.this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(couponAdapter);
         progressApplication.progressOFF();
     }

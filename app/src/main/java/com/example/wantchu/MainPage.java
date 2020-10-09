@@ -123,7 +123,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         context = this;
         mAddress = findViewById(R.id.address);
         // 왼쪽 사이드바
-        storeSessionManager = new StoreSessionManager(getApplicationContext(), StoreSessionManager.STORE_SESSION);
+        storeSessionManager = new StoreSessionManager(MainPage.this, StoreSessionManager.STORE_SESSION);
         storeSessionManager.setIsFavorite(false);
         ///////// 태영
         call_search = findViewById(R.id.search_dialog);
@@ -143,7 +143,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         mapBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MyMap.class);
+                Intent intent = new Intent(MainPage.this, MyMap.class);
                 startActivity(intent);
             }
         });
@@ -289,7 +289,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         hashMap.put("TypeHelperClass", new TypeHelperClass("", "", ""));
         TypeParsing typeParsing = new TypeParsing();
         jsonParsing(result, typeParsing);
-        adapter = new TypeAdapter(DataList, this, this, getApplicationContext());
+        adapter = new TypeAdapter(DataList, this, this, MainPage.this);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         for(int i = 0; i < typeParsing.getTypeList().size();i++){
             TypeListParsing typeListParsing = typeParsing.getTypeList().get(i);
@@ -305,7 +305,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     //ultrastore 가져오기 위한 recyclerview
     private void ultraStoreRecyclerView() {
         ultraStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        ultraAdapter = new UltraStoreListAdapter(listStoreParsing, this, this, getApplicationContext());
+        ultraAdapter = new UltraStoreListAdapter(listStoreParsing, this, this, MainPage.this);
         ultraStoreRecyclerView.setAdapter(ultraAdapter);
     }
 
@@ -320,10 +320,10 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.left_coupon:
-                startActivity(new Intent(getApplicationContext(), SideMyCoupon.class));
+                startActivity(new Intent(MainPage.this, SideMyCoupon.class));
                 break;
             case R.id.left_noti:
-                Intent intent = new Intent(getApplicationContext(), Notice.class);
+                Intent intent = new Intent(MainPage.this, Notice.class);
                 intent.putExtra("type", "NOTICE");
                 startActivity(intent);
                 break;
@@ -334,7 +334,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
                 break;
             case R.id.left_events:
-                startActivity(new Intent(getApplicationContext(), Alerts.class));
+                startActivity(new Intent(MainPage.this, Alerts.class));
                 break;
         }
         return true;
@@ -478,7 +478,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     public void onItemSelected(View v, int position) {
         TypeAdapter.TypeViewHolder viewHolder = (TypeAdapter.TypeViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
-        Intent intent = new Intent(getApplicationContext(), ListStorePage.class);
+        Intent intent = new Intent(MainPage.this, ListStorePage.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("type_code", viewHolder.code.getText().toString());
         intent.putExtra("type_name", viewHolder.title.getText().toString());
@@ -489,7 +489,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     public void onNewStoreItemSelected(View v, int position) {
         NewStoreListAdapter.NewStoreViewHolder viewHolder= (NewStoreListAdapter.NewStoreViewHolder) newStoreRecyclerView.findViewHolderForAdapterPosition(position);
-        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+        Intent intent = new Intent(MainPage.this, StoreInfoReNewer.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", viewHolder.storeId.getText().toString());
         startActivity(intent);
@@ -509,7 +509,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     public void onUltraStoreSelected(View v, int position) {
         UltraStoreListAdapter.UltraStoreListViewHolder viewHolder= (UltraStoreListAdapter.UltraStoreListViewHolder) ultraStoreRecyclerView.findViewHolderForAdapterPosition(position);
-        Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+        Intent intent = new Intent(MainPage.this, StoreInfoReNewer.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", viewHolder.storeId.getText().toString());
         startActivity(intent);

@@ -126,7 +126,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
                 oldMarkerOption = new MarkerOptions();
                 oldLatLng = GPSListener.startLocationService(null);
                 OverLayMarker.setVisibility(View.INVISIBLE);
-                setNewLatLng.setVisibility(View.INVISIBLE);
+                setNewLatLng.setVisibility(View.GONE);
                 GPSListener.setMapLocationTextView(address, oldLatLng);
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(oldLatLng, 15));
                 map.getUiSettings().setMapToolbarEnabled(false);
@@ -247,7 +247,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         storeDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), StoreInfoReNewer.class);
+                    Intent intent = new Intent(MyMap.this, StoreInfoReNewer.class);
                     intent.putExtra("store_id", storeDetailData.getStore_id()+"");
                     startActivity(intent);
             }
@@ -267,13 +267,13 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         makeRequest(setHashMapData());
         setMapFragmentGetMapAsync();
         OverLayMarker.setVisibility(View.INVISIBLE);
-        setNewLatLng.setVisibility(View.INVISIBLE);
+        setNewLatLng.setVisibility(View.GONE);
     }
 
     @Override
     public void clickCancel() {
         OverLayMarker.setVisibility(View.INVISIBLE);
-        setNewLatLng.setVisibility(View.INVISIBLE);
+        setNewLatLng.setVisibility(View.GONE);
     }
 
     public HashMap setHashMapData() {

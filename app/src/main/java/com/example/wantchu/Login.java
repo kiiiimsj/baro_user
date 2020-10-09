@@ -82,13 +82,13 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
                 });
         startLocationService();
 
-        SharedPreferences shf = getApplicationContext().getSharedPreferences("basketList", MODE_PRIVATE);
+        SharedPreferences shf = Login.this.getSharedPreferences("basketList", MODE_PRIVATE);
         SharedPreferences.Editor editor = shf.edit();
         editor.clear().commit();
 
         AutoPermissions.Companion.loadAllPermissions(this, 101);
 
-        userSession = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         phone = findViewById(R.id.login_phone);
         password = findViewById(R.id.login_password);
         rememberUser = findViewById(R.id.remember_user);
@@ -207,7 +207,7 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
                         try {
                             if (response.getBoolean("result")) {
 
-                                startActivity(new Intent(getApplicationContext(), MainPage.class));
+                                startActivity(new Intent(Login.this, MainPage.class));
                             }
                             else {
                                 Toast.makeText(Login.this, response.getString("message"), Toast.LENGTH_LONG).show();
@@ -273,11 +273,11 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
         }
     }
     public void onClickFindPass(View view){
-        startActivity(new Intent(getApplicationContext(), FindPass1.class));
+        startActivity(new Intent(Login.this, FindPass1.class));
     }
 
     public void onClickRegister(View view){
-        startActivity(new Intent(getApplicationContext(), Register1.class));
+        startActivity(new Intent(Login.this, Register1.class));
     }
     private void showCustomDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -292,8 +292,7 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-//                        startActivity(new Intent(getApplicationContext(), RetailerStartUpScreen.class));
-//                        finish();
+
                     }
                 });
 
