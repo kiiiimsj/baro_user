@@ -193,13 +193,8 @@ public class TopBar extends Fragment {
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "ListStoreFavoritePage":
-                backButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.onBack();
-                    }
-                });
-                title.setText("찜한 가게");
+                title.setText("찜한가게");
+                backButton.setVisibility(View.INVISIBLE);
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
