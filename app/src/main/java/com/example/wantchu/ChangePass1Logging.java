@@ -34,7 +34,7 @@ public class ChangePass1Logging extends AppCompatActivity implements TopBar.OnBa
         setContentView(R.layout.activity_change_pass1_logging);
         passInput = findViewById(R.id.input_current_pass);
 
-        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(ChangePass1Logging.this, SessionManager.SESSION_USERSESSION);
         sessionUserdata = sessionManager.getUsersDetailFromSession();
         phone = sessionUserdata.get(SessionManager.KEY_PHONENUMBER);
     }
@@ -95,7 +95,7 @@ public class ChangePass1Logging extends AppCompatActivity implements TopBar.OnBa
             return false;
         }
         else {
-            Intent intent = new Intent(getApplicationContext(), ChangePass2.class);
+            Intent intent = new Intent(ChangePass1Logging.this, ChangePass2.class);
             intent.putExtra("phone", phone);
             startActivity(intent);
             finish();

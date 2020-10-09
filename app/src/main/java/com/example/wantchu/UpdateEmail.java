@@ -50,7 +50,7 @@ public class UpdateEmail extends AppCompatActivity {
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("");
         StringBuilder urlBuilder = new StringBuilder(url);
-        urlBuilder.append(getApplicationContext().getString(R.string.emailUpdate));
+        urlBuilder.append(UpdateEmail.this.getString(R.string.emailUpdate));
 
         return urlBuilder.toString();
     }

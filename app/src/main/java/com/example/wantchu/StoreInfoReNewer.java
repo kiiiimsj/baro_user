@@ -167,7 +167,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     private void makeRequestForCheckFavorite(HashMap data) {
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("FavoriteExist.do");
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(StoreInfoReNewer.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -197,7 +197,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         }
     }
     private synchronized void makeRequestFavorteRem(String url, HashMap<String, String> data) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(StoreInfoReNewer.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -216,7 +216,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     }
 
     private synchronized void makeRequestFavoriteReg(String url, HashMap data) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(StoreInfoReNewer.this);
         Log.e("url", url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {

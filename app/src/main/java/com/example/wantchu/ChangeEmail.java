@@ -120,7 +120,7 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
             String newEmailString = newEmailInput.getEditText().getText().toString();
             editor.putString(SessionManager.KEY_EMAIL,newEmailString);
             editor.commit();
-            startActivity(new Intent(getApplicationContext(), ChangeEmail2.class));
+            startActivity(new Intent(ChangeEmail.this, ChangeEmail2.class));
             finish();
         }
         else {
