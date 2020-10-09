@@ -273,7 +273,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         setMapFragmentGetMapAsync();
         OverLayMarker.setVisibility(View.INVISIBLE);
         setNewLatLng.setVisibility(View.GONE);
-
     }
 
     @Override
