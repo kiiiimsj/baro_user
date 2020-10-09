@@ -130,7 +130,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         makeRequestForRegister(urlMaker(), registerUsers);
         if(getResult) {
             //storeNewPhoneData();
-            startActivity(new Intent(getApplicationContext(), Login.class));
+            startActivity(new Intent(Register2.this, Login.class));
             finish();
         }
         else {
@@ -146,7 +146,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("");
         StringBuilder urlBuilder = new StringBuilder(url);
-        urlBuilder.append(getApplicationContext().getString(R.string.register));
+        urlBuilder.append(Register2.this.getString(R.string.register));
 
         return urlBuilder.toString();
     }

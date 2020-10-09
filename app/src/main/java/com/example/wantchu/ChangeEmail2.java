@@ -15,7 +15,7 @@ public class ChangeEmail2 extends AppCompatActivity {
     }
 
     public void goToMyPage(View view) {
-        startActivity(new Intent(getApplicationContext(), MyPage.class));
+        startActivity(new Intent(ChangeEmail2.this, MyPage.class));
         finish();
     }
 }

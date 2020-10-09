@@ -56,7 +56,7 @@ public class OrderHistory extends AppCompatActivity {
         refreshLayout = findViewById(R.id.refresh_list);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
-        sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        sessionManager = new SessionManager(OrderHistory.this, SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String,String> hashMap = sessionManager.getUsersDetailFromSession();
 //        sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
@@ -101,7 +101,7 @@ public class OrderHistory extends AppCompatActivity {
                             @Override
                             public void onItemClick(View v, int pos) {
                                 Log.i("asdfa","qqqqqq");
-                                Toast.makeText(getApplicationContext(),"asdfaag",Toast.LENGTH_LONG).show();
+                                Toast.makeText(OrderHistory.this,"asdfaag",Toast.LENGTH_LONG).show();
                             }
                         });
                     }
