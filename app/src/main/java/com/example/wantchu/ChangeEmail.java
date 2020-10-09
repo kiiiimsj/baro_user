@@ -37,6 +37,7 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
     SharedPreferences.Editor editor;
     TextInputLayout newEmailInput;
     TextView oldEmail;
+    SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
         oldEmail = findViewById(R.id.old_email);
         newEmailInput = findViewById(R.id.new_email);
 
-        SessionManager sessionManager = new SessionManager(ChangeEmail.this, SessionManager.SESSION_USERSESSION);
+        sessionManager = new SessionManager(ChangeEmail.this, SessionManager.SESSION_USERSESSION);
         sessionUserdata = sessionManager.getUsersDetailFromSession();
         editor = sessionManager.getDetailEditor();
 
@@ -119,8 +120,6 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
             String newEmailString = newEmailInput.getEditText().getText().toString();
             editor.putString(SessionManager.KEY_EMAIL,newEmailString);
             editor.commit();
-            SessionManager sessionManager = new SessionManager(ChangeEmail.this,SessionManager.SESSION_USERSESSION);
-            Log.e("email",sessionManager.getUsersDetailFromSession().get(SessionManager.KEY_EMAIL));
             startActivity(new Intent(getApplicationContext(), ChangeEmail2.class));
             finish();
         }
@@ -144,6 +143,7 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
         changeEmailUser.put("email", newEmailString);
         makeRequestForEmail(changeEmailUser);
     }
+
 
     @Override
     public void onBack() {

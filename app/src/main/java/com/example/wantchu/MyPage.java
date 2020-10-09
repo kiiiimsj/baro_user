@@ -145,6 +145,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         super.onResume();
         getPhoneNumber();
         makeRequestForOrderCount();
+        setMyInfo();
     }
     @Override
     protected void onPause() {
@@ -158,7 +159,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         String name = userData.get(SessionManager.KEY_USERNAME);
         String email = userData.get(SessionManager.KEY_EMAIL);
         StringBuilder nameString = new StringBuilder(name + "님 >");
-
         nameSpace.setText(nameString.toString());
         emailSpace.setText(email);
         phoneSpace.setText(phone);

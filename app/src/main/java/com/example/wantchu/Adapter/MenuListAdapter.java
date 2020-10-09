@@ -1,8 +1,10 @@
 package com.example.wantchu.Adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +74,11 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
             holder.sold_out.setVisibility(View.VISIBLE);
             holder.background.setClickable(false);
             holder.background.setEnabled(false);
-            holder.background.setBackgroundColor(context.getResources().getColor(R.color.lightGray));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                holder.sold_out.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.gray)));
+            }else{
+                holder.sold_out.setBackgroundColor(context.getResources().getColor(R.color.gray));
+            }
         }
     }
     @Override
