@@ -77,12 +77,21 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
         myIntent = getIntent();
         storedIdStr=myIntent.getStringExtra("store_id");
+        saveFavoriteOnce();
         checkFavorite();
         setTabEvent();
         makeRequestGetStore(Integer.parseInt(storedIdStr));
 
         setOnClickFavorite();
     }
+
+    private void saveFavoriteOnce() {
+        sp = getSharedPreferences("saveStoreId", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("store_id", storedIdStr);
+        editor.commit();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -104,6 +113,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
             @Override
             public void onClick(View v) {
                 if(result) {
+                    Log.i("result", "true");
                     //등록 - > 미등록
                     String phone = _phone;
                     String storeId = storedIdStr;
@@ -111,7 +121,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
                     HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("phone", phone);
                     hashMap.put("store_id", storeId);
-                    String url = "http://15.165.22.64:8080/FavoriteDelete.do";
+                    String url = "http://3.35.180.57:8080/FavoriteDelete.do";
 
                     makeRequestFavorteRem(url, hashMap);
                     //mFavorite.setImageResource(R.drawable.heart_empty);
@@ -122,6 +132,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
                     //true 등록되어있을때
                 }
                 else {
+                    Log.i("result", "false");
                     //미등록 -> 등록
                     String phone = _phone;
                     String storeId = storedIdStr;
@@ -130,7 +141,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
                     hashMap.put("phone", phone);
                     hashMap.put("store_id", storeId);
 
-                    String url = "http://15.165.22.64:8080/FavoriteSave.do";
+                    String url = "http://3.35.180.57:8080/FavoriteSave.do";
                     makeRequestFavoriteReg(url, hashMap);
 
                     //mFavorite.setImageResource(R.drawable.heart_full);
@@ -144,16 +155,16 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         };
     }
     private void getFavoriteStoreId() {
-        sp =getSharedPreferences("favorite", Context.MODE_PRIVATE);
+        sp = getSharedPreferences("saveStoreId", MODE_PRIVATE);
         if(sp == null) {
             return;
         }
-        Gson gson = new GsonBuilder().create();
-        String contactFavorite = sp.getString("favorite","");
-        Log.i("FAVORITE", contactFavorite);
-        if(!contactFavorite.equals("")){
-            FavoriteParsing favoriteParsing = gson.fromJson(contactFavorite, FavoriteParsing.class);
-            ArrayList<FavoriteListParsing> favoriteList = favoriteParsing.getFavorite();
+        else {
+            if (sp.getString("store_id", "") == "") {
+
+            }else {
+                storedIdStr = sp.getString("store_id", "");
+            }
         }
     }
     public HashMap setHashDataForCheckFavorite() {
@@ -175,6 +186,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                Log.e("checkFavorite", response.toString());
                 parsing(response.toString());
             }
         }, new Response.ErrorListener() {
@@ -200,7 +212,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
             topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_empty);
         }
     }
-    private synchronized void makeRequestFavorteRem(String url, HashMap<String, String> data) {
+    private void makeRequestFavorteRem(String url, HashMap<String, String> data) {
         RequestQueue requestQueue = Volley.newRequestQueue(StoreInfoReNewer.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
 
@@ -220,7 +232,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         requestQueue.add(jsonObjectRequest);
     }
 
-    private synchronized void makeRequestFavoriteReg(String url, HashMap data) {
+    private void makeRequestFavoriteReg(String url, HashMap data) {
         RequestQueue requestQueue = Volley.newRequestQueue(StoreInfoReNewer.this);
         Log.e("url", url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
