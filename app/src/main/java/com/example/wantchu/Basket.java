@@ -486,7 +486,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                     return null;
                 }
             }
-
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 String responseString = "";
