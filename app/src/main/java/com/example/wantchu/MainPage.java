@@ -140,7 +140,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         mAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MyMap.class);
+//                Intent intent = new Intent(getApplicationContext(), MyMap.class);
+                Intent intent = new Intent(getApplicationContext(), NewMyMap.class);
                 startActivity(intent);
             }
         });
