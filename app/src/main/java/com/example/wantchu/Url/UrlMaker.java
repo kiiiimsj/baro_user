@@ -1,7 +1,7 @@
 package com.example.wantchu.Url;
 
 public class UrlMaker {
-    private String serverUrl = "http://15.165.22.64:8080/";
+    private String serverUrl = "http://3.35.180.57:8080/";
 
     public UrlMaker(){}
 
