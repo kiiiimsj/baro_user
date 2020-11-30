@@ -72,11 +72,12 @@ public class TopBar extends Fragment {
         switch (getTokenActivityName(getActivity().toString())) {
             case "Register1":
             case "Register2":
+            case "ChangePass2":
+            case "ChangePass1Logging":
             case "FindPass1":
             case "VerifyOTP":
-            case "ChangePass2":
             case "ChangeEmail":
-            case "ChangePass1Logging":
+                rootView.setBackgroundColor(getResources().getColor(R.color.main));
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

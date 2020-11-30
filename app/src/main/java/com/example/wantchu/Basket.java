@@ -451,13 +451,11 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         String url = urlMaker.UrlMake(lastUrl);
         Log.e("jsonNNN",json);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        StringRequest request = new StringRequest(Request.Method.POST, url,
+        StringRequest request = new StringRequest(Request.Method.POST, url, 
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.i("OrderDetails", response);
-
                         connectToWebSocket(phone, store_id, json);
                         try {
                             sendFcmToOwner();
