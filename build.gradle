@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.0.0"
+        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath 'com.google.gms:google-services:4.3.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
 
@@ -13,7 +13,6 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
 allprojects {
     repositories {
         google()
@@ -24,7 +23,7 @@ allprojects {
         maven { url 'https://navercorp.bintray.com/maps' }
     }
 }
-
 task clean(type: Delete) {
     delete rootProject.buildDir
+    prepareKotlinBuildScriptModel
 }
