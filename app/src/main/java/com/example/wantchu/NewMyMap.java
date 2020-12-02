@@ -175,7 +175,7 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback {
         });
         for (final MapListParsing item : mapParsing.getMapList()) {
             final Marker marker = new Marker();
-            com.naver.maps.geometry.LatLng storeLatlng = new com.naver.maps.geometry.LatLng(new Double(item.getStore_latitude()),new Double(item.getStore_longitude()));
+            com.naver.maps.geometry.LatLng storeLatlng = new com.naver.maps.geometry.LatLng(Double.valueOf(item.getStore_latitude()),Double.valueOf(item.getStore_longitude()));
             marker.setPosition(storeLatlng);
             int height = 27;
             int width = 20 ;
