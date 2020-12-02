@@ -7,6 +7,7 @@
         android:name="com.example.wantchu.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="com.example.wantchu.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -44,6 +45,18 @@
         <activity android:name=".Events" />
         <activity android:name=".Alerts" />
         <activity android:name=".OrderStatus" />
+        <service
+            android:name=".helperClass.RestartService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".helperClass.OrderCancelIfNotAccept"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver android:name=".helperClass.ThreadKillReceiver"
+            android:enabled="true"
+            android:exported="true"/>
 
         <uses-library android:name="com.google.android.maps" />
         <uses-library

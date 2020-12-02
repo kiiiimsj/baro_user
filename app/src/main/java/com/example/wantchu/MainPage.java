@@ -8,13 +8,12 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -44,6 +43,7 @@ import com.example.wantchu.JsonParsingHelper.TypeListParsing;
 import com.example.wantchu.JsonParsingHelper.TypeParsing;
 import com.example.wantchu.JsonParsingHelper.ViewPagersListStoreParsing;
 import com.example.wantchu.Url.UrlMaker;
+import com.example.wantchu.helperClass.OrderCancelIfNotAccept;
 import com.example.wantchu.helperClass.myGPSListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
@@ -60,7 +60,7 @@ import java.util.HashMap;
 public class MainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, UltraStoreListAdapter.OnListItemLongSelectedInterface, UltraStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemLongSelectedInterface {
 
     RecyclerView mRecyclerView;
-
+    private Intent serviceIntent;
     //울트라store recycler
     RecyclerView ultraStoreRecyclerView;
     ViewPagersListStoreParsing listStoreParsing;
@@ -125,6 +125,14 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         call_search = findViewById(R.id.search_dialog);
         /////////
         startLocation();
+        if (OrderCancelIfNotAccept.serviceIntent==null) {
+            serviceIntent = new Intent(this, OrderCancelIfNotAccept.class);
+            startService(serviceIntent);
+        } else {
+            serviceIntent = OrderCancelIfNotAccept.serviceIntent;//getInstance().getApplication();
+            Toast.makeText(getApplicationContext(), "already", Toast.LENGTH_LONG).show();
+        }
+
         makeRequestForEventThread();
         // 타입 버튼 동적으로 만드는 메소드
         makeRequest();
@@ -172,6 +180,15 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             mAddress.setText("GPS를 설정 해 주세요");
         }
         makeRequestUltraStore(setHashMapData());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (serviceIntent!=null) {
+            stopService(serviceIntent);
+            serviceIntent = null;
+        }
     }
 
     @Override
