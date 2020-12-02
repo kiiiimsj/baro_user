@@ -37,7 +37,7 @@ public class AdvertiseAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return eventHelperClass.event.size();
+        return 10000;
     }
 
     @Override
@@ -53,16 +53,17 @@ public class AdvertiseAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         posi = position;
+        final int realIndex = position % eventHelperClass.event.size();
         layoutInflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.advertise_design, container, false);
         ImageView imageView = view.findViewById(R.id.slider_image);
-        EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(position);
+        EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(realIndex);
         makeRequestForgetImage(eventHelperParsingClass.event_image, imageView, context);
         container.addView(view);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(position);
+                EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(realIndex);
                 Intent intent = new Intent(context, Events.class);
                 intent.putExtra("event_id", eventHelperParsingClass.event_id);
                 context.startActivity(intent);
@@ -73,7 +74,7 @@ public class AdvertiseAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((ConstraintLayout) object);
+        container.removeView((RelativeLayout) object);
     }
     public void makeRequestForgetImage(String type_image, final ImageView imageView, Context context ) {
         String lastUrl = "ImageEvent.do?image_name=";

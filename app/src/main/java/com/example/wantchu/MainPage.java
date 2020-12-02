@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
@@ -44,6 +45,7 @@ import com.example.wantchu.JsonParsingHelper.TypeParsing;
 import com.example.wantchu.JsonParsingHelper.ViewPagersListStoreParsing;
 import com.example.wantchu.Url.UrlMaker;
 import com.example.wantchu.helperClass.OrderCancelIfNotAccept;
+import com.example.wantchu.helperClass.ViewPagerCustomDuration;
 import com.example.wantchu.helperClass.myGPSListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
@@ -75,7 +77,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     Context context;
 
     TextView eventCountSet;
-    ViewPager viewPager;
+    ViewPagerCustomDuration viewPager;
     int currentPos;
     AdvertiseAdapter advertiseAdapter;
 
@@ -222,7 +224,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private void setEventCountSet(int position) {
-        eventCountSet.setText((position+1)+"  /  "+advertiseAdapter.getCount());
+        eventCountSet.setText((position % eventHelperClass.event.size() + 1)+"  /  "+eventHelperClass.event.size());
     }
     public HashMap setHashMapData() {
         HashMap<String, String> data = new HashMap<>();
@@ -473,10 +475,13 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         eventHelperClass = gson.fromJson(response, EventHelperClass.class);
         advertiseAdapter = new AdvertiseAdapter(context, eventHelperClass);
         viewPager.setAdapter(advertiseAdapter);
-
+        viewPager.setCurrentItem(eventHelperClass.event.size() * 1000);
+        viewPager.setOffscreenPageLimit(5);
+        viewPager.setScrollDurationFactor(3);
         setEventCountSet(0);
 
         setAdvertiseAdapter();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -486,10 +491,11 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            viewPager.setCurrentItem((currentPos + 1)%eventHelperClass.event.size());
+                            viewPager.setCurrentItem((currentPos + 1),true);
                         }
                     });
                 }

@@ -94,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.viewpager.widget.ViewPager
+                <com.example.wantchu.helperClass.ViewPagerCustomDuration
                     android:id="@+id/info_image"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
