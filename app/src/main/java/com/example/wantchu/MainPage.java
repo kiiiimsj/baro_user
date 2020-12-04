@@ -51,6 +51,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,9 +59,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, UltraStoreListAdapter.OnListItemLongSelectedInterface, UltraStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemLongSelectedInterface {
 
+    private static String TAG = "MainPage";
     RecyclerView mRecyclerView;
     private Intent serviceIntent;
     //울트라store recycler
@@ -98,7 +101,33 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     ///////// 태영
     ImageView call_search;
     /////////
+    void goChangSin(){
 
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://celebe.ohmyapp.io/bnb/aggregateForTable",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e(TAG+"SUCCESS",response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG+"FAIL",error.toString());
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("metaCode","boardEvent");
+                params.put("collectionName","boardEvent");
+                params.put("documentJson", "{\"pipeline\":{\"$skip\":0,\"$limit\":10,\"$sort\":{\"_updateTime\":1}}}");
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +142,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         newStoreRecyclerView = findViewById(R.id.new_store);
 
         viewPager = findViewById(R.id.info_image);
-
+        goChangSin();
         eventCountSet = findViewById(R.id.event_count);
         AppStartAdDialog appStartAdDialog = new AppStartAdDialog(MainPage.this);
         appStartAdDialog.callFunction();

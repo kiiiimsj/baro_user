@@ -15,63 +15,244 @@
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:background="@color/black"/>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"
         android:background="@color/white"
         android:orientation="vertical">
-        <LinearLayout
+        <ImageView
+            android:id="@+id/store_image"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/gray"/>
+        <TextView
+            android:id="@+id/store_names"
+            android:gravity="center"
+            android:text="도스마스 숭실대점"
+            android:fontFamily="@font/notosans_black"
+            android:textColor="#343434"
+            android:textSize="14sp"
+            android:layout_weight="3"
+            android:layout_toRightOf="@+id/store_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:id="@+id/ordered_dates"
+            android:layout_toRightOf="@id/store_image"
+            android:layout_below="@id/store_names"
+            android:text="2020년 10월 28일"
+            android:textSize="14sp"
+            android:textColor="#343434"
+            android:fontFamily="@font/notosans_regular"
+            android:gravity="center"
+            android:layout_weight="4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:id="@+id/totalPrices"
+            android:gravity="right"
+            android:text="110000원"
+            android:textColor="#8333e6"
+            android:textSize="12sp"
+            android:fontFamily="@font/notosans_black"
+            android:layout_weight="2"
+            android:layout_below="@id/store_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/progress_tap"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
+            android:layout_below="@id/ordered_dates"
+            android:layout_toRightOf="@id/store_image"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp">
+            <ProgressBar
+                android:id="@+id/progressBar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintWidth_percent="0.75"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:progress="34"/>
+            <LinearLayout
+                app:layout_constraintTop_toBottomOf="@id/progressBar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
 
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        android:gravity="center"
+                        android:text="l"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="#343434"
+                        android:fontFamily="@font/notosans_regular"
+                        android:gravity="center"
+                        android:text="결제완료"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="l"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="#343434"
+                        android:fontFamily="@font/notosans_regular"
+                        android:text="접수 중"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="l"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="#343434"
+                        android:fontFamily="@font/notosans_regular"
+                        android:text="제조중"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="l"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="#343434"
+                        android:fontFamily="@font/notosans_regular"
+                        android:text="수정완료"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/order_state"
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"
                 android:text="주문 완료"
-                android:textColor="@color/main"
-                android:fontFamily="@font/muli_black"
+                android:textSize="14sp"
+                android:textColor="#8333e6"
+                android:fontFamily="@font/notosans_bold"
+                android:letterSpacing="-0.02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/ordered_dates"
-                android:text="2020년 10월 28일"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:layout_weight="4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/store_names"
-                android:gravity="center"
-                android:text="도스마스 숭실대점"
-                android:layout_weight="3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/totalPrices"
-                android:paddingRight="20dp"
-                android:gravity="right"
-                android:text="110000원"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
         <TextView
             android:id="@+id/orderGroup_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"/>
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/btnRow"
+            android:layout_below="@id/progress_tap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <Button
+                    android:background="@drawable/button_border_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:text="전화걸기"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <Button
+                    android:background="@drawable/button_border_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:text="상세 영수증 보기"
+                    android:textSize="13sp"
+                    android:textColor="#8333e6"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <com.naver.maps.map.MapView
+            android:id="@+id/map_view"
+            android:layout_below="@id/btnRow"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="250dp"
+            android:layout_width="match_parent" />
+
+
+    </RelativeLayout>
 
 </LinearLayout>

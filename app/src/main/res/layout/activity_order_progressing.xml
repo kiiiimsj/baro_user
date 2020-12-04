@@ -18,6 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_menu"
         android:layout_below="@id/top_bar"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="-3dp"
         app:srl_direction="bottom">
 
         <androidx.recyclerview.widget.RecyclerView

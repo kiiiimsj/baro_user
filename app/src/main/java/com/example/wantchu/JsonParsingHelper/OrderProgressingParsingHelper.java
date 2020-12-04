@@ -7,6 +7,7 @@ public class OrderProgressingParsingHelper {
     int total_price;
     String order_state;
     int total_count;
+    String store_image;
 
     public String getOrder_date() {
         return order_date;
@@ -30,5 +31,9 @@ public class OrderProgressingParsingHelper {
 
     public int getTotal_count() {
         return total_count;
+    }
+
+    public String getStore_image() {
+        return store_image;
     }
 }
