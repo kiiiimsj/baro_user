@@ -2,11 +2,13 @@ package com.example.wantchu.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -14,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
@@ -22,12 +26,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Dialogs.ProgressingDetailDialog;
+import com.example.wantchu.Fragment.OrderProgressingMap;
 import com.example.wantchu.JsonParsingHelper.OrderHistoryParsingHelper;
 import com.example.wantchu.JsonParsingHelper.OrderProgressingParsingHelper;
 import com.example.wantchu.OrderProgressing;
 import com.example.wantchu.R;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.gson.Gson;
+import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraUpdate;
+import com.naver.maps.map.MapView;
+import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.overlay.Marker;
 
 import java.util.ArrayList;
 
@@ -37,13 +48,15 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
     private static String PREPARING = "PREPARING";
 
     static ArrayList<OrderProgressingParsingHelper> mData;
-    static Context context;
+    public Context context;
 
     public OrderProgressingAdapter(ArrayList<OrderProgressingParsingHelper> mData, Context context) {
         this.mData = mData;
         this.context = context;
     }
+    public void onResume(){
 
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -88,6 +101,15 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         }else{
             ;
         }
+        if (holder.naverMap == null){
+            Log.e(TAG,"NULL");
+        }
+        Marker marker = new Marker();
+        marker.setPosition(new LatLng(reverse.getStore_latitude(),reverse.getStore_longitude()));
+        marker.setMap(holder.naverMap);
+//        FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
+//        FragmentTransaction ft = fm.beginTransaction();
+//        ft.replace(holder.map.getId(),new OrderProgressingMap(reverse.getStore_latitude(),reverse.getStore_longitude())).commit();
     }
 
     @Override
@@ -97,6 +119,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
     @Override
     public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
+
     }
 
     @Override
@@ -124,7 +147,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder  implements OnMapReadyCallback{
         TextView order_state;
         TextView order_date;
         TextView stores_name;
@@ -132,6 +155,8 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         ImageView store_image;
         LinearLayout shell;
         ProgressBar progressBar;
+        MapView map;
+        NaverMap naverMap;
         public ViewHolder(@NonNull View itemView, int po) {
             super(itemView);
             order_state = (itemView).findViewById(R.id.order_state);
@@ -141,9 +166,47 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
             shell = (itemView).findViewById(R.id.shellProgressingItem);
             store_image = (itemView).findViewById(R.id.store_image);
             progressBar = (itemView).findViewById(R.id.progressBar);
+            map = (itemView).findViewById(R.id.map_view);
+            map.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Marker marker = new Marker();
+                    marker.setPosition(new LatLng(37.5670135, 126.9783740));
+                    marker.setMap(naverMap);
+                }
+            });
+            Marker marker = new Marker();
+            marker.setPosition(new LatLng(37.5670135, 126.9783740));
+            marker.setMap(naverMap);
             makeRequest( mData.get(mData.size()-po-1).getStore_image(),context,store_image);
 //            }
         }
+ //////// 2020 12 04 해당부분 호출안됨 naverMap이 null이라 마커심기가 불가능;
+        @Override
+        public void onMapReady(@NonNull final NaverMap naverMap) {
+            this.naverMap = naverMap;
+            Log.e(TAG,"readyready");
+            naverMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
+                    Log.e(TAG,"WHYWHWYWHWY");
+                    Marker marker = new Marker();
+                    marker.setPosition(new LatLng(37.5670135, 126.9783740));
+                    marker.setMap(naverMap);
+                }
+            });
+            CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(37.5670135, 126.9783740));
+            naverMap.moveCamera(cameraUpdate);
+            if (this.naverMap == null){
+                Log.e(TAG,"ALSO");
+            }
+            Marker marker = new Marker();
+            marker.setPosition(new LatLng(37.5670135, 126.9783740));
+            marker.setMap(naverMap);
+
+        }
+
+
     }
     public static void makeRequest(String imageName, Context context, final ImageView image) {
         UrlMaker urlMaker = new UrlMaker();
