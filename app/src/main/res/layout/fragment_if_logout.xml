@@ -7,12 +7,12 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#8D00F1"
-        android:fontFamily="@font/bmhannapro"
+        android:background="@color/white"
+        android:fontFamily="@font/notosans_bold"
         android:gravity="center"
         android:text="로그아웃"
         android:letterSpacing="0.3"
-        android:textColor="#ffffff"
+        android:textColor="#343434"
         android:textSize="16dp" />
 
     <RelativeLayout
@@ -21,7 +21,6 @@
         android:padding="20dp"
         >
         <TextView
-
             android:id="@+id/mesgase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +33,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <Button
@@ -44,13 +44,13 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="확 인"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16dp"
             android:letterSpacing="0.2"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/button_border_empty"
-            android:fontFamily="@font/bmhannapro"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_border_full"
+            android:fontFamily="@font/notosans_bold"/>
         <Button
             android:id="@+id/dialog_close"
             android:layout_width="match_parent"
@@ -61,10 +61,10 @@
             android:textColor="@color/black"
             android:textSize="16dp"
             android:letterSpacing="0.2"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/button_border_empty"
-            android:fontFamily="@font/bmhannapro"/>
+            android:fontFamily="@font/notosans_bold"/>
     </LinearLayout>
 
     <View
