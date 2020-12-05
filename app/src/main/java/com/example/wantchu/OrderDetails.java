@@ -3,6 +3,8 @@ package com.example.wantchu;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -29,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.wantchu.Adapter.OrderDetailsEssentialAdapter;
 import com.example.wantchu.Adapter.OrderDetailsNonEssentialAdapter;
 import com.example.wantchu.AdapterHelper.ExtraOrder;
@@ -45,6 +48,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -79,7 +87,7 @@ public class OrderDetails extends AppCompatActivity {
     OrderDetailsNonEssentialAdapter nonEssentialAdapter;
     View v;
     Button fix;
-
+    Bitmap bitmap = null;
     ProgressApplication progressApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -320,7 +328,7 @@ public class OrderDetails extends AppCompatActivity {
 
         ArrayList<OrderDetailsNonEssential> NonEssentialOptionList = ConvertNonEssential(nonEssentialOptions);
         RecyclerView essentailRecyclerView = findViewById(R.id.menuRecyler_Essential);
-        essentailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        essentailRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
         if (arrayList.size() != 0) {
             adapter = new OrderDetailsEssentialAdapter(arrayList, essentialOptions, this, totalPriceText, itemCount);
@@ -410,6 +418,11 @@ public class OrderDetails extends AppCompatActivity {
                     }
                 });
         requestQueue.add(imageRequest);
+
+//        Glide.with(this).load("http://celebe.ohmyapp.io/app-assets/images/portrait/small/avatar-a-1.png").into(imageView);
+//        Glide.with(this).load("http://celebe.ohmyapp.io/app-assets/images/portrait/small/avatar-a-1.png").into(imageView);
+
+
     }
 
     private void jsonParsing(String result, OrderDetailsParsing orderDetailsParsing) {

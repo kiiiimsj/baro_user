@@ -14,6 +14,8 @@
     <!--회원가입 3-->
     <string name="notice_title"> 타이틀 </string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
 
 
 </resources>

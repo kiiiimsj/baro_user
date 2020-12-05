@@ -100,4 +100,9 @@ public class OrderProgressing extends AppCompatActivity {
         super.onPause();
         overridePendingTransition(0, 0);
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+    }
 }
