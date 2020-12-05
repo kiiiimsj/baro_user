@@ -142,7 +142,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         newStoreRecyclerView = findViewById(R.id.new_store);
 
         viewPager = findViewById(R.id.info_image);
-        goChangSin();
+//        goChangSin();
         eventCountSet = findViewById(R.id.event_count);
         AppStartAdDialog appStartAdDialog = new AppStartAdDialog(MainPage.this);
         appStartAdDialog.callFunction();
@@ -206,6 +206,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     protected void onResume() {
         super.onResume();
+        Log.e(TAG,"RESUME");
         latLng = myGPSListener.startLocationService(mAddress);
         if(latLng == null) {
             mAddress.setText("GPS를 설정 해 주세요");

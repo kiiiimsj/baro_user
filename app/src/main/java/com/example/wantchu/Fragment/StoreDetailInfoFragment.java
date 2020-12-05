@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,20 +33,25 @@ import com.example.wantchu.R;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraUpdate;
+import com.naver.maps.map.MapFragment;
+import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.overlay.Marker;
 
 import java.util.StringTokenizer;
 
-public class StoreDetailInfoFragment extends Fragment {
-    SupportMapFragment mapFragment;
+public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallback {
+    MapFragment mapFragment;
     GoogleMap map;
-
+    NaverMap naverMap;
+    Marker marker;
     //
     StoreDetail storeDetailData;
 
@@ -78,7 +84,14 @@ public class StoreDetailInfoFragment extends Fragment {
         eventBenefit = rootView.findViewById(R.id.events_benefits_title);
         storeInfoTitle = rootView.findViewById(R.id.store_info_title);
         eventsBenefitsLayout = rootView.findViewById(R.id.events_benefits_layout);
+        FragmentManager fm = getChildFragmentManager();
+        mapFragment = (MapFragment)fm.findFragmentById(R.id.map);
+        if (mapFragment == null) {
+            mapFragment = MapFragment.newInstance();
+            fm.beginTransaction().add(R.id.map, mapFragment).commit();
+        }
 
+        mapFragment.getMapAsync(this);
 
         return rootView;
     }
@@ -115,60 +128,60 @@ public class StoreDetailInfoFragment extends Fragment {
         eventsBenefitsLayout.setVisibility(View.INVISIBLE);
 
         storeInfoTitle.setPaintFlags(eventBenefit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        mapReady();
+//        mapReady();
     }
-    public void mapReady() {
-        latLng = new LatLng(storeDetailData.getStore_latitude(), storeDetailData.getStore_longitude());
-        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                Log.d("Map", "지도 준비됨.");
-                map = googleMap;
-                try {
-                    map.setMyLocationEnabled(true);
-                }
-                catch(SecurityException e){
-                    e.printStackTrace();
-                }
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
-
-                MarkerOptions markerOption = new MarkerOptions().position(latLng);
-                int height = 86;
-                int width = 69;
-                BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.map_marker_purple);
-                Bitmap b = bitmapdraw.getBitmap();
-                Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-                markerOption.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-
-                View marker = ((LayoutInflater) getContext().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE)).inflate(R.layout.map_marker_textview, null);
-                TextView storeNameOfMarker = (TextView) marker.findViewById(R.id.store_title);
-                TextView storeLocationOfMarker = (TextView) marker.findViewById(R.id.store_location_content);
-
-                storeNameOfMarker.setText(storeDetailData.getStore_name());
-                String locationName = storeDetailData.getStore_location();
-                StringTokenizer stringTokenizer = new StringTokenizer(locationName, " ");
-                StringBuilder stringBuilder = new StringBuilder();
-                int i = 0;
-                while(stringTokenizer.hasMoreElements()) {
-                    stringBuilder.append(stringTokenizer.nextElement()+" ");
-                    i++;
-                    if(i > 4){
-                        stringBuilder.append("\n");
-                    }
-                }
-                storeNameOfMarker.setText(storeDetailData.getStore_name());
-                storeLocationOfMarker.setText(stringBuilder.toString());
-
-                MarkerOptions markerOptions2 = new MarkerOptions().position(latLng).anchor(0f, 0.1f);
-                markerOptions2.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker)));
-
-                map.addMarker(markerOptions2).showInfoWindow();
-                map.addMarker(markerOption).showInfoWindow();
-
-            }
-        });
-    }
+//    public void mapReady() {
+//        latLng = new LatLng(storeDetailData.getStore_latitude(), storeDetailData.getStore_longitude());
+//        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(new OnMapReadyCallback() {
+//            @Override
+//            public void onMapReady(GoogleMap googleMap) {
+//                Log.d("Map", "지도 준비됨.");
+//                map = googleMap;
+//                try {
+//                    map.setMyLocationEnabled(true);
+//                }
+//                catch(SecurityException e){
+//                    e.printStackTrace();
+//                }
+//                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+//
+//                MarkerOptions markerOption = new MarkerOptions().position(latLng);
+//                int height = 86;
+//                int width = 69;
+//                BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.map_marker_purple);
+//                Bitmap b = bitmapdraw.getBitmap();
+//                Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+//                markerOption.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+//
+//                View marker = ((LayoutInflater) getContext().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE)).inflate(R.layout.map_marker_textview, null);
+//                TextView storeNameOfMarker = (TextView) marker.findViewById(R.id.store_title);
+//                TextView storeLocationOfMarker = (TextView) marker.findViewById(R.id.store_location_content);
+//
+//                storeNameOfMarker.setText(storeDetailData.getStore_name());
+//                String locationName = storeDetailData.getStore_location();
+//                StringTokenizer stringTokenizer = new StringTokenizer(locationName, " ");
+//                StringBuilder stringBuilder = new StringBuilder();
+//                int i = 0;
+//                while(stringTokenizer.hasMoreElements()) {
+//                    stringBuilder.append(stringTokenizer.nextElement()+" ");
+//                    i++;
+//                    if(i > 4){
+//                        stringBuilder.append("\n");
+//                    }
+//                }
+//                storeNameOfMarker.setText(storeDetailData.getStore_name());
+//                storeLocationOfMarker.setText(stringBuilder.toString());
+//
+//                MarkerOptions markerOptions2 = new MarkerOptions().position(latLng).anchor(0f, 0.1f);
+//                markerOptions2.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker)));
+//
+//                map.addMarker(markerOptions2).showInfoWindow();
+//                map.addMarker(markerOption).showInfoWindow();
+//
+//            }
+//        });
+//    }
     private Bitmap createDrawableFromView(Context context, View view) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -202,5 +215,18 @@ public class StoreDetailInfoFragment extends Fragment {
                 });
         //request.setShouldCache(false);
         requestQueue.add(request);
+    }
+
+
+    @Override
+    public void onMapReady(@NonNull NaverMap naverMap) {
+        this.naverMap = naverMap;
+        LatLng storeLocation = new LatLng(storeDetailData.getStore_latitude(),storeDetailData.getStore_longitude());
+        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(storeLocation);
+        this.naverMap.moveCamera(cameraUpdate);
+        marker = new Marker();
+        marker.setPosition(storeLocation);
+        marker.setMap(naverMap);
+        marker.setCaptionText(storeDetailData.getStore_name());
     }
 }

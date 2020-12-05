@@ -86,6 +86,15 @@
             android:layout_gravity="center_vertical"/>
 
     </RelativeLayout>
+    <Button
+        android:id="@+id/close_dialog"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="확인 완료"
+        android:textSize="16dp"
+        android:textColor="@color/white"
+        android:background="@color/main" />
 
 
 </LinearLayout>
