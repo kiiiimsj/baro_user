@@ -13,11 +13,26 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.wantchu.MyMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.NaverMapSdk;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class myGPSListener implements LocationListener {
@@ -73,6 +88,7 @@ public class myGPSListener implements LocationListener {
         if(getAddress == null) {
             return;
         }
+        makeRequestForMap(latitude, longitude,getAddress);
         Geocoder geocoder = new Geocoder(context, Locale.KOREA);
         try {
             List<Address> list = geocoder.getFromLocation(latitude, longitude, 10);
@@ -82,6 +98,47 @@ public class myGPSListener implements LocationListener {
         }
         catch(Exception e){
             e.printStackTrace();
+        }
+    }
+    public void makeRequestForMap(double latitude, double longitude, final TextView getAddress) {
+        String url = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords="+longitude+","+latitude+"&orders=roadaddr&output=json";
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("response", response);
+                        parsing(response, getAddress);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put("X-NCP-APIGW-API-KEY-ID","5aavwfgus7");
+                header.put("X-NCP-APIGW-API-KEY","BkTdUu3zRK8VhD3xqFbVAKorymQxFGIVyZuBDYr0");
+                return header;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+    public void parsing(String response, TextView getAddress) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            if(jsonObject.getBoolean("result")) {
+                Log.e("name1 ", jsonObject.getJSONObject("area2").getString("name"));//"name 동작구"
+                Log.e("name2", jsonObject.getJSONObject("area3").getString("name"));//name
+            }
+            else {
+
+            }
+        }
+        catch (JSONException e) {
+
         }
     }
     public void setMapLocationTextView(TextView getAddress, LatLng latLng) {
@@ -100,23 +157,22 @@ public class myGPSListener implements LocationListener {
     public LatLng startLocationService(TextView getAdress) {
         LocationManager manager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         LatLng latLng= null;
-
         if(saveLocation != null ) {
-            Log.i("RRRRR", 1+"");
+            Log.i("RRRRR", 1 + "");
             double[] ll = new double[2];
             int i = 0;
-            if(!saveLocation.getString("location", "").equals("")) {
-                Log.i("LLLLL", 2+"");
-                String locationStr =saveLocation.getString("location", null);
+            if (!saveLocation.getString("location", "").equals("")) {
+                Log.i("LLLLL", 2 + "");
+                String locationStr = saveLocation.getString("location", null);
                 //Location[gps 37.493879,126.956373 hAcc=??? t=?!? et=?!? vAcc=??? sAcc=??? bAcc=???]
                 StringTokenizer stringTokenizer = new StringTokenizer(locationStr, ":");
-                while(stringTokenizer.hasMoreTokens()) {
-                    String getDouble =stringTokenizer.nextToken();
-                    ll[i] =Double.parseDouble(getDouble);
+                while (stringTokenizer.hasMoreTokens()) {
+                    String getDouble = stringTokenizer.nextToken();
+                    ll[i] = Double.parseDouble(getDouble);
                     i++;
                 }
-                Log.i("TTTT", 3+"");
-                LatLng latLng1 = new LatLng(ll[0],ll[1]);
+                Log.i("TTTT", 3 + "");
+                LatLng latLng1 = new LatLng(ll[0], ll[1]);
                 latitude = ll[0];
                 longitude = ll[1];
                 setMapLocationTextView(getAdress);

@@ -169,10 +169,13 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         makeRequest();
 
         myGPSListener = new myGPSListener(this);
-        latLng = myGPSListener.startLocationService(mAddress);
+        latLng = myGPSListener.startLocationService(null);
         if(latLng == null) {
             mAddress.setText("GPS를 설정 해 주세요");
         }
+
+
+
         makeRequestUltraStore(setHashMapData());
         makeRequestNewStore(setHashMapData());
 
