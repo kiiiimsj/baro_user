@@ -25,6 +25,7 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.JsonParsingHelper.MapListParsing;
 import com.example.wantchu.JsonParsingHelper.MapParsing;
@@ -57,7 +58,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback {
+public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, TopBar.OnBackPressedInParentActivity {
     private MapView mapView;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
@@ -175,7 +176,7 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback {
         });
         for (final MapListParsing item : mapParsing.getMapList()) {
             final Marker marker = new Marker();
-            com.naver.maps.geometry.LatLng storeLatlng = new com.naver.maps.geometry.LatLng(new Double(item.getStore_latitude()),new Double(item.getStore_longitude()));
+            com.naver.maps.geometry.LatLng storeLatlng = new com.naver.maps.geometry.LatLng(Double.valueOf(item.getStore_latitude()),Double.valueOf(item.getStore_longitude()));
             marker.setPosition(storeLatlng);
             int height = 27;
             int width = 20 ;
@@ -322,5 +323,10 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback {
         CameraUpdate cameraUpdate = CameraUpdate.scrollTo(naverLatlng);
         naverMap.moveCamera(cameraUpdate);
         makeRequest(setHashMapData(),naverMap);
+    }
+
+    @Override
+    public void onBack() {
+        super.onBackPressed();
     }
 }

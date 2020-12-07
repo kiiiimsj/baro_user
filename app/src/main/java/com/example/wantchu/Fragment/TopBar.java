@@ -149,6 +149,17 @@ public class TopBar extends Fragment {
                 button.setText("위치 설정");
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
+            case "NewMyMap":
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onBack();
+                    }
+                });
+                title.setText("내 주변 가게");
+                button.setVisibility(View.INVISIBLE);
+                etcImage.setVisibility(View.INVISIBLE);
+                break;
             case "StoreInfoReNewer":
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
