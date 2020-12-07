@@ -9,21 +9,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="2dp"
             android:orientation="vertical">
             <RelativeLayout
-                android:background="#8D00F1"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/bmhannapro"
+                    android:fontFamily="@font/notosans_black"
+                    android:includeFontPadding="false"
                     android:letterSpacing="0.3"
                     android:padding="15dp"
                     android:text="쿠폰 적용"
                     android:layout_centerInParent="true"
-                    android:textColor="@color/white"
+                    android:textColor="#343434"
                     android:textSize="20sp" />
 
                 <ImageButton
@@ -33,7 +35,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:background="#8D00F1"
+                    android:background="@color/white"
                     android:src="@drawable/ic_baseline_close_24" />
             </RelativeLayout>
             <LinearLayout
@@ -230,18 +232,21 @@
                         android:background="@drawable/edit_text_border"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:layout_marginBottom="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <Button
                         android:id="@+id/pay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/bmhannapro"
-                        android:background="@drawable/button_border_empty"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/notosans_bold"
+                        android:background="@color/main"
                         android:text="결제하기"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
                         android:letterSpacing="2"/>
                 </LinearLayout>
             </LinearLayout>

@@ -2,18 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="2dp"
     android:background="#ffffff">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/main"
-        android:fontFamily="@font/bmhannapro"
+        android:background="@color/white"
+        android:fontFamily="@font/notosans_bold"
         android:gravity="center"
         android:text="주문 완료"
         android:letterSpacing="0.3"
-        android:textColor="#ffffff"
+        android:textColor="#343434"
         android:textSize="16dp" />
 
 
@@ -32,7 +33,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
         <Button
@@ -42,13 +42,11 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="확 인"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16dp"
             android:letterSpacing="0.2"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/button_border_empty"
-            android:fontFamily="@font/bmhannapro"/>
+            android:background="@color/main"
+            android:fontFamily="@font/notosans_bold"/>
 
     </LinearLayout>
 

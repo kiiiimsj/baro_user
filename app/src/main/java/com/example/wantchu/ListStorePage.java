@@ -30,6 +30,7 @@ import com.example.wantchu.Url.UrlMaker;
 import com.example.wantchu.helperClass.myGPSListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.pedro.library.AutoPermissions;
@@ -184,24 +185,43 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     private void makeRequestForSearch(final int state){
         //String url = "http://54.180.56.44:8080/StoreSearch.do?keyword="+storeSearch;
         //URL : http://15.165.22.64:8080/StoreSearch.do?keyword=test&startPoint=0
-        String url = new UrlMaker().UrlMake("StoreSearch.do?keyword="+ storeSearch+"&startPoint=" +currentPos);
+        HashMap<String,Object> data = new HashMap<>();
+        data.put("latitude",latLng.latitude);
+        data.put("longitude",latLng.longitude);
+        data.put("keyword",storeSearch);
+        data.put("startPoint",currentPos);
+//        String url = new UrlMaker().UrlMake("StoreSearch.do?keyword="+ storeSearch+"&startPoint=" +currentPos);
+        String url = new UrlMaker().UrlMake("StoreSearchByKeyword.do");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.e("searchStore", url); //ok
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        Log.e("searchStore", response);
-                        jsonParsing(response, state);
+                    public void onResponse(JSONObject response) {
+                        Log.e("searchStore", response.toString());
+                        jsonParsing(response.toString(), state);
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("searchStoreError", "error");
-                    }
-                });
-        requestQueue.add(request);
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("searchStoreError", "error");
+            }
+        });
+//        Log.e("searchStore", url); //ok
+//        StringRequest request = new StringRequest(Request.Method.GET, url,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        Log.e("searchStore", response);
+//                        jsonParsing(response, state);
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Log.e("searchStoreError", "error");
+//                    }
+//                });
+        requestQueue.add(jsonObjectRequest);
     }
 
     @Override

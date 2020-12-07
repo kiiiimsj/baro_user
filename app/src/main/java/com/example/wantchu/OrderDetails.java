@@ -328,7 +328,7 @@ public class OrderDetails extends AppCompatActivity {
 
         ArrayList<OrderDetailsNonEssential> NonEssentialOptionList = ConvertNonEssential(nonEssentialOptions);
         RecyclerView essentailRecyclerView = findViewById(R.id.menuRecyler_Essential);
-        essentailRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        essentailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (arrayList.size() != 0) {
             adapter = new OrderDetailsEssentialAdapter(arrayList, essentialOptions, this, totalPriceText, itemCount);

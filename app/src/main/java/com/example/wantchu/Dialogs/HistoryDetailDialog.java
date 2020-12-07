@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public class HistoryDetailDialog extends DialogFragment {
     TextView store;
     TextView requests;
     HistoryDetailAdapter historyDetailAdapter;
-
+    Button close_btn;
     public static HistoryDetailDialog newInstance(Context context) {
         Bundle bundle = new Bundle();
         HistoryDetailDialog fragment = new HistoryDetailDialog();
@@ -67,6 +68,7 @@ public class HistoryDetailDialog extends DialogFragment {
         String ordered_date = getArguments().getString("orderedDate");
         int total_Price = getArguments().getInt("totalPrice");
         orderDetail.setVisibility(View.VISIBLE);
+        close_btn = orderDetail.findViewById(R.id.close_dialog);
         recyclerView = orderDetail.findViewById(R.id.historyDetailList);
         requests = orderDetail.findViewById(R.id.request);
         store = orderDetail.findViewById(R.id.store_name);
@@ -77,6 +79,12 @@ public class HistoryDetailDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
                 orderDetail.setVisibility(View.INVISIBLE);
+                dismissDialog();
+            }
+        });
+        close_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 dismissDialog();
             }
         });
@@ -149,5 +157,7 @@ public class HistoryDetailDialog extends DialogFragment {
     private void dismissDialog() {
         this.dismiss();
     }
+
+
 
 }

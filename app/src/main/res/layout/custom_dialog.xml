@@ -7,11 +7,11 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#8D00F1"
-        android:fontFamily="@font/bmhannapro"
+        android:background="@color/white"
+        android:fontFamily="@font/notosans_bold"
         android:gravity="center"
-        android:text="커스텀 다이얼로그"
-        android:textColor="#ffffff"
+        android:text="장바구니 담기 완료"
+        android:textColor="#343434"
         android:textSize="20dp" />
 
 
@@ -40,12 +40,12 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="다른메뉴 보기"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="14dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/button_border_empty"
-            android:fontFamily="@font/bmhannapro"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_border_full"
+            android:fontFamily="@font/notosans_bold"
             />
 
         <Button
@@ -55,12 +55,12 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="장바구니"
-            android:textColor="@color/black"
+            android:textColor="@color/main"
             android:textSize="14dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/button_border_empty"
-            android:fontFamily="@font/bmhannapro"/>
+            android:fontFamily="@font/notosans_bold"/>
 
     </LinearLayout>
 
