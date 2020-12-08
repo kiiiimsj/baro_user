@@ -5,10 +5,8 @@
     android:layout_marginBottom="10dp">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_height="150dp"
-        android:padding="15dp"
-        android:background="@drawable/categories_car_background">
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border_empty">
         <TextView
             android:id="@+id/coupon_name"
             android:layout_width="wrap_content"
@@ -16,48 +14,54 @@
             android:layout_alignParentLeft="true"
             android:text="첫 가입 이벤트 할인 쿠폰"
             android:textSize="20dp"
-            android:fontFamily="@font/baloo"
-            android:textColor="@color/black"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"/>
+            android:fontFamily="@font/notosans_black"
+            android:textColor="#8333e6"
+            android:includeFontPadding="false"
+            android:layout_below="@id/coupon_condition"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="30dp"/>
 
         <TextView
-            android:textColor="@color/black"
+            android:textColor="#c4c4c4"
             android:id="@+id/coupon_condition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="10000원 이상 구매" />
+            android:text="10000원 이상 구매"
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/coupon_content"
-            android:layout_above="@+id/coupon_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/coupon_name"
+            android:layout_marginLeft="30dp"
             android:maxLines="1"
             android:singleLine="true"
             android:text="30% 할인권"
             android:textAlignment="center"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="10dp"
+            android:textSize="12sp"
+            android:textColor="#343434"
+            android:fontFamily="@font/notosans_regular"
+            android:includeFontPadding="false"
             />
 
         <TextView
             android:textColor="@color/black"
             android:gravity="left"
             android:id="@+id/coupon_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
+            android:layout_below="@id/coupon_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
             android:text="~2020-08-20" />
 
         <TextView
