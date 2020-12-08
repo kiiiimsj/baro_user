@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shellHistoryItem"
@@ -15,19 +15,70 @@
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:background="@color/black"/>
-    <LinearLayout
+    <ImageView
+        android:id="@+id/store_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"/>
+    <TextView
+        android:id="@+id/store_names"
+        android:gravity="center"
+        android:text="도스마스 숭실대점"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/store_image"
+        android:textSize="16sp"
+        android:textColor="#343434"
+        android:fontFamily="@font/notosans_bold"
+        android:includeFontPadding="false"/>
+    <TextView
+        android:id="@+id/ordered_dates"
+        android:text="2020년 10월 28일"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/store_image"
+        android:layout_below="@id/store_names"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        android:textColor="#343434"
+        android:fontFamily="@font/notosans_light"
+        android:includeFontPadding="false"/>
+    <TextView
+        android:id="@+id/totalPrices"
+        android:paddingRight="20dp"
+        android:gravity="right"
+        android:text="110000원"
+        android:layout_toRightOf="@id/store_image"
+        android:layout_below="@id/ordered_dates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp"
+        android:textColor="#343434"
+        android:fontFamily="@font/notosans_regular"
+        android:includeFontPadding="false"/>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="5dp"
-        android:background="@color/white"
         android:orientation="vertical">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@id/order_state"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -38,40 +89,46 @@
                 android:textColor="@color/main" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/ordered_dates"
-                android:text="2020년 10월 28일"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:layout_weight="4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/store_names"
-                android:gravity="center"
-                android:text="도스마스 숭실대점"
-                android:layout_weight="3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/totalPrices"
-                android:paddingRight="20dp"
-                android:gravity="right"
-                android:text="110000원"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
         <TextView
             android:id="@+id/orderGroup_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/totalPrices"
+        android:layout_marginBottom="20dp">
+        <Button
+            android:id="@+id/go_to_store"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="50dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:text="가게로 이동"
+            android:textColor="@color/main"
+            android:background="@drawable/order_history_button"
+            android:textSize="14sp"
+            android:fontFamily="@font/notosans_regular"
+            android:includeFontPadding="false"/>
+        <Button
+            android:id="@+id/history_detail"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="25dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:text="상세 영수증 보기"
+            android:textColor="@color/main"
+            android:background="@drawable/order_history_button"
+            android:textSize="14sp"
+            android:fontFamily="@font/notosans_regular"
+            android:includeFontPadding="false"/>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
