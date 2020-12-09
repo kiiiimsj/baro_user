@@ -88,7 +88,7 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
 
         AutoPermissions.Companion.loadAllPermissions(this, 101);
 
-        userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        userSession = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         phone = findViewById(R.id.login_phone);
         password = findViewById(R.id.login_password);
         rememberUser = findViewById(R.id.remember_user);

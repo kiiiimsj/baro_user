@@ -36,10 +36,18 @@ public class AlertsHelperClass {
     }
 
     public class AlertsHelperClassParsing {
+        public String is_read;
         public String alert_title;
-        public String alert_content;
         public String alert_startdate;
         public int alert_id;
+
+        public String getIs_read() {
+            return is_read;
+        }
+
+        public void setIs_read(String is_read) {
+            this.is_read = is_read;
+        }
 
         public String getAlert_title() {
             return alert_title;
@@ -47,14 +55,6 @@ public class AlertsHelperClass {
 
         public void setAlert_title(String alert_title) {
             this.alert_title = alert_title;
-        }
-
-        public String getAlert_content() {
-            return alert_content;
-        }
-
-        public void setAlert_content(String alert_content) {
-            this.alert_content = alert_content;
         }
 
         public String getAlert_startdate() {
@@ -76,8 +76,8 @@ public class AlertsHelperClass {
         @Override
         public String toString() {
             return "AlertsHelperClassParsing{" +
-                    "alert_title='" + alert_title + '\'' +
-                    ", alert_content='" + alert_content + '\'' +
+                    "is_read='" + is_read + '\'' +
+                    ", alert_title='" + alert_title + '\'' +
                     ", alert_startdate='" + alert_startdate + '\'' +
                     ", alert_id=" + alert_id +
                     '}';
