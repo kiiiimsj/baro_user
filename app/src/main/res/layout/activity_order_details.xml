@@ -189,6 +189,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/black"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -200,10 +204,7 @@
                     android:fontFamily="@font/notosans_regular"
                     android:textSize="12sp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/black"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/menuRecyler_Essential"
                     android:scrollbars="vertical"
@@ -245,6 +246,10 @@
 <!--                    android:layout_width="match_parent"-->
 <!--                    android:layout_height="1px"-->
 <!--                    android:background="@color/black"/>-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"/>
                 <ExpandableListView
                     android:id="@+id/menuExpand_NotEssential"
                     android:scrollbarThumbVertical="@color/black"
@@ -252,7 +257,9 @@
                     android:transcriptMode="alwaysScroll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft">
+                    android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+                    android:divider="@null"
+                    android:childDivider="@null">
                 </ExpandableListView>
             </LinearLayout>
         </LinearLayout>

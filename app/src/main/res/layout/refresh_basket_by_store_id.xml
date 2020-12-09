@@ -68,7 +68,7 @@
             android:includeFontPadding="false"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/button_border_shallow"/>
+            android:background="@drawable/menu_non_select"/>
 
 
 

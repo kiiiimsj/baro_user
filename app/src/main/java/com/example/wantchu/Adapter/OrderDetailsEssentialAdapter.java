@@ -151,7 +151,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                                     }
                                     toggleButtons.get(i).setTextColor(ContextCompat.getColor(context, R.color.lightGray));
                                     toggleButtons.get(i).setChecked(false);
-                                    toggleButtons.get(i).setBackgroundResource(R.drawable.button_border_empty);
+                                    toggleButtons.get(i).setBackgroundResource(R.drawable.menu_non_select);
                                 }
                                 holder.selectedOptions.setText(name.getText().toString() + "(+" + changePrice + "원)");
                                 must++;
@@ -162,7 +162,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                                 selectOptions.put(text, select);
                                 priceTotal.setText(String.valueOf(originPrice + (itemCount * (changePrice - deletePrice))));
                                 name.setChecked(true);
-                                name.setBackgroundResource(R.drawable.button_border_full);
+                                name.setBackgroundResource(R.drawable.menu_select);
                                 name.setTextColor(ContextCompat.getColor(context, R.color.white));
                             } else {
                                 must--;
