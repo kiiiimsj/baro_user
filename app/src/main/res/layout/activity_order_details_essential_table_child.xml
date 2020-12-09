@@ -13,6 +13,8 @@
         android:layout_weight="1"
         android:textStyle="bold"
         android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:orientation="vertical">
@@ -25,9 +27,10 @@
             android:background="@drawable/button_border_empty"
             android:gravity="center"
             android:text="옵 션"
-            android:textColor="@color/main"
-            android:textSize="14sp"
+            android:textColor="@color/lightGray"
+            android:textSize="10sp"
             android:letterSpacing="-0.02"
+            android:minHeight="0dp"
             android:fontFamily="@font/notosans_bold">
         </ToggleButton>
 
@@ -51,6 +54,8 @@
         android:layout_weight="1"
         android:textStyle="bold"
         android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:orientation="vertical">
@@ -63,10 +68,11 @@
             android:background="@drawable/button_border_empty"
             android:gravity="center"
             android:text="옵 션"
-            android:textColor="@color/main"
-            android:textSize="14sp"
+            android:textColor="@color/lightGray"
+            android:textSize="10sp"
             android:fontFamily="@font/notosans_bold"
-            android:letterSpacing="-0.02">
+            android:letterSpacing="-0.02"
+            android:minHeight="0dp">
         </ToggleButton>
 
         <TextView
@@ -89,6 +95,8 @@
         android:layout_weight="1"
         android:textStyle="bold"
         android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:orientation="vertical">
@@ -101,10 +109,11 @@
             android:background="@drawable/button_border_empty"
             android:gravity="center"
             android:text="옵 션"
-            android:textColor="@color/main"
-            android:textSize="14sp"
+            android:textColor="@color/lightGray"
+            android:textSize="10sp"
             android:letterSpacing="-0.02"
-            android:fontFamily="@font/notosans_bold">
+            android:fontFamily="@font/notosans_bold"
+            android:minHeight="0dp">
         </ToggleButton>
 
         <TextView
