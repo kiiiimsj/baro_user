@@ -88,7 +88,7 @@ public class HistoryDetailDialog extends DialogFragment {
                 dismissDialog();
             }
         });
-        totals.setText("Totals : " + total_Price+"원");
+        totals.setText("총 결제 금액 : " + total_Price+"원");
         makeRequest(context,receipt_id);
         store.setText(store_name);
         builder.setView(orderDetail);

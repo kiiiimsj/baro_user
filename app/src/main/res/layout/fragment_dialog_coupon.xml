@@ -19,14 +19,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosans_black"
+                    android:fontFamily="@font/notosans_bold"
                     android:includeFontPadding="false"
-                    android:letterSpacing="0.3"
+                    android:letterSpacing="-0.02"
                     android:padding="15dp"
                     android:text="쿠폰 적용"
                     android:layout_centerInParent="true"
                     android:textColor="#343434"
-                    android:textSize="20sp" />
+                    android:textSize="14sp" />
 
                 <ImageButton
                     android:id="@+id/close_coupon"
@@ -57,10 +57,7 @@
                     android:layout_height="wrap_content"
                     />
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#8D00F1"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,8 +82,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/bmhannapro"
+                                android:textColor="#343434"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/notosans_bold"
                                 android:text="상품 금액"/>
                             <LinearLayout
                                 android:layout_gravity="center"
@@ -97,14 +95,16 @@
                                     android:id="@+id/total"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/black"
-                                    android:fontFamily="@font/bmhannapro"
+                                    android:textColor="#343434"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/notosans_regular"
                                     android:text="0"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/black"
-                                    android:fontFamily="@font/bmhannapro"
+                                    android:textColor="#343434"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/notosans_regular"
                                     android:text=" 원"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -114,8 +114,9 @@
                             android:gravity="center"
                             android:layout_weight="1">
                             <TextView
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/bmhannapro"
+                                android:textColor="#343434"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/notosans_regular"
                                 android:layout_gravity="center_vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -130,8 +131,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/bmhannapro"
+                                android:textColor="#343434"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/notosans_bold"
                                 android:text="할인 금액"/>
                             <LinearLayout
                                 android:layout_gravity="center"
@@ -142,23 +144,22 @@
                                     android:id="@+id/discount_money"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/black"
-                                    android:fontFamily="@font/bmhannapro"
+                                    android:textColor="#343434"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/notosans_regular"
                                     android:text="0"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/black"
-                                    android:fontFamily="@font/bmhannapro"
+                                    android:textColor="#343434"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/notosans_regular"
                                     android:text=" 원"/>
                             </LinearLayout>
 
                         </LinearLayout>
                     </LinearLayout>
-                    <View
-                        android:layout_width="0.5dp"
-                        android:layout_height="match_parent"
-                        android:background="#8D00F1"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -172,11 +173,12 @@
                             android:gravity="center">
 
                             <TextView
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/bmhannapro"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:textColor="#343434"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/notosans_bold"
                                 android:text="주문금액"/>
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -187,16 +189,18 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:textColor="@color/black"
-                                    android:fontFamily="@font/bmhannapro"
+                                    android:textColor="#343434"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/notosans_regular"
                                     android:text="0" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:textColor="@color/black"
-                                    android:fontFamily="@font/bmhannapro"
+                                    android:textColor="#343434"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/notosans_regular"
                                     android:text=" 원" />
                             </LinearLayout>
 
@@ -205,12 +209,9 @@
 
                     </LinearLayout>
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#8D00F1"/>
+
                 <LinearLayout
-                    android:padding="20dp"
+                    android:paddingHorizontal="20dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -219,8 +220,9 @@
                         android:layout_height="wrap_content"
                         android:text="요청사항"
                         android:fontFamily="@font/notosans_bold"
-                        android:textColor="@color/black"
-                        android:letterSpacing="1"/>
+                        android:textColor="#343434"
+                        android:textSize="14sp"
+                        android:letterSpacing="-0.02"/>
                     <EditText
                         android:id="@+id/request"
                         android:padding="10dp"
@@ -232,8 +234,9 @@
                         android:background="@drawable/edit_text_border"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:paddingLeft="0dp"
-                    android:paddingRight="0dp"
+                    android:paddingHorizontal="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -243,11 +246,11 @@
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
                         android:fontFamily="@font/notosans_bold"
-                        android:background="@color/main"
-                        android:text="결제하기"
-                        android:textSize="14sp"
+                        android:background="@drawable/button_border_full"
+                        android:text="결 제 하 기"
+                        android:textSize="17sp"
                         android:textColor="@color/white"
-                        android:letterSpacing="2"/>
+                        android:letterSpacing="-0.02"/>
                 </LinearLayout>
             </LinearLayout>
 

@@ -66,7 +66,7 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
             holder.options.addView(extraOption);
         }
         int eachPrice = parsingHelperArrayList.get(position).getMenu_defaultprice()+optionPrices;
-        holder.itemCount.setText(""+itemCount);
+        holder.itemCount.setText(""+itemCount+" 개");
         holder.eachPrice.setText(""+eachPrice+"원");
         holder.totalPrice.setText(""+eachPrice*itemCount+"원");
         totals+=eachPrice*itemCount;
