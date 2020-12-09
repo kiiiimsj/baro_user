@@ -3,6 +3,7 @@ package com.example.wantchu.Adapter;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -148,7 +149,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                                         must--;
                                         deletePrice = Integer.parseInt(((TextView) (((ViewGroup) toggleButtons.get(i).getParent()).getChildAt(1))).getText().toString());
                                     }
-                                    toggleButtons.get(i).setTextColor(ContextCompat.getColor(context, R.color.main));
+                                    toggleButtons.get(i).setTextColor(ContextCompat.getColor(context, R.color.lightGray));
                                     toggleButtons.get(i).setChecked(false);
                                     toggleButtons.get(i).setBackgroundResource(R.drawable.button_border_empty);
                                 }
@@ -168,7 +169,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                                 holder.selectedOptions.setText("");
                                 priceTotal.setText(String.valueOf(originPrice - (itemCount * changePrice)));
                                 name.setBackgroundResource(R.drawable.button_border_empty);
-                                name.setTextColor(ContextCompat.getColor(context, R.color.main));
+                                name.setTextColor(ContextCompat.getColor(context, R.color.lightGray));
                             }
                         }
                     });
