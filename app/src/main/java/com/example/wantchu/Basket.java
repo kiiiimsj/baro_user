@@ -178,7 +178,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             }
             totalPrice += detailsFixToBaskets.get(i).getPrice();
         }
-        finalPayValue.setText(totalPrice);
+        finalPayValue.setText(totalPrice+"원");
         basketAdapter = new BasketAdapter(detailsFixToBaskets, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(basketAdapter);
