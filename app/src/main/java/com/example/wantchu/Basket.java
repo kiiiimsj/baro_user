@@ -138,6 +138,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         recyclerView = findViewById(R.id.basketList);
         recyclerViewShell = findViewById(R.id.linearLayout2);
         storeNameTextView = findViewById(R.id.store_name);
+        finalPayValue = findViewById(R.id.total_price_final_pay);
         SharedPreferences sharedPreferences = getSharedPreferences(BasketList, MODE_PRIVATE);
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
