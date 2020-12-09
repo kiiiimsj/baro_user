@@ -115,6 +115,7 @@
                         android:textColor="#343434"
                         android:fontFamily="@font/notosans_regular"
                         android:gravity="center"
+                        android:textSize="7sp"
                         android:text="결제완료"/>
                 </LinearLayout>
                 <LinearLayout
@@ -132,6 +133,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:textColor="#343434"
+                        android:textSize="7sp"
                         android:fontFamily="@font/notosans_regular"
                         android:text="접수 중"/>
                 </LinearLayout>
@@ -150,6 +152,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:textColor="#343434"
+                        android:textSize="7sp"
                         android:fontFamily="@font/notosans_regular"
                         android:text="제조중"/>
                 </LinearLayout>
@@ -167,6 +170,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:textSize="7sp"
                         android:textColor="#343434"
                         android:fontFamily="@font/notosans_regular"
                         android:text="수정완료"/>
@@ -218,10 +222,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
                 <Button
-                    android:background="@drawable/button_border_empty"
+                    android:id="@+id/call_store"
+                    android:background="@drawable/order_history_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
+                    android:textSize="16sp"
+                    android:textColor="#8333e6"
+                    android:fontFamily="@font/notosans_bold"
                     android:text="전화걸기"/>
             </LinearLayout>
             <LinearLayout
@@ -229,13 +237,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
                 <Button
-                    android:background="@drawable/button_border_empty"
+                    android:id="@+id/show_details"
+                    android:background="@drawable/order_history_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:text="상세 영수증 보기"
-                    android:textSize="13sp"
+                    android:textSize="16sp"
                     android:textColor="#8333e6"
+                    android:fontFamily="@font/notosans_bold"
                     />
             </LinearLayout>
         </LinearLayout>

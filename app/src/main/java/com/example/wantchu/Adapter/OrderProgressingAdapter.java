@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -79,7 +80,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         holder.order_date.setText(reverse.getOrder_date());
         holder.stores_name.setText(reverse.getStore_name());
         holder.total_prices.setText("합계 : " + reverse.getTotal_price()+" 원");
-        holder.shell.setOnClickListener(new View.OnClickListener() {
+        holder.showDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ProgressingDetailDialog progressingDetailDialog = ProgressingDetailDialog.newInstance(context);
@@ -157,6 +158,8 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         ProgressBar progressBar;
         MapView map;
         NaverMap naverMap;
+        Button showDetails;
+        Button callStore;
         public ViewHolder(@NonNull View itemView, int po) {
             super(itemView);
             order_state = (itemView).findViewById(R.id.order_state);
@@ -166,6 +169,8 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
             shell = (itemView).findViewById(R.id.shellProgressingItem);
             store_image = (itemView).findViewById(R.id.store_image);
             progressBar = (itemView).findViewById(R.id.progressBar);
+            showDetails = (itemView).findViewById(R.id.show_details);
+            callStore = (itemView).findViewById(R.id.call_store);
             map = (itemView).findViewById(R.id.map_view);
             map.setOnClickListener(new View.OnClickListener() {
                 @Override
