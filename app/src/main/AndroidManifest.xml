@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -21,7 +22,8 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -41,10 +43,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TermsOfUse"></activity>
+        <activity android:name=".Alert"></activity>
+        <activity android:name=".TermsOfUse" />
         <activity android:name=".Events" />
         <activity android:name=".Alerts" />
         <activity android:name=".OrderStatus" />
+
         <service
             android:name=".helperClass.RestartService"
             android:enabled="true"
@@ -54,9 +58,10 @@
             android:enabled="true"
             android:exported="true" />
 
-        <receiver android:name=".helperClass.ThreadKillReceiver"
+        <receiver
+            android:name=".helperClass.ThreadKillReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <uses-library android:name="com.google.android.maps" />
         <uses-library
@@ -117,8 +122,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MyPage"
-            android:launchMode="singleTask" />
-<!--        FirstPage-->
+            android:launchMode="singleTask" /> <!-- FirstPage -->
         <activity android:name=".Celebe" />
         <activity android:name=".FirstPage">
             <intent-filter>

@@ -121,6 +121,17 @@ public class TopBar extends Fragment {
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
+            case "Alert":
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onBack();
+                    }
+                });
+                title.setVisibility(View.INVISIBLE);
+                button.setVisibility(View.INVISIBLE);
+                etcImage.setVisibility(View.INVISIBLE);
+                break;
             case "Alerts":
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -128,7 +139,7 @@ public class TopBar extends Fragment {
                         mListener.onBack();
                     }
                 });
-                title.setText("소 식");
+                title.setText("알 림");
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
@@ -233,9 +244,7 @@ public class TopBar extends Fragment {
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "OrderDetail":
-
                 break;
-
             case "MainPage":
                 //no top bar activity
                 break;

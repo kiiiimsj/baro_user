@@ -102,7 +102,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     ImageView call_search;
     /////////
     void goChangSin(){
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://celebe.ohmyapp.io/bnb/aggregateForTable",
                 new Response.Listener<String>() {
@@ -204,6 +203,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 searchDialog.callFunction();
             }
         });
+
+        progressApplication.progressOFF();
     }
 
     @Override
@@ -358,7 +359,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             DataList.add(typeHelperClass);
         }
         mRecyclerView.setAdapter(adapter);
-        progressApplication.progressOFF();
     }
 
     //ultrastore 가져오기 위한 recyclerview
@@ -441,43 +441,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         });
         requestQueue.add(stringRequest);
     }
-//    public void makeRequestForGetEventId() {
-//        String url = new UrlMaker().UrlMake("EventFindAdvertising.do");
-//        RequestQueue requestQueue = Volley.newRequestQueue(context);
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.i("getPictureForEvent", response);
-//                parsing(response);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//        requestQueue.add(stringRequest);
-//    }
-//
-//    private void parsing(String response) {
-//        boolean result = false;
-//        int eventId = 0;
-//        try {
-//            JSONObject jsonObject = new JSONObject(response);
-//            result =jsonObject.getBoolean("result");
-//            if(result) {
-//                SharedPreferences sf = getSharedPreferences("saveEventId", MODE_PRIVATE);
-//                SharedPreferences.Editor editor = sf.edit();
-//                eventId=jsonObject.getInt("event_id");
-//                editor.putInt("event_Id", eventId);
-//                editor.apply();
-//                editor.commit();
-//            }
-//        }
-//        catch(JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     private void setAdvertiseAdapter() {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

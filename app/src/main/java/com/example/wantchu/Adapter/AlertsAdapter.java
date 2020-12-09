@@ -1,6 +1,7 @@
 package com.example.wantchu.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wantchu.AdapterHelper.AlertsHelperClass;
-import com.example.wantchu.JsonParsingHelper.AlertIsNewParsing;
 import com.example.wantchu.R;
 
 public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsViewHolder> {
+    public interface ClickAlert {
+        void clickAlertListener(int alertId, int position);
+    }
+
     Context context;
     AlertsHelperClass alertsHelperClass;
-    public AlertsAdapter(Context context, AlertsHelperClass alertsHelperClass) {
+    ClickAlert clickAlert;
+
+    public AlertsAdapter(Context context, AlertsHelperClass alertsHelperClass, ClickAlert clickAlert) {
         this.context = context;
         this.alertsHelperClass = alertsHelperClass;
+        this.clickAlert = clickAlert;
     }
+
+
     @NonNull
     @Override
     public AlertsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,14 +40,19 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsView
 
     @Override
     public void onBindViewHolder(@NonNull AlertsViewHolder holder, int position) {
-
-//        AlertsHelperClass.AlertsHelperClassParsing alertsHelperClassParsing =alertsHelperClass.alert.get(position);
         AlertsHelperClass.AlertsHelperClassParsing reverse =alertsHelperClass.alert.get(alertsHelperClass.alert.size()-position-1);
+        Log.i("is_read", reverse.is_read);
         if(holder == null || reverse == null) {
             return;
         }
+        if(reverse.is_read.equals("N")) {
+            holder.isRead.setVisibility(View.VISIBLE);
+        }
+        else if(reverse.is_read.equals("Y")){
+            holder.isRead.setVisibility(View.INVISIBLE);
+        }
+
         holder.alertTitle.setText(reverse.alert_title);
-        holder.alertContent.setText(reverse.alert_content);
         holder.alertStartDate.setText(reverse.alert_startdate);
         holder.alertId.setText(reverse.alert_id+"");
     }
@@ -55,15 +69,24 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsView
 
     public class AlertsViewHolder extends RecyclerView.ViewHolder {
         TextView alertTitle;
-        TextView alertContent;
         TextView alertStartDate;
         TextView alertId;
-        public AlertsViewHolder(@NonNull View itemView, int pos) {
+        TextView isRead;
+        View clickListener;
+        public AlertsViewHolder(@NonNull View itemView, final int pos) {
             super(itemView);
             alertTitle = itemView.findViewById(R.id.alert_title);
-            alertContent = itemView.findViewById(R.id.alert_content);
             alertStartDate = itemView.findViewById(R.id.alert_start_date);
             alertId = itemView.findViewById(R.id.alert_id);
+            isRead = itemView.findViewById(R.id.is_read_new_label);
+            clickListener = itemView.findViewById(R.id.click_listener);
+            final AlertsHelperClass.AlertsHelperClassParsing alertsHelperClassParsing = alertsHelperClass.alert.get(alertsHelperClass.alert.size()-pos-1);
+            clickListener.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickAlert.clickAlertListener(alertsHelperClassParsing.alert_id, alertsHelperClass.alert.size()-pos-1);
+                }
+            });
         }
     }
 }

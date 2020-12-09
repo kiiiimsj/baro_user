@@ -149,4 +149,15 @@ public class SessionManager {
     public String getString(String fileName){
         return (usersDetailSession.getString(fileName,"") == null? "":(usersDetailSession.getString(fileName,"")));
     }
+
+    @Override
+    public String toString() {
+        return "SessionManager{" +
+                "usersSession=" + usersSession +
+                ", editor=" + editor +
+                ", usersDetailSession=" + usersDetailSession +
+                ", detailEditor=" + detailEditor +
+                ", context=" + context +
+                '}';
+    }
 }
