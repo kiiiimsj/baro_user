@@ -125,6 +125,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     BasketAdapter basketAdapter =null;
 
     ProgressApplication progressApplication;
+    TextView finalPayValue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,7 +177,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             }
             totalPrice += detailsFixToBaskets.get(i).getPrice();
         }
-        button.setText(totalPrice + "원 결제하기");
+        finalPayValue.setText(totalPrice);
         basketAdapter = new BasketAdapter(detailsFixToBaskets, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(basketAdapter);
