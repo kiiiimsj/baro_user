@@ -8,6 +8,7 @@
     android:background="@color/white"
     android:padding="2dp"
     android:layout_marginBottom="1dp"
+    android:layout_marginHorizontal="40dp"
     android:layout_height="500dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,17 +22,19 @@
             android:id="@+id/store_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/bmhannapro"
+            android:fontFamily="@font/notosans_bold"
             android:padding="5dp"
             android:text="도스마스 숭실대점"
-            android:textColor="@color/black"
+            android:textColor="#343434"
             android:textSize="20sp"
+            android:includeFontPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/deleteThis"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:visibility="gone"
             android:id="@+id/deleteThis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,17 +60,25 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_marginHorizontal="10dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="9sp"
+            android:textColor="#343434"
+            android:fontFamily="@font/notosans_regular"
+            android:includeFontPadding="false"
             android:text="요청 사항"/>
         <TextView
             android:id="@+id/request"
-            android:padding="10dp"
+            android:padding="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="요청사항이 없었습니다. "></TextView>
+            android:text="요청사항이 없었습니다. "
+            android:textSize="9sp"
+            android:textColor="#c4c4c4"
+            android:fontFamily="@font/notosans_regular"
+            android:includeFontPadding="false"></TextView>
     </LinearLayout>
 
     <RelativeLayout
@@ -80,21 +91,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="총 결제 금액 : "
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="11sp"
+            android:textColor="@color/main"
+            android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"
             android:layout_marginRight="10dp"
             android:layout_gravity="center_vertical"/>
 
     </RelativeLayout>
     <Button
         android:id="@+id/close_dialog"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:text="확인 완료"
-        android:textSize="16dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/notosans_bold"
         android:textColor="@color/white"
-        android:background="@color/main" />
+        android:background="@drawable/button_border_full" />
 
 
 </LinearLayout>

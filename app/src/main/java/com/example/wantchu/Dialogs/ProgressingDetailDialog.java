@@ -7,6 +7,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class ProgressingDetailDialog extends DialogFragment {
     TextView totals;
     TextView request;
     ImageButton delete_this;
+    Button okay;
     RecyclerView progressDetail;
     Gson gson;
     OrderProgressDetailParsing orderProgressDetailParsing;
@@ -76,6 +78,15 @@ public class ProgressingDetailDialog extends DialogFragment {
         request = progressingDetail.findViewById(R.id.request);
         delete_this = progressingDetail.findViewById(R.id.deleteThis);
         progressDetail = progressingDetail.findViewById(R.id.ProgressDetailList);
+        okay = progressingDetail.findViewById(R.id.okay);
+
+
+        okay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismissDialog();
+            }
+        });
 
         delete_this.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +95,7 @@ public class ProgressingDetailDialog extends DialogFragment {
             }
         });
         store_name.setText(data.getStore_name());
-        totals.setText(data.getTotal_price()+"");
+        totals.setText("총 결제 금액 : " + data.getTotal_price()+"");
         progressDetail.setLayoutManager(new LinearLayoutManager(context));
 
 
@@ -107,7 +118,7 @@ public class ProgressingDetailDialog extends DialogFragment {
                         Log.e("success", response);
                         jsonParsing(response);
                         applyAdapter(orderProgressDetailParsing.getOrders());
-                        if (orderProgressDetailParsing.getRequests()==null) {
+                        if (orderProgressDetailParsing.getRequests().equals("")) {
                             request.setText("요청사항이 없었습니다.");
                         } else {
                             request.setText(orderProgressDetailParsing.getRequests());
