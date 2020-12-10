@@ -1,14 +1,13 @@
 package com.example.wantchu;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -19,32 +18,41 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.AlertsAdapter;
 import com.example.wantchu.AdapterHelper.AlertsHelperClass;
+import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Fragment.TopBar;
-import com.example.wantchu.JsonParsingHelper.AlertIsNewParsing;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.gson.Gson;
 
-public class Alerts extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
-    RecyclerView eventsRecyclerView;
+import java.util.HashMap;
+
+public class Alerts extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity, AlertsAdapter.ClickAlert {
+    RecyclerView alertsRecyclerView;
     ProgressApplication progressApplication;
-    AlertsHelperClass eventsHelperData;
+    AlertsHelperClass alertsHelperClass;
     AlertsAdapter alertsAdapter;
-    SharedPreferences saveAtUserSawAlarmList;
+
+    SessionManager userInfo;
+    HashMap userData = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alert_list);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
-        eventsRecyclerView = findViewById(R.id.alert_list);
+        alertsRecyclerView = findViewById(R.id.alert_list);
+        userInfo = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        userData = userInfo.getUsersDetailFromSession();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         makeRequestForAlerts();
-        makeRequestForAlertsGetId();
     }
 
     private void makeRequestForAlerts() {
         UrlMaker urlMaker = new UrlMaker();
-        String url=urlMaker.UrlMake("AlertFindAll.do");
+        String url=urlMaker.UrlMake("AlertFindAll.do?phone="+userData.get(SessionManager.KEY_PHONENUMBER));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -59,38 +67,10 @@ public class Alerts extends AppCompatActivity implements TopBar.OnBackPressedInP
         });
         requestQueue.add(stringRequest);
     }
-    private void makeRequestForAlertsGetId() {
-        UrlMaker urlMaker = new UrlMaker();
-        String url=urlMaker.UrlMake("GetLatestAlertWhenMemberLogin.do");
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.i("AlertId", response);
-                alertIdParsing(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        requestQueue.add(stringRequest);
-    }
-
-    private void alertIdParsing(String response) {
-        Gson gson = new Gson();
-        AlertIsNewParsing parsing = gson.fromJson(response, AlertIsNewParsing.class);
-        saveAtUserSawAlarmList = getSharedPreferences("oldAlert", MODE_PRIVATE);
-        SharedPreferences.Editor editor = saveAtUserSawAlarmList.edit();
-        editor.putInt("alertId", parsing.getRecentlyAlertId());
-        editor.apply();
-        editor.commit();
-    }
-
     public void parsing(String response) {
         Gson gson = new Gson();
-        eventsHelperData = gson.fromJson(response, AlertsHelperClass.class);
-        if(!eventsHelperData.result) {
+        alertsHelperClass = gson.fromJson(response, AlertsHelperClass.class);
+        if(!alertsHelperClass.result) {
             Toast.makeText(this,"로딩 실패", Toast.LENGTH_LONG).show();
             progressApplication.progressOFF();
             return;
@@ -98,13 +78,22 @@ public class Alerts extends AppCompatActivity implements TopBar.OnBackPressedInP
         setRecyclerView();
     }
     public void setRecyclerView(){
-        alertsAdapter = new AlertsAdapter(this, eventsHelperData);
-        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        eventsRecyclerView.setAdapter(alertsAdapter);
+        alertsAdapter = new AlertsAdapter(this, alertsHelperClass, this);
+        alertsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        alertsRecyclerView.setAdapter(alertsAdapter);
         progressApplication.progressOFF();
     }
     @Override
     public void onBack() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void clickAlertListener(int alertId, int pos) {
+        Intent intent = new Intent(getApplicationContext(), Alert.class);
+        intent.putExtra("alertId", alertId);
+        intent.putExtra("alertTitle", alertsHelperClass.getAlert().get(pos).alert_title);
+        intent.putExtra("alertStartDate", alertsHelperClass.getAlert().get(pos).alert_startdate);
+        startActivity(intent);
     }
 }

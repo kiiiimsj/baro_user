@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="5dp"
     android:background="#ffffff">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/main"
-            android:fontFamily="@font/bmhannapro"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:fontFamily="@font/notosans_black"
             android:gravity="center"
             android:text="가게 검색"
             android:letterSpacing="0.3"
-            android:textColor="#ffffff"
-            android:textSize="16dp" />
+            android:textColor="#343434"
+            android:textSize="14dp" />
         <ImageButton
             android:id="@+id/close"
-            android:layout_marginRight="15dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@color/main"
             android:src="@drawable/ic_baseline_close_24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></ImageButton>
+            android:background="@color/white"
+            android:layout_width="50dp"
+            android:layout_height="50dp"></ImageButton>
     </RelativeLayout>
 
 
@@ -37,8 +38,6 @@
         android:padding="20dp"
         android:maxLength="10"
         android:maxLines="1"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></EditText>
 <!--    <TextView-->
@@ -55,29 +54,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/search"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="검색"
-            android:textColor="@color/black"
-            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:letterSpacing="0.2"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/button_border_empty"
-            android:fontFamily="@font/bmhannapro"/>
+            android:background="@drawable/button_border_full"
+            android:fontFamily="@font/notosans_bold"/>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+
 </LinearLayout>

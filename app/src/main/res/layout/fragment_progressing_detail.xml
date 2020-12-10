@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
+    android:layout_width="250dp"
     android:orientation="vertical"
     android:background="@color/white"
     android:padding="2dp"
@@ -21,17 +21,19 @@
             android:id="@+id/store_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/bmhannapro"
+            android:fontFamily="@font/notosans_bold"
             android:padding="5dp"
             android:text="도스마스 숭실대점"
-            android:textColor="@color/black"
+            android:textColor="#343434"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/deleteThis"
+            android:includeFontPadding="false"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:visibility="gone"
             android:id="@+id/deleteThis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,46 +60,65 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_marginHorizontal="10dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="9sp"
+            android:textColor="#343434"
+            android:fontFamily="@font/notosans_regular"
+            android:includeFontPadding="false"
             android:text="요청 사항"/>
         <TextView
             android:id="@+id/request"
-            android:padding="10dp"
+            android:padding="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="9sp"
+            android:textColor="#c4c4c4"
+            android:fontFamily="@font/notosans_regular"
+            android:includeFontPadding="false"
             android:text="요청사항이 없었습니다. "></TextView>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/main"/>
+
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_marginHorizontal="10dp"
         android:orientation="horizontal">
     <TextView
         android:layout_toLeftOf="@+id/won"
         android:id="@+id/totals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="총 결제 금액 : "
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_gravity="center_vertical"/>
+        android:layout_gravity="center_vertical"
+        android:textSize="11sp"
+        android:textColor="@color/main"
+        android:fontFamily="@font/notosans_bold"
+        android:includeFontPadding="false"/>
 
     <TextView
         android:id="@+id/won"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="원"
-        android:textColor="@color/black"
-        android:textSize="20sp"
         android:layout_gravity="center_vertical"
+        android:textSize="11sp"
+        android:textColor="@color/main"
+        android:fontFamily="@font/notosans_bold"
+        android:includeFontPadding="false"
         android:layout_alignParentRight="true"></TextView>
     </RelativeLayout>
+    <Button
+        android:id="@+id/okay"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/button_border_full"
+        android:text="확 인"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/notosans_bold"/>
 
 </LinearLayout>

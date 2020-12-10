@@ -49,7 +49,6 @@
                     android:background="@color/white"
                     android:fontFamily="@font/notosans_bold"
                     android:includeFontPadding="false"
-                    android:text="서울시 동작구"
                     android:textSize="14sp" />
 
                 <ImageView

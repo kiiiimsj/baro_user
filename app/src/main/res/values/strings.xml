@@ -15,6 +15,8 @@
     <string name="notice_title"> 타이틀 </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="viewpager_circle_indicator"><![CDATA["•"]]></string>
+    <string name="policy_in_basket">바로는 통신파매 중계자이며, 통신판매의 당사자가 아닙니다. 따라서 바로는 상품, 거래 정보 및 거래에 책임을 지지않습니다.</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 

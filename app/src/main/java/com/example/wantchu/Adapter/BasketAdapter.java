@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         HashMap<String, ExtraOrder> essentials = detailsFixToBasket.getEssentialOptions();
         HashMap<String,ExtraOrder> nonEssentials = detailsFixToBasket.getNonEssentialoptions();
         Iterator<String> iterator;
-        String essentialString="";
+        String essentialString=context.getString(R.string.viewpager_circle_indicator)+" ";
         int essentialPrice=0;
         if(detailsFixToBasket.getName().equals("")){
             return;
@@ -61,12 +62,6 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
             holder.essential.setVisibility(View.VISIBLE);
             iterator = essentials.keySet().iterator();
             while (iterator.hasNext()) {
-//                String key = iterator.next();
-//                Integer optionPrice = essentials.get(key);
-//                LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.activity_basket_item_child, null, false);
-//                ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(0)).setText(key);
-//                ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(1)).setText("" + optionPrice);
-//                holder.essential.addView(linearLayout);
                 String key = iterator.next();
                 Integer optionPrice = essentials.get(key).getExtra_price();
                 essentialString+=essentials.get(key).getExtra_name()+" / ";
@@ -96,7 +91,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                     continue;
                 }
                 LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.activity_basket_item_child2, null, false);
-                ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(0)).setText(key);
+                ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(0)).setText(context.getString(R.string.viewpager_circle_indicator)+" "+key);
                 ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(2)).setText("" + count);
                 ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(3)).setText("+ " + price);
                 holder.nonEssential.addView(linearLayout);
@@ -104,8 +99,8 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         }else{
             holder.nonEssential.setVisibility(View.GONE);
         }
-        ((TextView)holder.priceLinear.getChildAt(3)).setText("total : "+detailsFixToBasket.getPrice()+"원");
-        ((TextView)holder.priceLinear.getChildAt(2)).setText(""+detailsFixToBasket.getCount()+" 개");
+        ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getPrice()+"원 ");
+        ((TextView)holder.priceLinear.getChildAt(2)).setText(" "+detailsFixToBasket.getCount());
         ((TextView)holder.priceLinear.getChildAt(0)).setText(""+detailsFixToBasket.getPrice()/detailsFixToBasket.getCount()+" 원");
         holder.deleteThis.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -171,7 +166,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         LinearLayout nonEssential;
         ConstraintLayout priceLinear;
         ImageButton deleteThis;
-        LinearLayout parent;
+        RelativeLayout parent;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             parent = (itemView).findViewById(R.id.parent);

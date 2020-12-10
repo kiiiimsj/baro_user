@@ -40,7 +40,7 @@ public class ProgressDetailAdapter extends RecyclerView.Adapter<ProgressDetailAd
         ArrayList<OrderProgressDetailParsing.OrderProgressDetailParsingHelper.extras> extras = data.get(position).getExtras();
         holder.menu_name.setText(data.get(position).getMenu_name());
         holder.menu_defaultPrice.setText(data.get(position).getMenu_defaultprice()+"");
-        holder.count.setText(data.get(position).getOrder_count()+"");
+        holder.count.setText(data.get(position).getOrder_count()+" 개");
         int optionPrices = 0;
         holder.options.removeAllViews();
         for(int i = 0;i<extras.size();i++){

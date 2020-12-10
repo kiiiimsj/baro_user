@@ -6,66 +6,68 @@
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/white"
-        android:fontFamily="@font/notosans_bold"
+        android:fontFamily="@font/notosans_black"
         android:gravity="center"
         android:text="장바구니 담기 완료"
         android:textColor="#343434"
-        android:textSize="20dp" />
+        android:textSize="14sp" />
 
 
 
     <TextView
         android:id="@+id/mesgase"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
         android:gravity="center"
-        android:textColor="#000000"
-        android:fontFamily="@font/bmhannapro"
-        android:textSize="16dp"
+        android:textColor="#343434"
+        android:fontFamily="@font/notosans_regular"
+        android:textSize="12sp"
         android:text="성공적으로 장바구니에 물건이 담겼습니다"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/goStore"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="다른메뉴 보기"
             android:textColor="@color/white"
-            android:textSize="14dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
+            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
             android:background="@drawable/button_border_full"
             android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"
             />
 
         <Button
             android:id="@+id/goBasket"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="장바구니"
             android:textColor="@color/main"
-            android:textSize="14dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/button_border_empty"
-            android:fontFamily="@font/notosans_bold"/>
-
+            android:textSize="16sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/menu_non_select"
+            android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"/>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+
 </LinearLayout>

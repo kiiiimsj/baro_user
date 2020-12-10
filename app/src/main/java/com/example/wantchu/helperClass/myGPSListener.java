@@ -29,6 +29,7 @@ import com.naver.maps.map.NaverMapSdk;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -89,16 +90,16 @@ public class myGPSListener implements LocationListener {
             return;
         }
         makeRequestForMap(latitude, longitude,getAddress);
-        Geocoder geocoder = new Geocoder(context, Locale.KOREA);
-        try {
-            List<Address> list = geocoder.getFromLocation(latitude, longitude, 10);
-            Address address = list.get(0);
-            String fAddress = address.getSubLocality()+ " "+address.getThoroughfare();
-            getAddress.setText(fAddress); //--> 처리
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+//        Geocoder geocoder = new Geocoder(context, Locale.KOREA);
+//        try {
+//            List<Address> list = geocoder.getFromLocation(latitude, longitude, 10);
+//            Address address = list.get(0);
+//            String fAddress = address.getSubLocality()+ " "+address.getThoroughfare();
+//            getAddress.setText(fAddress); //--> 처리
+//        }
+//        catch(Exception e){
+//            e.printStackTrace();
+//        }
     }
     public void makeRequestForMap(double latitude, double longitude, final TextView getAddress) {
         String url = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords="+longitude+","+latitude+"&orders=roadaddr&output=json";
@@ -128,14 +129,14 @@ public class myGPSListener implements LocationListener {
     }
     public void parsing(String response, TextView getAddress) {
         try {
-            JSONObject jsonObject = new JSONObject(response);
-            if(jsonObject.getBoolean("result")) {
-                Log.e("name1 ", jsonObject.getJSONObject("area2").getString("name"));//"name 동작구"
-                Log.e("name2", jsonObject.getJSONObject("area3").getString("name"));//name
-            }
-            else {
-
-            }
+            JSONObject getJson = new JSONObject(response);
+            JSONObject results = new JSONObject(getJson.getJSONArray("results").getString(0));
+            JSONObject region = new JSONObject(results.getString("region"));
+            JSONObject area2 = new JSONObject(region.getString("area2"));
+            JSONObject area3 = new JSONObject(region.getString("area3"));
+            String area2Name = area2.getString("name");
+            String area3Name = area3.getString("name");
+            getAddress.setText(area2Name + " " + area3Name);
         }
         catch (JSONException e) {
 
