@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatRadioButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -84,7 +86,9 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
         final ArrayList<ToggleButton> toggleButtons = new ArrayList<>();
         int count = 0;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
-        TableLayout tableLayout = (TableLayout) inflater.inflate(R.layout.activity_order_details_essential_table,null,false);
+        RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.activity_order_details_essential_table,null,false);
+        LinearLayout reChild = (LinearLayout) relativeLayout.getChildAt(0);
+        LinearLayout reChildRadio = (LinearLayout) relativeLayout.getChildAt(1);
         final String text = mData.get(position);
         holder.optionName.setText(text);
 
@@ -182,8 +186,12 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                     trash.setVisibility(View.GONE);
                 }
             }
-            tableLayout.addView(parent);
-            holder.essentialOptionTableShell.addView(tableLayout);
+            if(extraOrders.size() > ONE_ROW){
+                reChildRadio.addView(parent);
+            }else {
+                reChild.addView(parent);
+            }
+            holder.essentialOptionTableShell.addView(relativeLayout);
         }
         else{
             return;

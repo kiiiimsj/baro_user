@@ -7,23 +7,25 @@
     android:orientation="vertical"
     android:paddingLeft="11dp"
     android:paddingRight="11dp"
+    android:layout_marginHorizontal="10dp"
     tools:context=".OrderDetails">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="10dp">
         <TextView
             android:layout_alignParentLeft="true"
             android:id="@+id/essentialOptionName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="#343434"
             android:letterSpacing="-0.02"
             android:background="@color/white"
             android:fontFamily="@font/notosans_regular"
+            android:includeFontPadding="false"
             android:text="옵션 종류명"/>
         <TextView
             android:id="@+id/selectedOptions"
@@ -31,10 +33,11 @@
             android:gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@color/main"
             android:letterSpacing="-0.02"
             android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"
             android:paddingRight="18dp"
             />
     </RelativeLayout>
@@ -43,7 +46,7 @@
         android:id="@+id/tableShell"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="10dp"
         >
     </LinearLayout>
 

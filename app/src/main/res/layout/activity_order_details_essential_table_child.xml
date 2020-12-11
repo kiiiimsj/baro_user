@@ -2,21 +2,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    android:baselineAligned="false" android:gravity="center"
+    android:gravity="center"
     android:id="@+id/optionTableRow"
     android:orientation="horizontal">
 
     <LinearLayout
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+
         android:orientation="vertical">
 
         <ToggleButton
@@ -28,9 +27,10 @@
             android:gravity="center"
             android:text="옵 션"
             android:textColor="@color/lightGray"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:letterSpacing="-0.02"
-            android:minHeight="0dp"
+            android:minWidth="120dp"
+            android:minHeight="40dp"
             android:fontFamily="@font/notosans_bold">
         </ToggleButton>
 
@@ -49,15 +49,14 @@
     </LinearLayout>
     <LinearLayout
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+
         android:orientation="vertical">
 
         <ToggleButton
@@ -69,10 +68,12 @@
             android:gravity="center"
             android:text="옵 션"
             android:textColor="@color/lightGray"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:fontFamily="@font/notosans_bold"
             android:letterSpacing="-0.02"
-            android:minHeight="0dp">
+            android:minWidth="120dp"
+            android:minHeight="40dp"
+            >
         </ToggleButton>
 
         <TextView
@@ -90,15 +91,14 @@
     </LinearLayout>
     <LinearLayout
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+
         android:orientation="vertical">
 
         <ToggleButton
@@ -110,10 +110,12 @@
             android:gravity="center"
             android:text="옵 션"
             android:textColor="@color/lightGray"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:letterSpacing="-0.02"
             android:fontFamily="@font/notosans_bold"
-            android:minHeight="0dp">
+            android:minWidth="120dp"
+            android:minHeight="40dp"
+            >
         </ToggleButton>
 
         <TextView
