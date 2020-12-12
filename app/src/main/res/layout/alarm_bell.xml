@@ -10,5 +10,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contextClickable="true"
-        android:src="@drawable/alert_off" />
+        android:src="@drawable/off" />
 </RelativeLayout>

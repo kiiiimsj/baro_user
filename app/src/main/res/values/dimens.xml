@@ -1,4 +1,5 @@
-<resources>
+<resources  xmlns:tools="http://schemas.android.com/tools">
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="order_list_cart_dp">80dp</dimen>
+    <dimen name="design_bottom_navigation_height" tools:override="true">49dp</dimen>
 </resources>

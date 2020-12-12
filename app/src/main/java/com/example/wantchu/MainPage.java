@@ -63,7 +63,7 @@ import java.util.Map;
 
 public class MainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, UltraStoreListAdapter.OnListItemLongSelectedInterface, UltraStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemLongSelectedInterface {
 
-    private static String TAG = "MainPage";
+    final private String TAG = this.getClass().getSimpleName();
     RecyclerView mRecyclerView;
     private Intent serviceIntent;
     //울트라store recycler
@@ -543,5 +543,9 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         intent.putExtra("store_id", viewHolder.storeId.getText().toString());
         Log.e("ultraid", viewHolder.storeId.getText().toString());
         startActivity(intent);
+    }
+    @Override
+    public void onBackPressed() {
+        Log.i(TAG, "true");
     }
 }

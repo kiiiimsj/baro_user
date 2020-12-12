@@ -18,12 +18,10 @@
 
         <LinearLayout
             android:id="@+id/header"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="19dp"
-            android:paddingBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
             android:orientation="vertical">
 
             <ImageView
@@ -58,15 +56,14 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="7dp"
                     android:layout_toRightOf="@id/address"
-                    android:background="@color/white"
-                    android:src="@drawable/my_map_click" />
+                    android:src="@drawable/arrow_down" />
                 <ImageView
                     android:id="@+id/search_dialog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/search"
+                    android:src="@drawable/search_icon"
                     android:layout_toLeftOf="@id/logo_image"
                     />
 
