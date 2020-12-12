@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnItemCilckListener, IfLogoutDialog.clickButton{
+    final private String TAG = this.getClass().getSimpleName();
     int[] counts;
     ArrayList<String> lists;
 
@@ -283,5 +284,10 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
                 startActivity(new Intent(MyPage.this, TermsOfUse.class));
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.i(TAG, "true");
     }
 }

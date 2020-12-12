@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class OrderProgressing extends AppCompatActivity {
+    final private String TAG = this.getClass().getSimpleName();
     Gson gson;
     OrderProgressingParsing orderProgressingParsing;
 
@@ -104,5 +105,9 @@ public class OrderProgressing extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
+    }
+    @Override
+    public void onBackPressed() {
+        Log.i(TAG, "true");
     }
 }

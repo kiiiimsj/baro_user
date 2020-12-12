@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string-array name="event_list_status_spinner">
+        <item>전체</item>
+        <item>진행중</item>
+        <item>완료</item>
+    </string-array>
+</resources>

@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class OrderHistory extends AppCompatActivity {
+    final private String TAG = this.getClass().getSimpleName();
     private final static int FIRST = 1;
     private final static int AFTER_FIRST = 2;
     String phoneNumber;
@@ -146,5 +147,10 @@ public class OrderHistory extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.i(TAG, "true");
     }
 }

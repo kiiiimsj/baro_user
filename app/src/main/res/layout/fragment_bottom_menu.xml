@@ -13,14 +13,16 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/real_bottom"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
+            android:layout_height="@dimen/design_bottom_navigation_height"
             android:background="@color/white"
             app:labelVisibilityMode="labeled"
             app:itemRippleColor="@color/invisible"
             app:itemIconTint="@drawable/bottom_menu_check_color"
             app:itemTextColor="@drawable/bottom_menu_check_color"
-            app:menu="@menu/bottom_menu" />
+            app:itemIconSize="16dp"
+            app:itemTextAppearanceActive="@style/bottom_text_style"
+            app:itemTextAppearanceInactive="@style/bottom_text_style"
+            app:menu="@menu/bottom_menu"
+            tools:ignore="PrivateResource" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </FrameLayout>

@@ -80,10 +80,10 @@ public class AlarmBell extends Fragment {
 
     private void compareNumber() {
         if(getUnReadAlertCount == 0) {
-            alarmBell.setImageResource(R.drawable.alert_off);
+            alarmBell.setImageResource(R.drawable.off);
         }
         else if (getUnReadAlertCount > 0){
-            alarmBell.setImageResource(R.drawable.alert_on);
+            alarmBell.setImageResource(R.drawable.on);
         }
     }
 
