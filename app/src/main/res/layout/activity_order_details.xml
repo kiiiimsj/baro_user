@@ -36,11 +36,12 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:fontFamily="@font/brandon_grotesque_black"
+                android:fontFamily="@font/notosans_bold"
+                android:includeFontPadding="false"
                 android:gravity="center"
                 android:text="카페"
                 android:textColor="@color/black"
-                android:textSize="25sp" />
+                android:textSize="27sp" />
 
 
         </RelativeLayout>
@@ -84,7 +85,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/notosans_black"
                             android:text="카페"
-                            android:textSize="14sp"
+                            android:textSize="16sp"
                             android:textColor="#343434"
                             android:letterSpacing="-0.02" />
                         <LinearLayout
@@ -111,7 +112,7 @@
                                     android:text="0"
                                     android:letterSpacing="-0.02"
                                     android:fontFamily="@font/metropolis_semibold"
-                                    android:textSize="14sp"/>
+                                    android:textSize="16sp"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -122,7 +123,7 @@
                                     android:letterSpacing="-0.02"
                                     android:text="원"
                                     android:textColor="@color/main"
-                                    android:textSize="14sp"></TextView>
+                                    android:textSize="16sp"></TextView>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -136,19 +137,20 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
+                                android:paddingVertical="10dp"
+                                android:paddingRight="10dp"
                                 android:background="@color/white"
                                 android:src="@drawable/minus"
                                 android:textStyle="bold"/>
 
                             <TextView
-                                android:layout_marginRight="10dp"
-                                android:layout_marginLeft="10dp"
                                 android:id="@+id/itemCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@color/main"
-                                android:textSize="14dp"
+                                android:textSize="16sp"
+                                android:layout_marginHorizontal="10dp"
                                 android:includeFontPadding="false"
                                 android:letterSpacing="-0.02"
                                 android:fontFamily="@font/notosans_bold"
@@ -156,6 +158,7 @@
 
                             <ImageButton
                                 android:id="@+id/itemPlus"
+                                android:padding="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -192,24 +195,24 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/black"/>
+                    android:background="#c4c4c4"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:padding="10dp"
                     android:text="필수 옵션"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/notosans_regular"
-                    android:textSize="12sp" />
+                    android:textColor="#343434"
+                    android:fontFamily="@font/notosans_bold"
+                    android:paddingBottom="5dp"
+                    android:textSize="14sp" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/menuRecyler_Essential"
                     android:scrollbars="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
                 </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
             <LinearLayout
@@ -248,8 +251,8 @@
 <!--                    android:background="@color/black"/>-->
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray"/>
+                    android:layout_height="1px"
+                    android:background="#c4c4c4"/>
                 <ExpandableListView
                     android:id="@+id/menuExpand_NotEssential"
                     android:scrollbarThumbVertical="@color/black"
