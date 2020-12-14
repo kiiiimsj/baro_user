@@ -89,7 +89,7 @@ import kr.co.bootpay.rest.BootpayRestImplement;
 import kr.co.bootpay.rest.model.RestEasyPayUserTokenData;
 import kr.co.bootpay.rest.model.RestTokenData;
 
-public class Basket extends AppCompatActivity implements BootpayRestImplement, TopBar.OnBackPressedInParentActivity {
+public class Basket extends AppCompatActivity implements BootpayRestImplement, TopBar.OnBackPressedInParentActivity, BasketAdapter.deleteItem {
     public static Basket basket;
     public static final String IN_MY_BASEKT = "inMyBasket";
     public static final String BasketList = "basketList";
@@ -98,6 +98,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     RecyclerView recyclerView;
     LinearLayout recyclerViewShell;
     Button button;
+    Button deleteAll;
 
     private WebSocketClient webSocketClient;
     int store_id;
@@ -135,6 +136,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
         basket = Basket.this;
         button = findViewById(R.id.pay);
+        deleteAll = findViewById(R.id.deleteAll);
         recyclerView = findViewById(R.id.basketList);
         recyclerViewShell = findViewById(R.id.linearLayout2);
         storeNameTextView = findViewById(R.id.store_name);
@@ -172,14 +174,9 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 e.printStackTrace();
             }
         }
-        for (int i = 0; i < detailsFixToBaskets.size(); i++) {
-            if((detailsFixToBaskets.get(i).getName().equals(""))){
-                continue;
-            }
-            totalPrice += detailsFixToBaskets.get(i).getPrice();
-        }
-        finalPayValue.setText(totalPrice+"원");
-        basketAdapter = new BasketAdapter(detailsFixToBaskets, this);
+        recalculateTotalPrice();
+        finalPayValue.setText(totalPrice+" 원");
+        basketAdapter = new BasketAdapter(detailsFixToBaskets, this,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(basketAdapter);
         if(storeName!="") {
@@ -368,8 +365,30 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             }
             totalPrice += detailsFixToBaskets.get(i).getPrice();
         }
-    }
+        finalPayValue.setText(totalPrice+" 원");
 
+    }
+    public void pressDeleteAll(View view) {
+        if (detailsFixToBaskets.size() > 0) {
+            Toast.makeText(this, "장바구니의 내용이 모두 삭제 되었습니다", Toast.LENGTH_SHORT).show();
+            detailsFixToBaskets.clear();
+            deleteBasket();
+        } else{
+            Toast.makeText(this, "이미 장바구니가 비어있습니다", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void deleteBasket(){
+        SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(Basket.IN_MY_BASEKT);
+        editor.remove("orderCnt");
+        editor.commit();
+        whenDataChanged();
+        recalculateTotalPrice();
+    }
+    public void whenDataChanged(){
+        basketAdapter.notifyDataSetChanged();
+    }
     public void onClick_onestore(View v) {
         Toast.makeText(this, "왜안되노", Toast.LENGTH_LONG).show();
 
@@ -744,5 +763,16 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     public void onBack() {
         super.onBackPressed();
     }
+
+
     //결제==================================
+
+    @Override
+    public void delete(int i) {
+        if (i > 0) {
+            recalculateTotalPrice();
+        }else {
+            finish();
+        }
+    }
 }

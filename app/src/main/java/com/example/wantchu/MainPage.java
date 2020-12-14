@@ -155,13 +155,13 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         call_search = findViewById(R.id.search_dialog);
         /////////
         startLocation();
-        if (OrderCancelIfNotAccept.serviceIntent==null) {
-            serviceIntent = new Intent(this, OrderCancelIfNotAccept.class);
-            startService(serviceIntent);
-        } else {
-            serviceIntent = OrderCancelIfNotAccept.serviceIntent;//getInstance().getApplication();
-            Toast.makeText(getApplicationContext(), "already", Toast.LENGTH_LONG).show();
-        }
+//        if (OrderCancelIfNotAccept.serviceIntent==null) {
+//            serviceIntent = new Intent(this, OrderCancelIfNotAccept.class);
+//            startService(serviceIntent);
+//        } else {
+//            serviceIntent = OrderCancelIfNotAccept.serviceIntent;//getInstance().getApplication();
+//            Toast.makeText(getApplicationContext(), "already", Toast.LENGTH_LONG).show();
+//        }
 
         makeRequestForEventThread();
         // 타입 버튼 동적으로 만드는 메소드

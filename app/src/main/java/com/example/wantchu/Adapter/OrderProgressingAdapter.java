@@ -3,6 +3,8 @@ package com.example.wantchu.Adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,7 +81,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         final OrderProgressingParsingHelper reverse = mData.get(mData.size()-position-1);
         holder.order_date.setText(reverse.getOrder_date());
         holder.stores_name.setText(reverse.getStore_name());
-        holder.total_prices.setText("합계 : " + reverse.getTotal_price()+" 원");
+        holder.total_prices.setText(reverse.getTotal_price()+"");
         holder.showDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,20 +96,16 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
 
         if(reverse.getOrder_state().equals(ACCEPT)){
             holder.order_state.setText("제 조 중");
-            holder.progressBar.setProgress(67);
+            holder.chageViewColor(2);
+
         }
         else if(reverse.getOrder_state().equals(PREPARING)){
             holder.order_state.setText("접 수 대 기");
-            holder.progressBar.setProgress(34);
+            holder.chageViewColor(1);
         }else{
-            ;
+            holder.chageViewColor(3);
         }
-        if (holder.naverMap == null){
-            Log.e(TAG,"NULL");
-        }
-        Marker marker = new Marker();
-        marker.setPosition(new LatLng(reverse.getStore_latitude(),reverse.getStore_longitude()));
-        marker.setMap(holder.naverMap);
+
 //        FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
 //        FragmentTransaction ft = fm.beginTransaction();
 //        ft.replace(holder.map.getId(),new OrderProgressingMap(reverse.getStore_latitude(),reverse.getStore_longitude())).commit();
@@ -148,18 +146,26 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder  implements OnMapReadyCallback{
+    public class ViewHolder extends RecyclerView.ViewHolder{
         TextView order_state;
         TextView order_date;
         TextView stores_name;
         TextView total_prices;
         ImageView store_image;
         LinearLayout shell;
-        ProgressBar progressBar;
-        MapView map;
-        NaverMap naverMap;
         Button showDetails;
         Button callStore;
+        ImageView firstState;
+        ImageView secondState;
+        ImageView thirdState;
+        View firstLine;
+        View secondLine;
+        View thirdLine;
+        TextView payComplete;
+        TextView accept;
+        TextView making;
+        TextView takeout;
+        ArrayList<Status> statuses = new ArrayList<>();
         public ViewHolder(@NonNull View itemView, int po) {
             super(itemView);
             order_state = (itemView).findViewById(R.id.order_state);
@@ -168,47 +174,43 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
             total_prices = (itemView).findViewById(R.id.totalPrices);
             shell = (itemView).findViewById(R.id.shellProgressingItem);
             store_image = (itemView).findViewById(R.id.store_image);
-            progressBar = (itemView).findViewById(R.id.progressBar);
             showDetails = (itemView).findViewById(R.id.show_details);
             callStore = (itemView).findViewById(R.id.call_store);
-            map = (itemView).findViewById(R.id.map_view);
-            map.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Marker marker = new Marker();
-                    marker.setPosition(new LatLng(37.5670135, 126.9783740));
-                    marker.setMap(naverMap);
-                }
-            });
-            Marker marker = new Marker();
-            marker.setPosition(new LatLng(37.5670135, 126.9783740));
-            marker.setMap(naverMap);
+            firstState = (itemView).findViewById(R.id.firstState);
+            secondState = (itemView).findViewById(R.id.secondState);
+            thirdState = (itemView).findViewById(R.id.thirdState);
+            firstLine = (itemView).findViewById(R.id.firstLine);
+            secondLine = (itemView).findViewById(R.id.secondLine);
+            thirdLine = (itemView).findViewById(R.id.thridLine);
+            payComplete = (itemView).findViewById(R.id.payComplete);
+            accept = (itemView).findViewById(R.id.accpept);
+            making = (itemView).findViewById(R.id.making);
+            takeout = (itemView).findViewById(R.id.takeout);
+
+            makeStatusData();
+
+
             makeRequest( mData.get(mData.size()-po-1).getStore_image(),context,store_image);
 //            }
         }
- //////// 2020 12 04 해당부분 호출안됨 naverMap이 null이라 마커심기가 불가능;
-        @Override
-        public void onMapReady(@NonNull final NaverMap naverMap) {
-            this.naverMap = naverMap;
-            Log.e(TAG,"readyready");
-            naverMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
-                    Log.e(TAG,"WHYWHWYWHWY");
-                    Marker marker = new Marker();
-                    marker.setPosition(new LatLng(37.5670135, 126.9783740));
-                    marker.setMap(naverMap);
-                }
-            });
-            CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(37.5670135, 126.9783740));
-            naverMap.moveCamera(cameraUpdate);
-            if (this.naverMap == null){
-                Log.e(TAG,"ALSO");
-            }
-            Marker marker = new Marker();
-            marker.setPosition(new LatLng(37.5670135, 126.9783740));
-            marker.setMap(naverMap);
+        private void makeStatusData(){
+            Status status = new Status(firstState,firstLine,payComplete);
+            statuses.add(status);
+            status = new Status(secondState,secondLine,accept);
+            statuses.add(status);
+            status = new Status(secondState,secondLine,making);
+            statuses.add(status);
+        }
 
+        private void chageViewColor(int num) {
+            for (int i = 0 ;i<num;i++){
+                statuses.get(i).changeColor();
+                if (i == num - 1){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        statuses.get(i).state.setTextColor(context.getColor(R.color.black));
+                    }
+                }
+            }
         }
 
 
@@ -233,5 +235,27 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
                     }
                 });
         requestQueue.add(request);
+    }
+
+
+    private class Status {
+        ImageView imageView;
+        View line;
+        TextView state;
+
+        public Status(ImageView imageView, View line,TextView state) {
+            this.imageView = imageView;
+            this.line = line;
+            this.state = state;
+        }
+        private void changeColor() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                imageView.setBackground(context.getDrawable(R.drawable.on));
+
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                line.setBackgroundColor(context.getColor(R.color.main));
+            }
+        }
     }
 }

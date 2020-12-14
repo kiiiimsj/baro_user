@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wantchu.AdapterHelper.ExtraOrder;
+import com.example.wantchu.Dialogs.LastItemDialog;
 import com.example.wantchu.R;
 import com.example.wantchu.helperClass.DetailsFixToBasket;
 import com.google.gson.Gson;
@@ -23,13 +24,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder> {
+public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder>{
     private ArrayList<DetailsFixToBasket> detailsFixToBaskets;
     private Context context;
-    public BasketAdapter(ArrayList<DetailsFixToBasket> detailsFixToBaskets,Context context) {
+    private deleteItem mListener;
+    public BasketAdapter(ArrayList<DetailsFixToBasket> detailsFixToBaskets,Context context,deleteItem mListener) {
         this.detailsFixToBaskets = detailsFixToBaskets;
         this.context = context;
+        this.mListener = mListener;
     }
+
+
+    public interface deleteItem {
+        void delete(int count);
+    }
+
 
     public ArrayList<DetailsFixToBasket> getDetailsFixToBaskets() {
         return detailsFixToBaskets;
@@ -105,19 +114,33 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         holder.deleteThis.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                detailsFixToBaskets.get(position).setName("");
-                detailsFixToBaskets.remove(position);
-                Log.i("FIXTOSIZE",detailsFixToBaskets.size()+"");
-                holder.parent.removeView(holder.parent);
-                Gson gson = new Gson();
-                for(int i = 0;i<detailsFixToBaskets.size();i++){
-                    Log.e("change",gson.toJson(detailsFixToBaskets.get(i),DetailsFixToBasket.class));
-                }
+                if (detailsFixToBaskets.size() == 1) {
+                    LastItemDialog dialog = new LastItemDialog(context, new LastItemDialog.DoDelete() {
+                        @Override
+                        public void doDelete() {
+                            detailsFixToBaskets.remove(position);
+                            notifyItemRemoved(position);
+                            notifyDataSetChanged();
+                            mListener.delete(0);
+                        }
+                    });
+                    dialog.callFunction();
+                }else {
+                    detailsFixToBaskets.get(position).setName("");
+                    detailsFixToBaskets.remove(position);
+                    Log.i("FIXTOSIZE", detailsFixToBaskets.size() + "");
+                    holder.parent.removeView(holder.parent);
+                    Gson gson = new Gson();
+                    for (int i = 0; i < detailsFixToBaskets.size(); i++) {
+                        Log.e("change", gson.toJson(detailsFixToBaskets.get(i), DetailsFixToBasket.class));
+                    }
 
 //                ((LinearLayout)holder.deleteThis.getParent()).removeAllViews();
-                notifyItemRemoved(position);
-                notifyDataSetChanged();
+                    notifyItemRemoved(position);
+                    notifyDataSetChanged();
 //                notifyItemRangeChanged(position, detailsFixToBaskets.size());
+                    mListener.delete(detailsFixToBaskets.size());
+                }
             }
         });
     }
