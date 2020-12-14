@@ -16,7 +16,7 @@
         android:includeFontPadding="false"
         android:letterSpacing="0.3"
         android:textColor="#343434"
-        android:textSize="16dp" />
+        android:textSize="16sp" />
 
 
     <TextView
@@ -29,8 +29,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="#000000"
-        android:fontFamily="@font/bmhannapro"
-        android:textSize="16dp"
+        android:fontFamily="@font/notosans_regular"
+        android:includeFontPadding="false"
+        android:textSize="16sp"
         android:text="주문 결제가 취소 되었습니다"/>
 
 
@@ -44,13 +45,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/main"
+            android:fontFamily="@font/notosans_bold"
             android:gravity="center"
+            android:letterSpacing="0.2"
             android:text="확 인"
             android:textColor="@color/white"
-            android:textSize="16dp"
-            android:letterSpacing="0.2"
-            android:background="@color/main"
-            android:fontFamily="@font/notosans_bold"/>
+            android:textSize="16sp" />
     </LinearLayout>
 
     <View

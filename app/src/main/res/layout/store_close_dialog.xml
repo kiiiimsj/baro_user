@@ -8,18 +8,13 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#8D00F1"
-        android:fontFamily="@font/bmhannapro"
+        android:background="@color/white"
+        android:fontFamily="@font/notosans_bold"
         android:gravity="center"
         android:text="점포 영업 종료"
         android:letterSpacing="0.3"
-        android:textColor="#ffffff"
-        android:textSize="16dp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+        android:textColor="#343434"
+        android:textSize="16sp" />
 
     <TextView
         android:padding="20dp"
@@ -28,35 +23,31 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="#000000"
-        android:fontFamily="@font/bmhannapro"
-        android:textSize="16dp"
+        android:fontFamily="@font/notosans_regular"
+        android:includeFontPadding="false"
+        android:textSize="16sp"
         android:text="해당 점포의 영업시간이 종료 되었습니다\n 다른 점포를 선택해주세요!"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
+        android:padding="5dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/okay"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/button_border_full"
+            android:fontFamily="@font/notosans_bold"
             android:gravity="center"
-            android:text="다른 점포 보기"
-            android:textColor="@color/black"
-            android:textSize="16dp"
+            android:includeFontPadding="false"
             android:letterSpacing="0.2"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/button_border_empty"
-            android:fontFamily="@font/bmhannapro"/>
+            android:text="다른 점포 보기"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
 </LinearLayout>
