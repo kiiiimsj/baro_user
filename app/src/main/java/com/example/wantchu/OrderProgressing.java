@@ -1,5 +1,6 @@
 package com.example.wantchu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -108,6 +109,7 @@ public class OrderProgressing extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Log.i(TAG, "true");
+        startActivity(new Intent(this, MainPage.class));
+        finish();
     }
 }

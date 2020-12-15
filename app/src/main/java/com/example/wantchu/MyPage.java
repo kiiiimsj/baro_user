@@ -288,6 +288,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
 
     @Override
     public void onBackPressed() {
-        Log.i(TAG, "true");
+        startActivity(new Intent(this, MainPage.class));
+        finish();
     }
 }
