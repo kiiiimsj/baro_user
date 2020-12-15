@@ -47,11 +47,11 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="다른메뉴 보기"
-            android:textColor="@color/white"
+            android:textColor="@color/main"
             android:textSize="16sp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/button_border_full"
+            android:background="@drawable/menu_non_select"
             android:fontFamily="@font/notosans_bold"
             android:includeFontPadding="false"
             />
@@ -63,11 +63,11 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="장바구니"
-            android:textColor="@color/main"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/menu_non_select"
+            android:background="@drawable/menu_select"
             android:fontFamily="@font/notosans_bold"
             android:includeFontPadding="false"/>
     </LinearLayout>

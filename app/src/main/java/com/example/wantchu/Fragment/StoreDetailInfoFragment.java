@@ -123,11 +123,11 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
         storePhone.setText(storeDetailData.getStore_phone());
         storeLocation.setText(storeDetailData.getStore_location());
 
-        storeIntro.setPaintFlags(storeIntro.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//        storeIntro.setPaintFlags(storeIntro.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         eventBenefit.setPaintFlags(eventBenefit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        eventsBenefitsLayout.setVisibility(View.INVISIBLE);
+        eventsBenefitsLayout.setVisibility(View.GONE);
 
-        storeInfoTitle.setPaintFlags(eventBenefit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//        storeInfoTitle.setPaintFlags(eventBenefit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 //        mapReady();
     }
 //    public void mapReady() {

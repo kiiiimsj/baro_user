@@ -244,7 +244,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     private void mRecyclerView(){
         mRecyclerView.setHasFixedSize(true);
         ArrayList<ListStoreHelperClass> DataList = new ArrayList<>();
-        ArrayList<ListStoreHelperClass> DataListForIsOpen = new ArrayList<>();
+//        ArrayList<ListStoreHelperClass> DataListForIsOpen = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         int [] storeIds = new int[listStoreParsing.store.size()];
@@ -262,20 +262,22 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
             storeIds[i] = listStoreParsing.store.get(i).getStore_id();
 
             listStoreHelperClass.storesIsOpen.add(listStoreParsing.store.get(i).getIs_open());
-            if(listStoreParsing.store.get(i).getIs_open().equals("Y")) {
-                DataListForIsOpen.add(listStoreHelperClass);
-                continue;
-            }
+//            if(listStoreParsing.store.get(i).getIs_open().equals("Y")) {
+//                DataListForIsOpen.add(listStoreHelperClass);
+//                continue;
+//            }
             DataList.add(listStoreHelperClass);
         }
-        DataListForIsOpen.addAll(DataList);
+//        DataListForIsOpen.addAll(DataList);
+//        DataList.addAll(DataList);
         SharedPreferences getStoreId = getSharedPreferences("storeID", MODE_PRIVATE);
         getStoreId.edit().putString("listStore", listStoreParsing.toString()).apply();
         getStoreId.edit().putInt("currentPos", currentPos);
         getStoreId.edit().apply();
         getStoreId.edit().commit();
 
-        adapter = new ListStoreAdapter(DataListForIsOpen, this, this,  this);
+//        adapter = new ListStoreAdapter(DataListForIsOpen, this, this,  this);
+        adapter = new ListStoreAdapter(DataList, this, this,  this);
         mRecyclerView.setAdapter(adapter);
         progressApplication.progressOFF();
         refreshLayout.setRefreshing(false);

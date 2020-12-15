@@ -78,7 +78,11 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
     public void onBindViewHolder(@NonNull ListStoreAdapter.ListStoreViewHolder holder, int position) {
         ListStoreHelperClass listStoreHelperClass = listStoreLocations.get(position);
         holder.storeName.setText(listStoreHelperClass.storeName);
-        holder.mDistance.setText(String.valueOf((int)listStoreHelperClass.storeDistance + "m"));
+        if (listStoreHelperClass.storeDistance > 1000){
+            holder.mDistance.setText(String.format("%,.1f", ((int)listStoreHelperClass.storeDistance / 100) * 0.1) + "km");
+        }else {
+            holder.mDistance.setText((int) listStoreHelperClass.storeDistance + "m");
+        }
         holder.storeId.setText(String.valueOf(listStoreHelperClass.storeId));
         if(listStoreHelperClass.storeIsOpen != null) {
             if(listStoreHelperClass.storeIsOpen.equals("N")) {
