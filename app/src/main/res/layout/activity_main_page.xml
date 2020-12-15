@@ -78,90 +78,95 @@
             </RelativeLayout>
 
         </LinearLayout>
-
-        <ScrollView
-            android:id="@+id/advertise"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/bottom_menu"
             android:layout_below="@id/header">
-
-            <RelativeLayout
+            <ScrollView
+                android:id="@+id/advertise"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
-                <com.example.wantchu.helperClass.ViewPagerCustomDuration
-                    android:id="@+id/info_image"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="@color/gray" />
-                <TextView
-                    android:id="@+id/event_count"
-                    android:background="@drawable/event_count_background_border_full"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="5dp"
-                    android:letterSpacing="-0.03"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignBottom="@id/info_image"
-                    android:fontFamily="@font/metropolis_regular"
-                    android:textSize="10sp"
-                    android:textColor="@color/white"
-                    android:text="1  /  2"
-                    android:layout_margin="16dp"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/info_image"
-                    />
-                <View
-                    android:layout_below="@id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"
-                    android:background="#d3d3d3"/>
-                <TextView
-                    android:id="@+id/ultra_store_title"
-                    android:layout_below="@id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
-                    android:text="여기 어때요?"
-                    android:padding="10dp"
-                    android:textSize="15sp"
-                    android:textColor="@color/main"
-                    android:fontFamily="@font/notosans_regular"
-                    />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_below="@id/ultra_store_title"
-                    android:id="@+id/ultra_store"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <View
-                    android:layout_below="@id/ultra_store"
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"
-                    android:background="#d3d3d3"/>
-                <TextView
-                    android:id="@+id/new_store_title"
-                    android:layout_below="@id/ultra_store"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
-                    android:text="신규 매장"
-                    android:padding="10dp"
-                    android:textSize="15sp"
-                    android:textColor="@color/main"
-                    android:fontFamily="@font/notosans_regular"
-                    />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_below="@id/new_store_title"
-                    android:id="@+id/new_store"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-        </ScrollView>
+                    android:layout_height="wrap_content">
+                    <com.example.wantchu.helperClass.ViewPagerCustomDuration
+                        android:id="@+id/info_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@color/gray" />
+                    <TextView
+                        android:id="@+id/event_count"
+                        android:background="@drawable/event_count_background_border_full"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="5dp"
+                        android:letterSpacing="-0.03"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignBottom="@id/info_image"
+                        android:fontFamily="@font/metropolis_regular"
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:text="1  /  2"
+                        android:layout_margin="16dp"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/info_image"
+                        />
+                    <View
+                        android:layout_below="@id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:background="#d3d3d3"/>
+                    <TextView
+                        android:id="@+id/ultra_store_title"
+                        android:layout_below="@id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="여기 어때요?"
+                        android:padding="10dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/main"
+                        android:fontFamily="@font/notosans_regular"
+                        />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_below="@id/ultra_store_title"
+                        android:id="@+id/ultra_store"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View
+                        android:layout_below="@id/ultra_store"
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:background="#d3d3d3"/>
+                    <TextView
+                        android:id="@+id/new_store_title"
+                        android:layout_below="@id/ultra_store"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="신규 매장"
+                        android:padding="10dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/main"
+                        android:fontFamily="@font/notosans_regular"
+                        />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_below="@id/new_store_title"
+                        android:id="@+id/new_store"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
         <fragment
             android:id="@+id/cart_click_button"

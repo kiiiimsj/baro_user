@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Request;
@@ -100,33 +101,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     myGPSListener myGPSListener;
     ///////// 태영
     ImageView call_search;
+    SwipeRefreshLayout refreshLayout;
     /////////
-    void goChangSin(){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://celebe.ohmyapp.io/bnb/aggregateForTable",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e(TAG+"SUCCESS",response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG+"FAIL",error.toString());
-                    }
-                }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("metaCode","boardEvent");
-                params.put("collectionName","boardEvent");
-                params.put("documentJson", "{\"pipeline\":{\"$skip\":0,\"$limit\":10,\"$sort\":{\"_updateTime\":1}}}");
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,7 +117,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         newStoreRecyclerView = findViewById(R.id.new_store);
 
         viewPager = findViewById(R.id.info_image);
-//        goChangSin();
         eventCountSet = findViewById(R.id.event_count);
         AppStartAdDialog appStartAdDialog = new AppStartAdDialog(MainPage.this);
         appStartAdDialog.callFunction();
@@ -153,6 +128,15 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         storeSessionManager.setIsFavorite(false);
         ///////// 태영
         call_search = findViewById(R.id.search_dialog);
+        refreshLayout = findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.e(TAG,TAG);
+                latLng = myGPSListener.startLocationService(mAddress);
+                refreshLayout.setRefreshing(false);
+            }
+        });
         /////////
         startLocation();
 //        if (OrderCancelIfNotAccept.serviceIntent==null) {
