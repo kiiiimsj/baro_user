@@ -103,7 +103,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2px"
-            android:background="@color/main"/>
+            android:background="#c4c4c4"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

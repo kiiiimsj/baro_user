@@ -41,8 +41,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="가게소개"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textColor="#343434"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/notosans_black"
+                    android:includeFontPadding="false"/>
 
                 <TextView
                     android:id="@+id/store_info"
@@ -50,7 +52,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="많은 양과 낮은 가격 메머드에 중독되다"
-                    android:textSize="13sp" />
+                    android:textSize="15sp"
+                    android:textColor="#343434"
+                    android:fontFamily="@font/notosans_regular"
+                    android:includeFontPadding="false"/>
             </LinearLayout>
 
             <LinearLayout
@@ -92,8 +97,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:text="영업정보"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textColor="#343434"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/notosans_black"
+                        android:includeFontPadding="false"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -104,14 +111,22 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="운영시간" />
+                            android:text="운영시간 : "
+                            android:textSize="13sp"
+                            android:textColor="#343434"
+                            android:fontFamily="@font/notosans_bold"
+                            android:includeFontPadding="false"/>
 
                         <TextView
                             android:id="@+id/open_close"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="09:00 ~ 21:00"
-                            android:textAlignment="center" />
+                            android:textAlignment="center"
+                            android:textSize="13sp"
+                            android:textColor="#343434"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -122,13 +137,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="휴무일" />
+                            android:text="휴무일 : "
+                            android:textSize="13sp"
+                            android:textColor="#343434"
+                            android:fontFamily="@font/notosans_bold"
+                            android:includeFontPadding="false"/>
 
                         <TextView
                             android:id="@+id/days_off"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="매주 월, 금 " />
+                            android:text="매주 월, 금 "
+                            android:textSize="13sp"
+                            android:textColor="#343434"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -140,20 +163,24 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="전화번호 : " />
+                            android:text="전화번호 : "
+                            android:textSize="13sp"
+                            android:textColor="#343434"
+                            android:fontFamily="@font/notosans_bold"
+                            android:includeFontPadding="false"/>
 
                         <TextView
                             android:id="@+id/store_phone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="02-882-9592" />
+                            android:text="02-882-9592"
+                            android:textSize="13sp"
+                            android:textColor="#343434"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"/>
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/store_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="서울시 성북구 종암로 25길 30" />
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -163,8 +190,20 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="가게 위치 : " />
-
+                            android:text="가게 위치 : "
+                            android:textSize="13sp"
+                            android:textColor="#343434"
+                            android:fontFamily="@font/notosans_bold"
+                            android:includeFontPadding="false"/>
+                        <TextView
+                            android:id="@+id/store_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="서울시 성북구 종암로 25길 30"
+                            android:textSize="13sp"
+                            android:textColor="#343434"
+                            android:fontFamily="@font/notosans_regular"
+                            android:includeFontPadding="false"/>
                     </LinearLayout>
 
                 </LinearLayout>
