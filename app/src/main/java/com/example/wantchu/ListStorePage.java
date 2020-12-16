@@ -350,13 +350,13 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     }
 
     @Override
-    public void onItemLongSelected(View v, int adapterPosition) {
-        ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
-        Intent intent = new Intent(ListStorePage.this, StoreInfoReNewer.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
-        intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
-        startActivity(intent);
+    public void onItemLongSelected(View v, int adapterPosition) { // 필요없는기능이라 판단되 막아둠 ( onItemSelected 와 동일한 기능을함)
+//        ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
+//        Intent intent = new Intent(ListStorePage.this, StoreInfoReNewer.class);
+////        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//        intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
+//        intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
+//        startActivity(intent);
     }
     @Override
     public void onItemSelected(View v, int position) {
@@ -378,8 +378,8 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     }
     @Override
     public void onBack() {
-        super.onBackPressed();
-
+        onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
 //        overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
     }
 

@@ -9,6 +9,8 @@ import android.webkit.WebViewClient;
 
 import com.example.wantchu.Fragment.TopBar;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class TermsOfUse extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     WebView mWebView;
     @Override
@@ -33,6 +35,11 @@ public class TermsOfUse extends AppCompatActivity implements TopBar.OnBackPresse
 
     @Override
     public void onBack() {
+        onBackPressed();
+    }
+    @Override
+    public void onBackPressed() {
         super.onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
     }
 }

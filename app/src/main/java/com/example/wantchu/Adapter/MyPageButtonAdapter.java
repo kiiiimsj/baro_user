@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -82,33 +83,37 @@ public class MyPageButtonAdapter extends RecyclerView.Adapter<MyPageButtonAdapte
 
     public class MyPageViewHolder extends RecyclerView.ViewHolder {
         View bottomLine;
-        View topLine;
         TextView buttonText;
-        LinearLayout backSize;
+        RelativeLayout backSize;
         public MyPageViewHolder(@NonNull View itemView, final int po) {
             super(itemView);
             buttonText = itemView.findViewById(R.id.my_page_button);
-            backSize = itemView.findViewById(R.id.my_page_expandable_layout);
             bottomLine = itemView.findViewById(R.id.bottom_line);
-            topLine = itemView.findViewById(R.id.top_line);
+            backSize = itemView.findViewById(R.id.my_page_background);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mListener.itemClick(po);
                 }
             });
-            if(po == 0) {
-                topLine.setVisibility(View.VISIBLE);
-            }
             if(po == 3) {
-                LinearLayout.MarginLayoutParams vl = new LinearLayout.MarginLayoutParams(backSize.getLayoutParams());
-                vl.setMargins(0,20,0, 0);
-                backSize.setLayoutParams(new LinearLayout.LayoutParams(vl));
+                View addLine = new View(context);
+                addLine.setMinimumHeight((int) 0.5);
+                addLine.setMinimumWidth(backSize.getWidth());
+                addLine.setBackgroundColor(context.getResources().getColor(R.color.home_background));
+                addLine.setBottom(backSize.getBottom());
+
+                int resizeHeight = backSize.getHeight();
+                resizeHeight += addLine.getHeight();
+
+
             }
             if(po == 5) {
-                LinearLayout.MarginLayoutParams vl = new LinearLayout.MarginLayoutParams(backSize.getLayoutParams());
-                vl.setMargins(0,20,0, 0);
-                backSize.setLayoutParams(new LinearLayout.LayoutParams(vl));
+                View addLine = new View(context);
+                addLine.setMinimumHeight((int) 0.5);
+                addLine.setMinimumWidth(backSize.getWidth());
+                addLine.setBackgroundColor(context.getResources().getColor(R.color.home_background));
+                addLine.setBottom(backSize.getBottom());
             }
 //            if(buttonList.size() == po + 1) {
 //                bottomLine.setVisibility(View.GONE);

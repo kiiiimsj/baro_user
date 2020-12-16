@@ -12,6 +12,8 @@ import com.example.wantchu.Basket;
 import com.example.wantchu.OrderDetails;
 import com.example.wantchu.R;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class CustomDialog {
 
     private Context context;
@@ -38,8 +40,10 @@ public class CustomDialog {
                 Intent intent = new Intent(context, Basket.class);
                 intent.putExtra("onDialog", true);
                 context.startActivity(intent);
+
                 OrderDetails orderDetails = (OrderDetails)OrderDetails.orderDetails;
                 orderDetails.finish();
+                CustomIntent.customType(context,"left-to-right");
                 dlg.dismiss();
             }
         });

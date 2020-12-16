@@ -347,7 +347,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
 
     @Override
     public void onBack() {
-        super.onBackPressed();
+        onBackPressed();
     }
 
     @Override

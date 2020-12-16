@@ -88,6 +88,7 @@ import kr.co.bootpay.rest.BootpayRest;
 import kr.co.bootpay.rest.BootpayRestImplement;
 import kr.co.bootpay.rest.model.RestEasyPayUserTokenData;
 import kr.co.bootpay.rest.model.RestTokenData;
+import maes.tech.intentanim.CustomIntent;
 
 public class Basket extends AppCompatActivity implements BootpayRestImplement, TopBar.OnBackPressedInParentActivity, BasketAdapter.deleteItem {
     public static Basket basket;
@@ -761,7 +762,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
     @Override
     public void onBack() {
-        super.onBackPressed();
+        onBackPressed();
     }
 
 
@@ -775,4 +776,15 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             finish();
         }
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        CustomIntent.customType(this,"right-to-left");
+    }
+
 }
