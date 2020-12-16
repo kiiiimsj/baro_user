@@ -1,9 +1,11 @@
 package com.example.wantchu.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -152,6 +154,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         TextView stores_name;
         TextView total_prices;
         ImageView store_image;
+        TextView store_phone;
         LinearLayout shell;
         Button showDetails;
         Button callStore;
@@ -174,6 +177,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
             total_prices = (itemView).findViewById(R.id.totalPrices);
             shell = (itemView).findViewById(R.id.shellProgressingItem);
             store_image = (itemView).findViewById(R.id.store_image);
+            store_phone = (itemView).findViewById(R.id.store_phone);
             showDetails = (itemView).findViewById(R.id.show_details);
             callStore = (itemView).findViewById(R.id.call_store);
             firstState = (itemView).findViewById(R.id.firstState);
@@ -186,6 +190,14 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
             accept = (itemView).findViewById(R.id.accpept);
             making = (itemView).findViewById(R.id.making);
             takeout = (itemView).findViewById(R.id.takeout);
+
+            callStore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + store_phone));
+                    context.startActivity(intent);
+                }
+            });
 
             makeStatusData();
 
@@ -250,7 +262,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         }
         private void changeColor() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                imageView.setBackground(context.getDrawable(R.drawable.alert_on));
+                imageView.setBackground(context.getDrawable(R.drawable.radio_on));
 
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
