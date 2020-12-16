@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class ChangeEmail2 extends AppCompatActivity {
 
     @Override
@@ -18,4 +20,10 @@ public class ChangeEmail2 extends AppCompatActivity {
         startActivity(new Intent(ChangeEmail2.this, MyPage.class));
         finish();
     }
+    @Override
+    public void finish() {
+        super.finish();
+        CustomIntent.customType(this,"right-to-left");
+    }
+
 }

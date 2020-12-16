@@ -30,6 +30,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     String email;
     String phone;
@@ -147,6 +149,11 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
 
     @Override
     public void onBack() {
+        onBackPressed();
+    }
+    @Override
+    public void onBackPressed() {
         super.onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
     }
 }

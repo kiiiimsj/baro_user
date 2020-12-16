@@ -157,7 +157,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(0, 0);
+//        overridePendingTransition(0, 0);
     }
     private void setMyInfo() {
         SessionManager sessionManager = new SessionManager(MyPage.this, SessionManager.SESSION_USERSESSION);
@@ -273,6 +273,8 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         switch (position) {
             case 0 :
                 startActivity(new Intent(MyPage.this, Notice.class));
+                CustomIntent.customType(MyPage.this,"left-to-right");
+
                 break;
             case 1 :
             case 2 :
@@ -280,13 +282,16 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
                 break;
             case 3:
                 startActivity(new Intent(MyPage.this,ChangePass1Logging.class));
+                CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
             case 4:
                 startActivity(new Intent(MyPage.this, ChangeEmail.class));
+                CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
             case 5 :
             case 6 :
                 startActivity(new Intent(MyPage.this, TermsOfUse.class));
+                CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
         }
     }
