@@ -159,7 +159,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                                 must--;
                                 holder.selectedOptions.setText("");
                                 priceTotal.setText(String.valueOf(originPrice - (itemCount * changePrice)));
-                                name.setBackgroundResource(R.drawable.layout_border_3dp);
+                                name.setBackgroundResource(R.drawable.menu_non_select);
                                 name.setTextColor(ContextCompat.getColor(context, R.color.lightGray));
                             }
                         }

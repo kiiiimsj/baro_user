@@ -48,6 +48,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class OrderDetails extends AppCompatActivity {
     public static OrderDetails orderDetails;
     ImageView imageView;
@@ -444,7 +446,7 @@ public class OrderDetails extends AppCompatActivity {
     }
 
     public void onClickBack(View view) {
-        super.onBackPressed();
+        onBackPressed();
     }
 
     private void setExpandableListViewHeight(ExpandableListView listView, int group) {
@@ -480,5 +482,9 @@ public class OrderDetails extends AppCompatActivity {
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
+    }
 }

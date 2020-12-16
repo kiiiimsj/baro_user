@@ -170,6 +170,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 //                Intent intent = new Intent(getApplicationContext(), MyMap.class);
                 Intent intent = new Intent(getApplicationContext(), NewMyMap.class);
                 startActivity(intent);
+                CustomIntent.customType(MainPage.this,"right-to-left");
             }
         });
         mMapButton.setOnClickListener(new View.OnClickListener(){
@@ -178,6 +179,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View view) {
                 Intent intent = new Intent(MainPage.this, NewMyMap.class);
                 startActivity(intent);
+                CustomIntent.customType(MainPage.this,"right-to-left");
             }
         });
 
@@ -515,6 +517,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", viewHolder.storeId.getText().toString());
         startActivity(intent);
+        CustomIntent.customType(this,"left-to-right");
     }
 
     @Override
@@ -536,6 +539,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         intent.putExtra("store_id", viewHolder.storeId.getText().toString());
         Log.e("ultraid", viewHolder.storeId.getText().toString());
         startActivity(intent);
+        CustomIntent.customType(this,"left-to-right");
     }
     @Override
     public void onBackPressed() {
