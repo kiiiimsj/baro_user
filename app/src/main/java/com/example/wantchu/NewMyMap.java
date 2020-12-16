@@ -59,6 +59,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, TopBar.OnBackPressedInParentActivity {
     private MapView mapView;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
@@ -263,6 +265,7 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
                 Intent intent = new Intent(NewMyMap.this, StoreInfoReNewer.class);
                 intent.putExtra("store_id", storeDetailData.getStore_id()+"");
                 startActivity(intent);
+                CustomIntent.customType(NewMyMap.this,"left-to-right");
             }
         });
     }
@@ -329,6 +332,11 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
 
     @Override
     public void onBack() {
+        onBackPressed();
+    }
+    @Override
+    public void onBackPressed() {
         super.onBackPressed();
+        CustomIntent.customType(this,"left-to-right");
     }
 }
