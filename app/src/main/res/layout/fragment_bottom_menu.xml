@@ -17,8 +17,6 @@
             android:background="@color/white"
             app:labelVisibilityMode="labeled"
             app:itemRippleColor="@color/invisible"
-            app:itemIconTint="@drawable/bottom_menu_check_color"
-            app:itemTextColor="@drawable/bottom_menu_check_color"
             app:itemIconSize="16dp"
             app:itemTextAppearanceActive="@style/bottom_text_style"
             app:itemTextAppearanceInactive="@style/bottom_text_style"
