@@ -71,10 +71,10 @@ public class BottomMenu extends Fragment {
             case "MainPage" :
                 realBottom.getMenu().getItem(0).setChecked(true);
                 break;
-            case "OrderProgressing" :
+            case "ListStoreFavoritePage" :
                 realBottom.getMenu().getItem(1).setChecked(true);
                 break;
-            case "ListStoreFavoritePage" :
+            case "OrderProgressing" :
                 realBottom.getMenu().getItem(2).setChecked(true);
                 break;
             case "OrderHistory" :

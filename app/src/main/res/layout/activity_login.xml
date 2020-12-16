@@ -48,7 +48,7 @@
 <!--        android:src="@drawable/categories_restaurant_background" />-->
     <ScrollView
         android:layout_marginTop="27dp"
-        android:background="@drawable/login_background"
+        android:background="@drawable/layout_border_50dp_top_left_top_right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text"
         android:orientation="vertical"
@@ -153,7 +153,7 @@
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_border_full"
+                android:background="@drawable/layout_border_5dp_main"
                 android:layout_marginTop="56dp"
                 android:onClick="onClickLogin"
                 android:text="로그인"

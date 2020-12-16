@@ -231,7 +231,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="50dp"
-                        android:background="@drawable/edit_text_border"/>
+                        android:background="@drawable/layout_border_3dp_stroke_2dp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:paddingHorizontal="5dp"
@@ -246,7 +246,7 @@
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
                         android:fontFamily="@font/notosans_bold"
-                        android:background="@drawable/button_border_full"
+                        android:background="@drawable/layout_border_5dp_main"
                         android:text="결 제 하 기"
                         android:textSize="17sp"
                         android:textColor="@color/white"

@@ -32,7 +32,7 @@
                 android:layout_marginVertical="10dp"
                 android:layout_marginHorizontal="10dp"
 
-                android:background="@drawable/button_full_gray"
+                android:background="@drawable/layout_border_3dp"
                 android:elevation="8dp"
                 android:paddingHorizontal="20dp"
                 android:backgroundTintMode="src_over"
@@ -75,7 +75,7 @@
                 android:id="@+id/alert_content_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_full_gray"
+                android:background="@drawable/layout_border_3dp"
                 android:elevation="8dp"
                 android:backgroundTintMode="src_over"
                 android:backgroundTint="@color/white"

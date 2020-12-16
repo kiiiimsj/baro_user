@@ -52,7 +52,7 @@
     <LinearLayout
         android:padding="20dp"
         android:orientation="vertical"
-        android:background="@drawable/login_background"
+        android:background="@drawable/layout_border_50dp_top_left_top_right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/register_title"
         android:layout_marginTop="27dp"
@@ -100,7 +100,7 @@
             android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_border_full"
+            android:background="@drawable/layout_border_5dp_main"
             android:onClick="verifyPhone"
             android:text="입력하기"
             android:textSize="16dp"
