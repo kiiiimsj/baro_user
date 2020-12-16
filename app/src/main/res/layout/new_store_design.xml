@@ -45,7 +45,7 @@
             android:text="영업중"
             android:textColor="@color/white"
             android:textSize="10sp"
-            android:background="@drawable/layout_border_10dp"
+            android:background="@drawable/layout_border_5dp"
             android:paddingHorizontal="5dp"
             android:paddingVertical="2dp"
             android:backgroundTintMode="src_in"

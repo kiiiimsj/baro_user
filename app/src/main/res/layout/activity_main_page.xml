@@ -97,7 +97,7 @@
                         android:background="@color/gray" />
                     <TextView
                         android:id="@+id/event_count"
-                        android:background="@drawable/layout_border_10dp"
+                        android:background="@drawable/layout_border_5dp"
                         android:backgroundTintMode="src_in"
                         android:backgroundTint="@color/transparent_color"
                         android:layout_width="wrap_content"
