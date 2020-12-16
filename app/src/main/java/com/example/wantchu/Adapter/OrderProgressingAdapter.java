@@ -83,6 +83,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         final OrderProgressingParsingHelper reverse = mData.get(mData.size()-position-1);
         holder.order_date.setText(reverse.getOrder_date());
         holder.stores_name.setText(reverse.getStore_name());
+        holder.store_phone.setText(reverse.getStore_phone());
         holder.total_prices.setText(reverse.getTotal_price()+"");
         holder.showDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,18 +192,22 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
             making = (itemView).findViewById(R.id.making);
             takeout = (itemView).findViewById(R.id.takeout);
 
-            callStore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + store_phone));
-                    context.startActivity(intent);
-                }
-            });
+
 
             makeStatusData();
 
 
             makeRequest( mData.get(mData.size()-po-1).getStore_image(),context,store_image);
+
+            callStore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e("asdf", store_phone.getText().toString());
+                    Log.e("asdff", "click");
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + store_phone.getText().toString()));
+                    context.startActivity(intent);
+                }
+            });
 //            }
         }
         private void makeStatusData(){
@@ -224,7 +229,6 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
                 }
             }
         }
-
 
     }
     public static void makeRequest(String imageName, Context context, final ImageView image) {

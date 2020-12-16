@@ -28,6 +28,7 @@
             app:tabIndicatorColor="@color/bottom_icon_color_select"
             app:tabTextColor="@color/text_info_color"
             app:cardBackgroundColor="@color/black"
+            android:background="@color/white"
             app:cardCornerRadius="5dp">
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/order_history_list"
