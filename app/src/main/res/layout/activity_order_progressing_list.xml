@@ -40,7 +40,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:clickable="false"
-                    android:background="@drawable/alert_off"
+                    android:background="@drawable/radio_off"
                     android:textColor="@color/main"/>
                 <View
                     android:id="@+id/firstLine"
@@ -54,7 +54,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:clickable="false"
-                    android:background="@drawable/alert_off"
+                    android:background="@drawable/radio_off"
                     android:textColor="@color/main"/>
                 <View
                     android:id="@+id/secondLine"
@@ -68,7 +68,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:clickable="false"
-                    android:background="@drawable/alert_off"
+                    android:background="@drawable/radio_off"
                     android:textColor="@color/main"/>
                 <View
                     android:id="@+id/thridLine"
@@ -82,7 +82,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:clickable="false"
-                    android:background="@drawable/alert_off"
+                    android:background="@drawable/radio_off"
                     android:textColor="@color/main"/>
             </LinearLayout>
             <LinearLayout
