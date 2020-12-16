@@ -35,6 +35,8 @@ import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     private final String TAG = this.getClass().getSimpleName();
     CouponAdapter couponAdapter;
@@ -141,5 +143,10 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
     @Override
     public void onBack() {
         super.onBackPressed();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
     }
 }

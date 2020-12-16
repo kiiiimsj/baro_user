@@ -84,7 +84,7 @@ public class OrderHistory extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(0, 0);
+//        overridePendingTransition(0, 0);
     }
     private synchronized void makeRequest(final int state) {
         UrlMaker urlMaker = new UrlMaker();

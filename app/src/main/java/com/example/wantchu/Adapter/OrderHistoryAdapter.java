@@ -35,6 +35,8 @@ import com.example.wantchu.Url.UrlMaker;
 
 import java.util.ArrayList;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> {
     static ArrayList<OrderHistoryParsingHelper> order;
     Context context;
@@ -107,6 +109,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                 intent.putExtra("store_id",reverse.getStore_id());
                 intent.putExtra("store_name",reverse.getStore_name());
                 context.startActivity(intent);
+                CustomIntent.customType(context,"left-to-right");
             }
         });
 
