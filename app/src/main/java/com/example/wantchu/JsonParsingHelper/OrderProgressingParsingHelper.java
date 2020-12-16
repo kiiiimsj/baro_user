@@ -4,6 +4,7 @@ public class OrderProgressingParsingHelper {
     String order_date;
     String receipt_id;
     String store_name;
+    String store_phone;
     int total_price;
     String order_state;
     int total_count;
@@ -54,5 +55,9 @@ public class OrderProgressingParsingHelper {
 
     public void setStore_latitude(Double store_latitude) {
         this.store_latitude = store_latitude;
+    }
+
+    public String getStore_phone() {
+        return store_phone;
     }
 }

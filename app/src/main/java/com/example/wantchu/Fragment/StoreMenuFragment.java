@@ -320,6 +320,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         intent.putExtra("storeNumber",storeDetail.getStore_phone());//가게 전화번호
 
         startActivity(intent);
+
     }
 
     @Override
