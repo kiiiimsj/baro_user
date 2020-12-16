@@ -18,17 +18,12 @@
     <color name="bottom_icon_unselect">#c7a9ed</color>
     <color name="map_marker_content_background">#CFFFFFFF</color>
     <color name="invisible">#00FFFFFF</color>
+    <color name="border_gray">#c4c4c4</color>
 
     <color name="nearWhite">#FCF7FF</color>
     <color name="littleGray">#EDEDED</color>
+    <color name="main_page_store_view_detail_color">#6d6d6d</color>
 
-
-    <!--      Dashboard Colors      -->
-
-    <!--  Body and background Colors  -->
-    <color name="home_background">#f2f5f8</color>
-
-    <!--  Card Colors  -->
-
-    <!-- 태영 -->
+    <color name="home_background">#f9f9f9</color>
+    <color name="transparent_color">#75828282</color>
 </resources>

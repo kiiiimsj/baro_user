@@ -53,7 +53,7 @@
         android:layout_marginTop="27dp"
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/login_background">
+        android:background="@drawable/layout_border_50dp_top_left_top_right">
         <TextView
             android:id="@+id/findPass_title"
             android:layout_width="wrap_content"
@@ -127,7 +127,7 @@
             android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_border_full"
+            android:background="@drawable/layout_border_5dp_main"
             android:onClick="onClickPassword"
             android:text="완료"
             android:textSize="16dp"

@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:background="@drawable/button_border_empty"
+                android:background="@drawable/layout_border_3dp"
                 android:text="등록"
                 android:textSize="15sp"
                 android:textColor="#343434"

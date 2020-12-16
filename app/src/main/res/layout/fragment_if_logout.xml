@@ -50,7 +50,7 @@
             android:letterSpacing="0.2"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/button_border_full"
+            android:background="@drawable/layout_border_5dp_main"
             android:fontFamily="@font/notosans_bold"/>
         <Button
             android:id="@+id/dialog_close"
@@ -64,7 +64,7 @@
             android:letterSpacing="0.2"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/button_border_empty"
+            android:background="@drawable/layout_border_3dp"
             android:fontFamily="@font/notosans_bold"/>
     </LinearLayout>
 

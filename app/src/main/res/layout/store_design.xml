@@ -52,7 +52,7 @@
                     android:paddingVertical="3dp"
                     android:text="영업중"
                     android:textSize="10sp"
-                    android:background="@drawable/border_3dp_in_list_store"
+                    android:background="@drawable/layout_radius_3dp_color_main"
                     android:textColor="@color/white"
                     android:fontFamily="@font/notosans_regular"
                     android:includeFontPadding="false"

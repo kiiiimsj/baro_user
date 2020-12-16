@@ -50,7 +50,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/login_background"
+        android:background="@drawable/layout_border_50dp_top_left_top_right"
         app:layout_constraintTop_toBottomOf="@id/textView2"
         android:layout_marginTop="27dp"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -207,7 +207,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="39dp"
-                android:background="@drawable/button_border_full"
+                android:background="@drawable/layout_border_5dp_main"
                 android:onClick="onClickRegister"
                 android:text="회원가입 완료"
                 android:textColor="@color/white"

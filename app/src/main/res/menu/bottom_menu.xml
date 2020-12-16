@@ -6,15 +6,16 @@
         android:icon="@drawable/bottom_home_off"
         android:title="홈"
         />
-    <item
-        android:id="@+id/bottomIconClock"
-        android:icon="@drawable/bottom_order_status_off"
-        android:title="주문현황"
-        />
+
     <item
         android:id="@+id/bottomIconMyStore"
         android:icon="@drawable/bottom_favorite_off"
         android:title="찜한 가게"
+        />
+    <item
+        android:id="@+id/bottomIconClock"
+        android:icon="@drawable/bottom_order_status_off"
+        android:title="주문현황"
         />
     <item
         android:id="@+id/bottomIconOrderList"
