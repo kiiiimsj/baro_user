@@ -3,27 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/bottomIconHome"
-        android:icon="@drawable/home_off"
+        android:icon="@drawable/bottom_home_off"
         android:title="홈"
         />
     <item
         android:id="@+id/bottomIconClock"
-        android:icon="@drawable/order_progress_off"
+        android:icon="@drawable/bottom_order_status_off"
         android:title="주문현황"
         />
     <item
         android:id="@+id/bottomIconMyStore"
-        android:icon="@drawable/my_favorite_off"
+        android:icon="@drawable/bottom_favorite_off"
         android:title="찜한 가게"
         />
     <item
         android:id="@+id/bottomIconOrderList"
-        android:icon="@drawable/order_history_off"
+        android:icon="@drawable/bottom_history_off"
         android:title="주문내역"
         />
     <item
         android:id="@+id/bottomIconMyPage"
-        android:icon="@drawable/mypage_off"
+        android:icon="@drawable/bottom_my_page_off"
         android:title="마이페이지"
         />
 </menu>

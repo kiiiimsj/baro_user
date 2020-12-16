@@ -17,7 +17,7 @@
         android:scaleX="1.5"
         android:scaleY="1.5"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_baseline_shopping_cart_24" />
+        android:src="@drawable/profile_01" />
 
     <TextView
         android:id="@+id/get_cart_session"

@@ -125,7 +125,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
 
                     makeRequestFavorteRem(url, hashMap);
                     //mFavorite.setImageResource(R.drawable.heart_empty);
-                    topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_empty);
+                    topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_empty);
                     result = false;
                     DeleteFavoriteDialog deleteFavoriteDialog = new DeleteFavoriteDialog(StoreInfoReNewer.this);
                     deleteFavoriteDialog.callFunction();
@@ -145,7 +145,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
                     makeRequestFavoriteReg(url, hashMap);
 
                     //mFavorite.setImageResource(R.drawable.heart_full);
-                    topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_full);
+                    topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_fill);
                     result = true;
                     AddFavoriteDialog addFavoriteDialog = new AddFavoriteDialog(StoreInfoReNewer.this);
                     addFavoriteDialog.callFunction();
@@ -206,10 +206,10 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
             e.printStackTrace();
         }
         if(result) {
-            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_full);
+            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_fill);
         }
         else {
-            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.heart_empty);
+            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_empty);
         }
     }
     private void makeRequestFavorteRem(String url, HashMap<String, String> data) {

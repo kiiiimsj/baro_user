@@ -180,7 +180,7 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
             marker.setPosition(storeLatlng);
             int height = 27;
             int width = 20 ;
-            BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.map_marker_purple);
+            BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.store_marker);
             Bitmap b = bitmapdraw.getBitmap();
             Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
             marker.setIcon(OverlayImage.fromBitmap(smallMarker));

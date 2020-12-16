@@ -69,19 +69,19 @@ public class BottomMenu extends Fragment {
     private void setBottomButtonColor() {
         switch (getTokenActivityName(getActivity().toString())) {
             case "MainPage" :
-                realBottom.getMenu().getItem(0).setChecked(true);
+                realBottom.getMenu().getItem(0).setIcon(R.drawable.bottom_home_on);
                 break;
             case "OrderProgressing" :
-                realBottom.getMenu().getItem(1).setChecked(true);
+                realBottom.getMenu().getItem(1).setIcon(R.drawable.bottom_order_status_on);
                 break;
             case "ListStoreFavoritePage" :
-                realBottom.getMenu().getItem(2).setChecked(true);
+                realBottom.getMenu().getItem(2).setIcon(R.drawable.bottom_favorite_on);
                 break;
             case "OrderHistory" :
-                realBottom.getMenu().getItem(3).setChecked(true);
+                realBottom.getMenu().getItem(3).setIcon(R.drawable.bottom_history_on);
                 break;
             case "MyPage" :
-                realBottom.getMenu().getItem(4).setChecked(true);
+                realBottom.getMenu().getItem(4).setIcon(R.drawable.bottom_my_page_on);
                 break;
         }
     }
