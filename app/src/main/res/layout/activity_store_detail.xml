@@ -47,7 +47,7 @@
                     android:includeFontPadding="false"/>
 
                 <TextView
-                    android:id="@+id/store_info"
+                    android:id="@+id/store_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"

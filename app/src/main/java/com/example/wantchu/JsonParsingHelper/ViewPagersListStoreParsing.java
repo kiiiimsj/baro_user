@@ -37,6 +37,7 @@ public class ViewPagersListStoreParsing {
         String is_open;
         String store_name;
         String store_image;
+        double distance;
 
         public int getStore_id() {
             return store_id;
@@ -54,6 +55,21 @@ public class ViewPagersListStoreParsing {
             this.store_info = store_info;
         }
 
+        public double getDistance() {
+            return distance;
+        }
+
+        public void setDistance(double distance) {
+            this.distance = distance;
+        }
+
+        public String getIs_open() {
+            return is_open;
+        }
+
+        public void setIs_open(String is_open) {
+            this.is_open = is_open;
+        }
 
         public String getStore_name() {
             return store_name;

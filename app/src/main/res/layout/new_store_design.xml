@@ -2,9 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="11dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    android:layout_marginHorizontal="11dp"
+    >
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,24 +17,40 @@
             android:layout_below="@id/store_image"
             android:id="@+id/store_name"
             android:layout_marginTop="8dp"
-            android:textSize="12sp"
-            android:maxLines="1"
-            android:textStyle="normal"
-            android:letterSpacing="-0.02"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_below="@id/store_name"
-            android:id="@+id/store_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:maxLines="1"
+            android:textStyle="normal"
+            android:letterSpacing="-0.02"/>
+        <TextView
+            android:layout_below="@id/store_name"
+            android:id="@+id/store_distance"
             android:layout_marginTop="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textStyle="normal"
             android:textSize="10sp"
             android:maxLines="1"
             android:textColor="@color/main_page_store_view_detail_color"
             android:layout_marginBottom="19dp"/>
-
+        <TextView
+            android:id="@+id/is_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/store_image"
+            android:layout_alignEnd="@id/store_image"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            android:text="영업중"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:background="@drawable/layout_border_10dp"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="2dp"
+            android:backgroundTintMode="src_in"
+            android:backgroundTint="@color/gray"
+            />
         <TextView
             android:id="@+id/store_id"
             android:layout_width="wrap_content"
