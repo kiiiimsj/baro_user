@@ -22,29 +22,32 @@
         android:scrollbarSize="0dp">
 
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/table_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp">
+                >
 
                 <RelativeLayout
+                    android:id="@+id/user_info_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp">
+                    android:layout_marginTop="31dp"
+                    android:layout_marginStart="17dp"
+                    >
 
                     <ImageView
                         android:id="@+id/user_picture"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/profile_01" />
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:src="@drawable/my_page_profile" />
 
                     <RelativeLayout
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="20dp"
                         android:layout_toRightOf="@id/user_picture"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -57,17 +60,21 @@
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/notosans_bold"
                             android:includeFontPadding="false"
-                            android:text="홍길동님 >"
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:text="홍길동님"
+                            android:letterSpacing="-0.02"
+                            android:textColor="@color/more_bright_gray"
+                            android:textSize="14sp" />
                         <TextView
                             android:layout_below="@id/user_name_space"
                             android:id="@+id/phone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/notosans_bold"
+                            android:fontFamily="@font/notosans_regular"
                             android:includeFontPadding="false"
-                            android:textSize="11sp"
+                            android:textColor="@color/main_page_store_view_detail_color"
+                            android:textStyle="normal"
+                            android:letterSpacing="-0.03"
+                            android:textSize="10sp"
                             android:text="01093756927"
                             />
                         <TextView
@@ -75,20 +82,22 @@
                             android:id="@+id/email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/notosans_bold"
+                            android:fontFamily="@font/notosans_regular"
                             android:includeFontPadding="false"
-                            android:textSize="11sp"
+                            android:textColor="@color/main_page_store_view_detail_color"
+                            android:textStyle="normal"
+                            android:letterSpacing="-0.03"
+                            android:textSize="10sp"
                             android:text="sky_battle@naver.com"
                             />
                     </RelativeLayout>
                 </RelativeLayout>
-
                 <LinearLayout
+                    android:layout_below="@id/user_info_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="5dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginHorizontal="17dp"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/recycler_view_border_line"
                     android:baselineAligned="false" android:orientation="horizontal"
                     android:padding="12dp"
@@ -99,19 +108,19 @@
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="3">
-
                         <TextView
                             android:id="@+id/order_history_button_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="12dp"
-                            android:fontFamily="@font/notosans_regular"
+                            android:fontFamily="@font/notosans_bold"
                             android:includeFontPadding="false"
+                            android:letterSpacing="-0.03"
+                            android:textColor="@color/more_bright_gray"
+                            android:textSize="11sp"
                             android:text="주문내역"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
+                            />
                         <TextView
                             android:id="@+id/order_history_count"
                             android:layout_width="wrap_content"
@@ -123,16 +132,18 @@
                             android:includeFontPadding="false"
                             android:text="0"
                             android:textSize="11sp"
+                            android:textStyle="normal"
+                            android:letterSpacing="-0.03"
                             android:textColor="@color/main" />
 
                         <View
                             android:id="@+id/side_line1"
-                            android:layout_width="2dp"
+                            android:layout_width="0.5dp"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@id/order_history_button_title"
                             android:layout_alignBottom="@id/order_history_count"
-                            android:layout_alignParentRight="true"
-                            android:background="@color/gray" />
+                            android:layout_alignParentEnd="true"
+                            android:background="@color/border_gray" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -147,11 +158,13 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="12dp"
-                            android:fontFamily="@font/notosans_regular"
+                            android:text="내 쿠폰"
+                            android:fontFamily="@font/notosans_bold"
                             android:includeFontPadding="false"
-                            android:text="쿠 폰"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:textStyle="normal"
+                            android:letterSpacing="-0.03"
+                            android:textColor="@color/more_bright_gray"
+                            android:textSize="11sp" />
 
                         <TextView
                             android:id="@+id/my_coupon_count"
@@ -162,18 +175,20 @@
                             android:fontFamily="@font/notosans_regular"
                             android:includeFontPadding="false"
                             android:layout_marginTop="5dp"
+                            android:textStyle="normal"
+                            android:letterSpacing="-0.03"
                             android:text="0"
                             android:textSize="11sp"
                             android:textColor="@color/main" />
 
                         <View
                             android:id="@+id/side_lin2"
-                            android:layout_width="2dp"
+                            android:layout_width="0.5dp"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@id/my_coupon_title"
                             android:layout_alignBottom="@id/my_coupon_count"
-                            android:layout_alignParentRight="true"
-                            android:background="@color/gray" />
+                            android:layout_alignParentEnd="true"
+                            android:background="@color/border_gray" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -188,11 +203,12 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="12dp"
-                            android:fontFamily="@font/notosans_regular"
+                            android:fontFamily="@font/notosans_bold"
                             android:includeFontPadding="false"
                             android:text="장바구니"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:letterSpacing="-0.03"
+                            android:textColor="@color/more_bright_gray"
+                            android:textSize="11sp" />
 
                         <TextView
                             android:id="@+id/my_order_cart_count"
@@ -205,16 +221,24 @@
                             android:layout_marginTop="5dp"
                             android:text="0"
                             android:textSize="11sp"
+                            android:textStyle="normal"
+                            android:letterSpacing="-0.03"
                             android:textColor="@color/main" />
                     </RelativeLayout>
                 </LinearLayout>
-            </LinearLayout>
-
+            </RelativeLayout>
+            <View
+                android:id="@+id/table_size_bottom_line"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:background="@color/home_background"
+                android:layout_below="@id/table_size"
+                />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/menu_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/table_size"
+                android:layout_below="@id/table_size_bottom_line"
                 android:background="@color/text_info_color" />
 
             <Button

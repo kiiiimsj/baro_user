@@ -22,7 +22,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.AdapterHelper.ListMenuHelperClass;
-import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.R;
 import com.example.wantchu.Url.UrlMaker;
 
@@ -132,7 +131,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
             menuPrice = itemView.findViewById(R.id.menu_price);
             menuId = itemView.findViewById(R.id.menu_id);
             background = itemView.findViewById(R.id.background);
-            menuImage = itemView.findViewById(R.id.menu_image);
+            menuImage = itemView.findViewById(R.id.baro_logo);
             subscription = itemView.findViewById(R.id.subscription);
             sold_out = itemView.findViewById(R.id.sold_out);
 

@@ -1,5 +1,6 @@
 package com.example.wantchu;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
@@ -159,6 +160,7 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
         }
         mapInfo(mapParsing,naverMap);
     }
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void mapInfo(MapParsing mapParsing,NaverMap naverMap){
         naverMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {
             @Override
@@ -178,8 +180,8 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
             final Marker marker = new Marker();
             com.naver.maps.geometry.LatLng storeLatlng = new com.naver.maps.geometry.LatLng(Double.valueOf(item.getStore_latitude()),Double.valueOf(item.getStore_longitude()));
             marker.setPosition(storeLatlng);
-            int height = 27;
-            int width = 20 ;
+            int height = getResources().getDrawable(R.drawable.store_marker).getIntrinsicHeight();
+            int width = getResources().getDrawable(R.drawable.store_marker).getIntrinsicWidth();
             BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.store_marker);
             Bitmap b = bitmapdraw.getBitmap();
             Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
