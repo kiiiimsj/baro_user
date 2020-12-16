@@ -131,9 +131,9 @@
             android:includeFontPadding="false"
             android:textSize="15sp"
             android:onClick="onClick_onestore"
-            android:background="@drawable/button_border_empty"
+            android:background="@drawable/layout_border_3dp"
             android:backgroundTint="@color/main"
-            android:backgroundTintMode="src_over"
+            android:backgroundTintMode="src_in"
             android:textColor="@color/white"
             android:text="결제하기"/>
     </LinearLayout>

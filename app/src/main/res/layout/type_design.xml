@@ -3,33 +3,30 @@
     android:id="@+id/type_design_back"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginBottom="15dp"
-    android:background="@color/invisible">
-
+    android:layout_marginStart="23dp">
     <ImageView
         android:id="@+id/type_image"
         android:layout_width="53dp"
         android:layout_height="53dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginTop="19dp"/>
 
     <TextView
         android:id="@+id/type_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/type_image"
+
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/notosans_regular"
         android:includeFontPadding="false"
         android:letterSpacing="-0.03"
         android:text="커피"
         android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="11sp" />
-
+        android:textColor="@color/more_bright_gray"
+        android:textSize="11sp"
+        android:layout_marginBottom="19dp"
+        />
     <TextView
         android:id="@+id/type_code"
         android:layout_width="wrap_content"

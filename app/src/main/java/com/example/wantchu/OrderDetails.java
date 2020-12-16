@@ -3,8 +3,6 @@ package com.example.wantchu;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -31,7 +29,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wantchu.Adapter.OrderDetailsEssentialAdapter;
 import com.example.wantchu.Adapter.OrderDetailsNonEssentialAdapter;
 import com.example.wantchu.AdapterHelper.ExtraOrder;
@@ -48,11 +45,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -112,7 +104,7 @@ public class OrderDetails extends AppCompatActivity {
         makeRequest();
         //--------------------------------------------------------
         store_name_text = findViewById(R.id.store_name);
-        imageView = findViewById(R.id.menu_image);
+        imageView = findViewById(R.id.baro_logo);
         expandableListView = findViewById(R.id.menuExpand_NotEssential);
         itemName = findViewById(R.id.menuName);
         itemMinus = findViewById(R.id.itemMinus);

@@ -1,38 +1,25 @@
 package com.example.wantchu.Adapter;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.ColorSpace;
-import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatRadioButton;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wantchu.AdapterHelper.ExtraOrder;
 import com.example.wantchu.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDetailsEssentialAdapter.ViewHolder> {
     private ArrayList<String> mData = null ;
@@ -172,7 +159,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                                 must--;
                                 holder.selectedOptions.setText("");
                                 priceTotal.setText(String.valueOf(originPrice - (itemCount * changePrice)));
-                                name.setBackgroundResource(R.drawable.button_border_empty);
+                                name.setBackgroundResource(R.drawable.layout_border_3dp);
                                 name.setTextColor(ContextCompat.getColor(context, R.color.lightGray));
                             }
                         }

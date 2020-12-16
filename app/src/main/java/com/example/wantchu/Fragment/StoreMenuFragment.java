@@ -24,11 +24,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.MenuListAdapter;
-import com.example.wantchu.AdapterHelper.ListCategoryHelperClass;
 import com.example.wantchu.AdapterHelper.ListMenuHelperClass;
 import com.example.wantchu.Database.SessionManager;
-import com.example.wantchu.Fragment.BottomMenu;
-import com.example.wantchu.Fragment.StoreDetailInfoFragment;
 import com.example.wantchu.HelperDatabase.StoreCategories;
 import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.HelperDatabase.StoreMenus;
@@ -172,7 +169,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
 
         TextView firstTextView = mCategoryTabLayout.getTabAt(0).view.findViewById(R.id.category_button);
         firstTextView.setTextColor(getResources().getColor(R.color.white));
-        mCategoryTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.button_border_empty));
+        mCategoryTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.layout_border_3dp));
         mCategoryTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -323,6 +320,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         intent.putExtra("storeNumber",storeDetail.getStore_phone());//가게 전화번호
 
         startActivity(intent);
+
     }
 
     @Override

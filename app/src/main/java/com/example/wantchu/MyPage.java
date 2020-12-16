@@ -41,7 +41,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     String phone = null;
 
     RecyclerView buttonRecyclerViews;
-    LinearLayout tableSize;
+    RelativeLayout tableSize;
 
     TextView nameSpace;
     TextView phoneSpace;
@@ -160,7 +160,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         String name = userData.get(SessionManager.KEY_USERNAME);
         String email = userData.get(SessionManager.KEY_EMAIL);
-        StringBuilder nameString = new StringBuilder(name + "님 >");
+        StringBuilder nameString = new StringBuilder(name + "님");
         nameSpace.setText(nameString.toString());
         emailSpace.setText(email);
         phoneSpace.setText(phone);
