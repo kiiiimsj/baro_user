@@ -33,6 +33,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnItemCilckListener, IfLogoutDialog.clickButton{
     final private String TAG = this.getClass().getSimpleName();
     int[] counts;
@@ -117,12 +119,14 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MyPage.this, OrderHistory.class));
+                CustomIntent.customType(MyPage.this,"left-to-right");
             }
         });
         myCouponButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MyPage.this, SideMyCoupon.class));
+                CustomIntent.customType(MyPage.this,"left-to-right");
             }
         });
         orderCartButton.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +135,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
                 SharedPreferences shf = getSharedPreferences("basketList", MODE_PRIVATE);
                 if(shf.getInt("orderCnt", 0) > 0) {
                     startActivity(new Intent(MyPage.this, Basket.class));
+                    CustomIntent.customType(MyPage.this,"left-to-right");
                 }
             }
         });
@@ -152,7 +157,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(0, 0);
+//        overridePendingTransition(0, 0);
     }
     private void setMyInfo() {
         SessionManager sessionManager = new SessionManager(MyPage.this, SessionManager.SESSION_USERSESSION);
@@ -268,6 +273,8 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         switch (position) {
             case 0 :
                 startActivity(new Intent(MyPage.this, Notice.class));
+                CustomIntent.customType(MyPage.this,"left-to-right");
+
                 break;
             case 1 :
             case 2 :
@@ -275,13 +282,16 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
                 break;
             case 3:
                 startActivity(new Intent(MyPage.this,ChangePass1Logging.class));
+                CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
             case 4:
                 startActivity(new Intent(MyPage.this, ChangeEmail.class));
+                CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
             case 5 :
             case 6 :
                 startActivity(new Intent(MyPage.this, TermsOfUse.class));
+                CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
         }
     }
@@ -291,4 +301,5 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         startActivity(new Intent(this, MainPage.class));
         finish();
     }
+
 }

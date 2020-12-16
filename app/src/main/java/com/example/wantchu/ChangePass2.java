@@ -25,6 +25,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class ChangePass2 extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     TextInputLayout pass1, pass2;
 
@@ -143,6 +145,16 @@ public class ChangePass2 extends AppCompatActivity implements TopBar.OnBackPress
 
     @Override
     public void onBack() {
+        onBackPressed();
+    }
+    @Override
+    public void onBackPressed() {
         super.onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        CustomIntent.customType(this,"right-to-left");
     }
 }

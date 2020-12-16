@@ -51,6 +51,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnListItemSelectedInterfaceForMenu, MenuListAdapter.OnListItemLongSelectedInterfaceForMenu {
     private final static int SEND_CODE = 1;
     //RecyclerView 설정
@@ -327,7 +329,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         intent.putExtra("storeNumber",storeDetail.getStore_phone());//가게 전화번호
 
         startActivity(intent);
-
+        CustomIntent.customType(mContext,"left-to-right");
     }
 
     @Override

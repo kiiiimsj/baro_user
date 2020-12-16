@@ -44,6 +44,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class Notice extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     ArrayList<NoticeGroup> DataList;
     private ExpandableListView listView;
@@ -169,5 +171,11 @@ public class Notice extends AppCompatActivity implements TopBar.OnBackPressedInP
     @Override
     public void onBack() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
     }
 }
