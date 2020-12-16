@@ -46,7 +46,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     RelativeLayout tableSize;
 
     TextView nameSpace;
-    TextView phoneSpace;
     TextView emailSpace;
 
     TextView orderHistoryCount;
@@ -78,7 +77,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         tableSize = findViewById(R.id.table_size);
 
         nameSpace= findViewById(R.id.user_name_space);
-        phoneSpace = findViewById(R.id.phone);
         emailSpace = findViewById(R.id.email);
 
         orderHistoryCount = findViewById(R.id.order_history_count);
@@ -168,7 +166,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         StringBuilder nameString = new StringBuilder(name + "님");
         nameSpace.setText(nameString.toString());
         emailSpace.setText(email);
-        phoneSpace.setText(phone);
     }
 
     private void setExpandListener() {
