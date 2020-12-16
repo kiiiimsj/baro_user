@@ -233,14 +233,14 @@
                 android:layout_height="7dp"
                 android:background="@color/home_background"
                 android:layout_below="@id/table_size"
+                android:layout_marginTop="14dp"
                 />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/menu_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/table_size_bottom_line"
-                android:background="@color/text_info_color" />
-
+                />
             <Button
                 android:id="@+id/logout"
                 android:layout_width="match_parent"
