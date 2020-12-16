@@ -1,7 +1,12 @@
 package com.example.wantchu.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -146,6 +153,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         mMenuAdapter = new MenuListAdapter(DataList, this, this, getContext(), storedIdStr);
         mRecyclerViewMenu.setAdapter(mMenuAdapter);
     }
+    @SuppressLint({"UseCompatLoadingForDrawables", "ResourceAsColor"})
     private void setMRecyclerViewCategory() {
         for(int i = 0; i < saveCategories.size(); i++){
             View tabView = LayoutInflater.from(getActivity()).inflate(R.layout.category_layout, null);
@@ -169,13 +177,12 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
 
         TextView firstTextView = mCategoryTabLayout.getTabAt(0).view.findViewById(R.id.category_button);
         firstTextView.setTextColor(getResources().getColor(R.color.white));
-        mCategoryTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.layout_border_3dp));
+        mCategoryTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.layout_radius_3dp_color_main));
         mCategoryTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 TextView textColor = tab.view.findViewById(R.id.category_button);
                 textColor.setTextColor(getResources().getColor(R.color.white));
-
                 int categroyId = Integer.parseInt(((TextView)tab.view.findViewById(R.id.category_id)).getText().toString());
                 setMRecyclerViewMenu(categroyId);
             }

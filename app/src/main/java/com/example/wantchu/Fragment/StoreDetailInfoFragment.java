@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,11 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.R;
 import com.example.wantchu.Url.UrlMaker;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.naver.maps.geometry.LatLng;
@@ -44,8 +38,6 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.Marker;
-
-import java.util.StringTokenizer;
 
 public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallback {
     MapFragment mapFragment;
@@ -74,7 +66,7 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_store_detail, container, false);
-        storeInfo = rootView.findViewById(R.id.store_info);
+        storeInfo = rootView.findViewById(R.id.store_distance);
         openCloseTime = rootView.findViewById(R.id.open_close);
         daysOff = rootView.findViewById(R.id.days_off);
         storePhone = rootView.findViewById(R.id.store_phone);

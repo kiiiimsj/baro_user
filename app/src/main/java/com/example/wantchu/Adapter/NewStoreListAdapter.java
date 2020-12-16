@@ -1,8 +1,10 @@
 package com.example.wantchu.Adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
@@ -54,11 +57,22 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
     }
 
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onBindViewHolder(@NonNull NewStoreListAdapter.NewStoreViewHolder holder, int position) {
         ViewPagersListStoreParsing.ViewPagerStoreParsing viewPagerStoreParsing = listStoreHelperClasses.store.get(position);
         holder.storeName.setText(viewPagerStoreParsing.getStore_name());
-        holder.mInfo.setText(viewPagerStoreParsing.getStore_info());
+        if (viewPagerStoreParsing.getDistance() > 1000){
+            holder.storeDistance.setText(String.format("%,.1f", ((int)viewPagerStoreParsing.getDistance() / 100) * 0.1) + "km");
+        }else {
+            holder.storeDistance.setText((int) viewPagerStoreParsing.getDistance() + "m");
+        }
         holder.storeId.setText(String.valueOf(viewPagerStoreParsing.getStore_id()));
+        if(viewPagerStoreParsing.getIs_open().equals("Y")) {
+            holder.isOpen.setText("영업중");
+            holder.isOpen.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.main)));
+        }else {
+            holder.isOpen.setText("준비중");
+        }
     }
 
     @Override
@@ -99,15 +113,16 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
     public class NewStoreViewHolder extends RecyclerView.ViewHolder {
         public ImageView storeImage;
         public TextView storeName;
-        public TextView mInfo;
+        public TextView storeDistance;
         public TextView storeId;
-
+        public TextView isOpen;
         public NewStoreViewHolder(@NonNull View itemView, int po) {
             super(itemView);
             storeName = itemView.findViewById(R.id.store_name);
             storeImage = itemView.findViewById(R.id.store_image);
-            mInfo = itemView.findViewById(R.id.store_info);
+            storeDistance = itemView.findViewById(R.id.store_distance);
             storeId = itemView.findViewById(R.id.store_id);
+            isOpen = itemView.findViewById(R.id.is_open);
             ViewPagersListStoreParsing.ViewPagerStoreParsing list = listStoreHelperClasses.store.get(po);
             makeRequestNewStore(list.getStore_image(), context, storeImage);
             itemView.setOnClickListener(new View.OnClickListener() {

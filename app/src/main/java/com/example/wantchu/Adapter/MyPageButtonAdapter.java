@@ -82,6 +82,7 @@ public class MyPageButtonAdapter extends RecyclerView.Adapter<MyPageButtonAdapte
     }
 
     public class MyPageViewHolder extends RecyclerView.ViewHolder {
+        View topLine;
         View bottomLine;
         TextView buttonText;
         RelativeLayout backSize;
@@ -89,6 +90,8 @@ public class MyPageButtonAdapter extends RecyclerView.Adapter<MyPageButtonAdapte
             super(itemView);
             buttonText = itemView.findViewById(R.id.my_page_button);
             bottomLine = itemView.findViewById(R.id.bottom_line);
+            topLine = itemView.findViewById(R.id.top_line);
+            topLine.setVisibility(View.GONE);
             backSize = itemView.findViewById(R.id.my_page_background);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -97,30 +100,11 @@ public class MyPageButtonAdapter extends RecyclerView.Adapter<MyPageButtonAdapte
                 }
             });
             if(po == 3) {
-                View addLine = new View(context);
-                addLine.setMinimumHeight((int) 0.5);
-                addLine.setMinimumWidth(backSize.getWidth());
-                addLine.setBackgroundColor(context.getResources().getColor(R.color.home_background));
-                addLine.setBottom(backSize.getBottom());
-
-                int resizeHeight = backSize.getHeight();
-                resizeHeight += addLine.getHeight();
-
-
+                topLine.setVisibility(View.VISIBLE);
             }
             if(po == 5) {
-                View addLine = new View(context);
-                addLine.setMinimumHeight((int) 0.5);
-                addLine.setMinimumWidth(backSize.getWidth());
-                addLine.setBackgroundColor(context.getResources().getColor(R.color.home_background));
-                addLine.setBottom(backSize.getBottom());
+                topLine.setVisibility(View.VISIBLE);
             }
-//            if(buttonList.size() == po + 1) {
-//                bottomLine.setVisibility(View.GONE);
-//                LinearLayout.MarginLayoutParams vl = new LinearLayout.MarginLayoutParams(backSize.getLayoutParams());
-//                vl.setMargins(0,0,0, 20);
-//                backSize.setLayoutParams(new LinearLayout.LayoutParams(vl));
-//            }
         }
     }
 }
