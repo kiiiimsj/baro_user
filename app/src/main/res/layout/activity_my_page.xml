@@ -22,7 +22,6 @@
         android:scrollbarSize="0dp">
 
         <RelativeLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -66,19 +65,7 @@
                             android:textSize="14sp" />
                         <TextView
                             android:layout_below="@id/user_name_space"
-                            android:id="@+id/phone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/notosans_regular"
-                            android:includeFontPadding="false"
-                            android:textColor="@color/main_page_store_view_detail_color"
-                            android:textStyle="normal"
-                            android:letterSpacing="-0.03"
-                            android:textSize="10sp"
-                            android:text="01093756927"
-                            />
-                        <TextView
-                            android:layout_below="@id/phone"
+                            android:layout_marginTop="10dp"
                             android:id="@+id/email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -100,7 +87,6 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/recycler_view_border_line"
                     android:baselineAligned="false" android:orientation="horizontal"
-                    android:padding="12dp"
                     android:weightSum="9">
 
                     <RelativeLayout
@@ -113,7 +99,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="8dp"
                             android:fontFamily="@font/notosans_bold"
                             android:includeFontPadding="false"
                             android:letterSpacing="-0.03"
@@ -157,7 +143,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="8dp"
                             android:text="내 쿠폰"
                             android:fontFamily="@font/notosans_bold"
                             android:includeFontPadding="false"
@@ -202,7 +188,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="8dp"
                             android:fontFamily="@font/notosans_bold"
                             android:includeFontPadding="false"
                             android:text="장바구니"

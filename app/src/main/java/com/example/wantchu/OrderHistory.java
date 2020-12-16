@@ -145,12 +145,6 @@ public class OrderHistory extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
-    }
-
-    @Override
     public void onBackPressed() {
         startActivity(new Intent(this, MainPage.class));
         finish();
