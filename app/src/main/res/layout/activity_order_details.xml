@@ -27,7 +27,7 @@
                 android:onClick="onClickBack"
                 android:layout_centerVertical="true"
                 android:padding="10dp"
-                android:src="@drawable/general_back_icon" />
+                android:src="@drawable/arrow_left" />
 
             <TextView
                 android:id="@+id/store_name"

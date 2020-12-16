@@ -250,7 +250,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         }
         private void changeColor() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                imageView.setBackground(context.getDrawable(R.drawable.on));
+                imageView.setBackground(context.getDrawable(R.drawable.alert_on));
 
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -229,6 +229,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
     }
     @Override
     public void onBackPressed() {
-        Log.i(TAG, "true");
+        startActivity(new Intent(this, MainPage.class));
+        finish();
     }
 }
