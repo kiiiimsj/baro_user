@@ -43,6 +43,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 //import com.example.wantchu.Database.SendToServer;
 
 public class ListStorePage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface , AutoPermissionsListener, TopBar.OnBackPressedInParentActivity {
@@ -115,7 +117,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(0, 0);
+//        overridePendingTransition(0, 0);
     }
     public void chooseShowList(int state) {
         Intent intent = getIntent();
@@ -351,17 +353,17 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     public void onItemLongSelected(View v, int adapterPosition) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
         Intent intent = new Intent(ListStorePage.this, StoreInfoReNewer.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
         intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
         startActivity(intent);
     }
-
     @Override
     public void onItemSelected(View v, int position) {
+
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(ListStorePage.this, StoreInfoReNewer.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         if(listStoreViewHolder.storeId == null) {
             runOnUiThread(new Runnable() {
                 @Override
@@ -372,9 +374,18 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         }
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
         startActivity(intent);
+        CustomIntent.customType(this,"left-to-right");
     }
     @Override
     public void onBack() {
         super.onBackPressed();
+
+//        overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
     }
 }
