@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/main</item>
         <item name="colorPrimaryDark">@color/main</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>
     </style>
 
     <!--  Menu Style  -->

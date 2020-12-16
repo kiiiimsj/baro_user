@@ -41,6 +41,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity, TopBar.ClickImage {
     SessionManager sessionManager;
     String _phone;
@@ -102,7 +104,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(0, 0);
+//        overridePendingTransition(0, 0);
     }
 
     public void onClickBack(View view) {
@@ -351,5 +353,10 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     @Override
     public void clickImage() {
         heartClickListener.onClick(null);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
     }
 }
