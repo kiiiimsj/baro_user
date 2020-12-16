@@ -23,6 +23,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class ChangePass1Logging extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     private TextInputLayout passInput;
     private String phone;
@@ -105,6 +107,16 @@ public class ChangePass1Logging extends AppCompatActivity implements TopBar.OnBa
 
     @Override
     public void onBack() {
+        onBackPressed();
+    }
+    @Override
+    public void onBackPressed() {
         super.onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        CustomIntent.customType(this,"right-to-left");
     }
 }

@@ -14,9 +14,12 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.wantchu.Basket;
+import com.example.wantchu.NewMyMap;
 import com.example.wantchu.R;
 
 import java.util.StringTokenizer;
+
+import maes.tech.intentanim.CustomIntent;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -126,6 +129,7 @@ public class OrderListCart extends Fragment {
                 StringTokenizer tokenizer = new StringTokenizer(actName, "@");
                 Log.i("ACTIVITYNAME", tokenizer.nextToken());
                 startActivity(new Intent(getActivity(), Basket.class));
+                CustomIntent.customType(context,"left-to-right");
             }
         });
         return rootView;
