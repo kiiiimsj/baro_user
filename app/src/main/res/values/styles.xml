@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/main</item>
         <item name="colorPrimaryDark">@color/main</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
@@ -19,7 +19,8 @@
     <!-- Bottom Item text style-->
     <style name="bottom_text_style">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">9sp</item>
+        <item name="fontFamily">@font/notosans_bold</item>
         <item name="android:letterSpacing" tools:ignore="NewApi">-0.02</item>
     </style>
 

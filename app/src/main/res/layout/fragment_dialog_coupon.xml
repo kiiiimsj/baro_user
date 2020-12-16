@@ -36,7 +36,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
                     android:background="@color/white"
-                    android:src="@drawable/ic_baseline_close_24" />
+                    android:src="@drawable/close_button" />
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"

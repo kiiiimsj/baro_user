@@ -331,7 +331,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
             MarkerOptions markerOption = new MarkerOptions().position(new LatLng(lati, logi)).title(name).snippet(((int)store.getDistance())+"m");
             int height = 110;
             int width = 80;
-            BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.map_marker_purple);
+            BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.store_marker);
             Bitmap b = bitmapdraw.getBitmap();
             Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
             markerOption.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
