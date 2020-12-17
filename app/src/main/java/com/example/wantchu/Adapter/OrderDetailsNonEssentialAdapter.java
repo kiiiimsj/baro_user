@@ -148,7 +148,7 @@ public class OrderDetailsNonEssentialAdapter extends BaseExpandableListAdapter {
                 nonEssentialOptions.put(DataList.get(childPosition).ExtraOptionName,extraOrder);
             }
         });
-        optionName.setText(DataList.get(childPosition).getExtraOptionName());
+        optionName.setText(" · " +DataList.get(childPosition).getExtraOptionName());
         price.setText(DataList.get(childPosition).getOptionPrice()+"");
 //        final TextView count = (TextView) convertView.findViewById(R.id.optionCount);
 //        final Button minus = (Button) convertView.findViewById(R.id.minus);

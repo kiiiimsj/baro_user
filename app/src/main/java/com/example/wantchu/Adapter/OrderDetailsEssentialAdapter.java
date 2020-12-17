@@ -77,7 +77,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
         LinearLayout reChild = (LinearLayout) relativeLayout.getChildAt(0);
         LinearLayout reChildRadio = (LinearLayout) relativeLayout.getChildAt(1);
         final String text = mData.get(position);
-        holder.optionName.setText(text);
+        holder.optionName.setText(" · " + text);
 
         if(mTableData.containsKey(text)){
             Log.i("필수",text);

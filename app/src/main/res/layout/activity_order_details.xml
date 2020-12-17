@@ -54,8 +54,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:baselineAligned="false" android:orientation="horizontal"
-                android:padding="16dp">
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:layout_marginTop="20dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -63,10 +65,13 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:id="@+id/baro_logo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"></ImageView>
+                        android:layout_width="100dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_height="100dp"/>
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
@@ -139,6 +144,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:paddingVertical="10dp"
                                 android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
                                 android:background="@color/white"
                                 android:src="@drawable/minus"
                                 android:textStyle="bold"/>

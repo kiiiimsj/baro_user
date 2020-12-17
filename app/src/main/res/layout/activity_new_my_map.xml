@@ -28,14 +28,14 @@
         app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/store_detail"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="128dp"
         android:layout_margin="10dp"
         android:background="@color/white">
 
         <ImageView
             android:id="@+id/store_preview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="128dp"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
             android:src="@drawable/plus"/>
@@ -45,29 +45,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/store_preview"
             android:text="test cafe"
+            android:fontFamily="@font/notosans_black"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="70dp"
+            android:layout_marginLeft="10dp"
             android:layout_below="@id/store_title"
             android:layout_toRightOf="@id/store_preview"
-            android:maxLength="15"
-            android:text="서울시 동작구 성수동"
+            android:maxLines="2"
+            android:fontFamily="@font/notosans_regular"
+            android:textSize="12sp"
+            android:text="서울시 동작구 성수동asdfasdfasdfasdfasdfasdfadsf"
             android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/distance"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/store_title"
-            android:layout_toRightOf="@id/address"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/notosans_bold"
             android:paddingRight="20dp"
+            android:textSize="13sp"
             android:text="350m"
             android:textAlignment="textEnd" />
     </RelativeLayout>
