@@ -7,26 +7,14 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".OrderHistory">
-    <RelativeLayout
-        android:id="@+id/frame"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentTop="true"
+    <fragment
+        android:id="@+id/top_bar"
+        android:name="com.example.wantchu.Fragment.TopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/brandon_grotesque_black"
-            android:text="주 문 내 역"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
-    </RelativeLayout>
+        android:layout_alignParentTop="true" />
     <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-        android:layout_below="@id/frame"
+        android:layout_below="@id/top_bar"
         android:id="@+id/refresh_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

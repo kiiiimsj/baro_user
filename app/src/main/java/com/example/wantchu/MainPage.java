@@ -118,6 +118,14 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         ultraStoreRecyclerView = findViewById(R.id.ultra_store);
         newStoreRecyclerView = findViewById(R.id.new_store);
 
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            stringBuilder.append(i).append("/");
+        }
+        Log.i("stringBuilderBefore", stringBuilder.toString());
+        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf("/"));
+        Log.i("stringBuilderAfter", stringBuilder.toString());
+
         viewPager = findViewById(R.id.info_image);
         eventCountSet = findViewById(R.id.event_count);
         AppStartAdDialog appStartAdDialog = new AppStartAdDialog(MainPage.this);

@@ -39,6 +39,7 @@
                 android:background="@color/white"
                 android:fontFamily="@font/notosans_bold"
                 android:textStyle="bold"
+                android:text="동작구 상도동"
                 android:textColor="@color/more_bright_gray"
                 android:includeFontPadding="false"
                 android:layout_marginBottom="17dp"
@@ -48,9 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/address"
-                android:layout_marginTop="6dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="12dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/address"
                 android:src="@drawable/arrow_down" />
             <ImageView

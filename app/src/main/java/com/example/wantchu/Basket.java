@@ -601,6 +601,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         BootUser bootUser = new BootUser().setPhone(phone);
         BootExtra bootExtra = new BootExtra().setQuotas(new int[]{0, 2, 3});
         BootpayBuilder bootpayBuilder = Bootpay.init(getFragmentManager());
+
         bootpayBuilder.setContext(this)
                 .setApplicationId(application_id) // 해당 프로젝트(안드로이드)의 application id 값
                 .setPG(PG.NICEPAY) // 결제할 PG 사
