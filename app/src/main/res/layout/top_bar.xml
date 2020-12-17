@@ -9,6 +9,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="10dp"
+        android:layout_marginTop="12dp"
         android:id="@+id/back_pressed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,10 +19,11 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:text="액티비티 이름"
         android:textColor="@color/black"
         android:fontFamily="@font/notosans_black"
+        android:includeFontPadding="false"
         android:textSize="17sp"
         android:maxLength="20"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +36,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_margin="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
         />
     <ImageView
         android:id="@+id/when_has_image"
@@ -42,6 +45,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
         android:layout_margin="10dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
