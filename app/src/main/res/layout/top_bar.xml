@@ -8,12 +8,11 @@
     <ImageView
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_margin="10dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginLeft="15dp"
         android:id="@+id/back_pressed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="17dp"
         android:src="@drawable/arrow_left"/>
     <TextView
         android:id="@+id/title"
@@ -45,7 +44,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="10dp"
-        android:layout_margin="10dp"
-        />
+        android:padding="17dp"
+        android:layout_marginRight="15dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -38,6 +39,7 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.OverlayImage;
 
 public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallback {
     MapFragment mapFragment;
@@ -218,6 +220,14 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
         this.naverMap.moveCamera(cameraUpdate);
         marker = new Marker();
         marker.setPosition(storeLocation);
+
+        int height = getResources().getDrawable(R.drawable.store_marker).getIntrinsicHeight();
+        int width = getResources().getDrawable(R.drawable.store_marker).getIntrinsicWidth();
+        BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.store_marker);
+        Bitmap b = bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+        marker.setIcon(OverlayImage.fromBitmap(smallMarker));
+
         marker.setMap(naverMap);
         marker.setCaptionText(storeDetailData.getStore_name());
     }

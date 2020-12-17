@@ -138,10 +138,7 @@
                         android:textColor="@color/more_bright_gray"
                         android:textStyle="bold"
                         android:letterSpacing="-0.02"
-                        android:fontFamily="@font/notosans_bold"
-                        android:drawableEnd="@drawable/arrow_right"
-                        android:drawablePadding="16dp"
-                        />
+                        android:fontFamily="@font/notosans_bold" />
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_below="@id/ultra_store_title"
                         android:id="@+id/ultra_store"
@@ -167,10 +164,7 @@
                         android:textColor="@color/more_bright_gray"
                         android:textStyle="normal"
                         android:letterSpacing="-0.02"
-                        android:fontFamily="@font/notosans_bold"
-                        android:drawableRight="@drawable/arrow_right"
-                        android:drawablePadding="16dp"
-                        />
+                        android:fontFamily="@font/notosans_bold"/>
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_below="@id/new_store_title"
                         android:id="@+id/new_store"

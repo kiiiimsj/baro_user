@@ -80,11 +80,6 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="#c4c4c4" />
-
     </LinearLayout>
 
 

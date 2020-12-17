@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/lightGray2"
+    android:background="@color/lightGray"
     tools:context=".Basket">
     <fragment
         android:id="@+id/top_bar"
@@ -26,10 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:layout_marginLeft="10dp"
             android:textAlignment="viewStart"
             android:background="@color/white"
             android:text="test cafe"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:fontFamily="@font/notosans_bold"
             android:includeFontPadding="false"
             android:textColor="@color/black"
