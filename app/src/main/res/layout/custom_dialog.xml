@@ -30,7 +30,7 @@
         android:textColor="#343434"
         android:fontFamily="@font/notosans_regular"
         android:textSize="12sp"
-        android:text="성공적으로 장바구니에 물건이 담겼습니다"/>
+        android:text="장바구니에 물건이 담겼습니다 \n 다른메뉴를 보시겠습니까?"/>
 
 
     <LinearLayout

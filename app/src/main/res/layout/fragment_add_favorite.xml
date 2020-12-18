@@ -29,10 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="#343434"
-        android:fontFamily="@font/notosans_bold"
+        android:textColor="#434343"
+        android:fontFamily="@font/notosans_regular"
         android:includeFontPadding="false"
-        android:textSize="11sp"
+        android:textSize="12sp"
         android:text="즐겨찾기에 추가 되었습니다"/>
 
 

@@ -37,21 +37,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/okay"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="확 인"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:letterSpacing="0.2"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/layout_border_5dp_main"
-            android:fontFamily="@font/notosans_bold"/>
         <Button
             android:id="@+id/dialog_close"
             android:layout_width="match_parent"
@@ -59,13 +44,28 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="닫기"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:letterSpacing="0.2"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/layout_radius_3dp_color_main"
+            android:fontFamily="@font/notosans_bold"/>
+        <Button
+            android:id="@+id/okay"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="확 인"
+            android:textColor="@color/main"
             android:textSize="16sp"
             android:letterSpacing="0.2"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/layout_border_gray_3dp"
+            android:background="@drawable/layout_border_3dp_stroke_2dp"
             android:fontFamily="@font/notosans_bold"/>
+
     </LinearLayout>
 
     <View

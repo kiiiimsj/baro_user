@@ -34,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.BasketAdapter;
 import com.example.wantchu.AdapterHelper.ExtraOrder;
 import com.example.wantchu.Database.SessionManager;
+import com.example.wantchu.Dialogs.LastItemDialog;
 import com.example.wantchu.Dialogs.OrderCancelDialog;
 import com.example.wantchu.Dialogs.OrderDoneDialog;
 import com.example.wantchu.Dialogs.OrderLimitExcessDialog;
@@ -371,9 +372,17 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     }
     public void pressDeleteAll(View view) {
         if (detailsFixToBaskets.size() > 0) {
-            Toast.makeText(this, "장바구니의 내용이 모두 삭제 되었습니다", Toast.LENGTH_SHORT).show();
-            detailsFixToBaskets.clear();
-            deleteBasket();
+            LastItemDialog dialog = new LastItemDialog(this, new LastItemDialog.DoDelete() {
+                @Override
+                public void doDelete() {
+                    Toast.makeText(Basket.this, "장바구니의 내용이 모두 삭제 되었습니다", Toast.LENGTH_SHORT).show();
+                    detailsFixToBaskets.clear();
+                    deleteBasket();
+                    onBackPressed();
+                }
+            },true);
+            dialog.callFunction();
+
         } else{
             Toast.makeText(this, "이미 장바구니가 비어있습니다", Toast.LENGTH_SHORT).show();
         }

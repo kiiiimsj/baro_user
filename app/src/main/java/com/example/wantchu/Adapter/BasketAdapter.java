@@ -123,7 +123,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                             notifyDataSetChanged();
                             mListener.delete(0);
                         }
-                    });
+                    },false);
                     dialog.callFunction();
                 }else {
                     detailsFixToBaskets.get(position).setName("");
