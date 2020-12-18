@@ -30,6 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:tabIndicatorColor="@color/main"
+                    app:tabTextColor="@color/indicator_unselect_text_color"
                     app:tabGravity="fill"
                     app:tabIndicatorGravity="center"
                     app:tabIndicatorFullWidth="false"
