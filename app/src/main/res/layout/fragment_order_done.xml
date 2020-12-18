@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="2dp"
@@ -11,37 +11,46 @@
         android:layout_height="60dp"
         android:background="@color/white"
         android:fontFamily="@font/notosans_bold"
+        android:includeFontPadding="false"
         android:gravity="center"
         android:text="주문 완료"
         android:letterSpacing="0.3"
         android:textColor="#343434"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:layout_alignParentTop="true"/>
 
 
     <TextView
-        android:padding="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="20dp"
         android:id="@+id/mesgase"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="#000000"
-        android:fontFamily="@font/bmhannapro"
-        android:textSize="16dp"
-        android:text="주문 결제가 완료 되었습니다"/>
+        android:fontFamily="@font/notosans_regular"
+        android:includeFontPadding="false"
+        android:textSize="16sp"
+        android:text="주문 결제가 완료 되었습니다"
+        android:layout_below="@id/title"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_below="@id/mesgase">
 
         <Button
             android:id="@+id/okay"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="확 인"
+            android:layout_margin="5dp"
             android:textColor="@color/white"
             android:textSize="16dp"
             android:letterSpacing="0.2"
@@ -49,9 +58,4 @@
             android:fontFamily="@font/notosans_bold"/>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
-</LinearLayout>
+</RelativeLayout>

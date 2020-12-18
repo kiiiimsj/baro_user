@@ -44,26 +44,26 @@
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/okay"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="비 우 기"
-            android:textColor="@color/main"
-            android:textSize="16sp"
-            android:fontFamily="@font/notosans_bold"
-            android:includeFontPadding="false"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/layout_border_3dp"/>
-        <Button
             android:id="@+id/no"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="취 소"
+            android:textColor="@color/main"
+            android:textSize="16sp"
+            android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/layout_border_5dp_border_main"/>
+        <Button
+            android:id="@+id/okay"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="비 우 기"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:fontFamily="@font/notosans_bold"
@@ -71,6 +71,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/layout_border_5dp_main"/>
+
 
 
 

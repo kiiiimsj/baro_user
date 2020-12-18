@@ -37,7 +37,7 @@ public class AdvertiseAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 10000;
+        return eventHelperClass.event.size() * 1000;
     }
 
     @Override

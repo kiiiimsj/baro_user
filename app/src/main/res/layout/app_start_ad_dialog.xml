@@ -45,8 +45,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@drawable/layout_border_3dp_stroke_2dp"
-            android:backgroundTintMode="src_in"
-            android:backgroundTint="@color/white"
+
             android:fontFamily="@font/notosans_black"
             android:includeFontPadding="false"
             android:text="닫기"

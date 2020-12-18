@@ -36,6 +36,7 @@
 
 
     <EditText
+        android:layout_marginVertical="20dp"
         android:id="@+id/searchBody"
         android:hint="가게 검색"
         android:padding="20dp"

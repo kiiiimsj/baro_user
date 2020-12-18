@@ -467,7 +467,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         eventHelperClass = gson.fromJson(response, EventHelperClass.class);
         advertiseAdapter = new AdvertiseAdapter(context, eventHelperClass);
         viewPager.setAdapter(advertiseAdapter);
-        viewPager.setCurrentItem(eventHelperClass.event.size() * 1000);
+        viewPager.setCurrentItem(eventHelperClass.event.size() * 500);
         viewPager.setOffscreenPageLimit(5);
         viewPager.setScrollDurationFactor(3);
         setEventCountSet(0);
