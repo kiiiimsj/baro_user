@@ -56,7 +56,7 @@
             android:includeFontPadding="false"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/layout_border_3dp"/>
+            android:background="@drawable/layout_border_gray_3dp"/>
         <Button
             android:id="@+id/no"
             android:layout_width="match_parent"
