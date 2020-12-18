@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:background="@drawable/layout_border_3dp"
+    android:background="@drawable/layout_border_gray_3dp"
     android:backgroundTint="@color/white"
     android:backgroundTintMode="src_over"
     android:elevation="8dp"
