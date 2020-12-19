@@ -112,6 +112,7 @@ public class TopBar extends Fragment {
                 break;
             case "Events":
             case "ListStorePage":
+            case "OrderDetails":
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -242,8 +243,6 @@ public class TopBar extends Fragment {
                 title.setText("내 정보 수정");
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
-                break;
-            case "OrderDetail":
                 break;
             case "MainPage":
                 //no top bar activity

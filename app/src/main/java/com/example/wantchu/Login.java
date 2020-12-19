@@ -202,12 +202,11 @@ public class Login extends AppCompatActivity implements ActivityCompat.OnRequest
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // {"result":true, afs}
                         applyJson(response);
                         try {
                             if (response.getBoolean("result")) {
-
                                 startActivity(new Intent(Login.this, MainPage.class));
+                                finish();
                             }
                             else {
                                 Toast.makeText(Login.this, response.getString("message"), Toast.LENGTH_LONG).show();
