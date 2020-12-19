@@ -1,11 +1,13 @@
 package com.example.wantchu;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -532,8 +535,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     public void onLongNewStoreItemSelected(View v, int adapterPosition) {
 
     }
-
-
     @Override
     public void onUltraStoreLongSelected(View v, int adapterPosition) {
 
@@ -549,8 +550,12 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         startActivity(intent);
         CustomIntent.customType(this,"left-to-right");
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBackPressed() {
-        Log.i(TAG, "true");
+        moveTaskToBack(true);
+        finishAndRemoveTask();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 }

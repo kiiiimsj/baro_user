@@ -24,6 +24,8 @@ import com.example.wantchu.JsonParsingHelper.EventDetailHelper;
 import com.example.wantchu.Url.UrlMaker;
 import com.google.gson.Gson;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class Events extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     int storeId;
     TextView eventDate;
@@ -97,9 +99,9 @@ public class Events extends AppCompatActivity implements TopBar.OnBackPressedInP
                 });
         requestQueue.add(request);
     }
-
     @Override
     public void onBack() {
         super.onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
     }
 }

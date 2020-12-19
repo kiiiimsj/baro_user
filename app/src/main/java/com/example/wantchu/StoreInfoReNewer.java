@@ -52,6 +52,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     TextView tabStoreInfo;
 
     boolean result =false;
+
     SharedPreferences sp;
     StoreMenuFragment storeMenuFragment;
     StoreDetailInfoFragment storeDetailInfoFragment;
@@ -348,15 +349,11 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     @Override
     public void onBack() {
         onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
     }
 
     @Override
     public void clickImage() {
         heartClickListener.onClick(null);
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        CustomIntent.customType(this,"right-to-left");
     }
 }

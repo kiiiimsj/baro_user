@@ -8,43 +8,21 @@
     android:orientation="vertical"
     android:id="@+id/real_back"
     tools:context=".OrderDetails">
-
+    <fragment
+        android:id="@+id/top_bar"
+        android:name="com.example.wantchu.Fragment.TopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        />
     <LinearLayout
+        android:layout_below="@id/top_bar"
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="10dp"
         android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_marginTop="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/back_pressed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClickBack"
-                android:layout_centerVertical="true"
-                android:padding="10dp"
-                android:src="@drawable/arrow_left" />
-
-            <TextView
-                android:id="@+id/store_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/notosans_bold"
-                android:includeFontPadding="false"
-                android:gravity="center"
-                android:text="카페"
-                android:textColor="@color/black"
-                android:textSize="27sp" />
-
-
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
