@@ -89,6 +89,7 @@
             </intent-filter>
         </service>
 
+
         <activity android:name=".StoreInfoReNewer" />
         <activity
             android:name=".OrderProgressing"
