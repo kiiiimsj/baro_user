@@ -37,6 +37,7 @@ public class TopBar extends Fragment {
         void clickImage();
     }
 
+
     OnBackPressedInParentActivity mListener;
     ClickButton clickButtonListener;
     ClickImage clickImageListener;
@@ -189,7 +190,14 @@ public class TopBar extends Fragment {
                 break;
             case "OrderProgressing":
                 title.setText("주문현황");
-                button.setVisibility(View.INVISIBLE);
+                button.setVisibility(View.VISIBLE);
+                button.setBackgroundResource(R.drawable.reload_image);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        clickButtonListener.clickButton();
+                    }
+                });
                 backButton.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
