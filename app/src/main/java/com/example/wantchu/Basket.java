@@ -554,7 +554,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         Log.i("webSocket", "connectToWebSocket() called.");
         URI uri;
         try {
-            uri = new URI("ws://15.165.22.64:8080/websocket");
+            uri = new URI("ws://3.35.180.57:8080/websocket");
         } catch(Exception e) {
             e.printStackTrace();
             return;
