@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wantchu.Adapter.OrderProgressingAdapter;
 import com.example.wantchu.Database.SessionManager;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.JsonParsingHelper.OrderProgressingParsing;
 import com.example.wantchu.JsonParsingHelper.OrderProgressingParsingHelper;
 import com.example.wantchu.Url.UrlMaker;
@@ -28,7 +29,7 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutD
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class OrderProgressing extends AppCompatActivity {
+public class OrderProgressing extends AppCompatActivity implements TopBar.ClickButton {
     final private String TAG = this.getClass().getSimpleName();
     Gson gson;
     OrderProgressingParsing orderProgressingParsing;
@@ -64,6 +65,7 @@ public class OrderProgressing extends AppCompatActivity {
         makeRequest(phone);
     }
     private void makeRequest(String phone) {
+        orderProgressingParsing = new OrderProgressingParsing();
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("OrderProgressing.do?phone=")+phone;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -88,6 +90,7 @@ public class OrderProgressing extends AppCompatActivity {
 
     private void applyAdapter() {
         ArrayList<OrderProgressingParsingHelper> orderProgressingParsingHelpers = orderProgressingParsing.getOrder();
+        Log.e(TAG,orderProgressingParsingHelpers.size()+"");
         OrderProgressingAdapter orderProgressingAdapter = new OrderProgressingAdapter(orderProgressingParsingHelpers,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderProgressingAdapter);
@@ -112,5 +115,10 @@ public class OrderProgressing extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(this, MainPage.class));
         finish();
+    }
+
+    @Override
+    public void clickButton() {
+         makeRequest(phone);
     }
 }
