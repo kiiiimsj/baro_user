@@ -61,7 +61,7 @@
             android:textSize="18sp"
             android:textColor="@color/black"
             android:letterSpacing="-0.02"
-            android:text="새 비밀 번호 입력"
+            android:text="새 비밀번호 입력"
             android:fontFamily="@font/notosans_bold"
             android:includeFontPadding="false"
             android:layout_marginTop="58dp"
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
                 android:fontFamily="@font/notosans_regular"
-                android:inputType="textPassword"
+                android:inputType="numberPassword"
                 android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -94,7 +94,7 @@
             android:textSize="18sp"
             android:textColor="@color/black"
             android:letterSpacing="-0.02"
-            android:text="새 비밀 번호 확인"
+            android:text="새 비밀번호 확인"
             android:fontFamily="@font/notosans_bold"
             android:includeFontPadding="false"
             android:layout_marginTop="30dp"
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
                 android:fontFamily="@font/notosans_regular"
-                android:inputType="textPassword"
+                android:inputType="numberPassword"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
         <Button

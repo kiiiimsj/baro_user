@@ -57,9 +57,8 @@
                 android:id="@+id/search_dialog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginEnd="25dp"
-                android:layout_alignTop="@id/address"
+                android:layout_alignTop="@id/baro_logo"
                 android:src="@drawable/search"
                 android:layout_toStartOf="@id/logo_image"
                 />
@@ -72,7 +71,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="18dp"
-                android:layout_alignTop="@id/address"
+                android:layout_alignTop="@id/baro_logo"
                 />
         </RelativeLayout>
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

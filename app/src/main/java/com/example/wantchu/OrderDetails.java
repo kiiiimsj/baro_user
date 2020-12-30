@@ -19,6 +19,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +34,7 @@ import com.example.wantchu.Adapter.OrderDetailsEssentialAdapter;
 import com.example.wantchu.Adapter.OrderDetailsNonEssentialAdapter;
 import com.example.wantchu.AdapterHelper.ExtraOrder;
 import com.example.wantchu.AdapterHelper.OrderDetailsNonEssential;
+import com.example.wantchu.Fragment.TopBar;
 import com.example.wantchu.JsonParsingHelper.OrderDetailsListParsing;
 import com.example.wantchu.JsonParsingHelper.OrderDetailsParsing;
 import com.example.wantchu.Dialogs.CustomDialog;
@@ -50,10 +52,9 @@ import java.util.HashMap;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class OrderDetails extends AppCompatActivity {
+public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     public static OrderDetails orderDetails;
     ImageView imageView;
-    TextView store_name_text;
     LinearLayout expandListViewShell;
     LinearLayout recyclerViewShell;
     ExpandableListView expandableListView;
@@ -62,7 +63,6 @@ public class OrderDetails extends AppCompatActivity {
     TextView itemName;
     TextView itemCount;
     TextView totalPriceText;
-    ToggleButton toggleButton;
     String menu_name;
     String menu_code;
     int store_id;
@@ -83,29 +83,34 @@ public class OrderDetails extends AppCompatActivity {
     Button fix;
     Bitmap bitmap = null;
     ProgressApplication progressApplication;
+    TopBar topBar;
+    FragmentManager fm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_order_details);
 
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         orderDetails = OrderDetails.this;
         Intent intent = getIntent();
+
         final int defaultPrice = intent.getExtras().getInt("menuDefaultPrice");
         menu_code = String.valueOf(intent.getExtras().getInt("menuId"));
         menu_name = intent.getExtras().getString("menuName");
         store_id = intent.getExtras().getInt("storeId");
         store_name = intent.getExtras().getString("storeName");
         store_number = intent.getExtras().getString("storeNumber");
+
         arrayList = new ArrayList<>(); // 세부 항목 넣는곳
         arrayList2 = new ArrayList<>(); // 세부 항목 넣는곳
         essentialOrNot = new HashMap<>();
         essentialOptions = new HashMap<>();
         nonEssentialOptions = new HashMap<>();
+
         makeRequest();
         //--------------------------------------------------------
-        store_name_text = findViewById(R.id.store_name);
         imageView = findViewById(R.id.baro_logo);
         expandableListView = findViewById(R.id.menuExpand_NotEssential);
         itemName = findViewById(R.id.menuName);
@@ -117,9 +122,12 @@ public class OrderDetails extends AppCompatActivity {
         expandListViewShell = findViewById(R.id.expandListViewShell);
         recyclerViewShell = findViewById(R.id.essentialOptionShell);
         fix = findViewById(R.id.fix);
+
+        fm = getSupportFragmentManager();
+        topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
         //--------------------------------------------------------
         itemName.setText(menu_name);
-        store_name_text.setText(store_name);
+        topBar.setTitleStringWhereUsedEventsAndListStore(store_name);
         // 이벤트 심는곳
         fix.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -394,7 +402,6 @@ public class OrderDetails extends AppCompatActivity {
                 });
         requestQueue.add(request);
     }
-
     private void getMenuPicture() {
         String url = new UrlMaker().UrlMake("ImageMenu.do?image_name="+menu_code+".png&store_id="+store_id);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -418,7 +425,6 @@ public class OrderDetails extends AppCompatActivity {
 
 
     }
-
     private void jsonParsing(String result, OrderDetailsParsing orderDetailsParsing) {
         try {
             Boolean isSuccess = (Boolean) new JSONObject(result).getBoolean("result");
@@ -483,7 +489,7 @@ public class OrderDetails extends AppCompatActivity {
         listView.requestLayout();
     }
     @Override
-    public void onBackPressed() {
+    public void onBack() {
         super.onBackPressed();
         CustomIntent.customType(this,"right-to-left");
     }
