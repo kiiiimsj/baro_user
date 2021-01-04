@@ -30,6 +30,7 @@ import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.JsonParsingHelper.FavoriteListParsing;
 import com.example.wantchu.JsonParsingHelper.FavoriteParsing;
 import com.example.wantchu.Url.UrlMaker;
+import com.example.wantchu.helperClass.BaroUtil;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -81,7 +82,11 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         myIntent = getIntent();
         storedIdStr=myIntent.getStringExtra("store_id");
         saveFavoriteOnce();
-        checkFavorite();
+        if (_phone.equals("")) {
+            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_empty);
+        }else {
+            checkFavorite();
+        }
         setTabEvent();
         makeRequestGetStore(Integer.parseInt(storedIdStr));
 
@@ -115,6 +120,9 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         heartClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!BaroUtil.loginCheck(StoreInfoReNewer.this)) {
+                    return;
+                }
                 if(result) {
                     Log.i("result", "true");
                     //등록 - > 미등록

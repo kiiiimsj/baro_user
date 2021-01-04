@@ -22,6 +22,7 @@ import com.example.wantchu.MyPage;
 import com.example.wantchu.OrderHistory;
 import com.example.wantchu.OrderProgressing;
 import com.example.wantchu.R;
+import com.example.wantchu.helperClass.BaroUtil;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -100,6 +101,9 @@ public class BottomMenu extends Fragment {
                         startActivity(intent);
                         break;
                     case R.id.bottomIconClock:
+                        if(!BaroUtil.loginCheck(getActivity())) {
+                            break;
+                        }
                         if (getTokenActivityName(getActivity().toString()).equals("OrderProgressing")) {
                             break;
                         }
@@ -108,6 +112,9 @@ public class BottomMenu extends Fragment {
                         startActivity(intent2);
                         break;
                     case R.id.bottomIconMyStore:
+                        if(!BaroUtil.loginCheck(getActivity())) {
+                            break;
+                        }
                         if (getTokenActivityName(getActivity().toString()).equals("ListStoreFavoritePage")) {
                             break;
                         }
@@ -116,6 +123,9 @@ public class BottomMenu extends Fragment {
                         startActivity(intent3);
                         break;
                     case R.id.bottomIconOrderList:
+                        if(!BaroUtil.loginCheck(getActivity())) {
+                            break;
+                        }
                         if (getTokenActivityName(getActivity().toString()).equals("OrderHistory")) {
                             break;
                         }
@@ -124,6 +134,9 @@ public class BottomMenu extends Fragment {
                         startActivity(intent4);
                         break;
                     case R.id.bottomIconMyPage:
+                        if(!BaroUtil.loginCheck(getActivity())) {
+                            break;
+                        }
                         if (getTokenActivityName(getActivity().toString()).equals("MyPage")) {
                             break;
                         }
