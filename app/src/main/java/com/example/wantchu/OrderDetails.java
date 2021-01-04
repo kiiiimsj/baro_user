@@ -39,6 +39,7 @@ import com.example.wantchu.JsonParsingHelper.OrderDetailsListParsing;
 import com.example.wantchu.JsonParsingHelper.OrderDetailsParsing;
 import com.example.wantchu.Dialogs.CustomDialog;
 import com.example.wantchu.Url.UrlMaker;
+import com.example.wantchu.helperClass.BaroUtil;
 import com.example.wantchu.helperClass.DetailsFixToBasket;
 import com.example.wantchu.Dialogs.RefreshBasketByStoreIdDialog;
 import com.google.gson.Gson;
@@ -132,6 +133,9 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         fix.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!BaroUtil.loginCheck(OrderDetails.this)) {
+                    return;
+                }
                 int must;
                 SharedPreferences sharedPreferences = getSharedPreferences("basketList", MODE_PRIVATE);
                 final SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -24,6 +24,7 @@ import com.example.wantchu.Alerts;
 import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.R;
 import com.example.wantchu.Url.UrlMaker;
+import com.example.wantchu.helperClass.BaroUtil;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -72,6 +73,9 @@ public class AlarmBell extends Fragment {
         alarmBell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!BaroUtil.loginCheck(getActivity())) {
+                    return;
+                }
                 startActivity(new Intent(getContext(), Alerts.class));
             }
         });
