@@ -5,17 +5,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.provider.Settings;
 import android.util.Log;
 import androidx.appcompat.app.AlertDialog;
+
+import com.example.wantchu.Database.SessionManager;
 import com.example.wantchu.Login;
 
 public class BaroUtil {
     static SharedPreferences sf;
     public static boolean loginCheck(final Activity activity){
         Log.e("loginCheck" , " / loginCheck!");
-        sf = activity.getPreferences(Context.MODE_PRIVATE);
-        String nick = sf.getString("nick","");
+        SessionManager sm = new SessionManager(activity, SessionManager.SESSION_USERSESSION);
+        SharedPreferences sf = sm.getUsersDetailSession();
+        String nick = sf.getString(SessionManager.KEY_USERNAME,"");
         if(nick == null || nick.equals("")){
             new AlertDialog.Builder(activity)
                 .setTitle("알 림")
@@ -53,5 +57,10 @@ public class BaroUtil {
 
                 }
             }).show();
+    }
+    public static boolean checkGPS(Context context) {
+        LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        Log.e("manager_state", manager.isProviderEnabled(LocationManager.GPS_PROVIDER)+"");
+        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 }
