@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -50,6 +51,7 @@ import com.example.wantchu.JsonParsingHelper.TypeListParsing;
 import com.example.wantchu.JsonParsingHelper.TypeParsing;
 import com.example.wantchu.JsonParsingHelper.ViewPagersListStoreParsing;
 import com.example.wantchu.Url.UrlMaker;
+import com.example.wantchu.helperClass.BaroUtil;
 import com.example.wantchu.helperClass.OrderCancelIfNotAccept;
 import com.example.wantchu.helperClass.ViewPagerCustomDuration;
 import com.example.wantchu.helperClass.myGPSListener;
@@ -58,7 +60,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.pedro.library.AutoPermissions;
+import com.pedro.library.AutoPermissionsListener;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,7 +74,10 @@ import java.util.Map;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class MainPage extends AppCompatActivity implements TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, UltraStoreListAdapter.OnListItemLongSelectedInterface, UltraStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemLongSelectedInterface {
+import static com.example.wantchu.helperClass.BaroUtil.checkGPS;
+
+public class MainPage extends AppCompatActivity implements TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, UltraStoreListAdapter.OnListItemLongSelectedInterface, UltraStoreListAdapter.OnListItemSelectedInterface,
+        NewStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemLongSelectedInterface, AutoPermissionsListener, ActivityCompat.OnRequestPermissionsResultCallback {
     final private String TAG = this.getClass().getSimpleName();
     RecyclerView mRecyclerView;
     private Intent serviceIntent;
@@ -113,6 +121,8 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AutoPermissions.Companion.loadAllPermissions(this, 101);
+
         setContentView(R.layout.activity_main_page);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
@@ -147,43 +157,35 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         makeRequest();
 
         myGPSListener = new myGPSListener(this);
-        latLng = myGPSListener.startLocationService(null);
-        startLocation();
-        if(latLng == null) {
-
-
-        }else {
-
-            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    Log.e(TAG,TAG);
-                    latLng = myGPSListener.startLocationService(mAddress);
-                    refreshLayout.setRefreshing(false);
-                }
-            });
-
-            makeRequestUltraStore(setHashMapData());
-            makeRequestNewStore(setHashMapData());
-            mAddress.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        latLng = myGPSListener.startLocationService(mAddress);
+        mAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                Intent intent = new Intent(getApplicationContext(), MyMap.class);
-                    Intent intent = new Intent(getApplicationContext(), NewMyMap.class);
-                    startActivity(intent);
-                    CustomIntent.customType(MainPage.this,"right-to-left");
-                }
-            });
-            mMapButton.setOnClickListener(new View.OnClickListener(){
+                Intent intent = new Intent(getApplicationContext(), NewMyMap.class);
+                startActivity(intent);
+                CustomIntent.customType(MainPage.this,"right-to-left");
+            }
+        });
+        mMapButton.setOnClickListener(new View.OnClickListener(){
 
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(MainPage.this, NewMyMap.class);
-                    startActivity(intent);
-                    CustomIntent.customType(MainPage.this,"right-to-left");
-                }
-            });
-        }
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainPage.this, NewMyMap.class);
+                startActivity(intent);
+                CustomIntent.customType(MainPage.this,"right-to-left");
+            }
+        });
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.e(TAG,TAG);
+                latLng = myGPSListener.startLocationService(mAddress);
+                makeRequestUltraStore(setHashMapData());
+                makeRequestNewStore(setHashMapData());
+                refreshLayout.setRefreshing(false);
+            }
+        });
         ///////// 태영
         call_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,19 +194,21 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                 searchDialog.callFunction();
             }
         });
-
         progressApplication.progressOFF();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        Log.e("onResume", 1+"");
         latLng = myGPSListener.startLocationService(mAddress);
-        if(latLng == null) {
+        if(!BaroUtil.checkGPS(this)) {
             startLocation();
-        }else {
+        }
+
+        else {
             makeRequestUltraStore(setHashMapData());
+            makeRequestNewStore(setHashMapData());
         }
     }
 
@@ -223,25 +227,21 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     }
 
     private void startLocation() {
-        LocationManager manager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        Log.e("manager_state", manager.isProviderEnabled(LocationManager.GPS_PROVIDER)+"");
+        Log.e("startLocation", "start");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("설정");
+        builder.setCancelable(true);
         builder.setMessage("어플을 사용하기위해선 위치서비스를 켜주세요");
         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialog, int i) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                dialog.dismiss();
+                dialog.cancel();
                 startActivity(intent);
             }
-        }).create();
-
-        if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            builder.show();
-        }else {
-            builder.show().dismiss();
-        }
+        });
+        builder.show();
     }
 
     private void setEventCountSet(int position) {
@@ -511,5 +511,19 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         moveTaskToBack(true);
         finishAndRemoveTask();
         android.os.Process.killProcess(android.os.Process.myPid());
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        AutoPermissions.Companion.parsePermissions(this, requestCode, permissions, this);
+    }
+    @Override
+    public void onDenied(int i, @NotNull String[] strings) {
+
+    }
+
+    @Override
+    public void onGranted(int i, @NotNull String[] strings) {
+
     }
 }

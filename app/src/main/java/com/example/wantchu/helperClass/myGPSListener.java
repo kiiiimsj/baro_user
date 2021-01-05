@@ -140,60 +140,70 @@ public class myGPSListener implements LocationListener {
     public LatLng startLocationService(TextView getAdress) {
         LocationManager manager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         LatLng latLng= null;
-        Location location;
-        Location location2;
-        long minTime = 10000;
+
+        Location gpsProviderLocation;
+        Location networkProviderLocation;
+
+        long minTime = 500;
         float minDistance = 0;
 
         try {
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, this);
             manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, this);
 
-            location2 = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            location = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            gpsProviderLocation = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            networkProviderLocation = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
+            String message = "가게리스트페이지에서 내 위치 -> " + "location: "+ gpsProviderLocation +"\nlocation2:" + networkProviderLocation;
+            Log.e("message_", message);
 
-            if (location2 != null) {
-                latitude = location2.getLatitude();
-                longitude = location2.getLongitude();
+            if (gpsProviderLocation != null) {
+                Log.e("gps", 1+"");
+                latitude = gpsProviderLocation.getLatitude();
+                longitude = gpsProviderLocation.getLongitude();
                 latLng = new LatLng(latitude, longitude);
-                String message = "가게리스트페이지에서 내 위치 -> Latitude : " + latitude + "\nLongitude:" + longitude;
             }
-            else {
-                if(location != null) {
-                    latitude = location.getLatitude();
-                    longitude = location.getLongitude();
+            else if (networkProviderLocation != null){
+                Log.e("gps", 2+"");
+                    latitude = networkProviderLocation.getLatitude();
+                    longitude = networkProviderLocation.getLongitude();
                     latLng = new LatLng(latitude, longitude);
                 }
-                if(saveLocation != null ) {
-                    double[] ll = new double[2];
-                    int i = 0;
-                    if (!saveLocation.getString("location", "").equals("")) {
-                        String locationStr = saveLocation.getString("location", null);
-                        StringTokenizer stringTokenizer = new StringTokenizer(locationStr, ":");
-                        while (stringTokenizer.hasMoreTokens()) {
-                            String getDouble = stringTokenizer.nextToken();
-                            ll[i] = Double.parseDouble(getDouble);
-                            i++;
-                        }
-                        Toast.makeText(context, "GPS가 꺼져있으므로 마지막 저장위치를 현재위치로 설정합니다.", Toast.LENGTH_SHORT).show();
-                        LatLng latLng1 = new LatLng(ll[0], ll[1]);
-                        latitude = ll[0];
-                        longitude = ll[1];
-                        setMapLocationTextView(getAdress);
-                        return latLng1;
+            else if(saveLocation != null) {
+                Log.e("gps", 3+"");
+                double[] ll = new double[2];
+                int i = 0;
+                if (!saveLocation.getString("location", "").equals("")) {
+                    Log.e("gps", 5+"");
+                    String locationStr = saveLocation.getString("location", null);
+                    StringTokenizer stringTokenizer = new StringTokenizer(locationStr, ":");
+                    while (stringTokenizer.hasMoreTokens()) {
+                        String getDouble = stringTokenizer.nextToken();
+                        ll[i] = Double.parseDouble(getDouble);
+                        i++;
                     }
+                    Toast.makeText(context, "GPS가 꺼져있으므로 마지막 저장위치를 현재위치로 설정합니다.", Toast.LENGTH_SHORT).show();
+                    //LatLng latLng1 = new LatLng(ll[0], ll[1]);
+                    latitude = ll[0];
+                    longitude = ll[1];
+                    setMapLocationTextView(getAdress);
+                    latLng = new LatLng(latitude, longitude);
+                }
+                else {
+                    Log.e("gps", 4+"");
+                    latitude = 37.49808785857802;
+                    longitude = 127.02758604547965;
+                    latLng = new LatLng(latitude, longitude);
                 }
             }
-
             if(getAdress != null) {
                 setMapLocationTextView(getAdress);
             }
         }
-
         catch(SecurityException e) {
             e.printStackTrace();
         }
+        Log.e("final gps", latLng+"");
         return latLng;
     }
 }
