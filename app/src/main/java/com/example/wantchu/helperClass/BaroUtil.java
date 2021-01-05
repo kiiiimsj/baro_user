@@ -6,12 +6,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Window;
+import android.view.WindowManager;
+
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wantchu.Database.SessionManager;
+import com.example.wantchu.Dialogs.AddFavoriteDialog;
+import com.example.wantchu.Dialogs.HistoryDetailDialog;
+import com.example.wantchu.Dialogs.NeedLoginDialog;
 import com.example.wantchu.Login;
+import com.example.wantchu.StoreInfoReNewer;
 
 public class BaroUtil {
     static SharedPreferences sf;
@@ -21,22 +31,10 @@ public class BaroUtil {
         SharedPreferences sf = sm.getUsersDetailSession();
         String nick = sf.getString(SessionManager.KEY_USERNAME,"");
         if(nick == null || nick.equals("")){
-            new AlertDialog.Builder(activity)
-                .setTitle("알 림")
-                .setMessage("로그인이 필요한 페이지 입니다 \n로그인 하시겠습니까?")
-                .setPositiveButton("예", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    activity.startActivity(new Intent(activity, Login.class));
-                    activity.overridePendingTransition(0, 0);
-                }
-            }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            })
-            .show();
+            NeedLoginDialog needLoginDialog = new NeedLoginDialog(activity);
+            needLoginDialog.callFunction();
+
+
             return false;
         }
         return true;

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_need_login"
+    android:padding="20dp">
+    <TextView
+        android:id="@+id/title"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그인이 필요합니다"
+        android:textSize="17sp"
+        android:textColor="#434343"
+        android:fontFamily="@font/notosans_regular"
+        android:includeFontPadding="false"/>
+    <TextView
+        android:layout_marginVertical="15dp"
+        android:id="@+id/subTitle"
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="서비스를 이용하기 위해서는 로그인이 필요합니다."
+        android:textSize="15sp"
+        android:textColor="#343434"
+        android:fontFamily="@font/notosans_regular"
+        android:includeFontPadding="false"/>
+    <Button
+        android:layout_below="@id/subTitle"
+        android:id="@+id/goLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_border_5dp_border_main"
+        android:text="로그인 하기"/>
+    <ImageButton
+        android:id="@+id/dismiss"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:src="@drawable/arrow_right"/>
+</RelativeLayout>

@@ -14,6 +14,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -158,6 +159,14 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
 
         myGPSListener = new myGPSListener(this);
         latLng = myGPSListener.startLocationService(mAddress);
+        if(!BaroUtil.checkGPS(this)) {
+            startLocation();
+        }
+
+        else {
+            makeRequestUltraStore(setHashMapData());
+            makeRequestNewStore(setHashMapData());
+        }
         mAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,11 +211,8 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         super.onResume();
         Log.e("onResume", 1+"");
         latLng = myGPSListener.startLocationService(mAddress);
-        if(!BaroUtil.checkGPS(this)) {
-            startLocation();
-        }
-
-        else {
+        Log.e("RALO", String.valueOf(BaroUtil.checkGPS(this)));
+        if(BaroUtil.checkGPS(this)) {
             makeRequestUltraStore(setHashMapData());
             makeRequestNewStore(setHashMapData());
         }
@@ -234,14 +240,22 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         builder.setMessage("어플을 사용하기위해선 위치서비스를 켜주세요");
         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int i) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                dialog.dismiss();
-                dialog.cancel();
-                startActivity(intent);
+            public void onClick(final DialogInterface dialog, int i) {
+//                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//                startActivity(intent);
             }
         });
-        builder.show();
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        //Overriding the handler immediately after show is probably a better approach than OnShowListener as described below
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
     }
 
     private void setEventCountSet(int position) {
