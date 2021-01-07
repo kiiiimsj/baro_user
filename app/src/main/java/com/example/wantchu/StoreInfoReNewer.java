@@ -30,6 +30,7 @@ import com.example.wantchu.HelperDatabase.StoreDetail;
 import com.example.wantchu.JsonParsingHelper.FavoriteListParsing;
 import com.example.wantchu.JsonParsingHelper.FavoriteParsing;
 import com.example.wantchu.Url.UrlMaker;
+import com.example.wantchu.helperClass.BaroUtil;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -52,6 +53,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     TextView tabStoreInfo;
 
     boolean result =false;
+
     SharedPreferences sp;
     StoreMenuFragment storeMenuFragment;
     StoreDetailInfoFragment storeDetailInfoFragment;
@@ -66,7 +68,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_info_re_newer);
-
+        setOnClickFavorite();
         fm = getSupportFragmentManager();
         topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
         tabs = findViewById(R.id.tab_tabs);
@@ -80,11 +82,20 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         myIntent = getIntent();
         storedIdStr=myIntent.getStringExtra("store_id");
         saveFavoriteOnce();
-        checkFavorite();
+//        if (_phone.equals("")) {
+//            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_empty);
+//        }else {
+//            checkFavorite();
+//        }
         setTabEvent();
+//        if (_phone.equals("")) {
+//            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_empty);
+//        }else {
+//            checkFavorite();
+//        }
         makeRequestGetStore(Integer.parseInt(storedIdStr));
 
-        setOnClickFavorite();
+
     }
 
     private void saveFavoriteOnce() {
@@ -97,9 +108,10 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     @Override
     protected void onResume() {
         super.onResume();
+        setOnClickFavorite();
         getFavoriteStoreId();
         checkFavorite();
-        setOnClickFavorite();
+
     }
     @Override
     protected void onPause() {
@@ -114,6 +126,9 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         heartClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!BaroUtil.loginCheck(StoreInfoReNewer.this)) {
+                    return;
+                }
                 if(result) {
                     Log.i("result", "true");
                     //등록 - > 미등록
@@ -348,15 +363,11 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     @Override
     public void onBack() {
         onBackPressed();
+        CustomIntent.customType(this,"right-to-left");
     }
 
     @Override
     public void clickImage() {
         heartClickListener.onClick(null);
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        CustomIntent.customType(this,"right-to-left");
     }
 }

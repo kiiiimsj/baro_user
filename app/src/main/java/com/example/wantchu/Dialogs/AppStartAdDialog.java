@@ -48,7 +48,7 @@ public class AppStartAdDialog {
         dlg.setContentView(R.layout.app_start_ad_dialog);
         dlg.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dlg.setCanceledOnTouchOutside(false);
-        dlg.show();
+
         eventImage = (ImageView) dlg.findViewById(R.id.ad_image);
         closeEver = (Button) dlg.findViewById(R.id.close_ever);
         justClose = (Button) dlg.findViewById(R.id.just_close);
@@ -93,10 +93,10 @@ public class AppStartAdDialog {
         SharedPreferences sf = context.getSharedPreferences("saveEventId", Context.MODE_PRIVATE);
         int saveEventId = sf.getInt("event_id", 0);
         if(saveEventId == eventId) {
-            dlg.dismiss();
             return;
         }
         else {
+            dlg.show();
             makeRequestForImage();
         }
     }

@@ -1,24 +1,30 @@
 package com.example.wantchu;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,11 +46,13 @@ import com.example.wantchu.AdapterHelper.TypeHelperClass;
 import com.example.wantchu.Database.StoreSessionManager;
 import com.example.wantchu.Dialogs.AppStartAdDialog;
 import com.example.wantchu.Dialogs.SearchDialog;
+import com.example.wantchu.Fragment.AlarmBell;
 import com.example.wantchu.JsonParsingHelper.EventHelperClass;
 import com.example.wantchu.JsonParsingHelper.TypeListParsing;
 import com.example.wantchu.JsonParsingHelper.TypeParsing;
 import com.example.wantchu.JsonParsingHelper.ViewPagersListStoreParsing;
 import com.example.wantchu.Url.UrlMaker;
+import com.example.wantchu.helperClass.BaroUtil;
 import com.example.wantchu.helperClass.OrderCancelIfNotAccept;
 import com.example.wantchu.helperClass.ViewPagerCustomDuration;
 import com.example.wantchu.helperClass.myGPSListener;
@@ -53,7 +61,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.pedro.library.AutoPermissions;
+import com.pedro.library.AutoPermissionsListener;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,8 +75,10 @@ import java.util.Map;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class MainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, UltraStoreListAdapter.OnListItemLongSelectedInterface, UltraStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemLongSelectedInterface {
+import static com.example.wantchu.helperClass.BaroUtil.checkGPS;
 
+public class MainPage extends AppCompatActivity implements TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, UltraStoreListAdapter.OnListItemLongSelectedInterface, UltraStoreListAdapter.OnListItemSelectedInterface,
+        NewStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemLongSelectedInterface, AutoPermissionsListener, ActivityCompat.OnRequestPermissionsResultCallback {
     final private String TAG = this.getClass().getSimpleName();
     RecyclerView mRecyclerView;
     private Intent serviceIntent;
@@ -104,17 +117,19 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     ///////// 태영
     ImageView call_search;
     SwipeRefreshLayout refreshLayout;
+
     /////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AutoPermissions.Companion.loadAllPermissions(this, 101);
+
         setContentView(R.layout.activity_main_page);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         sp = getSharedPreferences("favorite", MODE_PRIVATE);
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
-
         ultraStoreRecyclerView = findViewById(R.id.ultra_store);
         newStoreRecyclerView = findViewById(R.id.new_store);
 
@@ -133,45 +148,25 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         context = this;
         mAddress = findViewById(R.id.address);
         mMapButton = findViewById(R.id.map_button);
-        // 왼쪽 사이드바
         storeSessionManager = new StoreSessionManager(MainPage.this, StoreSessionManager.STORE_SESSION);
         storeSessionManager.setIsFavorite(false);
         ///////// 태영
         call_search = findViewById(R.id.search_dialog);
         refreshLayout = findViewById(R.id.refreshLayout);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Log.e(TAG,TAG);
-                latLng = myGPSListener.startLocationService(mAddress);
-                refreshLayout.setRefreshing(false);
-            }
-        });
-        /////////
-        startLocation();
-//        if (OrderCancelIfNotAccept.serviceIntent==null) {
-//            serviceIntent = new Intent(this, OrderCancelIfNotAccept.class);
-//            startService(serviceIntent);
-//        } else {
-//            serviceIntent = OrderCancelIfNotAccept.serviceIntent;//getInstance().getApplication();
-//            Toast.makeText(getApplicationContext(), "already", Toast.LENGTH_LONG).show();
-//        }
 
         makeRequestForEventThread();
-        // 타입 버튼 동적으로 만드는 메소드
         makeRequest();
 
         myGPSListener = new myGPSListener(this);
-        latLng = myGPSListener.startLocationService(null);
-        if(latLng == null) {
-            mAddress.setText("GPS를 설정 해 주세요");
+        latLng = myGPSListener.startLocationService(mAddress);
+        if(!BaroUtil.checkGPS(this)) {
+            startLocation();
         }
 
-
-
-        makeRequestUltraStore(setHashMapData());
-        makeRequestNewStore(setHashMapData());
-
+        else {
+            makeRequestUltraStore(setHashMapData());
+            makeRequestNewStore(setHashMapData());
+        }
         mAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,7 +185,16 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 CustomIntent.customType(MainPage.this,"right-to-left");
             }
         });
-
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.e(TAG,TAG);
+                latLng = myGPSListener.startLocationService(mAddress);
+                makeRequestUltraStore(setHashMapData());
+                makeRequestNewStore(setHashMapData());
+                refreshLayout.setRefreshing(false);
+            }
+        });
         ///////// 태영
         call_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,19 +203,19 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 searchDialog.callFunction();
             }
         });
-
         progressApplication.progressOFF();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(TAG,"RESUME");
+        Log.e("onResume", 1+"");
         latLng = myGPSListener.startLocationService(mAddress);
-        if(latLng == null) {
-            mAddress.setText("GPS를 설정 해 주세요");
+        Log.e("RALO", String.valueOf(BaroUtil.checkGPS(this)));
+        if(BaroUtil.checkGPS(this)) {
+            makeRequestUltraStore(setHashMapData());
+            makeRequestNewStore(setHashMapData());
         }
-        makeRequestUltraStore(setHashMapData());
     }
 
     @Override
@@ -226,31 +230,32 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     protected void onPause() {
         super.onPause();
-//        overridePendingTransition(0, 0);
     }
 
     private void startLocation() {
-        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("설정");
-            builder.setMessage("어플을 사용하기위해선 위치서비스를 켜주세요");
-            builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    intent.addCategory(Intent.CATEGORY_DEFAULT);
-                    startActivity(intent);
-                }
-            });
-            builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
+        Log.e("startLocation", "start");
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("설정");
+        builder.setCancelable(true);
+        builder.setMessage("어플을 사용하기위해선 위치서비스를 켜주세요");
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, int i) {
+//                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//                startActivity(intent);
+            }
+        });
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        //Overriding the handler immediately after show is probably a better approach than OnShowListener as described below
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
     }
 
     private void setEventCountSet(int position) {
@@ -370,33 +375,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         ultraStoreRecyclerView();
     }
 
-    //왼쪽 사이드바 메뉴 클릭시
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.left_coupon:
-                startActivity(new Intent(MainPage.this, SideMyCoupon.class));
-                break;
-            case R.id.left_noti:
-                Intent intent = new Intent(MainPage.this, Notice.class);
-                intent.putExtra("type", "NOTICE");
-                startActivity(intent);
-                break;
-            case R.id.left_entry_request:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
-                break;
-            case R.id.left_one_to_one:
-
-                break;
-            case R.id.left_events:
-                startActivity(new Intent(MainPage.this, Alerts.class));
-                break;
-        }
-        return true;
-    }
-
-
-
 
     private synchronized void jsonParsing(String result, TypeParsing typeParsing){
         try {
@@ -452,13 +430,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             }
             @Override
             public void onPageScrollStateChanged(int state) {
-//                if(state == ViewPager.SCROLL_STATE_DRAGGING) {
-//                    if(currentPos+1 == viewPager.getChildCount()) {
-//                        viewPager.setCurrentItem(0);
-//                        setEventCountSet(0);
-//                        currentPos = 0;
-//                    }
-//                }
             }
         });
     }
@@ -532,8 +503,6 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     public void onLongNewStoreItemSelected(View v, int adapterPosition) {
 
     }
-
-
     @Override
     public void onUltraStoreLongSelected(View v, int adapterPosition) {
 
@@ -549,8 +518,26 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         startActivity(intent);
         CustomIntent.customType(this,"left-to-right");
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBackPressed() {
-        Log.i(TAG, "true");
+        moveTaskToBack(true);
+        finishAndRemoveTask();
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        AutoPermissions.Companion.parsePermissions(this, requestCode, permissions, this);
+    }
+    @Override
+    public void onDenied(int i, @NotNull String[] strings) {
+
+    }
+
+    @Override
+    public void onGranted(int i, @NotNull String[] strings) {
+
     }
 }
