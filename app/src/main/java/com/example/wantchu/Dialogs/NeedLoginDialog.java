@@ -52,7 +52,7 @@ public class NeedLoginDialog {
         dlg.show();
 
         Window window = dlg.getWindow();
-        window.setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(R.color.invisible)));
+        window.setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(R.color.dialog_invisible)));
 
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 

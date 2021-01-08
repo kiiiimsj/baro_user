@@ -16,7 +16,8 @@
 
     <color name="bottom_icon_color_select">#8333e6</color>
     <color name="map_marker_content_background">#CFFFFFFF</color>
-    <color name="invisible">#33000000</color>
+    <color name="dialog_invisible">#33000000</color>
+    <color name="invisible">#00000000</color>
     <color name="border_gray">#c4c4c4</color>
     <color name="indicator_unselect_text_color">#dbdbdb</color>
 
