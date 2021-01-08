@@ -6,14 +6,14 @@
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/white"
-        android:fontFamily="@font/notosans_bold"
+        android:fontFamily="@font/notosans_black"
+        android:includeFontPadding="false"
         android:gravity="center"
         android:text="로그아웃"
-        android:letterSpacing="0.3"
         android:textColor="#343434"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -28,41 +28,41 @@
             android:textColor="#343434"
             android:fontFamily="@font/notosans_regular"
             android:includeFontPadding="false"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:text="로그아웃 하시겠습니까?"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
         <Button
             android:id="@+id/dialog_close"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="닫기"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:letterSpacing="0.2"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
             android:background="@drawable/layout_radius_3dp_color_main"
             android:fontFamily="@font/notosans_bold"/>
         <Button
             android:id="@+id/okay"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="확 인"
             android:textColor="@color/main"
             android:textSize="16sp"
             android:letterSpacing="0.2"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/layout_border_3dp_stroke_2dp"
             android:fontFamily="@font/notosans_bold"/>
 

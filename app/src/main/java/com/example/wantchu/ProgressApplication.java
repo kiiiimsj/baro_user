@@ -6,7 +6,9 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDialog;
@@ -43,14 +45,8 @@ public class ProgressApplication extends Application {
             progressDialog.show();
         }
 
-        final ImageView img_loading_frame = (ImageView) progressDialog.findViewById(R.id.frame_loading);
-        final AnimationDrawable frameAnimation = (AnimationDrawable) img_loading_frame.getBackground();
-        img_loading_frame.post(new Runnable() {
-            @Override
-            public void run() {
-                frameAnimation.start();
-            }
-        });
+        final ProgressBar img_loading_frame = (ProgressBar) progressDialog.findViewById(R.id.frame_loading);
+        img_loading_frame.setVisibility(View.VISIBLE);
 
     }
 
@@ -62,6 +58,7 @@ public class ProgressApplication extends Application {
     }
     public void progressOFF() {
         if (progressDialog != null && progressDialog.isShowing()) {
+            //img_loading_frame.setVisibility(View.GONE);
             progressDialog.dismiss();
         }
     }

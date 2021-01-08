@@ -4,29 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main"
     tools:context=".FirstPage">
-
-    <ImageView
-        android:id="@+id/first_background_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/splash_screen_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/first_textView"
+        android:id="@+id/order_text"
+        app:layout_constraintBottom_toTopOf="@id/baro_logo"
+        app:layout_constraintLeft_toLeftOf="@id/baro_logo"
+        android:text="주문을"
+        android:textSize="20sp"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Want it? Choose it!"
-        app:layout_constraintBottom_toBottomOf="@+id/first_background_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_editor_absoluteX="126dp"
-        app:layout_editor_absoluteY="696dp" />
-
-
+        />
+    <TextView
+        android:id="@+id/get_text"
+        app:layout_constraintBottom_toTopOf="@id/baro_logo"
+        app:layout_constraintRight_toRightOf="@id/baro_logo"
+        android:text="바로잡다"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:id="@+id/baro_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BARO"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:fontFamily="@font/notosans_bold"
+        android:includeFontPadding="false"
+        android:translationY="-20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

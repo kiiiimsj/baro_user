@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,7 +72,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsView
         TextView alertTitle;
         TextView alertStartDate;
         TextView alertId;
-        TextView isRead;
+        RelativeLayout isRead;
         View clickListener;
         public AlertsViewHolder(@NonNull View itemView, final int pos) {
             super(itemView);

@@ -28,6 +28,6 @@
     <style name="myToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
         <item name="android:paddingBottom">0dp</item>
     </style>
-
+    <style name="mydialog"/>
 
 </resources>

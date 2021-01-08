@@ -58,7 +58,6 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
     @NonNull
     @Override
     public UltraStoreListAdapter.UltraStoreListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.ultra_store_design, parent, false);
@@ -139,21 +138,23 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
             storeId = itemView.findViewById(R.id.store_id);
             isOpen = itemView.findViewById(R.id.is_open);
             ViewPagersListStoreParsing.ViewPagerStoreParsing list = listStoreHelperClasses.store.get(po);
-            makeRequestUltraStore(list.getStore_image(), context, storeImage);
+            if(!list.getStore_name().equals("")) {
+                makeRequestUltraStore(list.getStore_image(), context, storeImage);
+            }
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mListener.onUltraStoreSelected(view, getAdapterPosition());
                 }
             });
-
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    mLongListener.onUltraStoreLongSelected(view, getAdapterPosition());
-                    return false;
-                }
-            });
+//
+//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View view) {
+//                    mLongListener.onUltraStoreLongSelected(view, getAdapterPosition());
+//                }
+//            });
         }
 
         public void makeRequestUltraStore(String store_image, Context context, final ImageView image){
@@ -163,7 +164,6 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
             StringBuilder urlBuilder = new StringBuilder()
                     .append(url)
                     .append(store_image);
-            Log.i("store", urlBuilder.toString());
             RequestQueue requestQueue = Volley.newRequestQueue(context);
 
             ImageRequest request = new ImageRequest(urlBuilder.toString(),
@@ -171,7 +171,6 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
                         @Override
                         public void onResponse(Bitmap response) {
                             image.setImageBitmap(response);
-                            Log.i("response", response.toString());
                         }
                     }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
                     new Response.ErrorListener() {

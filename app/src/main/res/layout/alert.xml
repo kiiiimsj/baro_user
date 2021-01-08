@@ -20,20 +20,28 @@
         android:includeFontPadding="false"
         android:text="새로운 쿠폰 받으세요!"
         />
-    <TextView
+    <RelativeLayout
         android:id="@+id/is_read_new_label"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:background="@drawable/circle"
-        android:backgroundTint="@color/red"
-        android:backgroundTintMode="src_over"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_toRightOf="@id/alert_title"
         android:layout_alignTop="@id/alert_title"
-        android:text="N"
-        android:textSize="7sp"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        />
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/main"
+        android:backgroundTintMode="src_over"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N"
+            android:textSize="10sp"
+            android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
     <TextView
         android:layout_below="@id/alert_title"
         android:layout_marginVertical="10dp"
