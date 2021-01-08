@@ -3,7 +3,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
     android:gravity="center"
-    android:paddingBottom="20dp"
     android:id="@+id/optionTableRow"
     android:orientation="horizontal">
 
@@ -14,9 +13,8 @@
         android:layout_weight="1"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:orientation="vertical">
 
         <ToggleButton
@@ -28,7 +26,7 @@
             android:gravity="center"
             android:text="옵 션"
             android:textColor="@color/lightGray"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:letterSpacing="-0.02"
             android:minWidth="120dp"
             android:minHeight="40dp"
@@ -42,7 +40,7 @@
             android:gravity="center"
             android:text="가격"
             android:background="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="10sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,8 +53,8 @@
         android:layout_weight="1"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
 
         android:orientation="vertical">
 
@@ -69,7 +67,7 @@
             android:gravity="center"
             android:text="옵 션"
             android:textColor="@color/lightGray"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:fontFamily="@font/notosans_bold"
             android:letterSpacing="-0.02"
             android:minWidth="120dp"
@@ -82,9 +80,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="가격"
+            android:text="10sp"
             android:background="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="10sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,11 +93,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-
         android:orientation="vertical">
 
         <ToggleButton
@@ -111,7 +108,7 @@
             android:gravity="center"
             android:text="옵 션"
             android:textColor="@color/lightGray"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:letterSpacing="-0.02"
             android:fontFamily="@font/notosans_bold"
             android:minWidth="120dp"
@@ -126,7 +123,7 @@
             android:gravity="center"
             android:text="가격"
             android:background="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="10sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     app:tabIndicatorColor="@color/main"
                     app:tabTextColor="@color/indicator_unselect_text_color"
-                    app:tabGravity="fill"
+                    app:tabGravity="center"
                     app:tabIndicatorGravity="center"
                     app:tabIndicatorFullWidth="false"
                     app:tabIndicatorHeight="25dp"

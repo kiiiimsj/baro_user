@@ -5,9 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="11dp"
-    android:paddingRight="11dp"
-    android:layout_marginHorizontal="10dp"
     tools:context=".OrderDetails">
 
     <RelativeLayout
