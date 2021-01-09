@@ -351,7 +351,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         TypeParsing typeParsing = new TypeParsing();
         jsonParsing(result, typeParsing);
         adapter = new TypeAdapter(DataList, this, this, MainPage.this);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         for(int i = 0; i < typeParsing.getTypeList().size();i++){
             TypeListParsing typeListParsing = typeParsing.getTypeList().get(i);
             TypeHelperClass typeHelperClass = new TypeHelperClass(typeListParsing.getTypeName(), typeListParsing.getTypeCode(), typeListParsing.getTypeImage());
