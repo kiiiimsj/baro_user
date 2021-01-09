@@ -9,6 +9,12 @@
     android:layout_marginTop="1dp"
     android:layout_marginBottom="1dp"
     android:padding="10dp">
+   <LinearLayout
+       android:layout_marginTop="5dp"
+       android:layout_width="match_parent"
+       android:layout_height="1px"
+       android:background="@color/main"
+       android:layout_marginBottom="15dp"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -134,4 +140,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>

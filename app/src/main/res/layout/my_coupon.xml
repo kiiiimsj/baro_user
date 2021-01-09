@@ -18,7 +18,7 @@
             android:textColor="#8333e6"
             android:includeFontPadding="false"
             android:layout_below="@id/coupon_condition"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="30dp"/>
 
         <TextView
@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/coupon_name"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
             android:maxLines="1"
             android:singleLine="true"
             android:text="30% 할인권"
@@ -52,8 +53,7 @@
             />
 
         <TextView
-            android:textColor="@color/black"
-            android:gravity="left"
+            android:textColor="#c4c4c4"
             android:id="@+id/coupon_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
