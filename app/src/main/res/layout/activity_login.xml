@@ -7,7 +7,7 @@
     android:background="@color/main"
     tools:context=".Login">
     <TextView
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="90dp"
         android:includeFontPadding="false"
         android:id="@+id/imageView"
         android:layout_width="match_parent"
