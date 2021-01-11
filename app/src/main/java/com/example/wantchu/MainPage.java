@@ -1,23 +1,15 @@
 package com.example.wantchu;
 
-import android.app.Application;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -53,14 +45,11 @@ import com.example.wantchu.JsonParsingHelper.TypeParsing;
 import com.example.wantchu.JsonParsingHelper.ViewPagersListStoreParsing;
 import com.example.wantchu.Url.UrlMaker;
 import com.example.wantchu.helperClass.BaroUtil;
-import com.example.wantchu.helperClass.OrderCancelIfNotAccept;
 import com.example.wantchu.helperClass.ViewPagerCustomDuration;
 import com.example.wantchu.helperClass.myGPSListener;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
 
@@ -71,11 +60,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import maes.tech.intentanim.CustomIntent;
-
-import static com.example.wantchu.helperClass.BaroUtil.checkGPS;
 
 public class MainPage extends AppCompatActivity implements TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, UltraStoreListAdapter.OnListItemLongSelectedInterface, UltraStoreListAdapter.OnListItemSelectedInterface,
         NewStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemLongSelectedInterface, AutoPermissionsListener, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -93,8 +79,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
 
     RecyclerView.Adapter adapter;
 
-    Context context;
-
     TextView eventCountSet;
     ViewPagerCustomDuration viewPager;
     int currentPos;
@@ -103,11 +87,9 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     SharedPreferences sp;
     Gson gson;
 
-
     StoreSessionManager storeSessionManager;
     ProgressApplication progressApplication;
     EventHelperClass eventHelperClass;
-    ViewPager.OnPageChangeListener changeListener;
 
     TextView mAddress;
     ImageView mMapButton;
@@ -118,34 +100,31 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     ImageView call_search;
     SwipeRefreshLayout refreshLayout;
 
+    FragmentManager fm;
+    AlarmBell alarmBell;
     /////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         AutoPermissions.Companion.loadAllPermissions(this, 101);
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main_page);
+
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
+
         sp = getSharedPreferences("favorite", MODE_PRIVATE);
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
         ultraStoreRecyclerView = findViewById(R.id.ultra_store);
         newStoreRecyclerView = findViewById(R.id.new_store);
 
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < 10; i++) {
-            stringBuilder.append(i).append("/");
-        }
-        Log.i("stringBuilderBefore", stringBuilder.toString());
-        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf("/"));
-        Log.i("stringBuilderAfter", stringBuilder.toString());
-
         viewPager = findViewById(R.id.info_image);
         eventCountSet = findViewById(R.id.event_count);
+
         AppStartAdDialog appStartAdDialog = new AppStartAdDialog(MainPage.this);
         appStartAdDialog.callFunction();
-        context = this;
+
         mAddress = findViewById(R.id.address);
         mMapButton = findViewById(R.id.map_button);
         storeSessionManager = new StoreSessionManager(MainPage.this, StoreSessionManager.STORE_SESSION);
@@ -158,19 +137,10 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         makeRequest();
 
         myGPSListener = new myGPSListener(this);
-        latLng = myGPSListener.startLocationService(mAddress);
-        if(!BaroUtil.checkGPS(this)) {
-            startLocation();
-        }
 
-        else {
-            makeRequestUltraStore(setHashMapData());
-            makeRequestNewStore(setHashMapData());
-        }
         mAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), MyMap.class);
                 Intent intent = new Intent(getApplicationContext(), NewMyMap.class);
                 startActivity(intent);
                 CustomIntent.customType(MainPage.this,"right-to-left");
@@ -195,7 +165,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                 refreshLayout.setRefreshing(false);
             }
         });
-        ///////// 태영
         call_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -211,8 +180,10 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         super.onResume();
         Log.e("onResume", 1+"");
         latLng = myGPSListener.startLocationService(mAddress);
-        Log.e("RALO", String.valueOf(BaroUtil.checkGPS(this)));
-        if(BaroUtil.checkGPS(this)) {
+        if(!BaroUtil.checkGPS(this)) {
+            startLocation();
+        }
+        else if(latLng != null) {
             makeRequestUltraStore(setHashMapData());
             makeRequestNewStore(setHashMapData());
         }
@@ -391,7 +362,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                 typeListParsings.add(typeListParsing);
             }
             typeParsing.setTypeList(typeListParsings);
-            Log.i("MainPage", result2.toString());
         }
         catch(JSONException e){
             e.printStackTrace();
@@ -436,7 +406,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     private void eventParsing(String response) {
         Gson gson = new Gson();
         eventHelperClass = gson.fromJson(response, EventHelperClass.class);
-        advertiseAdapter = new AdvertiseAdapter(context, eventHelperClass);
+        advertiseAdapter = new AdvertiseAdapter(this, eventHelperClass);
         viewPager.setAdapter(advertiseAdapter);
         viewPager.setCurrentItem(eventHelperClass.event.size() * 500);
         viewPager.setOffscreenPageLimit(5);

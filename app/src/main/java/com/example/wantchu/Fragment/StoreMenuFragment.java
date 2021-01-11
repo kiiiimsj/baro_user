@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -155,6 +156,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         mMenuAdapter = new MenuListAdapter(DataList, this, this, getContext(), storedIdStr);
         mRecyclerViewMenu.setAdapter(mMenuAdapter);
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint({"UseCompatLoadingForDrawables", "ResourceAsColor"})
     private void setMRecyclerViewCategory() {
         for(int i = 0; i < saveCategories.size(); i++){
@@ -168,6 +170,9 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
             categoryName.setText(storeCategories.getCategoryName());
             categoryName.setTextColor(getResources().getColor(R.color.indicator_unselect_text_color));
             categoryName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            categoryName.setTextSize(10);
+            Typeface face = getActivity().getResources().getFont(R.font.notosans_regular);
+            categoryName.setTypeface(face);
 
             ViewGroup.LayoutParams width = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             tabView.setLayoutParams(width);

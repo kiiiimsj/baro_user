@@ -35,7 +35,6 @@ import java.util.StringTokenizer;
  * create an instance of this fragment.
  */
 public class BottomMenu extends Fragment {
-    Bundle saveButton;
     BottomNavigationView realBottom;
     public BottomMenu() {}
 
@@ -46,15 +45,8 @@ public class BottomMenu extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        clickBottomMenu();
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        saveButton = savedInstanceState;
     }
 
     @Override

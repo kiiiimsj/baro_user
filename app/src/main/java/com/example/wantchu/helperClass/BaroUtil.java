@@ -33,8 +33,6 @@ public class BaroUtil {
         if(nick == null || nick.equals("")){
             NeedLoginDialog needLoginDialog = new NeedLoginDialog(activity);
             needLoginDialog.callFunction();
-
-
             return false;
         }
         return true;

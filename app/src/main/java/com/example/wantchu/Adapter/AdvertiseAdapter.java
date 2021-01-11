@@ -49,6 +49,7 @@ public class AdvertiseAdapter extends PagerAdapter {
     public int getItemPosition(@NonNull Object object) {
         return super.getItemPosition(object);
     }
+
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
@@ -58,7 +59,10 @@ public class AdvertiseAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.advertise_design, container, false);
         ImageView imageView = view.findViewById(R.id.slider_image);
         EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(realIndex);
-        makeRequestForgetImage(eventHelperParsingClass.event_image, imageView, context);
+        if(!eventHelperParsingClass.event_image.equals("")) {
+            makeRequestForgetImage(eventHelperParsingClass.event_image, imageView, context);
+        }
+
         container.addView(view);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

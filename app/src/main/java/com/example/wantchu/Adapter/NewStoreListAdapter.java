@@ -49,7 +49,6 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
     @NonNull
     @Override
     public NewStoreListAdapter.NewStoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.new_store_design, parent, false);
         NewStoreViewHolder newStoreViewHolder = new NewStoreViewHolder(view, viewType);
@@ -124,7 +123,9 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
             storeId = itemView.findViewById(R.id.store_id);
             isOpen = itemView.findViewById(R.id.is_open);
             ViewPagersListStoreParsing.ViewPagerStoreParsing list = listStoreHelperClasses.store.get(po);
-            makeRequestNewStore(list.getStore_image(), context, storeImage);
+            if(!list.getStore_name().equals("")) {
+                makeRequestNewStore(list.getStore_image(), context, storeImage);
+            }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -132,13 +133,13 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
                 }
             });
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    mLongListener.onLongNewStoreItemSelected(view, getAdapterPosition());
-                    return false;
-                }
-            });
+//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View view) {
+//                    mLongListener.onLongNewStoreItemSelected(view, getAdapterPosition());
+//                    return false;
+//                }
+//            });
         }
 
         public void makeRequestNewStore(String store_image, Context context, final ImageView image){
@@ -148,7 +149,6 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
             StringBuilder urlBuilder = new StringBuilder()
                     .append(url)
                     .append(store_image);
-            Log.i("store", urlBuilder.toString());
             RequestQueue requestQueue = Volley.newRequestQueue(context);
 
             ImageRequest request = new ImageRequest(urlBuilder.toString(),

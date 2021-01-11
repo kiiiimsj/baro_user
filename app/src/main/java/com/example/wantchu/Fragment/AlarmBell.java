@@ -46,14 +46,9 @@ public class AlarmBell extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        makeRequestForAlerts();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
+        Log.e("makeRequestForAlerts", "onResume");
         makeRequestForAlerts();
     }
 

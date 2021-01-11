@@ -1,18 +1,24 @@
 package com.example.wantchu.Dialogs;
 
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,7 +39,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class NeedLoginDialog  {
+public class NeedLoginDialog {
     private Context context;
 
     public NeedLoginDialog(Context context){
@@ -41,15 +47,15 @@ public class NeedLoginDialog  {
     }
 
     public void callFunction() {
-        final Dialog dlg = new Dialog(context);
-        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        final Dialog dlg = new Dialog(context, R.style.mydialog);
         dlg.setContentView(R.layout.dialog_need_login);
-        WindowManager.LayoutParams params = dlg.getWindow().getAttributes();
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        params.gravity = Gravity.BOTTOM;
-        dlg.getWindow().setAttributes(params);
         dlg.show();
+
+        Window window = dlg.getWindow();
+        window.setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(R.color.dialog_invisible)));
+
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
         ImageButton dismissBtn = (ImageButton) dlg.findViewById(R.id.dismiss);
         dismissBtn.setOnClickListener(new View.OnClickListener() {
             @Override
