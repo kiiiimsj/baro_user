@@ -23,19 +23,27 @@
           }
         },
         {
-          "client_id": "188217718840-pv77ulgj9palg1l7p9o9na5ntff4o37v.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.wantchu",
-            "certificate_hash": "95059b6f4aa56f916141a6e309a81fd5d9fa3261"
-          }
-        },
-        {
           "client_id": "188217718840-723eaaeql276f8knlcs46q744o3se6ut.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.wantchu",
             "certificate_hash": "e876f1bec849eac55aa4535223801416f7f7dcf4"
+          }
+        },
+        {
+          "client_id": "188217718840-a1sv8ka0191pap928ckdd4te2qii58lt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wantchu",
+            "certificate_hash": "12303ea40e19544e4d5981ad67c5f078063e6061"
+          }
+        },
+        {
+          "client_id": "188217718840-pv77ulgj9palg1l7p9o9na5ntff4o37v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wantchu",
+            "certificate_hash": "95059b6f4aa56f916141a6e309a81fd5d9fa3261"
           }
         },
         {
@@ -54,6 +62,13 @@
             {
               "client_id": "188217718840-1hcc53r70bbapls1fii1eako6rsvg8rb.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "188217718840-9c78ej5o60989ih0f2m0n6bp2vtcjmpg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.baro.baro.BARO-USER"
+              }
             }
           ]
         }
@@ -68,19 +83,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "188217718840-muo14vm4stb1646h8ktv162onjahsc50.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.wantchuowner",
-            "certificate_hash": "e876f1bec849eac55aa4535223801416f7f7dcf4"
-          }
-        },
-        {
           "client_id": "188217718840-cms7dq1bithugbh6l60btudaf1ru6rsq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.wantchuowner",
             "certificate_hash": "95059b6f4aa56f916141a6e309a81fd5d9fa3261"
+          }
+        },
+        {
+          "client_id": "188217718840-muo14vm4stb1646h8ktv162onjahsc50.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wantchuowner",
+            "certificate_hash": "e876f1bec849eac55aa4535223801416f7f7dcf4"
           }
         },
         {
@@ -99,6 +114,13 @@
             {
               "client_id": "188217718840-1hcc53r70bbapls1fii1eako6rsvg8rb.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "188217718840-9c78ej5o60989ih0f2m0n6bp2vtcjmpg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.baro.baro.BARO-USER"
+              }
             }
           ]
         }
