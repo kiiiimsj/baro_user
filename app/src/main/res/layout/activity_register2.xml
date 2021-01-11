@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="90dp"
         android:includeFontPadding="false"
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -206,7 +206,7 @@
                 android:id="@+id/button3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="39dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/layout_border_5dp_main"
                 android:onClick="onClickRegister"
                 android:text="회원가입 완료"
