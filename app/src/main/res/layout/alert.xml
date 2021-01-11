@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     android:background="@drawable/layout_border_gray_3dp"
     android:backgroundTint="@color/white"
     android:backgroundTintMode="src_over"
     android:elevation="8dp"
-    android:layout_marginHorizontal="10dp">
+    android:paddingTop="10dp"
+    android:layout_marginHorizontal="20dp">
     <TextView
         android:id="@+id/alert_title"
         android:layout_marginLeft="10dp"
@@ -22,17 +22,22 @@
         />
     <TextView
         android:id="@+id/is_read_new_label"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
         android:background="@drawable/circle"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="#8333e6"
         android:backgroundTintMode="src_over"
         android:layout_toRightOf="@id/alert_title"
         android:layout_alignTop="@id/alert_title"
+        android:layout_marginLeft="8dp"
         android:text="N"
-        android:textSize="7sp"
+        android:textSize="10sp"
         android:textColor="@color/white"
+        android:fontFamily="@font/notosans_bold"
+        android:includeFontPadding="false"
         android:textAlignment="center"
+        android:gravity="center"
         />
     <TextView
         android:layout_below="@id/alert_title"
@@ -69,16 +74,18 @@
     <View
         android:id="@+id/bottom_line"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:background="@color/gray"
-
+        android:layout_marginTop="10dp"
         android:layout_below="@id/alert_start_date"
         />
+
     <View
         android:id="@+id/click_listener"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignBottom="@id/bottom_line"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="1dp" />
 </RelativeLayout>

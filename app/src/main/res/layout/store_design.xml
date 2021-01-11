@@ -23,7 +23,8 @@
             <ImageView
                 android:id="@+id/store_image"
                 android:layout_width="54dp"
-                android:layout_height="54dp" />
+                android:layout_height="54dp"
+                android:layout_marginVertical="5dp"/>
 
             <TextView
                 android:layout_marginStart="30dp"
@@ -42,6 +43,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
                 >
                 <TextView
                     android:id="@+id/is_open"
