@@ -1,75 +1,70 @@
 package com.example.wantchu;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.wantchu.helperClass.myGPSListener;
 import com.pedro.library.AutoPermissions;
-import com.pedro.library.AutoPermissionsListener;
-
-import org.jetbrains.annotations.NotNull;
 
 public class FirstPage extends AppCompatActivity {
+    TextView orderText;
+    TextView getText;
+    TextView baroLogo;
 
-    private static int SLIDE_TIMER = 5000;
-
-    ImageView backgroundImage;
-    TextView wantchu;
-
-    Animation sideAnim, bottomAnim;
+    Animation sideLeftAnim, bottomAnim, rotate_0_to_20, rotate_20_to_0, rotate_0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page);
 
-        backgroundImage = findViewById(R.id.first_background_image);
-        wantchu = findViewById(R.id.first_textView);
-
-        sideAnim = AnimationUtils.loadAnimation(this, R.anim.side_anim);
-        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_anim);
-
-        backgroundImage.setAnimation(sideAnim);
-        wantchu.setAnimation(bottomAnim);
-
         SharedPreferences shf = this.getSharedPreferences("basketList", MODE_PRIVATE);
         SharedPreferences.Editor editor = shf.edit();
         editor.clear().commit();
 
+        orderText = findViewById(R.id.order_text);
+        getText = findViewById(R.id.get_text);
+        baroLogo =findViewById(R.id.baro_logo);
+
+        sideLeftAnim = AnimationUtils.loadAnimation(this, R.anim.anim_slide_in_left);
+        rotate_0_to_20 = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_0_to_20);
+        rotate_20_to_0 = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_20_to_0);
+        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_anim);
+        rotate_0 = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_0);
+
+        getText.setVisibility(View.INVISIBLE);
+        baroLogo.setVisibility(View.INVISIBLE);
+        orderText.setAnimation(sideLeftAnim);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(FirstPage.this, MainPage.class);
-                startActivity(intent);
-                finish();
-            }
-        }, SLIDE_TIMER);
-    }
+                getText.setVisibility(View.VISIBLE);
+                getText.setAnimation(rotate_0_to_20);
 
-//    private void startLocationService() {
-//        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-//            return;
-//        }
-//        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        long minTime = 10000;
-//        float minDistance = 0;
-//        myGPSListener gpsListener = new myGPSListener(this);
-//        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, gpsListener);
-//        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,minTime,minDistance, gpsListener);
-//        manager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,minTime,minDistance,gpsListener);
-//    }
+            }
+        }, 800);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                baroLogo.setVisibility(View.VISIBLE);
+                baroLogo.startAnimation(bottomAnim);
+                getText.startAnimation(rotate_20_to_0);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(FirstPage.this, MainPage.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }, 800);
+            }
+        }, 800);
+    }
 }

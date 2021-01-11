@@ -1,18 +1,28 @@
 package com.example.wantchu.Fragment;
 
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.example.wantchu.FirstPage;
+import com.example.wantchu.MainPage;
 import com.example.wantchu.R;
 
 import java.util.StringTokenizer;
@@ -62,6 +72,7 @@ public class TopBar extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -191,11 +202,24 @@ public class TopBar extends Fragment {
             case "OrderProgressing":
                 title.setText("주문현황");
                 button.setVisibility(View.VISIBLE);
-                button.setBackgroundResource(R.drawable.reload_image);
+                button.setBackgroundResource(R.drawable.icon_refresh);
+
+                button.getLayoutParams().height = 24;
+                button.getLayoutParams().width = 24;
+
+                button.setBackgroundTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.main)));
+                button.setBackgroundTintMode(PorterDuff.Mode.MULTIPLY);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        clickButtonListener.clickButton();
+                        final Animation rotate = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_rotate_360);
+                        button.startAnimation(rotate);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                clickButtonListener.clickButton();
+                            }
+                        }, 1000);
                     }
                 });
                 backButton.setVisibility(View.INVISIBLE);

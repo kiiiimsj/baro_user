@@ -64,9 +64,6 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
     @Override
     public TypeAdapter.TypeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        Context context = parent.getContext();
-        this.context = context;
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
         View view = inflater.inflate(R.layout.type_design,parent, false);
@@ -80,7 +77,6 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
         holder.title.setText(typeHelperClass.typeName);
         holder.code.setText(typeHelperClass.typeCode);
         //holder.image.setBackgroundDrawable(Drawable.createFromPath(typeHelperClass.typeImage));
-
     }
 
     @Override
@@ -131,9 +127,9 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
             image = itemView.findViewById(R.id.type_image);
             type_design_back = itemView.findViewById(R.id.type_design_back);
             TypeHelperClass typeHelperClass = typeLocations.get(po);
-
-            makeRequest(typeHelperClass.typeImage, image, context);
-
+            if(!typeHelperClass.typeImage.equals("")) {
+                makeRequest(typeHelperClass.typeImage, image, context);
+            }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -141,13 +137,13 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
                 }
             });
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    mLongListener.onItemLongSelected(v, getAdapterPosition());
-                    return false;
-                }
-            });
+//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    mLongListener.onItemLongSelected(v, getAdapterPosition());
+//                    return false;
+//                }
+//            });
 
         }
 
@@ -158,13 +154,11 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
             StringBuilder urlBuilder = new StringBuilder()
                     .append(url)
                     .append(type_image);
-            Log.i("url", urlBuilder.toString());
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             ImageRequest request = new ImageRequest(urlBuilder.toString(),
                     new Response.Listener<Bitmap>() {
                         @Override
                         public void onResponse(Bitmap response) {
-                            Log.i("response", "response succeeded.");
                             image.setImageBitmap(response);
                         }
                     }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,

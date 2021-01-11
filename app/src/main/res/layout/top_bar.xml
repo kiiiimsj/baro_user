@@ -19,7 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="액티비티 이름"
         android:textColor="@color/black"
         android:fontFamily="@font/notosans_black"
         android:includeFontPadding="false"

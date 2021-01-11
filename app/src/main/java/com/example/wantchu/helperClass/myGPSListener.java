@@ -1,8 +1,10 @@
 package com.example.wantchu.helperClass;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -64,7 +66,6 @@ public class myGPSListener implements LocationListener {
                 return;
             }
         }
-        Log.i("saveLocation", saveLocation.toString());
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         String message = "내 위치 -> Latitude : "+ latitude + "\nLongitude:"+ longitude;
@@ -90,7 +91,6 @@ public class myGPSListener implements LocationListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("response", response);
                         parsing(response, getAddress);
                     }
                 }, new Response.ErrorListener() {
@@ -144,7 +144,7 @@ public class myGPSListener implements LocationListener {
         Location gpsProviderLocation;
         Location networkProviderLocation;
 
-        long minTime = 500;
+        long minTime = 2000;
         float minDistance = 0;
 
         try {
@@ -168,7 +168,7 @@ public class myGPSListener implements LocationListener {
                     latitude = networkProviderLocation.getLatitude();
                     longitude = networkProviderLocation.getLongitude();
                     latLng = new LatLng(latitude, longitude);
-                }
+            }
             else if(saveLocation != null) {
                 Log.e("gps", 3+"");
                 double[] ll = new double[2];
@@ -189,13 +189,14 @@ public class myGPSListener implements LocationListener {
                     setMapLocationTextView(getAdress);
                     latLng = new LatLng(latitude, longitude);
                 }
-                else {
-                    Log.e("gps", 4+"");
-                    latitude = 37.49808785857802;
-                    longitude = 127.02758604547965;
-                    latLng = new LatLng(latitude, longitude);
-                }
             }
+            else if(latLng == null) {
+                Log.e("gps", 4+"");
+                latitude = 37.49808785857802;
+                longitude = 127.02758604547965;
+                latLng = new LatLng(latitude, longitude);
+            }
+
             if(getAdress != null) {
                 setMapLocationTextView(getAdress);
             }

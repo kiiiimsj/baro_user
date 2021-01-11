@@ -104,7 +104,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
 
     public void setLists() {
         lists = new ArrayList<>();
-        lists.add("공지사항");
         lists.add("입점요청");
         lists.add("1:1 문의");
         lists.add("비밀번호 변경");
@@ -254,8 +253,9 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     }
     @Override
     public void clickOkay() {
-        SessionManager sessionManager1 = new SessionManager(MyPage.this, SessionManager.SESSION_USERSESSION);
-        if(sessionManager1.getUsersDetailFromSession() != null) {
+        Log.e("logout_click_okay", "1");
+        SessionManager sessionManager1 = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        if(sessionManager1.getUsersDetailFromSession() != null || sessionManager1 != null) {
             sessionManager1.clearDetailUserSession();
         }
         Intent intent = new Intent(this, MainPage.class);
@@ -272,24 +272,20 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     public void itemClick(int position) {
         switch (position) {
             case 0 :
-                startActivity(new Intent(MyPage.this, Notice.class));
-                CustomIntent.customType(MyPage.this,"left-to-right");
-
-                break;
             case 1 :
-            case 2 :
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_bYeuK/chat")));
                 break;
-            case 3:
+            case 2 :
                 startActivity(new Intent(MyPage.this,ChangePass1Logging.class));
                 CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
-            case 4:
+            case 3:
+
                 startActivity(new Intent(MyPage.this, ChangeEmail.class));
                 CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
+            case 4:
             case 5 :
-            case 6 :
                 startActivity(new Intent(MyPage.this, TermsOfUse.class));
                 CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
