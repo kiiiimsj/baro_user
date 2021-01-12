@@ -20,6 +20,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,7 +48,7 @@ public class NeedLoginDialog {
     }
 
     public void callFunction() {
-        final Dialog dlg = new Dialog(context, R.style.mydialog);
+        final Dialog dlg = new Dialog(context);
         dlg.setContentView(R.layout.dialog_need_login);
         dlg.show();
 
@@ -71,6 +72,13 @@ public class NeedLoginDialog {
                 context.startActivity(new Intent(context, Login.class));
                 dlg.dismiss();
 //                context.overridePendingTransition(0, 0);
+            }
+        });
+        ConstraintLayout outSide = dlg.findViewById(R.id.outSide);
+        outSide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dlg.dismiss();
             }
         });
     }
