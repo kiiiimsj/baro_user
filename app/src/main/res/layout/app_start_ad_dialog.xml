@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@drawable/layout_border_3dp_stroke_2dp"
+            android:background="@drawable/layout_border_3dp_stroke_1dp"
 
             android:fontFamily="@font/notosans_black"
             android:includeFontPadding="false"

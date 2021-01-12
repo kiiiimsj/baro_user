@@ -73,7 +73,7 @@
         <activity android:name=".Alert"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
-        <activity android:name=".TermsOfUse"
+        <activity android:name=".Terms"
             android:screenOrientation="portrait"
             />
         <activity android:name=".Events"
@@ -106,7 +106,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".MapSettingPermission"
+        <activity android:name=".GetPermissionBeforeRegister"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             />

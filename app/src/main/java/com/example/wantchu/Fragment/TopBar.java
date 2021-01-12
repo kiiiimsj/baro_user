@@ -201,19 +201,16 @@ public class TopBar extends Fragment {
                 break;
             case "OrderProgressing":
                 title.setText("주문현황");
-                button.setVisibility(View.VISIBLE);
-                button.setBackgroundResource(R.drawable.icon_refresh);
+                etcImage.setVisibility(View.VISIBLE);
+                etcImage.setBackgroundResource(R.drawable.icon_refresh);
 
-                button.getLayoutParams().height = 24;
-                button.getLayoutParams().width = 24;
-
-                button.setBackgroundTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.main)));
-                button.setBackgroundTintMode(PorterDuff.Mode.MULTIPLY);
-                button.setOnClickListener(new View.OnClickListener() {
+                etcImage.setBackgroundTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.main)));
+                etcImage.setBackgroundTintMode(PorterDuff.Mode.MULTIPLY);
+                etcImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         final Animation rotate = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_rotate_360);
-                        button.startAnimation(rotate);
+                        etcImage.startAnimation(rotate);
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -223,7 +220,7 @@ public class TopBar extends Fragment {
                     }
                 });
                 backButton.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
+                button.setVisibility(View.INVISIBLE);
                 break;
             case "OrderHistory":
                 title.setText("주문내역");
