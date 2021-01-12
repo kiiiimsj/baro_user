@@ -11,13 +11,20 @@ import com.example.wantchu.Fragment.TopBar;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class TermsOfUse extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
+public class Terms extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     WebView mWebView;
+    public final static int LOCATION_INFORMATION = 0;
+    public final static int PRIVACY_STATEMENT = 1;
+    public final static int TERMS_OF_SERVICE = 2;
+
+    public final static String SET_WEB_VIEW = "set_web_view";
+
+    private int BRANCH_WEB_VIEW;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_of_use);
-
+        BRANCH_WEB_VIEW = getIntent().getIntExtra(SET_WEB_VIEW, -1);
         mWebView = (WebView) findViewById(R.id.terms_of_use);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -30,7 +37,16 @@ public class TermsOfUse extends AppCompatActivity implements TopBar.OnBackPresse
             }
         });
 
-        mWebView.loadUrl("file:///android_asset/www/privacyPolicy.html");
+        if(BRANCH_WEB_VIEW == LOCATION_INFORMATION) {
+            mWebView.loadUrl("file:///android_asset/www/location_information.html");
+        }
+        if(BRANCH_WEB_VIEW == PRIVACY_STATEMENT) {
+            mWebView.loadUrl("file:///android_asset/www/privacy_statement.html");
+        }
+        if(BRANCH_WEB_VIEW == TERMS_OF_SERVICE) {
+            mWebView.loadUrl("file:///android_asset/www/terms_of_service.html");
+        }
+
     }
 
     @Override

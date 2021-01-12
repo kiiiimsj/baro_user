@@ -29,7 +29,7 @@
             android:textSize="10sp"
             android:letterSpacing="-0.02"
             android:minWidth="120dp"
-            android:minHeight="40dp"
+            android:minHeight="35dp"
             android:fontFamily="@font/notosans_bold">
         </ToggleButton>
 
@@ -71,7 +71,7 @@
             android:fontFamily="@font/notosans_bold"
             android:letterSpacing="-0.02"
             android:minWidth="120dp"
-            android:minHeight="40dp"
+            android:minHeight="35dp"
             >
         </ToggleButton>
 
@@ -103,18 +103,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:shadowRadius="10"
             android:background="@drawable/menu_non_select"
+            android:fontFamily="@font/notosans_bold"
             android:gravity="center"
+            android:letterSpacing="-0.02"
+            android:minWidth="120dp"
+            android:minHeight="35dp"
+            android:shadowRadius="10"
             android:text="옵 션"
             android:textColor="@color/lightGray"
-            android:textSize="10sp"
-            android:letterSpacing="-0.02"
-            android:fontFamily="@font/notosans_bold"
-            android:minWidth="120dp"
-            android:minHeight="40dp"
-            >
-        </ToggleButton>
+            android:textSize="10sp"/>
 
         <TextView
             android:visibility="gone"

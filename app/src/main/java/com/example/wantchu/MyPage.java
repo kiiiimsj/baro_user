@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -285,8 +284,15 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
                 CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
             case 4:
+                Intent intent = new Intent(MyPage.this, Terms.class);
+                intent.putExtra(Terms.SET_WEB_VIEW, Terms.TERMS_OF_SERVICE);
+                startActivity(intent);
+                CustomIntent.customType(MyPage.this,"left-to-right");
+                break;
             case 5 :
-                startActivity(new Intent(MyPage.this, TermsOfUse.class));
+                Intent intent2 = new Intent(MyPage.this, Terms.class);
+                intent2.putExtra(Terms.SET_WEB_VIEW, Terms.PRIVACY_STATEMENT);
+                startActivity(intent2);
                 CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
         }

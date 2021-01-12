@@ -43,7 +43,7 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="닫기"
+            android:text="아니오"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:letterSpacing="0.2"
@@ -57,13 +57,13 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="확 인"
+            android:text="예"
             android:textColor="@color/main"
             android:textSize="16sp"
             android:letterSpacing="0.2"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/layout_border_3dp_stroke_2dp"
+            android:background="@drawable/layout_border_3dp_stroke_1dp"
             android:fontFamily="@font/notosans_bold"/>
 
     </LinearLayout>
