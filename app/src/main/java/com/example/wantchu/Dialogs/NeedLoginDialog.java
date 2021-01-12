@@ -48,7 +48,7 @@ public class NeedLoginDialog {
     }
 
     public void callFunction() {
-        final Dialog dlg = new Dialog(context, R.style.mydialog);
+        final Dialog dlg = new Dialog(context);
         dlg.setContentView(R.layout.dialog_need_login);
         dlg.show();
 
@@ -56,7 +56,6 @@ public class NeedLoginDialog {
         window.setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(R.color.dialog_invisible)));
 
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        ConstraintLayout backgroud = dlg.findViewById(R.id.background);
 
         ImageButton dismissBtn = (ImageButton) dlg.findViewById(R.id.dismiss);
         dismissBtn.setOnClickListener(new View.OnClickListener() {
@@ -75,9 +74,10 @@ public class NeedLoginDialog {
 //                context.overridePendingTransition(0, 0);
             }
         });
-        backgroud.setOnClickListener(new View.OnClickListener() {
+        ConstraintLayout outSide = dlg.findViewById(R.id.outSide);
+        outSide.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 dlg.dismiss();
             }
         });
