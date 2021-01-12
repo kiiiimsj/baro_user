@@ -238,7 +238,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="0dp"
-                        android:background="@drawable/layout_border_3dp_stroke_2dp"/>
+                        android:background="@drawable/layout_border_3dp_stroke_1dp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:paddingHorizontal="5dp"

@@ -133,7 +133,7 @@
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/black"
+                    android:buttonTint="@color/main"
                     android:fontFamily="@font/notosans_bold"
                     android:text="아이디/비밀번호 저장"
                     android:textColor="@color/black" />

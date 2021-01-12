@@ -221,6 +221,6 @@ public class Login extends AppCompatActivity {
     }
 
     public void onClickRegister(View view){
-        startActivity(new Intent(Login.this, MapSettingPermission.class));
+        startActivity(new Intent(Login.this, GetPermissionBeforeRegister.class));
     }
 }

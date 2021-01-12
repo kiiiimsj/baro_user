@@ -20,6 +20,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,6 +56,7 @@ public class NeedLoginDialog {
         window.setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(R.color.dialog_invisible)));
 
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        ConstraintLayout backgroud = dlg.findViewById(R.id.background);
 
         ImageButton dismissBtn = (ImageButton) dlg.findViewById(R.id.dismiss);
         dismissBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +73,12 @@ public class NeedLoginDialog {
                 context.startActivity(new Intent(context, Login.class));
                 dlg.dismiss();
 //                context.overridePendingTransition(0, 0);
+            }
+        });
+        backgroud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dlg.dismiss();
             }
         });
     }

@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class MapSettingPermission extends AppCompatActivity {
+public class GetPermissionBeforeRegister extends AppCompatActivity {
     CheckBox allCheck;
     CheckBox mapPermission;
     CheckBox storagePermission;
@@ -35,11 +35,16 @@ public class MapSettingPermission extends AppCompatActivity {
         privacyPermission = findViewById(R.id.user_privacy_permission);
         marketingSnsPermission = findViewById(R.id.marketing_sns_permission);
         goNextBtn = findViewById(R.id.login_button);
+
+        mapPermission.setTag("map");
+        storagePermission.setTag("storage");
+        privacyPermission.setTag("privacy");
+        marketingSnsPermission.setTag("marketing");
+
         setClickEvent();
         setContentClickEvent(mapPermission);
         setContentClickEvent(storagePermission);
         setContentClickEvent(privacyPermission);
-        setContentClickEvent(marketingSnsPermission);
     }
     @SuppressLint("ClickableViewAccessibility")
     private void setContentClickEvent(final CheckBox checkBox) {
@@ -53,8 +58,19 @@ public class MapSettingPermission extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     if(event.getRawX() >= (checkBox.getRight() - checkBox.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         // your action here
-                        startActivity(new Intent(MapSettingPermission.this, TermsOfUse.class));
-                        CustomIntent.customType(MapSettingPermission.this,"left-to-right");
+                        Intent intent = new Intent(GetPermissionBeforeRegister.this, Terms.class);
+
+                        if(checkBox.getTag().equals("map")) {
+                            intent.putExtra(Terms.SET_WEB_VIEW, Terms.LOCATION_INFORMATION);
+                        }
+                        if(checkBox.getTag().equals("storage")) {
+                            intent.putExtra(Terms.SET_WEB_VIEW, Terms.TERMS_OF_SERVICE);
+                        }
+                        if(checkBox.getTag().equals("privacy")) {
+                            intent.putExtra(Terms.SET_WEB_VIEW, Terms.PRIVACY_STATEMENT);
+                        }
+                        startActivity(intent);
+                        CustomIntent.customType(GetPermissionBeforeRegister.this,"left-to-right");
                         return true;
                     }
                 }
@@ -98,7 +114,7 @@ public class MapSettingPermission extends AppCompatActivity {
 
     public void onClickNext(View view) {
         if(mapPermission.isChecked() && storagePermission.isChecked() && privacyPermission.isChecked()) {
-            startActivity(new Intent(MapSettingPermission.this, Register1.class));
+            startActivity(new Intent(GetPermissionBeforeRegister.this, Register1.class));
             finish();
         }
         else {

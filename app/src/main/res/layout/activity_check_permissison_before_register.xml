@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main"
-    tools:context=".MapSettingPermission">
+    tools:context=".GetPermissionBeforeRegister">
     <TextView
         android:layout_marginTop="90dp"
         android:includeFontPadding="false"
@@ -138,7 +138,6 @@
                     android:layout_height="30dp"
                     android:text="마케팅정보 SNS 수신동의 ( 선택 )"
                     android:paddingEnd="10dp"
-                    android:drawableRight="@drawable/arrow_right"
                     android:textAlignment="textStart"
                     android:buttonTint="@color/main"
                     android:layoutDirection="ltr"
