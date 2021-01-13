@@ -9,7 +9,7 @@
     android:background="@color/white"
     android:layout_marginBottom="10dp"
     android:layout_marginTop="10dp"
-    tools:context=".OrderHistory">
+    tools:context="com.tpn.baro.OrderHistory">
 
     <View
         android:layout_width="match_parent"

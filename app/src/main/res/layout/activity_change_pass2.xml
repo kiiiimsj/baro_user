@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main"
-    tools:context=".ChangePass2">
+    tools:context="com.tpn.baro.ChangePass2">
     <fragment
         android:id="@+id/top_bar"
-        android:name="com.example.wantchu.Fragment.TopBar"
+        android:name="com.tpn.baro.Fragment.TopBar"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

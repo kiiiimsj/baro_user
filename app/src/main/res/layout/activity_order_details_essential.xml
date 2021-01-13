@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".OrderDetails">
+    tools:context="com.tpn.baro.OrderDetails">
 
     <RelativeLayout
         android:layout_width="match_parent"

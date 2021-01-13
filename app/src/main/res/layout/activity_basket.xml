@@ -7,10 +7,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/lightGray"
-    tools:context=".Basket">
+    tools:context="com.tpn.baro.Basket">
     <fragment
         android:id="@+id/top_bar"
-        android:name="com.example.wantchu.Fragment.TopBar"
+        android:name="com.tpn.baro.Fragment.TopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <RelativeLayout

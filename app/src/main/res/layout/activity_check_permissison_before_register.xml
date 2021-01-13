@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main"
-    tools:context=".GetPermissionBeforeRegister">
+    tools:context="com.tpn.baro.GetPermissionBeforeRegister">
     <TextView
         android:layout_marginTop="90dp"
         android:includeFontPadding="false"

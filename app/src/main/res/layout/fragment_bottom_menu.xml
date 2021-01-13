@@ -5,7 +5,7 @@
     android:id="@+id/coBack"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".Fragment.BottomMenu">
+    tools:context="com.tpn.baro.Fragment.BottomMenu">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

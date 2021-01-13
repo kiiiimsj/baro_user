@@ -7,10 +7,10 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:id="@+id/real_back"
-    tools:context=".OrderDetails">
+    tools:context="com.tpn.baro.OrderDetails">
     <fragment
         android:id="@+id/top_bar"
-        android:name="com.example.wantchu.Fragment.TopBar"
+        android:name="com.tpn.baro.Fragment.TopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
