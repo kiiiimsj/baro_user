@@ -39,8 +39,8 @@ public class AlarmBell extends Fragment {
 
     int getUnReadAlertCount = 0;
 
-    SessionManager userSession;
-    HashMap userData = new HashMap<>();
+//    SessionManager userSession;
+//    HashMap userData = new HashMap<>();
     public AlarmBell() {
 
     }
@@ -55,8 +55,8 @@ public class AlarmBell extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userSession = new SessionManager(getContext(), SessionManager.SESSION_USERSESSION);
-        userData = userSession.getUsersDetailFromSession();
+//        userSession = new SessionManager(getContext(), SessionManager.SESSION_USERSESSION);
+//        userData = userSession.getUsersDetailFromSession();
     }
 
     @Nullable
@@ -78,6 +78,7 @@ public class AlarmBell extends Fragment {
     }
 
     private void compareNumber() {
+        Log.e("count",getUnReadAlertCount+"");
         if(getUnReadAlertCount == 0) {
             alarmBell.setImageResource(R.drawable.alert_off);
         }
@@ -88,8 +89,8 @@ public class AlarmBell extends Fragment {
 
     private void makeRequestForAlerts() {
         UrlMaker urlMaker = new UrlMaker();
-        Log.e("getAlertCount", userData.get(SessionManager.KEY_PHONENUMBER)+"");
-        String url = urlMaker.UrlMake("GetNewAlertCount.do?phone=" + userData.get(SessionManager.KEY_PHONENUMBER));
+        Log.e("getAlertCount", new SessionManager(getContext(), SessionManager.SESSION_USERSESSION).getUsersDetailFromSession().get(SessionManager.KEY_PHONENUMBER)+"");
+        String url = urlMaker.UrlMake("GetNewAlertCount.do?phone=" + new SessionManager(getContext(), SessionManager.SESSION_USERSESSION).getUsersDetailFromSession().get(SessionManager.KEY_PHONENUMBER));
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
