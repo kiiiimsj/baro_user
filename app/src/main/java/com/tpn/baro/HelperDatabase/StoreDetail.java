@@ -15,16 +15,6 @@ public class StoreDetail {
     private String store_location;
     private String type_code;
     private String store_image;
-    private String representative_name;
-    private String business_number;
-
-    public String getRepresentative_name() {
-        return representative_name;
-    }
-
-    public String getBusiness_number() {
-        return business_number;
-    }
 
     public int getStore_id() {
         return store_id;
