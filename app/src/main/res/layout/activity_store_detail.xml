@@ -156,76 +156,6 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="가게 위치 : "
-                            android:textSize="13sp"
-                            android:textColor="#343434"
-                            android:fontFamily="@font/notosans_bold"
-                            android:includeFontPadding="false"/>
-                        <TextView
-                            android:id="@+id/store_location"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="서울시 성북구 종암로 25길 30"
-                            android:textSize="13sp"
-                            android:textColor="#343434"
-                            android:fontFamily="@font/notosans_regular"
-                            android:includeFontPadding="false"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="사업자정보"
-                        android:textColor="#343434"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/notosans_black"
-                        android:includeFontPadding="false"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="대표자명 : "
-                            android:textSize="13sp"
-                            android:textColor="#343434"
-                            android:fontFamily="@font/notosans_bold"
-                            android:includeFontPadding="false"/>
-
-                        <TextView
-                            android:id="@+id/representative_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textAlignment="center"
-                            android:textSize="13sp"
-                            android:textColor="#343434"
-                            android:fontFamily="@font/notosans_regular"
-                            android:includeFontPadding="false"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
@@ -250,6 +180,8 @@
                             android:includeFontPadding="false"/>
                     </LinearLayout>
 
+
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -258,13 +190,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="사업자 번호 : "
+                            android:text="가게 위치 : "
                             android:textSize="13sp"
                             android:textColor="#343434"
                             android:fontFamily="@font/notosans_bold"
                             android:includeFontPadding="false"/>
                         <TextView
-                            android:id="@+id/business_number"
+                            android:id="@+id/store_location"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="서울시 성북구 종암로 25길 30"
