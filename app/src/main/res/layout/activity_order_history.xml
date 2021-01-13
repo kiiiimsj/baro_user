@@ -9,7 +9,7 @@
     tools:context=".OrderHistory">
     <fragment
         android:id="@+id/top_bar"
-        android:name="com.example.wantchu.Fragment.TopBar"
+        android:name="com.tpn.baro.Fragment.TopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
@@ -31,14 +31,14 @@
 
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:name="com.example.wantchu.Fragment.HistoryDetail"
+        android:name="com.tpn.baro.Fragment.HistoryDetail"
         android:layout_width="300dp"
         android:layout_height="500dp"
         android:layout_centerInParent="true"
         tools:layout="@layout/activity_order_history"/>
     <fragment
         android:id="@+id/cart_click_button"
-        android:name="com.example.wantchu.Fragment.OrderListCart"
+        android:name="com.tpn.baro.Fragment.OrderListCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_menu"
@@ -48,7 +48,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="@dimen/order_list_cart_dp"/>
     <fragment
-        android:name="com.example.wantchu.Fragment.BottomMenu"
+        android:name="com.tpn.baro.Fragment.BottomMenu"
         android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.wantchu">
+    package="com.tpn.baro">
 
     <permission
-        android:name="com.example.wantchu.permission.MAPS_RECEIVE"
+        android:name="com.tpn.baro.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="com.example.wantchu.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -49,20 +48,20 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
         <service
-            android:name=".helperClass.RestartService"
+            android:name="com.tpn.baro.helperClass.RestartService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".helperClass.OrderCancelIfNotAccept"
+            android:name="com.tpn.baro.helperClass.OrderCancelIfNotAccept"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name=".helperClass.ThreadKillReceiver"
+            android:name="com.tpn.baro.helperClass.ThreadKillReceiver"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".firebase.FirebaseMessagingService"
+            android:name="com.tpn.baro.firebase.FirebaseMessagingService"
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false">
@@ -71,125 +70,125 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Alert"
+        <activity android:name="com.tpn.baro.Alert"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
-        <activity android:name=".Terms"
+        <activity android:name="com.tpn.baro.Terms"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".Events"
+        <activity android:name="com.tpn.baro.Events"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
-        <activity android:name=".Alerts"
+        <activity android:name="com.tpn.baro.Alerts"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
-        <activity android:name=".OrderStatus"
+        <activity android:name="com.tpn.baro.OrderStatus"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
-        <activity android:name=".StoreInfoReNewer"
+        <activity android:name="com.tpn.baro.StoreInfoReNewer"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
-        <activity android:name=".ChangePass1Logging"
+        <activity android:name="com.tpn.baro.ChangePass1Logging"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-        <activity android:name=".UpdateEmail"
+        <activity android:name="com.tpn.baro.UpdateEmail"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-        <activity android:name=".Basket"
+        <activity android:name="com.tpn.baro.Basket"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             />
-        <activity android:name=".MyMap"
+        <activity android:name="com.tpn.baro.MyMap"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             />
-        <activity android:name=".SideMyCoupon"
+        <activity android:name="com.tpn.baro.SideMyCoupon"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".GetPermissionBeforeRegister"
+        <activity android:name="com.tpn.baro.GetPermissionBeforeRegister"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             />
-        <activity android:name=".VerifyOTP"
+        <activity android:name="com.tpn.baro.VerifyOTP"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".ChangePass3"
+        <activity android:name="com.tpn.baro.ChangePass3"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".ChangePass2"
+        <activity android:name="com.tpn.baro.ChangePass2"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".FindPass1"
+        <activity android:name="com.tpn.baro.FindPass1"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".Register1"
+        <activity android:name="com.tpn.baro.Register1"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".Register2"
+        <activity android:name="com.tpn.baro.Register2"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".Notice"
+        <activity android:name="com.tpn.baro.Notice"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             />
-        <activity android:name=".ChangeEmail2"
+        <activity android:name="com.tpn.baro.ChangeEmail2"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".ChangeEmail"
+        <activity android:name="com.tpn.baro.ChangeEmail"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".ListStorePage"
+        <activity android:name="com.tpn.baro.ListStorePage"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".Login"
+        <activity android:name="com.tpn.baro.Login"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".OrderDetails"
+        <activity android:name="com.tpn.baro.OrderDetails"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
-        <activity android:name=".NewMyMap"
+        <activity android:name="com.tpn.baro.NewMyMap"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             />
         <activity
-            android:name=".OrderProgressing"
+            android:name="com.tpn.baro.OrderProgressing"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ListStoreFavoritePage"
+            android:name="com.tpn.baro.ListStoreFavoritePage"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:launchMode="singleTask" />
         <activity
-            android:name=".OrderHistory"
+            android:name="com.tpn.baro.OrderHistory"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:launchMode="singleTask" />
         <activity
-            android:name=".MainPage"
+            android:name="com.tpn.baro.MainPage"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".MyPage"
+            android:name="com.tpn.baro.MyPage"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:launchMode="singleTask" />
-        <activity android:name=".Celebe" />
-        <activity android:name=".FirstPage"
+        <activity android:name="com.tpn.baro.Celebe" />
+        <activity android:name="com.tpn.baro.FirstPage"
             android:screenOrientation="portrait"
             >
             <intent-filter>
