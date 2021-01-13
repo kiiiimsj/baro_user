@@ -54,9 +54,6 @@
       "api_key": [
         {
           "current_key": "AIzaSyBCEYl5maaBv6WDhrGvrrFUeVCdMML8hwg"
-        },
-        {
-          "current_key": "AIzaSyBADSFqvtH6j6DgfhS6Wo7V8inIOY2_nkQ"
         }
       ],
       "services": {
@@ -109,80 +106,6 @@
       "api_key": [
         {
           "current_key": "AIzaSyBCEYl5maaBv6WDhrGvrrFUeVCdMML8hwg"
-        },
-        {
-          "current_key": "AIzaSyBADSFqvtH6j6DgfhS6Wo7V8inIOY2_nkQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "188217718840-1hcc53r70bbapls1fii1eako6rsvg8rb.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "188217718840-9c78ej5o60989ih0f2m0n6bp2vtcjmpg.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.baro.baro.BARO-USER"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:188217718840:android:e8f84b741583dc613e8ecd",
-        "android_client_info": {
-          "package_name": "com.tpn.baro"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "188217718840-1l39c8m3vqdqk2lt4phbl6901idj9ig1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tpn.baro",
-            "certificate_hash": "12303ea40e19544e4d5981ad67c5f078063e6061"
-          }
-        },
-        {
-          "client_id": "188217718840-a2egmvoj6o9bk3kvo2ijrhcganq048dp.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tpn.baro",
-            "certificate_hash": "95059b6f4aa56f916141a6e309a81fd5d9fa3261"
-          }
-        },
-        {
-          "client_id": "188217718840-l41m3prcedptvg3l6ml569jp7v5qrhqd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tpn.baro",
-            "certificate_hash": "e876f1bec849eac55aa4535223801416f7f7dcf4"
-          }
-        },
-        {
-          "client_id": "188217718840-ui9r1u3gcrh6eblpld4s1771jhoij1v7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tpn.baro",
-            "certificate_hash": "92ce0d795a5fd845ea7e7744540a83051da8a36d"
-          }
-        },
-        {
-          "client_id": "188217718840-1hcc53r70bbapls1fii1eako6rsvg8rb.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBCEYl5maaBv6WDhrGvrrFUeVCdMML8hwg"
-        },
-        {
-          "current_key": "AIzaSyBADSFqvtH6j6DgfhS6Wo7V8inIOY2_nkQ"
         }
       ],
       "services": {
