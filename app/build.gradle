@@ -6,7 +6,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.example.wantchu"
+        applicationId "com.tpn.baro"
         minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
@@ -58,7 +58,6 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'com.hbb20:ccp:2.3.1'
-    //OTP PIN View Design
     implementation 'com.chaos.view:pinview:1.4.3'
     implementation 'com.googlecode.json-simple:json-simple:1.1'
     implementation 'com.github.pedroSG94:AutoPermissions:1.0.3'

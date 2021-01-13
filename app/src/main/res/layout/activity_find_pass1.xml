@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main"
-    tools:context=".FindPass1">
+    tools:context="com.tpn.baro.FindPass1">
     <fragment
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/top_bar"
-        android:name="com.example.wantchu.Fragment.TopBar"
+        android:name="com.tpn.baro.Fragment.TopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView

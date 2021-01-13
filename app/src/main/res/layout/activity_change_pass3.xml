@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:background="@color/main"
-    tools:context=".ChangePass3">
+    tools:context="com.tpn.baro.ChangePass3">
     <TextView
         android:layout_alignParentTop="true"
         android:layout_marginTop="40dp"
