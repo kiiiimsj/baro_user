@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/top_bar"
-        android:name="com.tpn.baro.Fragment.TopBar"
+        android:name="com.example.wantchu.Fragment.TopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
@@ -243,7 +243,7 @@
 
     <fragment
         android:id="@+id/cart_click_button"
-        android:name="com.tpn.baro.Fragment.OrderListCart"
+        android:name="com.example.wantchu.Fragment.OrderListCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_menu"
@@ -255,7 +255,7 @@
 
     <fragment
         android:id="@+id/bottom_menu"
-        android:name="com.tpn.baro.Fragment.BottomMenu"
+        android:name="com.example.wantchu.Fragment.BottomMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />

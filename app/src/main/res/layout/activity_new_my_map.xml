@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/top"
-        android:name="com.tpn.baro.Fragment.TopBar"
+        android:name="com.example.wantchu.Fragment.TopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

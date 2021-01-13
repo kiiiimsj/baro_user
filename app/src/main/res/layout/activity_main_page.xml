@@ -65,7 +65,7 @@
 
             <fragment
                 android:id="@+id/alert_fragment"
-                android:name="com.tpn.baro.Fragment.AlarmBell"
+                android:name="com.example.wantchu.Fragment.AlarmBell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -89,7 +89,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <com.tpn.baro.helperClass.ViewPagerCustomDuration
+                    <com.example.wantchu.helperClass.ViewPagerCustomDuration
                         android:id="@+id/info_image"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
@@ -176,7 +176,7 @@
 
         <fragment
             android:id="@+id/cart_click_button"
-            android:name="com.tpn.baro.Fragment.OrderListCart"
+            android:name="com.example.wantchu.Fragment.OrderListCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -187,7 +187,7 @@
 
         <fragment
             android:id="@+id/bottom_menu"
-            android:name="com.tpn.baro.Fragment.BottomMenu"
+            android:name="com.example.wantchu.Fragment.BottomMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
