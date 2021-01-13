@@ -15,7 +15,7 @@
         >
         <fragment
             android:id="@+id/top_bar"
-            android:name="com.example.wantchu.Fragment.TopBar"
+            android:name="com.tpn.baro.Fragment.TopBar"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -51,14 +51,14 @@
             >
             <fragment
                 android:id="@+id/store_list_fragment"
-                android:name="com.example.wantchu.Fragment.StoreMenuFragment"
+                android:name="com.tpn.baro.Fragment.StoreMenuFragment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <fragment
                 android:id="@+id/store_detail_info_fragment"
-                android:name="com.example.wantchu.Fragment.StoreDetailInfoFragment"
+                android:name="com.tpn.baro.Fragment.StoreDetailInfoFragment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_width="match_parent"
@@ -66,7 +66,7 @@
         </RelativeLayout>
         <fragment
             android:id="@+id/cart_click_button"
-            android:name="com.example.wantchu.Fragment.OrderListCart"
+            android:name="com.tpn.baro.Fragment.OrderListCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -75,7 +75,7 @@
             android:layout_marginBottom="80dp"/>
         <fragment
             android:id="@+id/bottom_menu"
-            android:name="com.example.wantchu.Fragment.BottomMenu"
+            android:name="com.tpn.baro.Fragment.BottomMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundDimEnabled="false"
