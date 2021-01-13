@@ -169,6 +169,25 @@
                         android:id="@+id/new_store"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/new_store"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/gray"
+                        android:padding="10dp"
+                        android:fontFamily="@font/notosans_regular"
+                        android:textSize="12sp"
+                        android:textColor="#434343"
+                        android:includeFontPadding="false"
+                        android:text="Contect
+                        \n\n BARO 제휴 문의 또는 서비스 이용 문의가 있으시다면 아래의 방법으로 언제든지 문의주세요!
+                        \n\n 이메일 : ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
+                        \n 전화 : 02 ) 000 - 0000
+                        \n\n (주) 티피엔
+                        \n 사업자등록번호 : 111-11-11111
+                        \n 통신판매업신고번호 : 0000 - 서울동작 - 0000
+                        \n 주소 : 서울특별시 동작구 숭실대학교 창신관 113호"/>
                 </RelativeLayout>
             </ScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

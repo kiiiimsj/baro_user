@@ -256,6 +256,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         SessionManager sessionManager1 = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         if(sessionManager1.getUsersDetailFromSession() != null || sessionManager1 != null) {
             sessionManager1.clearDetailUserSession();
+            sessionManager1.getDetailEditor().commit();
         }
         Intent intent = new Intent(this, MainPage.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
