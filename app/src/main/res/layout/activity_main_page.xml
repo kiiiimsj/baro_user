@@ -74,8 +74,9 @@
                 android:layout_alignTop="@id/baro_logo"
                 />
         </RelativeLayout>
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
             android:id="@+id/refreshLayout"
+            app:srl_direction="bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/bottom_menu"
@@ -171,7 +172,7 @@
                         android:layout_height="wrap_content" />
                 </RelativeLayout>
             </ScrollView>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 
 
         <fragment
