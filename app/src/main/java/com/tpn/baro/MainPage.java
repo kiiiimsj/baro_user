@@ -30,6 +30,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.tpn.baro.Adapter.AdvertiseAdapter;
 import com.tpn.baro.Adapter.NewStoreListAdapter;
 import com.tpn.baro.Adapter.TypeAdapter;
@@ -99,7 +101,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     com.tpn.baro.helperClass.myGPSListener myGPSListener;
     ///////// 태영
     ImageView call_search;
-    SwipeRefreshLayout refreshLayout;
+    SwipyRefreshLayout refreshLayout;
 
     FragmentManager fm;
     AlarmBell alarmBell;
@@ -117,6 +119,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         sp = getSharedPreferences("favorite", MODE_PRIVATE);
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setNestedScrollingEnabled(false);
         ultraStoreRecyclerView = findViewById(R.id.ultra_store);
         newStoreRecyclerView = findViewById(R.id.new_store);
 
@@ -156,16 +159,16 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                 CustomIntent.customType(MainPage.this,"right-to-left");
             }
         });
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Log.e(TAG,TAG);
-                latLng = myGPSListener.startLocationService(mAddress);
-                makeRequestUltraStore(setHashMapData());
-                makeRequestNewStore(setHashMapData());
-                refreshLayout.setRefreshing(false);
-            }
-        });
+        refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+           @Override
+           public void onRefresh(SwipyRefreshLayoutDirection direction) {
+               Log.e(TAG,TAG);
+               latLng = myGPSListener.startLocationService(mAddress);
+               makeRequestUltraStore(setHashMapData());
+               makeRequestNewStore(setHashMapData());
+               refreshLayout.setRefreshing(false);
+           }
+       });
         call_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
