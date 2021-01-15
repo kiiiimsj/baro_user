@@ -253,7 +253,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         if(sessionManager.getUsersDetailFromSession() != null || sessionManager != null) {
             sessionManager.clearDetailUserSession();
         }
-        Log.e("userInfo : ",sessionManager.getUsersDetailFromSession()+"");
         Intent intent = new Intent(this, MainPage.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);

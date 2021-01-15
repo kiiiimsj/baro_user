@@ -194,7 +194,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         super.onResume();
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         userData = userSession.getUsersDetailFromSession();
-        Log.e("getAlertCount", userData.get(SessionManager.KEY_PHONENUMBER)+"");
         if(userData.get(SessionManager.KEY_PHONENUMBER) == null) {
             alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
         }else {
@@ -231,7 +230,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("getAlertCount", response);
                 parsing(response);
             }
         }, new Response.ErrorListener() {

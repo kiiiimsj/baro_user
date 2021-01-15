@@ -176,7 +176,6 @@ public class Login extends AppCompatActivity {
         }
         if(result2) {
             userSession.createLoginSession(name, phone, createdDate, email, userToken);
-            Log.e("userSession" , userSession.getUsersDetailFromSession().toString());
             finish();
         }
         else {
