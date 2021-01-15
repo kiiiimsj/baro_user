@@ -1,5 +1,6 @@
 package com.tpn.baro;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +21,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Request;
@@ -37,7 +37,7 @@ import com.tpn.baro.Adapter.NewStoreListAdapter;
 import com.tpn.baro.Adapter.TypeAdapter;
 import com.tpn.baro.Adapter.UltraStoreListAdapter;
 import com.tpn.baro.AdapterHelper.TypeHelperClass;
-import com.tpn.baro.Database.StoreSessionManager;
+import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.AppStartAdDialog;
 import com.tpn.baro.Dialogs.SearchDialog;
 import com.tpn.baro.Fragment.AlarmBell;
@@ -45,7 +45,6 @@ import com.tpn.baro.JsonParsingHelper.EventHelperClass;
 import com.tpn.baro.JsonParsingHelper.TypeListParsing;
 import com.tpn.baro.JsonParsingHelper.TypeParsing;
 import com.tpn.baro.JsonParsingHelper.ViewPagersListStoreParsing;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.ViewPagerCustomDuration;
@@ -103,8 +102,13 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     ImageView call_search;
     SwipyRefreshLayout refreshLayout;
 
+    ImageView alert;
     FragmentManager fm;
+
     AlarmBell alarmBell;
+    SessionManager userSession;
+    HashMap userData = new HashMap<>();
+    int getUnReadAlertCount = 0;
     /////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +121,9 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         progressApplication.progressON(this);
 
         sp = getSharedPreferences("favorite", MODE_PRIVATE);
+        userSession = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        userData = userSession.getUsersDetailFromSession();
+
         gson = new GsonBuilder().create();
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -125,6 +132,8 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
 
         viewPager = findViewById(R.id.info_image);
         eventCountSet = findViewById(R.id.event_count);
+
+        alert = findViewById(R.id.alert);
 
         AppStartAdDialog appStartAdDialog = new AppStartAdDialog(MainPage.this);
         appStartAdDialog.callFunction();
@@ -139,9 +148,18 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
 
         makeRequestForEventThread();
         makeRequest();
-
+        makeRequestForAlerts();
         myGPSListener = new myGPSListener(this);
 
+        alert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!BaroUtil.loginCheck(MainPage.this)) {
+                    return;
+                }
+                startActivity(new Intent(MainPage.this, Alerts.class));
+            }
+        });
         mAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,7 +180,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
            @Override
            public void onRefresh(SwipyRefreshLayoutDirection direction) {
-               Log.e(TAG,TAG);
                latLng = myGPSListener.startLocationService(mAddress);
                makeRequestUltraStore(setHashMapData());
                makeRequestNewStore(setHashMapData());
@@ -182,7 +199,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("onResume", 1+"");
+        makeRequestForAlerts();
         latLng = myGPSListener.startLocationService(mAddress);
         if(!BaroUtil.checkGPS(this)) {
             startLocation();
@@ -206,9 +223,48 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     protected void onPause() {
         super.onPause();
     }
+    private void makeRequestForAlerts() {
+        UrlMaker urlMaker = new UrlMaker();
+        Log.e("getAlertCount", userData.get(SessionManager.KEY_PHONENUMBER)+"");
+        if(userData.get(SessionManager.KEY_PHONENUMBER).equals("") || userData.get(SessionManager.KEY_PHONENUMBER) == null) {
+            alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
+            return;
+        }
+        String url = urlMaker.UrlMake("GetNewAlertCount.do?phone=" + userData.get(SessionManager.KEY_PHONENUMBER));
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("getAlertCount", response);
+                parsing(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void parsing(String response) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            if (jsonObject.getBoolean("result")) {
+                getUnReadAlertCount = jsonObject.getInt("count");
+            }
+        }catch (JSONException e) {
+
+        }
+        if(getUnReadAlertCount == 0) {
+            alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
+
+        }
+        else if (getUnReadAlertCount > 0){
+            alert.setBackground(getResources().getDrawable(R.drawable.alert_on));
+        }
+    }
     private void startLocation() {
-        Log.e("startLocation", "start");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("설정");
         builder.setCancelable(true);
@@ -251,7 +307,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("StoreUltra", response.toString());
                         jsonParsingUltraStore(response.toString());
                     }
                 }, new Response.ErrorListener() {
@@ -268,12 +323,10 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         String lastUrl = "TypeFindAll.do";
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.i("type", "request made to " + url);
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("type", response);
                         mRecyclerView(response);
                     }
                 },
@@ -295,7 +348,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("StoreUltra", response.toString());
                         jsonParsingNewStore(response.toString());
                     }
                 }, new Response.ErrorListener() {
@@ -378,7 +430,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("GET_EVENT_PICTURE", response);
                 eventParsing(response);
             }
         }, new Response.ErrorListener() {
@@ -488,7 +539,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         Intent intent = new Intent(MainPage.this, StoreInfoReNewer.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", viewHolder.storeId.getText().toString());
-        Log.e("ultraid", viewHolder.storeId.getText().toString());
         startActivity(intent);
         CustomIntent.customType(this,"left-to-right");
     }

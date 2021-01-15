@@ -65,7 +65,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         backButton = findViewById(R.id.back_pressed);
 
         gson = new GsonBuilder().create();
-        sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
         myGPSListener myGPSListener = new myGPSListener(this);
@@ -77,7 +77,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
     @Override
     protected void onResume() {
         super.onResume();
-        sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
 
@@ -147,12 +147,9 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
                 String store_is_open = jObject.optString("is_open");
                 float distance = (float)jObject.optDouble("distance");
 
-                Log.e("storeImageee", store_image);
-
                 String store_location = jObject.optString("store_location");
                 int store_id = jObject.optInt("store_id");
                 FavoriteListParsing favoriteListParsing = new FavoriteListParsing(store_id, store_info, store_latitude, store_longitude, store_name, store_location, store_image, store_is_open, distance);
-                Log.i("LISTSTORELISTPARSING", favoriteListParsing.toString());
                 favoriteListParsings.add(favoriteListParsing);
             }
         }
@@ -176,12 +173,10 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.e("url", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("favoritefirst", response.toString());
                         sp = getSharedPreferences("favorite", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("favorite", response.toString());
@@ -215,7 +210,6 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         Intent intent = new Intent(ListStoreFavoritePage.this, StoreInfoReNewer.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
-        Log.i("storeId", listStoreViewHolder.storeId.getText().toString());
         startActivity(intent);
     }
     private double getDistance(Location myLocation, Location storeLocation){

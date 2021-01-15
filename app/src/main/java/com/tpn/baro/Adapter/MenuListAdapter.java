@@ -154,7 +154,6 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         StringBuilder urlBuilder = new StringBuilder()
                 .append(url)
                 .append(menu_image);
-        Log.e("menu", urlBuilder.toString());
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         ImageRequest request = new ImageRequest(urlBuilder.toString(),

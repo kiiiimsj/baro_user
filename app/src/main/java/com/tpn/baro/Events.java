@@ -55,7 +55,6 @@ public class Events extends AppCompatActivity implements TopBar.OnBackPressedInP
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("storeInfo", response);
                 parsing(response);
             }
         }, new Response.ErrorListener() {
@@ -87,7 +86,6 @@ public class Events extends AppCompatActivity implements TopBar.OnBackPressedInP
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap response) {
-                        Log.i("response1", "response succeeded.");
                         imageView.setImageBitmap(response);
                     }
                 }, 300, 300, ImageView.ScaleType.FIT_END, null,

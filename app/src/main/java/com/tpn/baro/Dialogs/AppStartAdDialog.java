@@ -60,7 +60,6 @@ public class AppStartAdDialog {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("getPictureForEvent", response);
                 parsing(response);
             }
         }, new Response.ErrorListener() {
@@ -118,14 +117,12 @@ public class AppStartAdDialog {
         });
     }
     private void makeRequestForImage() {
-        Log.i("IMAGESTR", imageStr);
         String url = new UrlMaker().UrlMake("ImageEvent.do?image_name="+imageStr);
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         ImageRequest request = new ImageRequest(url,
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap response) {
-                        Log.i("dialogScreen", "response succeeded.");
                         eventImage.setImageBitmap(response);
                     }
                 }, eventImage.getWidth(), eventImage.getHeight(), ImageView.ScaleType.FIT_CENTER, null,

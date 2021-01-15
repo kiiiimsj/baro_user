@@ -46,7 +46,6 @@ public class AlarmBell extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("makeRequestForAlerts", "onResume");
         makeRequestForAlerts();
     }
 
@@ -66,10 +65,7 @@ public class AlarmBell extends Fragment {
         alarmBell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!BaroUtil.loginCheck(getActivity())) {
-                    return;
-                }
-                startActivity(new Intent(getContext(), Alerts.class));
+
             }
         });
         return rootView;
@@ -92,7 +88,6 @@ public class AlarmBell extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("getAlertCount", response);
                 parsing(response);
             }
         }, new Response.ErrorListener() {

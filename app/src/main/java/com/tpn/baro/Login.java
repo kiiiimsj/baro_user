@@ -55,15 +55,13 @@ public class Login extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<InstanceIdResult> task) {
                 if(!task.isSuccessful()){
-                    Log.e("token failed", String.valueOf(task.getException()));
                     return;
                 }
                 userToken = task.getResult().getToken();
-                Log.e("aaa", userToken);
             }
         });
 
-        userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        userSession = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         phone = findViewById(R.id.login_phone);
         password = findViewById(R.id.login_password);
         rememberUser = findViewById(R.id.map_permission);
@@ -94,7 +92,6 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!(rememberUser.isChecked())) {
-                    Log.i("ddfa","i");
                     sessionManager.clearRememberMeSession();
                     sessionManager.getEditor().putBoolean("IsRememberMe",false);
                     sessionManager.getEditor().commit();
@@ -144,7 +141,6 @@ public class Login extends AppCompatActivity {
     
     public void makeRequest(String url, HashMap data) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.i("login", "request made to " + url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override

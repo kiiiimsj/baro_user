@@ -45,7 +45,7 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
         oldEmail = findViewById(R.id.old_email);
         newEmailInput = findViewById(R.id.new_email);
 
-        sessionManager = new SessionManager(ChangeEmail.this, SessionManager.SESSION_USERSESSION);
+        sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionUserdata = sessionManager.getUsersDetailFromSession();
         editor = sessionManager.getDetailEditor();
 
@@ -78,12 +78,10 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
     public void makeRequestForEmail(HashMap data) {
         String url = new UrlMaker().UrlMake("MemberEmailUpdate.do");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.i("login", "request made to " + url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("Register2", response.toString());
                         jsonParsing(response);
                         try {
                             Toast.makeText(ChangeEmail.this, response.getString("message"), Toast.LENGTH_LONG).show();

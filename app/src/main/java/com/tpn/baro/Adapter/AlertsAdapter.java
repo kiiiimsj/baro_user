@@ -42,7 +42,6 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsView
     @Override
     public void onBindViewHolder(@NonNull AlertsViewHolder holder, int position) {
         AlertsHelperClass.AlertsHelperClassParsing reverse =alertsHelperClass.alert.get(alertsHelperClass.alert.size()-position-1);
-        Log.i("is_read", reverse.is_read);
         if(holder == null || reverse == null) {
             return;
         }

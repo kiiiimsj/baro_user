@@ -83,7 +83,6 @@ public class HistoryDetail extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
-                        Log.i("OrderHistory", response);
                         ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> historyDetailParsingHelpers
                                 = jsonParsing(response);
                         applyAdapter(historyDetailParsingHelpers,context);

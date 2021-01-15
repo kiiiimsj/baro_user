@@ -157,7 +157,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
 //        overridePendingTransition(0, 0);
     }
     private void setMyInfo() {
-        SessionManager sessionManager = new SessionManager(MyPage.this, SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersDetailSession();
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         String name = userData.get(SessionManager.KEY_USERNAME);
@@ -175,7 +175,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     }
 
     private void getPhoneNumber() {
-        SessionManager sessionManager = new SessionManager(MyPage.this, SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersDetailSession();
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         phone = userData.get(SessionManager.KEY_PHONENUMBER);
@@ -183,12 +183,10 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     public void makeRequestForOrderCount() {
         String url = new UrlMaker().UrlMake("OrderTotalCountByPhone.do?phone="+phone);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.i("type", "request made to " + url);
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("data", response);
                         jsonParsingOrderCount(response);
                     }
                 },
@@ -204,12 +202,10 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     public void makeRequestForCouponCount() {
         String url = new UrlMaker().UrlMake("CouponCountByPhone.do?phone="+phone);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.i("type", "request made to " + url);
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("data", response);
                         jsonParsingCouponCount(response);
                     }
                 },
@@ -253,8 +249,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     }
     @Override
     public void clickOkay() {
-        Log.e("logout_click_okay", "1");
-        SessionManager sessionManager1 = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager1 = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         if(sessionManager1.getUsersDetailFromSession() != null || sessionManager1 != null) {
             sessionManager1.clearDetailUserSession();
         }

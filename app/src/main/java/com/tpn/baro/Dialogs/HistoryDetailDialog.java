@@ -99,14 +99,12 @@ public class HistoryDetailDialog extends DialogFragment {
         String lastUrl = "OrderFindByReceiptId.do?receipt_id=" +receipt_id;
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
-        Log.e("url",url);
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
-                        Log.i("OrderHistory", response);
                         ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> historyDetailParsingHelpers
                                 = jsonParsing(response);
                         applyAdapter(historyDetailParsingHelpers,context);

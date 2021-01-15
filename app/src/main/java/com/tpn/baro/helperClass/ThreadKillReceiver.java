@@ -10,7 +10,6 @@ public class ThreadKillReceiver extends BroadcastReceiver {
     private String TAG = "ThreadKillReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG,TAG);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Intent in = new Intent(context, RestartService.class);
             context.startForegroundService(in);

@@ -40,7 +40,7 @@ public class Alerts extends AppCompatActivity implements TopBar.OnBackPressedInP
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         alertsRecyclerView = findViewById(R.id.alert_list);
-        userInfo = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        userInfo = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         userData = userInfo.getUsersDetailFromSession();
     }
 
@@ -57,7 +57,6 @@ public class Alerts extends AppCompatActivity implements TopBar.OnBackPressedInP
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("getOldEvents", response);
                 parsing(response);
             }
         }, new Response.ErrorListener() {

@@ -60,18 +60,17 @@
                 android:layout_marginEnd="25dp"
                 android:layout_alignTop="@id/baro_logo"
                 android:src="@drawable/search"
-                android:layout_toStartOf="@id/alert_fragment"
+                android:layout_toStartOf="@id/alert"
                 />
-
-            <fragment
-                android:id="@+id/alert_fragment"
-                android:name="com.tpn.baro.Fragment.AlarmBell"
+            <ImageView
+                android:id="@+id/alert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="18dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="18dp"
                 android:layout_alignTop="@id/baro_logo"
+                android:background="@drawable/alert_off"
                 />
         </RelativeLayout>
         <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout

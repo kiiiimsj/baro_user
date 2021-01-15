@@ -62,7 +62,6 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Log.e(TAG,response);
                                 DefaultParsing defaultParsing = gson.fromJson(response,DefaultParsing.class);
                                 CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(SideMyCoupon.this,defaultParsing);
                                 couponRegisterDialog.callFunction();
@@ -73,8 +72,6 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG,error.toString());
-//                        CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(SideMyCoupon.this,false);
-//                        couponRegisterDialog.callFunction();
                     }
                 });
                 requestQueue.add(stringRequest);
@@ -87,7 +84,7 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
     }
 
     public String urlData() {
-        SessionManager sessionManager = new SessionManager(SideMyCoupon.this, SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersDetailSession();
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         userData.get(SessionManager.KEY_PHONENUMBER);
@@ -100,7 +97,6 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("couponList",response);
                         ParsingCoupon(response);
                     }
                 },

@@ -35,10 +35,8 @@ public class UpdateEmail extends AppCompatActivity {
         currentEmailView = findViewById(R.id.current_email);
 
         HashMap<String, String> updateEmailUser = new HashMap<>();
-        userSession = new SessionManager(UpdateEmail.this, SessionManager.SESSION_USERSESSION);
+        userSession = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         HashMap<String, String> userInfo = userSession.getUsersDetailFromSession();
-
-        Log.i("UPDATE_EMAIL", userInfo.toString());
 
         updateEmailUser.put("phone", userInfo.get(SessionManager.KEY_PHONENUMBER));
         updateEmailUser.put("email", userInfo.get(SessionManager.KEY_EMAIL));
@@ -56,12 +54,10 @@ public class UpdateEmail extends AppCompatActivity {
     }
     public void makeRequestForEmail(String url, HashMap data) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.i("login", "request made to " + url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("FindPass1Logging", response.toString());
                         jsonParsing(response);
                     }
                 },

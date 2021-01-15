@@ -114,11 +114,9 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
         String lastUrl = "StoreAllLocation.do";
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.e("map", url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i("RESPONSE", response.toString());
                 jsonParsing(response.toString(), naverMap);
             }
         }, new Response.ErrorListener() {
@@ -146,7 +144,6 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
                 float store_distance = (float)jObject.optDouble("distance");
                 MapListParsing mapListParsing = new MapListParsing(store_id, store_name, store_latitude, store_longitude, store_distance);
                 mapListParsings.add(mapListParsing);
-                Log.e("realMap", result2.toString());
             }
             mapParsing.setMapList(mapListParsings);
         }
@@ -161,7 +158,6 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
         naverMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull PointF pointF, @NonNull com.naver.maps.geometry.LatLng latLng) {
-                Log.d("tttt", willChange+"");
                 if (willChange){
                     if (isMarkerClicked){
                         isMarkerClicked = false;
@@ -187,7 +183,6 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
             marker.setOnClickListener(new Overlay.OnClickListener() {
                 @Override
                 public boolean onClick(@NonNull Overlay overlay) {
-                    Log.i("tttt","qwerqwe");
                     if (currentOpenMarker == overlay) {
                         currentOpenMarker = null;
                         isMarkerClicked = false;
@@ -224,7 +219,6 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
     }
     public void makeRequestForImage(final String distanceStr) {
         String url = new UrlMaker().UrlMake("ImageStore.do?image_name="+storeDetailData.getStore_image());
-        Log.i("store", url);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         ImageRequest request = new ImageRequest(url,

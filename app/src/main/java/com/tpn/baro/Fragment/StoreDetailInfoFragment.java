@@ -103,7 +103,6 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
     }
 
     private void jsonParsing(String storeDetail) {
-        Log.i("JSONPARSING", storeDetail);
         Gson gson = new GsonBuilder().create();
         storeDetailData = gson.fromJson(storeDetail, StoreDetail.class);
         setActivity();

@@ -44,7 +44,6 @@ public class SearchDialog {
                 intent.putExtra("isSearchOrder", true);
                 intent.putExtra("searchStore", message);
                 intent.putExtra("list_type", "search");
-                Log.i("MESSAGE", message);
                 context.startActivity(intent);
                 dlg.dismiss();
             }

@@ -33,7 +33,6 @@ public class Celebe extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e(TAG+"SUCCESS",response);
                         imageView.setImageURI(Uri.parse("http://celebe.ohmyapp.io/app-assets/images/portrait/small/avatar-a-1.png"));
                     }
                 },

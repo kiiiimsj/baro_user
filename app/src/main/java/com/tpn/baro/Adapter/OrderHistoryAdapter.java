@@ -175,14 +175,12 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             StringBuilder urlBuilder = new StringBuilder()
                     .append(url)
                     .append(order.get(po).getStore_image());
-            Log.i("store", urlBuilder.toString());
 
             ImageRequest request = new ImageRequest(urlBuilder.toString(),
                     new Response.Listener<Bitmap>() {
                         @Override
                         public void onResponse(Bitmap response) {
                             store_image.setImageBitmap(response);
-                            Log.i("response", response.toString());
                         }
                     }, 100, 100, ImageView.ScaleType.FIT_CENTER, null,
                     new Response.ErrorListener() {

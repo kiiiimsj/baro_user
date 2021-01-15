@@ -84,7 +84,6 @@ public class Notice extends AppCompatActivity implements TopBar.OnBackPressedInP
                 noticeListParsings.add(noticeListParsing);
             }
             noticeParsing.setNoticeList(noticeListParsings);
-            Log.i("DSF",result1.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -99,7 +98,6 @@ public class Notice extends AppCompatActivity implements TopBar.OnBackPressedInP
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("OrderDetails", response);
                         NoticeParsing noticeParsing = jsonParsing(response);
                         applyAdapter(noticeParsing);
                     }
@@ -133,7 +131,6 @@ public class Notice extends AppCompatActivity implements TopBar.OnBackPressedInP
                 final Animation animation = AnimationUtils.loadAnimation(Notice.this,R.anim.expandable_open);
                 animation.setDuration(600);
                 openChild+=1;
-                Log.e("i",i+openChild+"");
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         try {

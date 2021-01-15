@@ -86,13 +86,11 @@ public class AdvertiseAdapter extends PagerAdapter {
         StringBuilder urlBuilder = new StringBuilder()
                 .append(url)
                 .append(type_image);
-        Log.i("url", urlBuilder.toString());
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         ImageRequest request = new ImageRequest(urlBuilder.toString(),
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap response) {
-                        Log.i("response1", "response succeeded.");
                         imageView.setImageBitmap(response);
                     }
                 }, imageView.getWidth(), imageView.getHeight(), ImageView.ScaleType.FIT_XY, null,

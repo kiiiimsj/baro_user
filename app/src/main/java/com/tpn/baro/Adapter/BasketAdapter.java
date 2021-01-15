@@ -128,12 +128,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                 }else {
                     detailsFixToBaskets.get(position).setName("");
                     detailsFixToBaskets.remove(position);
-                    Log.i("FIXTOSIZE", detailsFixToBaskets.size() + "");
                     holder.parent.removeView(holder.parent);
-                    Gson gson = new Gson();
-                    for (int i = 0; i < detailsFixToBaskets.size(); i++) {
-                        Log.e("change", gson.toJson(detailsFixToBaskets.get(i), DetailsFixToBasket.class));
-                    }
 
 //                ((LinearLayout)holder.deleteThis.getParent()).removeAllViews();
                     notifyItemRemoved(position);

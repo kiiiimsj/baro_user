@@ -48,7 +48,6 @@ public class Register1 extends AppCompatActivity implements TopBar.OnBackPressed
             _getUserEnteredPhoneNumber = _getUserEnteredPhoneNumber.substring(1);
         } //remove 0 at the start if entered by the user
         _phone = KOREA + _getUserEnteredPhoneNumber;
-        Log.i("PHONE NUMBER : " , _phone);
 
         makeRequestForCheckPhone();
 
@@ -79,7 +78,6 @@ public class Register1 extends AppCompatActivity implements TopBar.OnBackPressed
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("response", response);
                 parsing(response);
             }
         }, new Response.ErrorListener() {

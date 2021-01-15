@@ -17,7 +17,6 @@ import com.tpn.baro.Dialogs.NeedLoginDialog;
 public class BaroUtil {
     static SharedPreferences sf;
     public static boolean loginCheck(final Activity activity){
-        Log.e("loginCheck" , " / loginCheck!");
         SessionManager sm = new SessionManager(activity, SessionManager.SESSION_USERSESSION);
         SharedPreferences sf = sm.getUsersDetailSession();
         String nick = sf.getString(SessionManager.KEY_USERNAME,"");
@@ -47,7 +46,6 @@ public class BaroUtil {
     }
     public static boolean checkGPS(Context context) {
         LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        Log.e("manager_state", manager.isProviderEnabled(LocationManager.GPS_PROVIDER)+"");
         return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 }

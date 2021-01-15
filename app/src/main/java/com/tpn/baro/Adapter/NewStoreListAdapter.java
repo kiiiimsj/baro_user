@@ -155,7 +155,6 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
                         @Override
                         public void onResponse(Bitmap response) {
                             image.setImageBitmap(response);
-                            Log.i("response", response.toString());
                         }
                     }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
                     new Response.ErrorListener() {
