@@ -59,10 +59,14 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     MyPageButtonAdapter myPageButtonAdapter;
     ProgressApplication progressApplication;
     Button logout;
+
+    SessionManager sessionManager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
+        sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         setLists();
@@ -157,8 +161,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
 //        overridePendingTransition(0, 0);
     }
     private void setMyInfo() {
-        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
-        sessionManager.getUsersDetailSession();
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         String name = userData.get(SessionManager.KEY_USERNAME);
         String email = userData.get(SessionManager.KEY_EMAIL);
@@ -175,7 +177,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     }
 
     private void getPhoneNumber() {
-        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersDetailSession();
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         phone = userData.get(SessionManager.KEY_PHONENUMBER);
@@ -249,10 +250,10 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     }
     @Override
     public void clickOkay() {
-        SessionManager sessionManager1 = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
-        if(sessionManager1.getUsersDetailFromSession() != null || sessionManager1 != null) {
-            sessionManager1.clearDetailUserSession();
+        if(sessionManager.getUsersDetailFromSession() != null || sessionManager != null) {
+            sessionManager.clearDetailUserSession();
         }
+        Log.e("userInfo : ",sessionManager.getUsersDetailFromSession()+"");
         Intent intent = new Intent(this, MainPage.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);

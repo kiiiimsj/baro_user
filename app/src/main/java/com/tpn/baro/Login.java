@@ -61,7 +61,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        userSession = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         phone = findViewById(R.id.login_phone);
         password = findViewById(R.id.login_password);
         rememberUser = findViewById(R.id.map_permission);
@@ -146,16 +146,6 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         applyJson(response);
-                        try {
-                            if (response.getBoolean("result")) {
-                                finish();
-                            }
-                            else {
-                                Toast.makeText(Login.this, response.getString("message"), Toast.LENGTH_LONG).show();
-                            }
-                        } catch(JSONException e) {
-                            e.printStackTrace();
-                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -171,6 +161,7 @@ public class Login extends AppCompatActivity {
         String phone = null;
         String createdDate = null;
         String email = null;
+        String message = null;
         boolean result2 = false;
         try {
             result2 = result.getBoolean("result");
@@ -178,13 +169,18 @@ public class Login extends AppCompatActivity {
             phone = result.getString("phone");
             createdDate = result.getString("created_date");
             email = result.getString("email");
-
+            message = result.getString("message");
         }
         catch(JSONException e ) {
             e.printStackTrace();
         }
         if(result2) {
             userSession.createLoginSession(name, phone, createdDate, email, userToken);
+            Log.e("userSession" , userSession.getUsersDetailFromSession().toString());
+            finish();
+        }
+        else {
+            Toast.makeText(Login.this, message, Toast.LENGTH_LONG).show();
         }
     }
     private boolean validateFields() {

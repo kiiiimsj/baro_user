@@ -17,7 +17,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +39,6 @@ import com.tpn.baro.AdapterHelper.TypeHelperClass;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.AppStartAdDialog;
 import com.tpn.baro.Dialogs.SearchDialog;
-import com.tpn.baro.Fragment.AlarmBell;
 import com.tpn.baro.JsonParsingHelper.EventHelperClass;
 import com.tpn.baro.JsonParsingHelper.TypeListParsing;
 import com.tpn.baro.JsonParsingHelper.TypeParsing;
@@ -89,7 +87,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     SharedPreferences sp;
     Gson gson;
 
-    StoreSessionManager storeSessionManager;
     ProgressApplication progressApplication;
     EventHelperClass eventHelperClass;
 
@@ -103,9 +100,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     SwipyRefreshLayout refreshLayout;
 
     ImageView alert;
-    FragmentManager fm;
 
-    AlarmBell alarmBell;
     SessionManager userSession;
     HashMap userData = new HashMap<>();
     int getUnReadAlertCount = 0;
@@ -121,7 +116,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         progressApplication.progressON(this);
 
         sp = getSharedPreferences("favorite", MODE_PRIVATE);
-        userSession = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
+        userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         userData = userSession.getUsersDetailFromSession();
 
         gson = new GsonBuilder().create();
@@ -140,8 +135,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
 
         mAddress = findViewById(R.id.address);
         mMapButton = findViewById(R.id.map_button);
-        storeSessionManager = new StoreSessionManager(MainPage.this, StoreSessionManager.STORE_SESSION);
-        storeSessionManager.setIsFavorite(false);
         ///////// 태영
         call_search = findViewById(R.id.search_dialog);
         refreshLayout = findViewById(R.id.refreshLayout);
@@ -199,7 +192,15 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     @Override
     protected void onResume() {
         super.onResume();
-        makeRequestForAlerts();
+        userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        userData = userSession.getUsersDetailFromSession();
+        Log.e("getAlertCount", userData.get(SessionManager.KEY_PHONENUMBER)+"");
+        if(userData.get(SessionManager.KEY_PHONENUMBER) == null) {
+            alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
+        }else {
+            makeRequestForAlerts();
+        }
+
         latLng = myGPSListener.startLocationService(mAddress);
         if(!BaroUtil.checkGPS(this)) {
             startLocation();
@@ -225,11 +226,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     }
     private void makeRequestForAlerts() {
         UrlMaker urlMaker = new UrlMaker();
-        Log.e("getAlertCount", userData.get(SessionManager.KEY_PHONENUMBER)+"");
-        if(userData.get(SessionManager.KEY_PHONENUMBER).equals("") || userData.get(SessionManager.KEY_PHONENUMBER) == null) {
-            alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
-            return;
-        }
         String url = urlMaker.UrlMake("GetNewAlertCount.do?phone=" + userData.get(SessionManager.KEY_PHONENUMBER));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
