@@ -23,6 +23,7 @@
     <RelativeLayout
         android:id="@+id/is_read_new_label"
         android:layout_marginTop="3dp"
+        android:layout_marginStart="10dp"
         android:layout_width="17dp"
         android:layout_height="17dp"
         android:background="@drawable/circle"
@@ -30,15 +31,21 @@
         android:backgroundTintMode="src_over"
         android:layout_toRightOf="@id/alert_title"
         android:layout_alignTop="@id/alert_title"
-        android:layout_marginLeft="8dp"
-        android:text="N"
-        android:textSize="10sp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/notosans_bold"
-        android:includeFontPadding="false"
-        android:textAlignment="center"
-        android:gravity="center"
-        />
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="8dp"
+            android:text="N"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+    </RelativeLayout>
 
     <TextView
         android:layout_below="@id/alert_title"
