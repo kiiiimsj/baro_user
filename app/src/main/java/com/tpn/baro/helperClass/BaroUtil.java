@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -44,8 +45,32 @@ public class BaroUtil {
                 }
             }).show();
     }
-    public static boolean checkGPS(Context context) {
+    public static boolean checkGPS(final Context context) {
+        boolean isClose = false;
         LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("설정");
+            builder.setCancelable(true);
+            builder.setMessage("어플을 사용하기위해선 위치서비스를 켜주세요");
+            builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    context.startActivity(intent);
+                }
+            });
+            builder.show();
+            isClose = true;
+        }else {
+            isClose = false;
+        }
+        return isClose;
     }
 }

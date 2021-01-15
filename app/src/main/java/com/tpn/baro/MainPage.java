@@ -142,7 +142,16 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         makeRequestForEventThread();
         makeRequest();
         makeRequestForAlerts();
+
         myGPSListener = new myGPSListener(this);
+        latLng = myGPSListener.startLocationService(mAddress);
+        makeRequestUltraStore(setHashMapData());
+        makeRequestNewStore(setHashMapData());
+
+        if(!BaroUtil.checkGPS(this)) {
+
+        }
+
 
         alert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,13 +210,8 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         }
 
         latLng = myGPSListener.startLocationService(mAddress);
-        if(!BaroUtil.checkGPS(this)) {
-            startLocation();
-        }
-        else if(latLng != null) {
-            makeRequestUltraStore(setHashMapData());
-            makeRequestNewStore(setHashMapData());
-        }
+        makeRequestUltraStore(setHashMapData());
+        makeRequestNewStore(setHashMapData());
     }
 
     @Override

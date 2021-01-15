@@ -146,7 +146,7 @@ public class myGPSListener implements LocationListener {
 
             String message = "가게리스트페이지에서 내 위치 -> " + "location: "+ gpsProviderLocation +"\nlocation2:" + networkProviderLocation;
             Log.e("message_", message);
-
+            Log.e("location :", saveLocation.getString("location", ""));
             if (gpsProviderLocation != null) {
                 latitude = gpsProviderLocation.getLatitude();
                 longitude = gpsProviderLocation.getLongitude();
@@ -157,26 +157,24 @@ public class myGPSListener implements LocationListener {
                     longitude = networkProviderLocation.getLongitude();
                     latLng = new LatLng(latitude, longitude);
             }
-            else if(saveLocation != null) {
-                double[] ll = new double[2];
-                int i = 0;
-                if (!saveLocation.getString("location", "").equals("")) {
-                    String locationStr = saveLocation.getString("location", null);
-                    StringTokenizer stringTokenizer = new StringTokenizer(locationStr, ":");
-                    while (stringTokenizer.hasMoreTokens()) {
-                        String getDouble = stringTokenizer.nextToken();
-                        ll[i] = Double.parseDouble(getDouble);
-                        i++;
-                    }
-                    Toast.makeText(context, "GPS가 꺼져있으므로 마지막 저장위치를 현재위치로 설정합니다.", Toast.LENGTH_SHORT).show();
-                    //LatLng latLng1 = new LatLng(ll[0], ll[1]);
-                    latitude = ll[0];
-                    longitude = ll[1];
-                    setMapLocationTextView(getAdress);
-                    latLng = new LatLng(latitude, longitude);
-                }
-            }
-            else if(latLng == null) {
+//            else if(saveLocation != null || !saveLocation.getString("location", "").equals("")) {
+//                double[] ll = new double[2];
+//                int i = 0;
+//                String locationStr = saveLocation.getString("location", null);
+//                StringTokenizer stringTokenizer = new StringTokenizer(locationStr, ":");
+//                while (stringTokenizer.hasMoreTokens()) {
+//                    String getDouble = stringTokenizer.nextToken();
+//                    ll[i] = Double.parseDouble(getDouble);
+//                    i++;
+//                }
+//                Toast.makeText(context, "GPS가 꺼져있으므로 마지막 저장위치를 현재위치로 설정합니다.", Toast.LENGTH_SHORT).show();
+//                //LatLng latLng1 = new LatLng(ll[0], ll[1]);
+//                latitude = ll[0];
+//                longitude = ll[1];
+//                setMapLocationTextView(getAdress);
+//                latLng = new LatLng(latitude, longitude);
+//            }
+            else {
                 latitude = 37.49808785857802;
                 longitude = 127.02758604547965;
                 latLng = new LatLng(latitude, longitude);
@@ -185,6 +183,7 @@ public class myGPSListener implements LocationListener {
             if(getAdress != null) {
                 setMapLocationTextView(getAdress);
             }
+            Log.e("GPS", latLng+"");
         }
         catch(SecurityException e) {
             e.printStackTrace();
