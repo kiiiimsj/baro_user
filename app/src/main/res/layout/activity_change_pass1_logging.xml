@@ -99,7 +99,7 @@
             android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/layout_border_5dp_main"
+            android:background="@drawable/layout_border_5dp_stroke_2dp_main"
             android:onClick="verifyPass"
             android:text="완료"
             android:textSize="16dp"

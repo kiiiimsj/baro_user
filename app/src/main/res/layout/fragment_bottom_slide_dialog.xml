@@ -43,7 +43,7 @@
             android:layout_marginTop="10dp"
             android:id="@+id/bottom_slide_dialog_bottom_button"
             android:layout_below="@id/bottom_slide_dialog_content"
-            android:background="@drawable/layout_border_5dp_main"
+            android:background="@drawable/layout_border_5dp_stroke_2dp_main"
             android:text="로그인 하러 가기"
             android:textColor="@color/white"
             android:fontFamily="@font/notosans_bold"

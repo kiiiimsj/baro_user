@@ -253,7 +253,7 @@
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
                         android:fontFamily="@font/notosans_bold"
-                        android:background="@drawable/layout_border_5dp_main"
+                        android:background="@drawable/layout_border_5dp_stroke_2dp_main"
                         android:text="결 제 하 기"
                         android:textSize="17sp"
                         android:textColor="@color/white"

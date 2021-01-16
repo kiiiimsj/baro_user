@@ -80,7 +80,7 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
             holder.isOpen.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.main)));
 
         }else {
-            holder.isOpen.setText("준비중");
+            holder.isOpen.setText("영업종료");
         }
     }
 

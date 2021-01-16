@@ -41,8 +41,8 @@
         android:id="@+id/when_has_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:padding="17dp"
-        android:layout_marginRight="15dp"/>
+        android:layout_marginEnd="15dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,5 +29,8 @@
         <item name="android:paddingBottom">0dp</item>
     </style>
     <style name="mydialog"/>
-
+    <style name="text_style" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/notosans_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
 </resources>

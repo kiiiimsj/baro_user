@@ -11,14 +11,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.tpn.baro.R;
-
 public class FirstPage extends AppCompatActivity {
     TextView orderText;
     TextView getText;
     TextView baroLogo;
 
-    Animation sideLeftAnim, bottomAnim, rotate_0_to_20, rotate_20_to_0, rotate_0;
+    Animation sideLeftAnim, bottomAnim, rotated_35, rotated_35_to_0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +32,9 @@ public class FirstPage extends AppCompatActivity {
         baroLogo =findViewById(R.id.baro_logo);
 
         sideLeftAnim = AnimationUtils.loadAnimation(this, R.anim.anim_slide_in_left);
-        rotate_0_to_20 = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_0_to_20);
-        rotate_20_to_0 = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_20_to_0);
+        rotated_35 = AnimationUtils.loadAnimation(this, R.anim.anim_rotated_35);
+        rotated_35_to_0 = AnimationUtils.loadAnimation(this, R.anim.anim_rotated_35_to_0);
         bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_anim);
-        rotate_0 = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_0);
 
         getText.setVisibility(View.INVISIBLE);
         baroLogo.setVisibility(View.INVISIBLE);
@@ -45,23 +42,23 @@ public class FirstPage extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                getText.setVisibility(View.VISIBLE);
-                getText.setAnimation(rotate_0_to_20);
 
-            }
-        }, 800);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                baroLogo.setVisibility(View.VISIBLE);
-                baroLogo.startAnimation(bottomAnim);
-                getText.startAnimation(rotate_20_to_0);
+                getText.setVisibility(View.VISIBLE);
+                getText.setAnimation(rotated_35);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(FirstPage.this, MainPage.class);
-                        startActivity(intent);
-                        finish();
+                        baroLogo.setVisibility(View.VISIBLE);
+                        baroLogo.startAnimation(bottomAnim);
+                        getText.startAnimation(rotated_35_to_0);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(FirstPage.this, MainPage.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }, 800);
                     }
                 }, 800);
             }

@@ -54,7 +54,7 @@
             android:id="@+id/goLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/layout_border_5dp_main"
+            android:background="@drawable/layout_border_5dp_stroke_2dp_main"
             android:text="로그인 하기"
             android:textColor="@color/white"
             android:fontFamily="@font/notosans_regular"

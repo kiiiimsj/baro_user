@@ -5,16 +5,10 @@
     android:id="@+id/shellHistoryItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@color/white"
     android:layout_marginBottom="10dp"
     android:layout_marginTop="10dp"
     tools:context="com.tpn.baro.OrderHistory">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="@color/black"/>
     <ImageView
         android:id="@+id/store_image"
         android:layout_width="70dp"
@@ -96,7 +90,7 @@
             android:visibility="gone"/>
     </RelativeLayout>
     <LinearLayout
-        android:layout_alignParentBottom="true"
+        android:id="@+id/bottom"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -130,5 +124,10 @@
             android:fontFamily="@font/notosans_regular"
             android:includeFontPadding="false"/>
     </LinearLayout>
+    <View
+        android:layout_below="@id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main"/>
 
 </RelativeLayout>

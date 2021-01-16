@@ -70,7 +70,7 @@
             android:includeFontPadding="false"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/layout_border_5dp_main"/>
+            android:background="@drawable/layout_border_5dp_stroke_2dp_main"/>
 
 
 

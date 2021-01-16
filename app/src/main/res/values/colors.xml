@@ -25,6 +25,8 @@
     <color name="littleGray">#EDEDED</color>
     <color name="main_page_store_view_detail_color">#6d6d6d</color>
 
-    <color name="home_background">#f9f9f9</color>
+    <color name="home_background">#D7D7D7</color>
     <color name="transparent_color">#75828282</color>
+
+    <color name="main_store_recycler_view_text">#444444</color>
 </resources>
