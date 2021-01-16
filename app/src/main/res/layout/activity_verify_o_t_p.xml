@@ -102,7 +102,7 @@
             android:id="@+id/verify_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/layout_border_5dp_main"
+            android:background="@drawable/layout_border_5dp_stroke_2dp_main"
             android:onClick="onClickVerify"
             android:text="입력하기"
             android:textSize="16dp"

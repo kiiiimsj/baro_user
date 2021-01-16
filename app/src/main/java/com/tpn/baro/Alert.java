@@ -48,7 +48,7 @@ public class Alert extends AppCompatActivity implements TopBar.OnBackPressedInPa
         alertStartDate = findViewById(R.id.alert_start_date);
         alertContent = findViewById(R.id.alert_content);
 
-        sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         userData = sessionManager.getUsersDetailFromSession();
 
         makeRequestForAlertDetail();
@@ -57,13 +57,11 @@ public class Alert extends AppCompatActivity implements TopBar.OnBackPressedInPa
 
     private void makeRequestForAlertRead() {
         UrlMaker urlMaker = new UrlMaker();
-        Log.e("alertReadCheck : ", alertId + "" + userData.get(SessionManager.KEY_PHONENUMBER));
         String url=urlMaker.UrlMake("AlertReadCheck.do?alert_id="+alertId+"&phone="+userData.get(SessionManager.KEY_PHONENUMBER));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("sendToRead", response);
                 parsing(response);
             }
         }, new Response.ErrorListener() {
@@ -81,7 +79,6 @@ public class Alert extends AppCompatActivity implements TopBar.OnBackPressedInPa
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("getOldEvents", response);
                 parsing(response);
             }
         }, new Response.ErrorListener() {

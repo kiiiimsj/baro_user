@@ -55,11 +55,9 @@ public class Login extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<InstanceIdResult> task) {
                 if(!task.isSuccessful()){
-                    Log.e("token failed", String.valueOf(task.getException()));
                     return;
                 }
                 userToken = task.getResult().getToken();
-                Log.e("aaa", userToken);
             }
         });
 
@@ -94,7 +92,6 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!(rememberUser.isChecked())) {
-                    Log.i("ddfa","i");
                     sessionManager.clearRememberMeSession();
                     sessionManager.getEditor().putBoolean("IsRememberMe",false);
                     sessionManager.getEditor().commit();
@@ -144,22 +141,11 @@ public class Login extends AppCompatActivity {
     
     public void makeRequest(String url, HashMap data) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.i("login", "request made to " + url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         applyJson(response);
-                        try {
-                            if (response.getBoolean("result")) {
-                                finish();
-                            }
-                            else {
-                                Toast.makeText(Login.this, response.getString("message"), Toast.LENGTH_LONG).show();
-                            }
-                        } catch(JSONException e) {
-                            e.printStackTrace();
-                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -175,6 +161,7 @@ public class Login extends AppCompatActivity {
         String phone = null;
         String createdDate = null;
         String email = null;
+        String message = null;
         boolean result2 = false;
         try {
             result2 = result.getBoolean("result");
@@ -182,13 +169,17 @@ public class Login extends AppCompatActivity {
             phone = result.getString("phone");
             createdDate = result.getString("created_date");
             email = result.getString("email");
-
+            message = result.getString("message");
         }
         catch(JSONException e ) {
             e.printStackTrace();
         }
         if(result2) {
             userSession.createLoginSession(name, phone, createdDate, email, userToken);
+            finish();
+        }
+        else {
+            Toast.makeText(Login.this, message, Toast.LENGTH_LONG).show();
         }
     }
     private boolean validateFields() {

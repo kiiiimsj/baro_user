@@ -102,12 +102,10 @@ public class ChangePass2 extends AppCompatActivity implements TopBar.OnBackPress
     public void makeRequestForFindPass(HashMap data) {
         String url = new UrlMaker().UrlMake("MemberPassUpdate.do");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.i("login", "request made to " + url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("FindPass1", response.toString());
                         jsonParsing(response);
                     }
                 },

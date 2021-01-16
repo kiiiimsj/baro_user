@@ -54,14 +54,12 @@ public class myGPSListener implements LocationListener {
                 latitude = ll[0];
                 longitude = ll[1];
                 String message = "내 위치 -> Latitude : "+ latitude + "\nLongitude:"+ longitude;
-                Log.d("Map", message);
                 return;
             }
         }
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         String message = "내 위치 -> Latitude : "+ latitude + "\nLongitude:"+ longitude;
-        Log.d("Map", message);
     }
 
     public void onProviderDisabled(String provider) { }
@@ -148,42 +146,35 @@ public class myGPSListener implements LocationListener {
 
             String message = "가게리스트페이지에서 내 위치 -> " + "location: "+ gpsProviderLocation +"\nlocation2:" + networkProviderLocation;
             Log.e("message_", message);
-
+            Log.e("location :", saveLocation.getString("location", ""));
             if (gpsProviderLocation != null) {
-                Log.e("gps", 1+"");
                 latitude = gpsProviderLocation.getLatitude();
                 longitude = gpsProviderLocation.getLongitude();
                 latLng = new LatLng(latitude, longitude);
             }
             else if (networkProviderLocation != null){
-                Log.e("gps", 2+"");
                     latitude = networkProviderLocation.getLatitude();
                     longitude = networkProviderLocation.getLongitude();
                     latLng = new LatLng(latitude, longitude);
             }
-            else if(saveLocation != null) {
-                Log.e("gps", 3+"");
-                double[] ll = new double[2];
-                int i = 0;
-                if (!saveLocation.getString("location", "").equals("")) {
-                    Log.e("gps", 5+"");
-                    String locationStr = saveLocation.getString("location", null);
-                    StringTokenizer stringTokenizer = new StringTokenizer(locationStr, ":");
-                    while (stringTokenizer.hasMoreTokens()) {
-                        String getDouble = stringTokenizer.nextToken();
-                        ll[i] = Double.parseDouble(getDouble);
-                        i++;
-                    }
-                    Toast.makeText(context, "GPS가 꺼져있으므로 마지막 저장위치를 현재위치로 설정합니다.", Toast.LENGTH_SHORT).show();
-                    //LatLng latLng1 = new LatLng(ll[0], ll[1]);
-                    latitude = ll[0];
-                    longitude = ll[1];
-                    setMapLocationTextView(getAdress);
-                    latLng = new LatLng(latitude, longitude);
-                }
-            }
-            else if(latLng == null) {
-                Log.e("gps", 4+"");
+//            else if(saveLocation != null || !saveLocation.getString("location", "").equals("")) {
+//                double[] ll = new double[2];
+//                int i = 0;
+//                String locationStr = saveLocation.getString("location", null);
+//                StringTokenizer stringTokenizer = new StringTokenizer(locationStr, ":");
+//                while (stringTokenizer.hasMoreTokens()) {
+//                    String getDouble = stringTokenizer.nextToken();
+//                    ll[i] = Double.parseDouble(getDouble);
+//                    i++;
+//                }
+//                Toast.makeText(context, "GPS가 꺼져있으므로 마지막 저장위치를 현재위치로 설정합니다.", Toast.LENGTH_SHORT).show();
+//                //LatLng latLng1 = new LatLng(ll[0], ll[1]);
+//                latitude = ll[0];
+//                longitude = ll[1];
+//                setMapLocationTextView(getAdress);
+//                latLng = new LatLng(latitude, longitude);
+//            }
+            else {
                 latitude = 37.49808785857802;
                 longitude = 127.02758604547965;
                 latLng = new LatLng(latitude, longitude);
@@ -192,11 +183,11 @@ public class myGPSListener implements LocationListener {
             if(getAdress != null) {
                 setMapLocationTextView(getAdress);
             }
+            Log.e("GPS", latLng+"");
         }
         catch(SecurityException e) {
             e.printStackTrace();
         }
-        Log.e("final gps", latLng+"");
         return latLng;
     }
 }

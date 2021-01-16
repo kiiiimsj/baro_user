@@ -101,7 +101,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("onCreate", true+"");
         sessionManager = new SessionManager(mContext, SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
@@ -152,8 +151,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         mMenuAdapter = new MenuListAdapter(DataList, this, this, getContext(), storedIdStr);
         mRecyclerViewMenu.setAdapter(mMenuAdapter);
     }
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @SuppressLint({"UseCompatLoadingForDrawables", "ResourceAsColor"})
     private void setMRecyclerViewCategory() {
         for(int i = 0; i < saveCategories.size(); i++){
             View tabView = LayoutInflater.from(getActivity()).inflate(R.layout.category_layout, null);
@@ -167,7 +164,10 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
             categoryName.setTextColor(getResources().getColor(R.color.indicator_unselect_text_color));
             categoryName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             categoryName.setTextSize(10);
-            Typeface face = getActivity().getResources().getFont(R.font.notosans_regular);
+            Typeface face = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                face = getActivity().getResources().getFont(R.font.notosans_regular);
+            }
             categoryName.setTypeface(face);
 
             ViewGroup.LayoutParams width = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -318,7 +318,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         String getMenuPrice = viewHolder.menuPrice.getText().toString();
         StringTokenizer stringTokenizer = new StringTokenizer(getMenuPrice, " 원");
         String str =stringTokenizer.nextToken();
-        Log.i("StringTokenizer", str);
 
         String getMenuId = viewHolder.menuId.getText().toString();
 

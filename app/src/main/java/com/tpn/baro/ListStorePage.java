@@ -22,10 +22,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.tpn.baro.Adapter.ListStoreAdapter;
 import com.tpn.baro.AdapterHelper.ListStoreHelperClass;
-import com.tpn.baro.Database.StoreSessionManager;
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.JsonParsingHelper.ListStoreParsing;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.myGPSListener;
 import com.google.android.gms.maps.model.LatLng;
@@ -67,7 +65,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
 
     LatLng latLng;
 
-    StoreSessionManager storeSessionManager;
     ProgressApplication progressApplication;
     SharedPreferences saveListSet;
 
@@ -88,7 +85,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         mRecyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.back_pressed);
         saveListSet = getSharedPreferences("saveList", MODE_PRIVATE);
-        storeSessionManager = new StoreSessionManager(ListStorePage.this, StoreSessionManager.STORE_SESSION);
         currentPos = 0;
         fm = getSupportFragmentManager();
         topbar = (TopBar) fm.findFragmentById(R.id.top_bar);
@@ -165,12 +161,10 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(ListStorePage.this);
-        Log.i("storesList", "request made to " + url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("storeList", response.toString());
                         jsonParsing(response.toString(), state);
                     }
                 },
@@ -198,7 +192,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("searchStore", response.toString());
                         jsonParsing(response.toString(), state);
                     }
                 }, new Response.ErrorListener() {
@@ -207,21 +200,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
                 Log.e("searchStoreError", "error");
             }
         });
-//        Log.e("searchStore", url); //ok
-//        StringRequest request = new StringRequest(Request.Method.GET, url,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        Log.e("searchStore", response);
-//                        jsonParsing(response, state);
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Log.e("searchStoreError", "error");
-//                    }
-//                });
         requestQueue.add(jsonObjectRequest);
     }
 
@@ -252,8 +230,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         for(int i = 0; i< listStoreParsing.store.size();i++){
 
             ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(listStoreParsing.store.get(i).getStore_name(), listStoreParsing.store.get(i).getStore_location(), listStoreParsing.store.get(i).getStore_image(), listStoreParsing.store.get(i).getDistance(), listStoreParsing.store.get(i).getStore_id(), listStoreParsing.store.get(i).getIs_open());
-
-            Log.e("hey", listStoreParsing.store.get(i).getStore_image());
 
             listStoreHelperClass.storeNames.add(listStoreParsing.store.get(i).getStore_name());
             listStoreHelperClass.storeLocations.add(listStoreParsing.store.get(i).getStore_location());

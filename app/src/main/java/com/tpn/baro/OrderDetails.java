@@ -171,7 +171,6 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                         JSONArray jsonArray = new JSONArray(inMyBasket);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             String jsonChild = jsonArray.optString(i);
-                            Log.i("Zzzzz", jsonChild);
                             DetailsFixToBasket detailsFixToBasket = gson.fromJson(jsonChild, DetailsFixToBasket.class);
                             if (detailsFixToBasket.getName().equals("")) continue;
                             detailsFixToBaskets.add(detailsFixToBasket);
@@ -284,7 +283,6 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
             }
         }).run();
         ArrayList<OrderDetailsListParsing> orderDetailsListParsings = orderDetailsParsing.getExtraList();
-        Log.i("asdfadfs", String.valueOf(orderDetailsListParsings.size()));
         String extraCategory = "";
         extraOptions = new HashMap<>();
         ExtraOrder extraOption = null;
@@ -343,7 +341,6 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
             recyclerViewShell.setVisibility(View.GONE);
         }
         if (NonEssentialOptionList.size() != 0) {
-            Log.i("sizeeeeeeeeeeeee", NonEssentialOptionList.size() + "");
             nonEssentialAdapter =
                     new OrderDetailsNonEssentialAdapter(OrderDetails.this, R.layout.activity_order_details_nonessential_group_parent,
                             R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount);

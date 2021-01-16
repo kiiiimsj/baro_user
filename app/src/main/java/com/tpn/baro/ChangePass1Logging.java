@@ -37,7 +37,7 @@ public class ChangePass1Logging extends AppCompatActivity implements TopBar.OnBa
         setContentView(R.layout.activity_change_pass1_logging);
         passInput = findViewById(R.id.input_current_pass);
 
-        SessionManager sessionManager = new SessionManager(ChangePass1Logging.this, SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionUserdata = sessionManager.getUsersDetailFromSession();
         phone = sessionUserdata.get(SessionManager.KEY_PHONENUMBER);
     }
@@ -48,12 +48,10 @@ public class ChangePass1Logging extends AppCompatActivity implements TopBar.OnBa
     public void makeRequestForCheckPass(HashMap data) {
         String url = new UrlMaker().UrlMake("MemberLogin.do");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.i("login", "request made to " + url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("FindPass1Logging", response.toString());
                         jsonParsing(response);
                     }
                 },
@@ -76,7 +74,6 @@ public class ChangePass1Logging extends AppCompatActivity implements TopBar.OnBa
             e.printStackTrace();
         }
         checkPass(getLogin);
-        Log.i("JSONPARSING", getLogin+"");
     }
     public void checkPassRight() {
         final HashMap<String ,String > userData = new HashMap<>();

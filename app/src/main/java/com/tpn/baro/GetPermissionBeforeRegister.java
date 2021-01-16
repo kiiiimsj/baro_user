@@ -101,7 +101,6 @@ public class GetPermissionBeforeRegister extends AppCompatActivity {
         });
     }
     public void check(View view) {
-        Log.e("click","cccccc");
         if (mapPermission.isChecked() && storagePermission.isChecked() && privacyPermission.isChecked() ) {
             goNextBtn.setBackgroundColor(Color.rgb(131,51,230));
             if (marketingSnsPermission.isChecked()){

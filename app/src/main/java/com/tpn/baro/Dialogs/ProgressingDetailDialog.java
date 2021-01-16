@@ -50,17 +50,6 @@ public class ProgressingDetailDialog extends DialogFragment {
         return fragment;
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        final int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 400, getResources().getDisplayMetrics());
-//
-//        final int height  = ActionBar.LayoutParams.WRAP_CONTENT;
-//
-//
-//        getDialog().getWindow().setLayout(width, height);
-//    }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -113,7 +102,6 @@ public class ProgressingDetailDialog extends DialogFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("success", response);
                         jsonParsing(response);
                         applyAdapter(orderProgressDetailParsing.getOrders());
                         if (orderProgressDetailParsing.getRequests().equals("")) {

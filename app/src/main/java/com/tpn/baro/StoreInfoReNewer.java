@@ -71,7 +71,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         tabMenu = (TextView)findViewById(R.id.order_history_list);
         tabStoreInfo = (TextView)findViewById(R.id.calc_history_list);
 
-        sessionManager = new SessionManager(StoreInfoReNewer.this, SessionManager.SESSION_USERSESSION);
+        sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
@@ -126,7 +126,6 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
                     return;
                 }
                 if(result) {
-                    Log.i("result", "true");
                     //등록 - > 미등록
                     String phone = _phone;
                     String storeId = storedIdStr;
@@ -145,7 +144,6 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
                     //true 등록되어있을때
                 }
                 else {
-                    Log.i("result", "false");
                     //미등록 -> 등록
                     String phone = _phone;
                     String storeId = storedIdStr;
@@ -184,7 +182,6 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         HashMap<String, Object> data = new HashMap<>();
         data.put("phone", _phone);
         data.put("store_id", storedIdStr);
-        Log.i("storeID", storedIdStr);
 
         return data;
     }
@@ -304,7 +301,6 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     }
 
     private void jsonParsingStore(String response) {
-        Log.i("JSONPARSING", response);
         Gson gson = new GsonBuilder().create();
         storeDetailData = gson.fromJson(response, StoreDetail.class);
         setTitleName();
@@ -319,7 +315,6 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
 
         TextView tv = (TextView)(((LinearLayout)((LinearLayout)tabs.getChildAt(0)).getChildAt(0)).getChildAt(1));
         tv.setTextColor(getResources().getColor(R.color.main));
-        Log.i("tabsTabItem", tv.getText().toString());
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

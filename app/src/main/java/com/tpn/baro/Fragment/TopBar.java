@@ -199,7 +199,6 @@ public class TopBar extends Fragment {
                 title.setText("주문현황");
                 etcImage.setVisibility(View.VISIBLE);
                 etcImage.setBackgroundResource(R.drawable.icon_refresh);
-
                 etcImage.setBackgroundTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.main)));
                 etcImage.setBackgroundTintMode(PorterDuff.Mode.MULTIPLY);
                 etcImage.setOnClickListener(new View.OnClickListener() {

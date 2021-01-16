@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.android.volley.RequestQueue;
@@ -61,17 +62,17 @@ public class AdvertiseAdapter extends PagerAdapter {
         if(!eventHelperParsingClass.event_image.equals("")) {
             makeRequestForgetImage(eventHelperParsingClass.event_image, imageView, context);
         }
-
         container.addView(view);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(realIndex);
-                Intent intent = new Intent(context, Events.class);
-                intent.putExtra("event_id", eventHelperParsingClass.event_id);
-                context.startActivity(intent);
-            }
-        });
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(realIndex);
+//                Intent intent = new Intent(context, Events.class);
+//                intent.putExtra("event_id", eventHelperParsingClass.event_id);
+//                context.startActivity(intent);
+//            }
+//        });
+
         return view;
     }
 
@@ -86,16 +87,14 @@ public class AdvertiseAdapter extends PagerAdapter {
         StringBuilder urlBuilder = new StringBuilder()
                 .append(url)
                 .append(type_image);
-        Log.i("url", urlBuilder.toString());
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         ImageRequest request = new ImageRequest(urlBuilder.toString(),
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap response) {
-                        Log.i("response1", "response succeeded.");
                         imageView.setImageBitmap(response);
                     }
-                }, imageView.getWidth(), imageView.getHeight(), ImageView.ScaleType.FIT_XY, null,
+                }, imageView.getWidth(), imageView.getHeight(), ImageView.ScaleType.CENTER, null,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {

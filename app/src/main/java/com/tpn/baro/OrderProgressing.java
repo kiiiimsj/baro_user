@@ -49,7 +49,7 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
         recyclerView = findViewById(R.id.orderProgresslist);
         refreshLayout = findViewById(R.id.refresh_list);
         gson = new Gson();
-        SessionManager sessionManager = new SessionManager(this,SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(getApplicationContext(),SessionManager.SESSION_USERSESSION);
         HashMap<String,String> hashMap = sessionManager.getUsersDetailFromSession();
         phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
         refreshLayout.setDistanceToTriggerSync(20);
@@ -73,7 +73,6 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("success",response);
                         jsonparsing(response);
                         applyAdapter();
                     }
@@ -89,7 +88,6 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
 
     private void applyAdapter() {
         ArrayList<OrderProgressingParsingHelper> orderProgressingParsingHelpers = orderProgressingParsing.getOrder();
-        Log.e(TAG,orderProgressingParsingHelpers.size()+"");
         OrderProgressingAdapter orderProgressingAdapter = new OrderProgressingAdapter(orderProgressingParsingHelpers,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderProgressingAdapter);

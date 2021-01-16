@@ -55,7 +55,6 @@ public class OrderCancelIfNotAccept extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG,"DESTROY");
         serviceIntent = null;
         Intent intent = new Intent(this, ThreadKillReceiver.class);
         startService(intent);

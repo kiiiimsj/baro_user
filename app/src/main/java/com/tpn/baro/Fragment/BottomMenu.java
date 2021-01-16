@@ -53,7 +53,6 @@ public class BottomMenu extends Fragment {
     }
 
     private void setBottomButtonColor() {
-        Log.e("activityName : ", getTokenActivityName(getActivity().toString()));
         switch (getTokenActivityName(getActivity().toString())) {
             case "MainPage" :
                 realBottom.getMenu().getItem(0).setChecked(true);

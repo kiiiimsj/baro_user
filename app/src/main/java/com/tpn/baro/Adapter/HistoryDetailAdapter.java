@@ -70,7 +70,6 @@ public class HistoryDetailAdapter extends RecyclerView.Adapter<HistoryDetailAdap
         holder.eachPrice.setText(""+eachPrice+"원");
         holder.totalPrice.setText(""+eachPrice*itemCount+"원");
         totals+=eachPrice*itemCount;
-        Log.i("To",""+ totals);
     }
 
     @Override

@@ -149,7 +149,6 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         try {
             getResult = jsonObject.getBoolean("result");
             message = jsonObject.getString("message");
-            Log.i("register2", getResult+"");
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -163,12 +162,10 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
 //    }
     public void makeRequestForRegister(String url, HashMap data) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.i("login", "request made to " + url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("Register2", response.toString());
                         jsonParsing(response);
                         try {
                                 Toast.makeText(Register2.this, response.getString("message"), Toast.LENGTH_LONG).show();

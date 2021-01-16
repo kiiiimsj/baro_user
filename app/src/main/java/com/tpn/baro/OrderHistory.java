@@ -48,16 +48,11 @@ public class OrderHistory extends AppCompatActivity {
         refreshLayout = findViewById(R.id.refresh_list);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
-        sessionManager = new SessionManager(OrderHistory.this, SessionManager.SESSION_USERSESSION);
+        sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         sessionManager.getUsersSession();
         HashMap<String,String> hashMap = sessionManager.getUsersDetailFromSession();
-//        sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
-        if (sessionManager == null) {
-            Log.i("Error update Session", sessionManager.toString());
-        }
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        Log.i("height", metrics+"");
         refreshLayout.setDistanceToTriggerSync((metrics.heightPixels /4) + 50);
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
@@ -86,13 +81,11 @@ public class OrderHistory extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
-                        Log.i("OrderHistory", response);
                         orderHistoryParsing = jsonParsing(response, state);
                         applyAdapter(orderHistoryParsing);
                         orderHistoryAdapter.setOnItemClickListener(new OrderHistoryAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(View v, int pos) {
-                                Log.i("asdfa","qqqqqq");
                                 Toast.makeText(OrderHistory.this,"asdfaag",Toast.LENGTH_LONG).show();
                             }
                         });

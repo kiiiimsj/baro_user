@@ -69,7 +69,7 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
             holder.isOpen.setText("영업중");
             holder.isOpen.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.main)));
         }else {
-            holder.isOpen.setText("준비중");
+            holder.isOpen.setText("영업종료");
         }
     }
 
@@ -155,7 +155,6 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
                         @Override
                         public void onResponse(Bitmap response) {
                             image.setImageBitmap(response);
-                            Log.i("response", response.toString());
                         }
                     }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
                     new Response.ErrorListener() {

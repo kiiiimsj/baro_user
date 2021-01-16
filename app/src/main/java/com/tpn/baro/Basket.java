@@ -141,10 +141,9 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         storeNameTextView = findViewById(R.id.store_name);
         finalPayValue = findViewById(R.id.total_price_final_pay);
         SharedPreferences sharedPreferences = getSharedPreferences(BasketList, MODE_PRIVATE);
-        SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         phone = userData.get(SessionManager.KEY_PHONENUMBER);
-        Log.e("phoneeeeee", phone);
         email = userData.get(SessionManager.KEY_EMAIL);
         user_name = userData.get(SessionManager.KEY_USERNAME);
         Gson gson = new Gson();
@@ -156,7 +155,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             Toast.makeText(this, "잘못된 접근 요청입니다", Toast.LENGTH_LONG);
         }
         String inMyBasket = sharedPreferences.getString(IN_MY_BASEKT, "");
-        Log.i("inmy", inMyBasket);
         storeNameTextView.setText(stringTokenizer.nextToken());
         detailsFixToBaskets = new ArrayList<>();
         if (!(inMyBasket.equals(""))) {
@@ -255,7 +253,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         }
 
         String result = gson.toJson(orderInsertParsing, OrderInsertParsing.class);
-        Log.e("result", result);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("result", result);
         try {
@@ -269,7 +266,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         super.onResume();
         SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        Log.i("onresDETAIL_SIZE", detailsFixToBaskets.size()+"");
         editor.putInt("orderCnt", detailsFixToBaskets.size());
         editor.commit();
     }
@@ -277,7 +273,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("jsonAAA","AAAAAA");
         SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if(!isOpen){
@@ -286,7 +281,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             editor.remove("currentStoreName");
             editor.remove("currentStoreId");
             editor.commit();
-            Log.e("ddddddddddd",sharedPreferences.getString(Basket.IN_MY_BASEKT,"")+"귀로");
 
 
         }
@@ -297,9 +291,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             for(int i = 0;i<detailsFixToBaskets.size();i++){
                 count +=detailsFixToBaskets.get(i).getCount();
             }
-            Log.i("json", json);
             editor.putString(IN_MY_BASEKT, json);
-            Log.i("ondesDETAIL_SIZE", detailsFixToBaskets.size()+"");
             editor.putInt("orderCnt", count);
             editor.commit();
         }else{
@@ -316,8 +308,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         String lastUrl = "BillingGetUserToken.do";
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
-        Log.i("qerw", phoneNumber);
-        Log.i("qerw", user_id);
         makeRequest2(url, hashMap);
     }
 
@@ -329,8 +319,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                     @Override
                     public void onResponse(JSONObject response) {
                         applyJson(response);
-                        Log.i("qerw", response.toString());
-                        Log.i("pn", phone);
                         startBootPay(user_token);
                     }
                 },
@@ -436,7 +424,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("clarityIsOpenStore",response);
                         Gson gson = new Gson();
                         ClarityIsOpenStoreParsing clarityIsOpenStoreParsing = gson.fromJson(response,ClarityIsOpenStoreParsing.class);
                         isOpen = clarityIsOpenStoreParsing.getResult();
@@ -468,7 +455,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("clarityIsOpenStore",error.toString());
                     }
                 });
         requestQueue.add(request);
@@ -477,13 +463,11 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         String lastUrl = "OrderInsert.do";
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
-        Log.e("jsonNNN",json);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.POST, url, 
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("OrderDetails", response);
                         connectToWebSocket(phone, store_id, json);
                         try {
                             sendFcmToOwner();
@@ -535,7 +519,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Log.e("success",response.toString());
                             }
                         },
                         new Response.ErrorListener() {
@@ -548,7 +531,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     }
 
     private void connectToWebSocket(final String phone, final int store_id, final String message) {
-        Log.i("webSocket", "connectToWebSocket() called.");
         URI uri;
         try {
             uri = new URI("ws://3.35.180.57:8080/websocket");
@@ -560,9 +542,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         webSocketClient = new WebSocketClient(uri, new Draft_17()) {
             @Override
             public void onOpen(ServerHandshake handshakedata) {
-                Log.e("webSocket Open", "opened.");
-                Log.e("phone", phone);
-                Log.e("message", message);
                 webSocketClient.send("connect:::" + phone);
                 webSocketClient.send("message:::" + store_id + ":::" + message);
             }
@@ -591,18 +570,14 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             items.add(new StatItem(detailsFixToBaskets.get(i).getName(), null, detailsFixToBaskets.get(i).getMenu_id() + "",
                     null, null, null));
         }
-        Log.i("zzz","" + items.size());
         BootpayAnalytics.start("ItemListActivity", "item_list", items);
     }
 
     void startBootPay(String userToken) {
-        Log.e("1234",1+"");
         if(getFragmentManager().isDestroyed()){
-            Log.e("de","de");
             return;
         }
         if(getFragmentManager() ==null){
-            Log.e("사라","사라");
         }
         BootUser bootUser = new BootUser().setPhone(phone);
         BootExtra bootExtra = new BootExtra().setQuotas(new int[]{0, 2, 3});
@@ -629,13 +604,11 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                     public void onConfirm(@Nullable String message) {
                         if (0 < stuck) Bootpay.confirm(message); // 재고가 있을 경우.
                         else Bootpay.removePaymentWindow(); // 재고가 없어 중간에 결제창을 닫고 싶을 경우
-                        Log.d("confirm", message);
                     }
                 })
                 .onDone(new DoneListener() { // 결제완료시 호출, 아이템 지급 등 데이터 동기화 로직을 수행합니다
                     @Override
                     public void onDone(@Nullable String message) {
-                        Log.d("done", message);
                         SharedPreferences shf = Basket.this.getSharedPreferences("basketList", MODE_PRIVATE);
                         SharedPreferences.Editor editor = shf.edit();
                         editor.clear().commit();
@@ -650,8 +623,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                         hashMap.put("price", price);
                         hashMap.put("receipt_id", receipt_id);
                         String url = "";
-                        Log.e("price", price);
-                        Log.e("rece", receipt_id);
                         String lastUrl2 = "BillingVerify.do";
                         UrlMaker urlMaker = new UrlMaker();
                         String url2 = urlMaker.UrlMake(lastUrl2);
@@ -670,7 +641,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 .onCancel(new CancelListener() { // 결제 취소시 호출
                     @Override
                     public void onCancel(@Nullable String message) {
-                        Log.d("cancel", message);
                         OrderCancelDialog orderCancelDialog = new OrderCancelDialog(Basket.this);
                         orderCancelDialog.callFunction();
                     }
@@ -678,7 +648,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 .onError(new ErrorListener() { // 에러가 났을때 호출되는 부분
                     @Override
                     public void onError(@Nullable String message) {
-                        Log.d("error", message);
                         String getMessage ="";
                         try {
                             JSONObject jsonObject = new JSONObject(message);
@@ -716,20 +685,15 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
     private synchronized void makeRequest3(String url, HashMap hashMap) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        Log.i("aaaa", url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(hashMap),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("success", response.toString());
                         SharedPreferences sharedPreferences = getSharedPreferences(BasketList, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(IN_MY_BASEKT,"");
                         editor.commit();
                         String inMyBasket = sharedPreferences.getString(IN_MY_BASEKT, "");
-                        Log.i("inmyyyyyyyyyy", inMyBasket);
-                        Log.i("inmyyyyyyyyy",inMyBasket+"22");
                         orderInsert();
 
 
@@ -763,7 +727,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
     @Override
     public void callbackEasyPayUserToken(RestEasyPayUserTokenData userToken) {
-        Log.e("2222222","2222222");
         startBootPay(user_token);
     }
 

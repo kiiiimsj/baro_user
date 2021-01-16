@@ -93,10 +93,6 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         }else{
             holder.chageViewColor(3);
         }
-
-//        FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
-//        FragmentTransaction ft = fm.beginTransaction();
-//        ft.replace(holder.map.getId(),new OrderProgressingMap(reverse.getStore_latitude(),reverse.getStore_longitude())).commit();
     }
 
     @Override
@@ -187,8 +183,6 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
             callStore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("asdf", store_phone.getText().toString());
-                    Log.e("asdff", "click");
                     Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + store_phone.getText().toString()));
                     context.startActivity(intent);
                 }
@@ -219,7 +213,6 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
     public static void makeRequest(String imageName, Context context, final ImageView image) {
         UrlMaker urlMaker = new UrlMaker();
         String url = new UrlMaker().UrlMake("ImageStore.do?image_name=" + imageName);
-        Log.d(TAG,url);
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         ImageRequest request = new ImageRequest(url,

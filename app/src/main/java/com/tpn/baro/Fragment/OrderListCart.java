@@ -40,7 +40,6 @@ public class OrderListCart extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("OrderListCart", "onResume");
         shf = context.getSharedPreferences("basketList", Context.MODE_PRIVATE);
         count = shf.getInt("orderCnt", 0);
         setText(count);

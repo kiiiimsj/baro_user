@@ -167,7 +167,6 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             StringBuilder urlBuilder = new StringBuilder()
                     .append(url)
                     .append(store_image);
-            Log.i("store", urlBuilder.toString());
             RequestQueue requestQueue = Volley.newRequestQueue(context);
 
             ImageRequest request = new ImageRequest(urlBuilder.toString(),
@@ -175,7 +174,6 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
                         @Override
                         public void onResponse(Bitmap response) {
                             image.setImageBitmap(response);
-                            Log.i("response", response.toString());
                         }
                     }, 100, 100, ImageView.ScaleType.FIT_CENTER, null,
                     new Response.ErrorListener() {
