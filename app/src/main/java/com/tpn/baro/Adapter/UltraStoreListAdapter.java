@@ -157,7 +157,7 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
 
         public void makeRequestUltraStore(String store_image, Context context, final ImageView image){
             UrlMaker urlMaker = new UrlMaker();
-            String lastUrl = "ImageStore.do?image_name=";
+            String lastUrl = "UltraNewImageStore.do?image_name=";
             String url = urlMaker.UrlMake(lastUrl);
             StringBuilder urlBuilder = new StringBuilder()
                     .append(url)
