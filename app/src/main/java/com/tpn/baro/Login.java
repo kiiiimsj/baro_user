@@ -2,7 +2,9 @@ package com.tpn.baro;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -72,6 +74,30 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 phone.setError(null);
+            }
+        });
+        phoneEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(phoneEditText.isFocused()) {
+                    if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        phoneEditText.setFocusable(false);
+                        phoneEditText.setCursorVisible(false);
+                        passwordEditText.requestFocus();
+                    }
+                }
+                return false;
+            }
+        });
+        phoneEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!phoneEditText.isFocusable()) {
+                    phoneEditText.setFocusable(true);
+                }
+                if(!phoneEditText.isCursorVisible()) {
+                    phoneEditText.setCursorVisible(true);
+                }
             }
         });
         passwordEditText.setOnClickListener(new View.OnClickListener() {
