@@ -71,6 +71,7 @@ public class BaroUtil {
         }else {
             isClose = false;
         }
+        Log.e("qwerqwer","called");
         return isClose;
     }
 }
