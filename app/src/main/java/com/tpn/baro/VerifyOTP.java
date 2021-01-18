@@ -32,8 +32,10 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     String codeBySystem;
     String pageType;
     TextView timer;
+    Thread timerThread;
     int sec = 120;
     int min;
+    public boolean isDestroy = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +47,13 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
         pageType = intent.getStringExtra("pageType");
         phoneNumber = intent.getStringExtra("phone");
         sendVerificationCodeToUser(phoneNumber);
-        Thread timerThread = new Thread(new Runnable() {
+        timerThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(sec != 0) {
+                    Log.e("thread running", "true");
+                    Log.e("isDestroy", ""+isDestroy);
+                    Log.e("sec", ""+sec);
                     try {
                         Thread.sleep(1000);
                         sec--;
@@ -66,10 +71,20 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    if(isDestroy) {
+                        sec = 0;
+                    }
                 }
             }
         });
         timerThread.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("onStop", " true");
+        isDestroy = true;
     }
 
     private void sendVerificationCodeToUser(String phoneNo) {
