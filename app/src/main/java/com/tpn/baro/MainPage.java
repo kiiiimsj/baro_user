@@ -66,6 +66,7 @@ import maes.tech.intentanim.CustomIntent;
 public class MainPage extends AppCompatActivity implements TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, UltraStoreListAdapter.OnListItemLongSelectedInterface, UltraStoreListAdapter.OnListItemSelectedInterface,
         NewStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemLongSelectedInterface, AutoPermissionsListener, ActivityCompat.OnRequestPermissionsResultCallback {
     final private String TAG = this.getClass().getSimpleName();
+    private boolean firstFlag = false;
     RecyclerView mRecyclerView;
     private Intent serviceIntent;
     //울트라store recycler
@@ -107,9 +108,8 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     /////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AutoPermissions.Companion.loadAllPermissions(this, 101);
         super.onCreate(savedInstanceState);
-
+        Log.e("qwerqwer","onCreate");
         setContentView(R.layout.activity_main_page);
 
         progressApplication = new ProgressApplication();
@@ -145,12 +145,12 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
 
         myGPSListener = new myGPSListener(this);
         latLng = myGPSListener.startLocationService(mAddress);
-        makeRequestUltraStore(setHashMapData());
-        makeRequestNewStore(setHashMapData());
 
-        if(!BaroUtil.checkGPS(this)) {
 
-        }
+//        if(!BaroUtil.checkGPS(this)) {
+//            makeRequestUltraStore(setHashMapData());
+//            makeRequestNewStore(setHashMapData());
+//        }
 
 
         alert.setOnClickListener(new View.OnClickListener() {
@@ -201,6 +201,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     @Override
     protected void onResume() {
         super.onResume();
+        Log.e("qwerqwer","onResume");
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         userData = userSession.getUsersDetailFromSession();
         if(userData.get(SessionManager.KEY_PHONENUMBER) == null) {
@@ -208,10 +209,15 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         }else {
             makeRequestForAlerts();
         }
+        if (!BaroUtil.checkGPS(this)) {
+            makeRequestUltraStore(setHashMapData());
+            makeRequestNewStore(setHashMapData());
+        } else {
 
-        latLng = myGPSListener.startLocationService(mAddress);
-        makeRequestUltraStore(setHashMapData());
-        makeRequestNewStore(setHashMapData());
+        }
+//        latLng = myGPSListener.startLocationService(mAddress);
+//        makeRequestUltraStore(setHashMapData());
+//        makeRequestNewStore(setHashMapData());
     }
 
     @Override
@@ -555,7 +561,8 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     }
     @Override
     public void onDenied(int i, @NotNull String[] strings) {
-
+        firstFlag = true;
+        Log.e("qwerqwer","deny");
     }
 
     @Override
