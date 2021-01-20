@@ -98,10 +98,10 @@ public class MyPageButtonAdapter extends RecyclerView.Adapter<MyPageButtonAdapte
                     mListener.itemClick(po);
                 }
             });
-            if(po == 3) {
+            if(po == 2) {
                 topLine.setVisibility(View.VISIBLE);
             }
-            if(po == 5) {
+            if(po == 4) {
                 topLine.setVisibility(View.VISIBLE);
             }
         }
