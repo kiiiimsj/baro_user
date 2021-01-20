@@ -66,6 +66,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         holder.menuPrice.setText(Integer.toString(listMenuHelperClass.menuPrice)+" 원");
         holder.menuId.setText(Integer.toString(listMenuHelperClass.menuId));
         holder.menuImage.setBackground(Drawable.createFromPath(listMenuHelperClass.menuImage));
+        holder.menuImage.setTag(listMenuHelperClass.menuImage);
         holder.subscription.setText(listMenuHelperClass.menu_info);
         if(listMenuHelperClass.is_soldout.equals("Y")){
             holder.sold_out.setVisibility(View.VISIBLE);
