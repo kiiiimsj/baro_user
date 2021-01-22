@@ -20,14 +20,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
-import com.tpn.baro.JsonParsingHelper.ViewPagerStoreParsing;
 import com.tpn.baro.JsonParsingHelper.ViewPagersListStoreParsing;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 
 public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapter.NewStoreViewHolder> {
     public static Context context;
-    public static int index = 0;
+
     public interface OnListItemLongSelectedInterface{
         void onLongNewStoreItemSelected(View v, int adapterPosition);
     }
@@ -58,8 +57,7 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
     @Override
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onBindViewHolder(@NonNull NewStoreListAdapter.NewStoreViewHolder holder, int position) {
-        index = position;
-        ViewPagerStoreParsing viewPagerStoreParsing = listStoreHelperClasses.store.get(position);
+        ViewPagersListStoreParsing.ViewPagerStoreParsing viewPagerStoreParsing = listStoreHelperClasses.store.get(position);
         holder.storeName.setText(viewPagerStoreParsing.getStore_name());
         if (viewPagerStoreParsing.getDistance() > 1000){
             holder.storeDistance.setText(String.format("%,.1f", ((int)viewPagerStoreParsing.getDistance() / 100) * 0.1) + "km");
@@ -73,44 +71,10 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
         }else {
             holder.isOpen.setText("영업종료");
         }
-        if(!viewPagerStoreParsing.getStore_name().equals("")) {
-            Log.e("storeImage : ", viewPagerStoreParsing.store_image);
-            makeRequestNewStore(viewPagerStoreParsing.getStore_image(), context, holder.storeImage);
+        ViewPagersListStoreParsing.ViewPagerStoreParsing list = listStoreHelperClasses.store.get(position);
+        if(!list.getStore_name().equals("")) {
+            makeRequestNewStore(list.getStore_image(), context, holder.storeImage);
         }
-    }
-    public void makeRequestNewStore(String store_image, Context context, final ImageView image){
-        Log.e("storeImage : ", store_image);
-        UrlMaker urlMaker = new UrlMaker();
-        String lastUrl = "UltraNewImageStore.do?image_name=";
-        String url = urlMaker.UrlMake(lastUrl);
-        StringBuilder urlBuilder = new StringBuilder()
-                .append(url)
-                .append(store_image);
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-
-        ImageRequest request = new ImageRequest(urlBuilder.toString(),
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap response) {
-                        image.setImageBitmap(response);
-                    }
-                }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i("error", "error");
-                    }
-                });
-        requestQueue.add(request);
-    }
-    @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
     }
 
     @Override
@@ -147,7 +111,30 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
     public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
     }
+    public void makeRequestNewStore(String store_image, Context context, final ImageView image){
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "UltraNewImageStore.do?image_name=";
+        String url = urlMaker.UrlMake(lastUrl);
+        StringBuilder urlBuilder = new StringBuilder()
+                .append(url)
+                .append(store_image);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
 
+        ImageRequest request = new ImageRequest(urlBuilder.toString(),
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        image.setImageBitmap(response);
+                    }
+                }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("error", "error");
+                    }
+                });
+        requestQueue.add(request);
+    }
     public class NewStoreViewHolder extends RecyclerView.ViewHolder {
         public ImageView storeImage;
         public TextView storeName;
@@ -161,6 +148,7 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
             storeDistance = itemView.findViewById(R.id.store_distance);
             storeId = itemView.findViewById(R.id.store_id);
             isOpen = itemView.findViewById(R.id.is_open);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

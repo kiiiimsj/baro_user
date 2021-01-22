@@ -110,10 +110,8 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         lists = new ArrayList<>();
         lists.add("입점요청");
         lists.add("1:1 문의");
-
         lists.add("비밀번호 변경");
         lists.add("이메일 변경");
-
         lists.add("이용약관");
         lists.add("개인정보 처리방침");
     }
@@ -281,7 +279,6 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
                 startActivity(new Intent(MyPage.this, ChangeEmail.class));
                 CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
-
             case 4:
                 Intent intent = new Intent(MyPage.this, Terms.class);
                 intent.putExtra(Terms.SET_WEB_VIEW, Terms.TERMS_OF_SERVICE);

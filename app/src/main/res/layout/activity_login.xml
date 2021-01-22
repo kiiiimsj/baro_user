@@ -3,75 +3,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/main"
     tools:context="com.tpn.baro.Login">
-    <ScrollView
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:layout_marginTop="90dp"
+        android:includeFontPadding="false"
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-        <TextView
-            android:layout_marginTop="90dp"
-            android:includeFontPadding="false"
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:fontFamily="@font/notosans_regular"
-            android:text="BARO"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="13dp"
-            />
-        <TextView
-            android:id="@+id/text"
-            android:text="로그인"
-            android:textSize="24sp"
-            android:letterSpacing="-0.02"
-            android:textColor="@color/white"
-            android:fontFamily="@font/notosans_black"
-            android:gravity="center"
-            android:includeFontPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/notosans_regular"
+        android:text="BARO"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="13dp"
+        />
+    <TextView
+        android:id="@+id/text"
+        android:text="로그인"
+        android:textSize="24sp"
+        android:letterSpacing="-0.02"
+        android:textColor="@color/white"
+        android:fontFamily="@font/notosans_black"
+        android:gravity="center"
+        android:includeFontPadding="false"
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:src="@drawable/categories_restaurant_background" />-->
+    <ScrollView
+        android:layout_marginTop="27dp"
+        android:background="@drawable/layout_border_50dp_top_left_top_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
         <LinearLayout
-            android:layout_marginTop="27dp"
             android:orientation="vertical"
-            android:padding="20dp"
-            android:background="@drawable/layout_border_50dp_top_left_top_right"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <TextView
-                android:id="@+id/text2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/black"
-                android:letterSpacing="-0.02"
-                android:text="휴대폰 번호"
-                android:fontFamily="@font/notosans_bold"
-                android:includeFontPadding="false"
-                android:layout_marginTop="58dp"
-                />
+            android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:letterSpacing="-0.02"
+            android:text="휴대폰 번호"
+            android:fontFamily="@font/notosans_bold"
+            android:includeFontPadding="false"
+            android:layout_marginTop="58dp"
+            />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/login_phone"
                 android:layout_width="match_parent"
@@ -89,6 +88,7 @@
                     android:inputType="phone"
                     android:textColor="@color/black"
                     android:textCursorDrawable="@null" />
+
             </com.google.android.material.textfield.TextInputLayout>
             <TextView
                 android:id="@+id/text3"
@@ -191,6 +191,5 @@
                     android:textColor="@color/main" />
             </LinearLayout>
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,10 +31,8 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     String codeBySystem;
     String pageType;
     TextView timer;
-    Thread timerThread;
     int sec = 120;
     int min;
-    public boolean isDestroy = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +44,10 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
         pageType = intent.getStringExtra("pageType");
         phoneNumber = intent.getStringExtra("phone");
         sendVerificationCodeToUser(phoneNumber);
-        timerThread = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 while(sec != 0) {
-                    Log.e("thread running", "true");
-                    Log.e("isDestroy", ""+isDestroy);
-                    Log.e("sec", ""+sec);
                     try {
                         Thread.sleep(1000);
                         sec--;
@@ -61,30 +55,16 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                timer.setText(min + " : " +(sec % 60) + " 분");
-                                if(sec == 1) {
-                                    Toast.makeText(VerifyOTP.this, "인증시간이 초과하였습니다.\n인증요청을 재시도 해주세요.", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
+                                timer.setText(min + " : " +(sec % 60));
                             }
                         });
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(isDestroy) {
-                        sec = 0;
-                    }
                 }
             }
-        });
-        timerThread.start();
-    }
+        }).start();
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e("onStop", " true");
-        isDestroy = true;
     }
 
     private void sendVerificationCodeToUser(String phoneNo) {
@@ -150,8 +130,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
             Intent intent = new Intent(VerifyOTP.this, ChangePass2.class);
             intent.putExtra("phone", phoneNumber);
             startActivity(intent);
-        }
-        else if(pageType.equals("Register1")){
+        }else if(pageType.equals("Register1")){
             Intent intent = new Intent(VerifyOTP.this, Register2.class);
             intent.putExtra("phone", phoneNumber);
             startActivity(intent);
@@ -160,21 +139,19 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     }
 
     public void onClickVerify(View view) {
-        Intent intent = new Intent(VerifyOTP.this, Register2.class);
-        intent.putExtra("phone", phoneNumber);
-        startActivity(intent);
-//        String code = pinFromUser.getText().toString();
-//        if (!code.isEmpty()) {
-//            verifyCode(code);
-//        }
-//        else {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Toast.makeText(VerifyOTP.this, "입력코드가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
+        String code = pinFromUser.getText().toString();
+        if (!code.isEmpty()) {
+            verifyCode(code);
+        }
+        else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(VerifyOTP.this, "입력코드가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        //인증버튼 클릭했을경우
     }
 
     @Override

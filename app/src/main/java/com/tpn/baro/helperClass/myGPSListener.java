@@ -93,7 +93,7 @@ public class myGPSListener implements LocationListener {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put("X-NCP-APIGW-API-KEY-ID","5aavwfgus7");
-                header.put("X-NCP-APIGW-API-KEY","b1QoYlefARjfMIpulH7jWGNkubgPtxHFtu5xHlXV");
+                header.put("X-NCP-APIGW-API-KEY","BkTdUu3zRK8VhD3xqFbVAKorymQxFGIVyZuBDYr0");
                 return header;
             }
         };

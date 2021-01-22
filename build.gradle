@@ -22,7 +22,7 @@ allprojects {
         maven {
             url 'https://jitpack.io'
             }
-        maven { url 'https://naver.jfrog.io/artifactory/maven/' }
+        maven { url 'https://navercorp.bintray.com/maps' }
     }
 }
 task clean(type: Delete) {

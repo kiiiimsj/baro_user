@@ -59,7 +59,6 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
     TextView eventBenefit;
     TextView storeInfoTitle;
 
-    TextView businessNumber;
     LinearLayout eventsBenefitsLayout;
     //
     View rootView;
@@ -78,7 +77,6 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
         storeIntro = rootView.findViewById(R.id.store_intro_title);
         eventBenefit = rootView.findViewById(R.id.events_benefits_title);
         storeInfoTitle = rootView.findViewById(R.id.store_info_title);
-        businessNumber = rootView.findViewById(R.id.store_business_number);
         eventsBenefitsLayout = rootView.findViewById(R.id.events_benefits_layout);
         FragmentManager fm = getChildFragmentManager();
         mapFragment = (MapFragment)fm.findFragmentById(R.id.map);
@@ -117,7 +115,7 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
         daysOff.setText(storeDetailData.getStore_daysoff());
         storePhone.setText(storeDetailData.getStore_phone());
         storeLocation.setText(storeDetailData.getStore_location());
-        businessNumber.setText(storeDetailData.getBusiness_number());
+
 //        storeIntro.setPaintFlags(storeIntro.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         eventBenefit.setPaintFlags(eventBenefit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         eventsBenefitsLayout.setVisibility(View.GONE);

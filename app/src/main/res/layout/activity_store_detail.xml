@@ -185,7 +185,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -206,28 +205,7 @@
                             android:fontFamily="@font/notosans_regular"
                             android:includeFontPadding="false"/>
                     </LinearLayout>
-                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="사업자 등록 번호 : "
-                            android:textSize="13sp"
-                            android:textColor="#343434"
-                            android:fontFamily="@font/notosans_bold"
-                            android:includeFontPadding="false"/>
-                        <TextView
-                            android:id="@+id/store_business_number"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="000-00-00000"
-                            android:textSize="13sp"
-                            android:textColor="#343434"
-                            android:fontFamily="@font/notosans_regular"
-                            android:includeFontPadding="false"/>
-                     </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

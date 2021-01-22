@@ -66,7 +66,6 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     TextView totalPriceText;
     String menu_name;
     String menu_code;
-    String menu_image_name;
     int store_id;
     String store_name;
     String store_number;
@@ -104,7 +103,6 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         store_id = intent.getExtras().getInt("storeId");
         store_name = intent.getExtras().getString("storeName");
         store_number = intent.getExtras().getString("storeNumber");
-        menu_image_name = intent.getExtras().getString("menuImageName");
 
         arrayList = new ArrayList<>(); // 세부 항목 넣는곳
         arrayList2 = new ArrayList<>(); // 세부 항목 넣는곳
@@ -406,7 +404,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         requestQueue.add(request);
     }
     private void getMenuPicture() {
-        String url = new UrlMaker().UrlMake("ImageMenu.do?store_id="+store_id+"&image_name="+menu_image_name);
+        String url = new UrlMaker().UrlMake("ImageMenu.do?image_name="+menu_code+".png&store_id="+store_id);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         ImageRequest imageRequest = new ImageRequest(url,
                 new Response.Listener<Bitmap>() {

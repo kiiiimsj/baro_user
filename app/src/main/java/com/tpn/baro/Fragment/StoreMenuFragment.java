@@ -314,7 +314,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     public void onItemSelectedForMenu(View v, int position) {
         MenuListAdapter.MenuViewHolder viewHolder = (MenuListAdapter.MenuViewHolder)mRecyclerViewMenu.findViewHolderForAdapterPosition(position);
         String getMenuName = viewHolder.menuName.getText().toString();
-        String getMenuImageName  = (String) viewHolder.menuImage.getTag();
+
         String getMenuPrice = viewHolder.menuPrice.getText().toString();
         StringTokenizer stringTokenizer = new StringTokenizer(getMenuPrice, " 원");
         String str =stringTokenizer.nextToken();
@@ -323,7 +323,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
 
         Intent intent = new Intent(getActivity(), OrderDetails.class);
         intent.putExtra("menuName", getMenuName);
-        intent.putExtra("menuImageName", getMenuImageName);
         intent.putExtra("menuDefaultPrice", Integer.parseInt(str));
         intent.putExtra("menuId", Integer.parseInt(getMenuId));
         intent.putExtra("storeName", storeDetail.getStore_name());

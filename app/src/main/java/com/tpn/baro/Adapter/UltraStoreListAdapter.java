@@ -20,7 +20,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
-import com.tpn.baro.JsonParsingHelper.ViewPagerStoreParsing;
 import com.tpn.baro.JsonParsingHelper.ViewPagersListStoreParsing;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
@@ -68,7 +67,7 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
     @Override
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onBindViewHolder(@NonNull UltraStoreListViewHolder holder, int position) {
-        ViewPagerStoreParsing viewPagerStoreParsing = listStoreHelperClasses.store.get(position);
+        ViewPagersListStoreParsing.ViewPagerStoreParsing viewPagerStoreParsing = listStoreHelperClasses.store.get(position);
         holder.storeName.setText(viewPagerStoreParsing.getStore_name());
         if (viewPagerStoreParsing.getDistance() > 1000){
             holder.storeDistance.setText(String.format("%,.1f", ((int)viewPagerStoreParsing.getDistance() / 100) * 0.1) + "km");
@@ -83,34 +82,8 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
         }else {
             holder.isOpen.setText("영업종료");
         }
-        if(!viewPagerStoreParsing.getStore_name().equals("")) {
-            makeRequestUltraStore(viewPagerStoreParsing.getStore_image(), context, holder.storeImage);
-        }
     }
-    public void makeRequestUltraStore(String store_image, Context context, final ImageView image){
-        UrlMaker urlMaker = new UrlMaker();
-        String lastUrl = "UltraNewImageStore.do?image_name=";
-        String url = urlMaker.UrlMake(lastUrl);
-        StringBuilder urlBuilder = new StringBuilder()
-                .append(url)
-                .append(store_image);
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
 
-        ImageRequest request = new ImageRequest(urlBuilder.toString(),
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap response) {
-                        image.setImageBitmap(response);
-                    }
-                }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i("error", "error");
-                    }
-                });
-        requestQueue.add(request);
-    }
     @Override
     public int getItemCount() {
         return listStoreHelperClasses.store == null ? 0 : listStoreHelperClasses.store.size();
@@ -162,6 +135,11 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
             storeDistance = itemView.findViewById(R.id.store_distance);
             storeId = itemView.findViewById(R.id.store_id);
             isOpen = itemView.findViewById(R.id.is_open);
+            ViewPagersListStoreParsing.ViewPagerStoreParsing list = listStoreHelperClasses.store.get(po);
+            if(!list.getStore_name().equals("")) {
+                makeRequestUltraStore(list.getStore_image(), context, storeImage);
+            }
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -175,6 +153,31 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
 //                    mLongListener.onUltraStoreLongSelected(view, getAdapterPosition());
 //                }
 //            });
+        }
+
+        public void makeRequestUltraStore(String store_image, Context context, final ImageView image){
+            UrlMaker urlMaker = new UrlMaker();
+            String lastUrl = "UltraNewImageStore.do?image_name=";
+            String url = urlMaker.UrlMake(lastUrl);
+            StringBuilder urlBuilder = new StringBuilder()
+                    .append(url)
+                    .append(store_image);
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+            ImageRequest request = new ImageRequest(urlBuilder.toString(),
+                    new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap response) {
+                            image.setImageBitmap(response);
+                        }
+                    }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.i("error", "error");
+                        }
+                    });
+            requestQueue.add(request);
         }
     }
 }

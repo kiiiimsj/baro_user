@@ -17,12 +17,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tpn.baro.R;
 
-import java.util.Objects;
 import java.util.StringTokenizer;
 
 public class TopBar extends Fragment {
@@ -88,8 +86,6 @@ public class TopBar extends Fragment {
             case "VerifyOTP":
             case "ChangeEmail":
                 rootView.setBackgroundColor(getResources().getColor(R.color.main));
-                backButton.setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getContext()),
-                        R.color.white));
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
