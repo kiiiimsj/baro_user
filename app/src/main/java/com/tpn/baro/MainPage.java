@@ -144,7 +144,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         makeRequestForAlerts();
 
         myGPSListener = new myGPSListener(this);
-        latLng = myGPSListener.startLocationService(mAddress);
+        latLng = myGPSListener.startLocationService(mAddress); 
 
 
 //        if(!BaroUtil.checkGPS(this)) {
