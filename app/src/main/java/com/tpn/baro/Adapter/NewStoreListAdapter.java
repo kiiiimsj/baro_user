@@ -71,6 +71,10 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
         }else {
             holder.isOpen.setText("영업종료");
         }
+        ViewPagersListStoreParsing.ViewPagerStoreParsing list = listStoreHelperClasses.store.get(position);
+        if(!list.getStore_name().equals("")) {
+            makeRequestNewStore(list.getStore_image(), context, holder.storeImage);
+        }
     }
 
     @Override
@@ -107,7 +111,30 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
     public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
     }
+    public void makeRequestNewStore(String store_image, Context context, final ImageView image){
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "UltraNewImageStore.do?image_name=";
+        String url = urlMaker.UrlMake(lastUrl);
+        StringBuilder urlBuilder = new StringBuilder()
+                .append(url)
+                .append(store_image);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
 
+        ImageRequest request = new ImageRequest(urlBuilder.toString(),
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        image.setImageBitmap(response);
+                    }
+                }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("error", "error");
+                    }
+                });
+        requestQueue.add(request);
+    }
     public class NewStoreViewHolder extends RecyclerView.ViewHolder {
         public ImageView storeImage;
         public TextView storeName;
@@ -121,17 +148,13 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
             storeDistance = itemView.findViewById(R.id.store_distance);
             storeId = itemView.findViewById(R.id.store_id);
             isOpen = itemView.findViewById(R.id.is_open);
-            ViewPagersListStoreParsing.ViewPagerStoreParsing list = listStoreHelperClasses.store.get(po);
-            if(!list.getStore_name().equals("")) {
-                makeRequestNewStore(list.getStore_image(), context, storeImage);
-            }
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mListener.onNewStoreItemSelected(view, getAdapterPosition());
                 }
             });
-
 //            itemView.setOnLongClickListener(new View.OnLongClickListener() {
 //                @Override
 //                public boolean onLongClick(View view) {
@@ -139,31 +162,6 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
 //                    return false;
 //                }
 //            });
-        }
-
-        public void makeRequestNewStore(String store_image, Context context, final ImageView image){
-            UrlMaker urlMaker = new UrlMaker();
-            String lastUrl = "UltraNewImageStore.do?image_name=";
-            String url = urlMaker.UrlMake(lastUrl);
-            StringBuilder urlBuilder = new StringBuilder()
-                    .append(url)
-                    .append(store_image);
-            RequestQueue requestQueue = Volley.newRequestQueue(context);
-
-            ImageRequest request = new ImageRequest(urlBuilder.toString(),
-                    new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap response) {
-                            image.setImageBitmap(response);
-                        }
-                    }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.i("error", "error");
-                        }
-                    });
-            requestQueue.add(request);
         }
     }
 }
