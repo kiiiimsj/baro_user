@@ -15,6 +15,15 @@ public class StoreDetail {
     private String store_location;
     private String type_code;
     private String store_image;
+    private String business_number;
+
+    public String getBusiness_number() {
+        return business_number;
+    }
+
+    public void setBusiness_number(String business_number) {
+        this.business_number = business_number;
+    }
 
     public int getStore_id() {
         return store_id;
@@ -130,21 +139,22 @@ public class StoreDetail {
 
     @Override
     public String toString() {
-        return "{" +
-                "\"store_id\":" + store_id +
-                ",\"store_opentime\":\"" + store_opentime + '\"' +
-                ",\"store_info\":\"" + store_info + '\"' +
-                ",\"store_latitude\":" + store_latitude +
-                ",\"store_closetime\":\"" + store_closetime + '\"' +
-                ",\"store_daysoff\":\"" + store_daysoff + '\"' +
-                ",\"message\":\"" + message + '\"' +
-                ",\"result\":" + result +
-                ",\"store_phone\":\"" + store_phone + '\"' +
-                ",\"store_longitude\":" + store_longitude +
-                ",\"store_name\":\"" + store_name + '\"' +
-                ",\"store_location\":\"" + store_location + '\"' +
-                ",\"type_code\":\"" + type_code + '\"' +
-                ",\"store_image\":\"" + store_image + '\"' +
+        return "StoreDetail{" +
+                "store_id=" + store_id +
+                ", store_opentime='" + store_opentime + '\'' +
+                ", store_info='" + store_info + '\'' +
+                ", store_latitude=" + store_latitude +
+                ", store_closetime='" + store_closetime + '\'' +
+                ", store_daysoff='" + store_daysoff + '\'' +
+                ", message='" + message + '\'' +
+                ", result=" + result +
+                ", store_phone='" + store_phone + '\'' +
+                ", store_longitude=" + store_longitude +
+                ", store_name='" + store_name + '\'' +
+                ", store_location='" + store_location + '\'' +
+                ", type_code='" + type_code + '\'' +
+                ", store_image='" + store_image + '\'' +
+                ", business_number='" + business_number + '\'' +
                 '}';
     }
 }
