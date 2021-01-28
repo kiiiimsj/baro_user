@@ -148,49 +148,6 @@ public class OrderDetailsNonEssentialAdapter extends BaseExpandableListAdapter {
         });
         optionName.setText(" · " +DataList.get(childPosition).getExtraOptionName());
         price.setText(DataList.get(childPosition).getOptionPrice()+"");
-//        final TextView count = (TextView) convertView.findViewById(R.id.optionCount);
-//        final Button minus = (Button) convertView.findViewById(R.id.minus);
-//        count.setText(optionCounts.get(i)+"");
-//        minus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int itemcount = Integer.parseInt(itemCountText.getText().toString());
-//                int optionCount = Integer.parseInt(count.getText().toString());
-//                int currentPrice = Integer.parseInt(priceTotal.getText().toString());
-//                if(optionCount!=0){
-//                    optionCount-=1;
-//                    count.setText(String.valueOf(optionCount));
-//                    priceTotal.setText(String.valueOf(currentPrice-(itemcount*optionPrice.get(i))));
-//                    ExtraOrder extraOrder = new ExtraOrder(Integer.parseInt(DataList.get(i).ExtraOption_id),DataList.get(i).optionPrice,DataList.get(i).ExtraOptionName,DataList.get(i).getMaxCount());
-//                    extraOrder.setExtra_count(optionCount);
-//                    optionCounts.set(i,optionCount);
-//                    nonEssentialOptions.put(DataList.get(i).ExtraOptionName,extraOrder);
-//                }
-//            }
-//        });
-//        final Button plus = (Button) convertView.findViewById(R.id.plus);
-//        plus.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                int itemcount = Integer.parseInt(itemCountText.getText().toString());
-//                int optionCount = Integer.parseInt(count.getText().toString());
-//                int currentPrice = Integer.parseInt(priceTotal.getText().toString());
-//                if (optionCount == DataList.get(i).getMaxCount()){
-//                    Toast.makeText(context, "더이상 옵션을 추가할수가 없습니다",Toast.LENGTH_LONG);
-//                    return;
-//                }
-//                Log.i("p",String.valueOf(optionPrice));
-//                optionCount+=1;
-//                count.setText(String.valueOf(optionCount));
-//                priceTotal.setText(String.valueOf(currentPrice+(itemcount*optionPrice.get(i))));
-//                ExtraOrder extraOrder = new ExtraOrder(Integer.parseInt(DataList.get(i).ExtraOption_id),DataList.get(i).optionPrice,DataList.get(i).ExtraOptionName,DataList.get(i).getMaxCount());
-//                extraOrder.setExtra_count(optionCount);
-//                optionCounts.set(i,optionCount);
-//                nonEssentialOptions.put(DataList.get(i).ExtraOptionName,extraOrder);
-//            }
-//        });
-
         return convertView;
     }
 

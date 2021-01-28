@@ -109,7 +109,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("qwerqwer","onCreate");
         setContentView(R.layout.activity_main_page);
 
         progressApplication = new ProgressApplication();
@@ -201,7 +200,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("qwerqwer","onResume");
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         userData = userSession.getUsersDetailFromSession();
         if(userData.get(SessionManager.KEY_PHONENUMBER) == null) {
@@ -453,7 +451,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
             }
             @Override
             public void onPageSelected(int position) {
-                Log.i("onPageSelected", position+"");
                 setEventCountSet(position);
                 currentPos = position;
             }
@@ -562,7 +559,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     @Override
     public void onDenied(int i, @NotNull String[] strings) {
         firstFlag = true;
-        Log.e("qwerqwer","deny");
     }
 
     @Override
