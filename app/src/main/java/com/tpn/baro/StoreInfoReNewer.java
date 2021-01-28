@@ -189,14 +189,12 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         makeRequestForCheckFavorite(setHashDataForCheckFavorite());
     }
     private void makeRequestForCheckFavorite(HashMap data) {
-        Log.e("comein?", "aaaa");
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake("FavoriteExist.do");
         RequestQueue requestQueue = Volley.newRequestQueue(StoreInfoReNewer.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.e("checkFavorite", response.toString());
                 parsing(response.toString());
             }
         }, new Response.ErrorListener() {
@@ -229,7 +227,6 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("removeFAV", response.toString());
                         jsonParsing(response);
                     }
                 },
@@ -244,16 +241,14 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
 
     private void makeRequestFavoriteReg(String url, HashMap data) {
         RequestQueue requestQueue = Volley.newRequestQueue(StoreInfoReNewer.this);
-        Log.e("url", url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("responseeee", response.toString());
                         jsonParsing(response);
                         try {
                             if (response.getBoolean("result")) {
-                                Log.e("favreg", "등록성공");
+//                                Log.e("favreg", "등록성공");
                             }
                         }
                         catch(JSONException e){

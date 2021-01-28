@@ -86,18 +86,6 @@ public class HistoryDetail extends Fragment {
                         ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> historyDetailParsingHelpers
                                 = jsonParsing(response);
                         applyAdapter(historyDetailParsingHelpers,context);
-//                        new Thread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                try {
-//                                    Thread.sleep(200);
-//                                    totals.setText("Totals : "+historyDetailAdapter.getTotals());
-//                                } catch (InterruptedException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        }).start();
-
                     }
                 },
                 new Response.ErrorListener() {

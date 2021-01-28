@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -87,7 +86,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(context,"sdddd",Toast.LENGTH_LONG).show();
 //                Bundle bundle = new Bundle();
                 HistoryDetailDialog fragment = HistoryDetailDialog.newInstance(context);
                 Bundle bundle = fragment.getBundle();

@@ -36,7 +36,6 @@ public class CustomDialog {
         goBasket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "\" 을 입력하였습니다.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, Basket.class);
                 intent.putExtra("onDialog", true);
                 context.startActivity(intent);
@@ -50,7 +49,6 @@ public class CustomDialog {
         goStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "취소 했습니다.", Toast.LENGTH_SHORT).show();
                 OrderDetails orderDetails = (OrderDetails)OrderDetails.orderDetails;
                 orderDetails.finish();
                 dlg.dismiss();

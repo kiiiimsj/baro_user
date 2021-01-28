@@ -122,7 +122,6 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-                Log.d("Map", "지도 준비됨.");
                 map = googleMap;
                 oldMarkerOption = new MarkerOptions();
                 oldLatLng = GPSListener.startLocationService(null);

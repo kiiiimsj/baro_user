@@ -385,7 +385,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         basketAdapter.notifyDataSetChanged();
     }
     public void onClick_onestore(View v) {
-        Toast.makeText(this, "왜안되노", Toast.LENGTH_LONG).show();
 
         recalculateTotalPrice();
 

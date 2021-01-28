@@ -145,8 +145,8 @@ public class myGPSListener implements LocationListener {
             networkProviderLocation = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
             String message = "가게리스트페이지에서 내 위치 -> " + "location: "+ gpsProviderLocation +"\nlocation2:" + networkProviderLocation;
-            Log.e("message_", message);
-            Log.e("location :", saveLocation.getString("location", ""));
+//            Log.e("message_", message);
+//            Log.e("location :", saveLocation.getString("location", ""));
             if (gpsProviderLocation != null) {
                 latitude = gpsProviderLocation.getLatitude();
                 longitude = gpsProviderLocation.getLongitude();
@@ -183,7 +183,7 @@ public class myGPSListener implements LocationListener {
             if(getAdress != null) {
                 setMapLocationTextView(getAdress);
             }
-            Log.e("GPS", latLng+"");
+//            Log.e("GPS", latLng+"");
         }
         catch(SecurityException e) {
             e.printStackTrace();

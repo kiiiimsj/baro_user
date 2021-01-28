@@ -80,10 +80,10 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
         holder.optionName.setText(" · " + text);
 
         if(mTableData.containsKey(text)){
-            Log.i("필수",text);
+//            Log.i("필수",text);
             final ArrayList<ExtraOrder> extraOrders = mTableData.get(text);
             resolveExtraOrdersToArrayList(extraOrders,nameList,priceList,option_ids);
-            Log.i("size",String.valueOf(nameList.size()));
+//            Log.i("size",String.valueOf(nameList.size()));
 
             if(extraOrders.size() > ONE_ROW){
                 parent = (LinearLayout) inflater.inflate(R.layout.activity_order_details_radio, null, false);
