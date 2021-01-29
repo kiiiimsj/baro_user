@@ -113,17 +113,18 @@ public class OrderHistory extends AppCompatActivity {
             Gson gson = new Gson();
             orderHistoryParsing = gson.fromJson(result, OrderHistoryParsing.class);
             //Collections.sort(orderHistoryParsing.order);
-        }
-        Gson gson = new Gson();
-        OrderHistoryParsing addOrder = gson.fromJson(result, OrderHistoryParsing.class);
-        if(!addOrder.getResult()) {
-            Toast.makeText(this, "더 불러올 내역이 없습니다.", Toast.LENGTH_SHORT).show();
-            return orderHistoryParsing;
-        }
-        else {
-            //Collections.sort(addOrder.order);
-            orderHistoryParsing.order.addAll(addOrder.order);
-            return orderHistoryParsing;
+            return  orderHistoryParsing;
+        }else {
+            Gson gson = new Gson();
+            OrderHistoryParsing addOrder = gson.fromJson(result, OrderHistoryParsing.class);
+            if (!addOrder.getResult()) {
+                Toast.makeText(this, "더 불러올 내역이 없습니다.", Toast.LENGTH_SHORT).show();
+                return orderHistoryParsing;
+            } else {
+                //Collections.sort(addOrder.order);
+                orderHistoryParsing.order.addAll(addOrder.order);
+                return orderHistoryParsing;
+            }
         }
     }
 
