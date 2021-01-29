@@ -72,7 +72,8 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull OrderHistoryAdapter.ViewHolder holder, final int position) {
-        final OrderHistoryParsingHelper reverse = order.get(order.size() - position - 1);
+//        final OrderHistoryParsingHelper reverse = order.get(order.size() - position - 1);
+        final OrderHistoryParsingHelper reverse = order.get(position);
         holder.store_name.setText(reverse.getStore_name());
         holder.ordered_date.setText(reverse.getOrder_date());
         holder.totalPrice.setText("합계 : "+reverse.getTotal_price() + " 원");
