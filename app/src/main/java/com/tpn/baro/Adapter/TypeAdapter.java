@@ -25,7 +25,7 @@ import com.tpn.baro.Url.UrlMaker;
 import java.util.ArrayList;
 
 public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder> {
-
+    private static String TAG = "TypeAdapter";
     static private Context context;
 
     public interface OnListItemLongSelectedInterface{
@@ -146,28 +146,35 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
 
         }
 
-        public void makeRequest(String type_image, final ImageView image, Context context) {
+        public void makeRequest(String type_image, final ImageView image, final Context context) {
             String lastUrl = "ImageType.do?image_name=";
             UrlMaker urlMaker = new UrlMaker();
             String url = urlMaker.UrlMake(lastUrl);
-            StringBuilder urlBuilder = new StringBuilder()
+            final StringBuilder urlBuilder = new StringBuilder()
                     .append(url)
                     .append(type_image);
-            RequestQueue requestQueue = Volley.newRequestQueue(context);
-            ImageRequest request = new ImageRequest(urlBuilder.toString(),
-                    new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap response) {
-                            image.setImageBitmap(response);
-                        }
-                    }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.i("error", "error");
-                        }
-                    });
-            requestQueue.add(request);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    RequestQueue requestQueue = Volley.newRequestQueue(context);
+                    ImageRequest request = new ImageRequest(urlBuilder.toString(),
+                            new Response.Listener<Bitmap>() {
+                                @Override
+                                public void onResponse(Bitmap response) {
+                                    image.setImageBitmap(response);
+                                }
+                            }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.i(TAG, "error");
+                                }
+                            });
+                    requestQueue.add(request);
+                }
+            }).start();
+
         }
     }
 }

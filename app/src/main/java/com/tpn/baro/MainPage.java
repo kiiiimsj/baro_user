@@ -1,14 +1,18 @@
 package com.tpn.baro;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +30,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -233,20 +238,25 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     }
     private void makeRequestForAlerts() {
         UrlMaker urlMaker = new UrlMaker();
-        String url = urlMaker.UrlMake("GetNewAlertCount.do?phone=" + userData.get(SessionManager.KEY_PHONENUMBER));
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        final String url = urlMaker.UrlMake("GetNewAlertCount.do?phone=" + userData.get(SessionManager.KEY_PHONENUMBER));
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(String response) {
-                parsing(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+            public void run() {
+                RequestQueue requestQueue = Volley.newRequestQueue(MainPage.this);
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        parsing(response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
+                    }
+                });
+                requestQueue.add(stringRequest);
             }
         });
-        requestQueue.add(stringRequest);
     }
     @SuppressLint("UseCompatLoadingForDrawables")
     private void parsing(String response) {
@@ -300,65 +310,80 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         data.put("longitude",latLng.longitude+"");
         return data;
     }
-    public void makeRequestUltraStore(HashMap data) {
+    public void makeRequestUltraStore(final HashMap data) {
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "StoreFindByUltra.do";
-        String url = urlMaker.UrlMake(lastUrl);
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        jsonParsingUltraStore(response.toString());
-                    }
-                }, new Response.ErrorListener() {
+        final String url = urlMaker.UrlMake(lastUrl);
+        new Thread(new Runnable() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void run() {
+                RequestQueue requestQueue = Volley.newRequestQueue(MainPage.this);
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                jsonParsingUltraStore(response.toString());
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
+                    }
+                });
+                requestQueue.add(jsonObjectRequest);
             }
-        });
-        requestQueue.add(jsonObjectRequest);
+        }).start();
     }
 
     public void makeRequest() {
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "TypeFindAll.do";
-        String url = urlMaker.UrlMake(lastUrl);
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        mRecyclerView(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i("type", "error");
-                    }
-                });
-        requestQueue.add(request);
+        final String url = urlMaker.UrlMake(lastUrl);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestQueue requestQueue = Volley.newRequestQueue(MainPage.this);
+                StringRequest request = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                mRecyclerView(response);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.i("type", "error");
+                            }
+                        });
+                requestQueue.add(request);
+            }
+        }).start();
     }
 
-    public void makeRequestNewStore(HashMap data) {
+    public void makeRequestNewStore(final HashMap data) {
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "StoreFindByNew.do";
-        String url = urlMaker.UrlMake(lastUrl);
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        jsonParsingNewStore(response.toString());
-                    }
-                }, new Response.ErrorListener() {
+        final String url = urlMaker.UrlMake(lastUrl);
+        new Thread(new Runnable() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void run() {
+                RequestQueue requestQueue = Volley.newRequestQueue(MainPage.this);
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                jsonParsingNewStore(response.toString());
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
+                    }
+                });
+                requestQueue.add(jsonObjectRequest);
             }
-        });
-        requestQueue.add(jsonObjectRequest);
+        }).start();
     }
 
     private void jsonParsingNewStore(String toString) {
@@ -427,20 +452,25 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
 
     }
     public void makeRequestForEventThread() {
-        String url = new UrlMaker().UrlMake("EventFindAll.do");
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        final String url = new UrlMaker().UrlMake("EventFindAll.do");
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(String response) {
-                eventParsing(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+            public void run() {
+                RequestQueue requestQueue = Volley.newRequestQueue(MainPage.this);
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        eventParsing(response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
+                    }
+                });
+                requestQueue.add(stringRequest);
             }
-        });
-        requestQueue.add(stringRequest);
+        }).start();
     }
 
     private void setAdvertiseAdapter() {
@@ -462,37 +492,74 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     private void eventParsing(String response) {
         Gson gson = new Gson();
         eventHelperClass = gson.fromJson(response, EventHelperClass.class);
-        advertiseAdapter = new AdvertiseAdapter(this, eventHelperClass);
-        viewPager.setAdapter(advertiseAdapter);
-        viewPager.setCurrentItem(eventHelperClass.event.size() * 500);
-        viewPager.setOffscreenPageLimit(5);
-        viewPager.setScrollDurationFactor(3);
-        setEventCountSet(0);
+        LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.advertise_design, null, false);
+        ImageView imageView = view.findViewById(R.id.slider_image);
+        ArrayList<Bitmap> bitmaps = new ArrayList<>();
+        for (int i = 0;i<eventHelperClass.event.size();i++){
+            makeRequestForgetImage(eventHelperClass.event.get(i).event_image,imageView,MainPage.this,bitmaps,i,eventHelperClass.event.size());
+        }
 
-        setAdvertiseAdapter();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            viewPager.setCurrentItem((currentPos + 1),true);
-                        }
-                    });
-                }
-
-            }
-        }).start();
     }
+    public void makeRequestForgetImage(String type_image, final ImageView imageView, Context context, final ArrayList<Bitmap> bitmaps, final int pos, final int max) {
+        String lastUrl = "ImageEvent.do?image_name=";
+        UrlMaker urlMaker = new UrlMaker();
+        String url = urlMaker.UrlMake(lastUrl);
+        StringBuilder urlBuilder = new StringBuilder()
+                .append(url)
+                .append(type_image);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        ImageRequest request = new ImageRequest(urlBuilder.toString(),
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        bitmaps.add(pos,response);
+                        if (max-1 == pos){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    advertiseAdapter = new AdvertiseAdapter(MainPage.this, eventHelperClass,bitmaps);
+                                    viewPager.setAdapter(advertiseAdapter);
+                                    viewPager.setCurrentItem(eventHelperClass.event.size() * 500);
+                                    viewPager.setOffscreenPageLimit(5);
+                                    viewPager.setScrollDurationFactor(3);
+                                    setEventCountSet(0);
 
+                                    setAdvertiseAdapter();
+
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            while (true) {
+                                                try {
+                                                    Thread.sleep(5000);
+                                                } catch (InterruptedException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        viewPager.setCurrentItem((currentPos + 1),true);
+                                                    }
+                                                });
+                                            }
+
+                                        }
+                                    }).start();
+                                }
+                            });
+                        }
+                    }
+                }, imageView.getWidth(), imageView.getHeight(), ImageView.ScaleType.CENTER, null,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("error", "error");
+                    }
+                });
+        requestQueue.add(request);
+    }
     @Override
     public void onItemLongSelected(View v, int adapterPosition) {
     }

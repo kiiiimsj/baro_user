@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -117,21 +118,31 @@ public class AppStartAdDialog {
         });
     }
     private void makeRequestForImage() {
-        String url = new UrlMaker().UrlMake("ImageEvent.do?image_name="+imageStr);
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        ImageRequest request = new ImageRequest(url,
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap response) {
-                        eventImage.setImageBitmap(response);
-                    }
-                }, eventImage.getWidth(), eventImage.getHeight(), ImageView.ScaleType.FIT_CENTER, null,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i("error", "error");
-                    }
-                });
-        requestQueue.add(request);
+        final String url = new UrlMaker().UrlMake("ImageEvent.do?image_name="+imageStr);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestQueue requestQueue = Volley.newRequestQueue(context);
+                ImageRequest request = new ImageRequest(url,
+                        new Response.Listener<Bitmap>() {
+                            @Override
+                            public void onResponse(Bitmap response) {
+                                eventImage.setImageBitmap(response);
+                            }
+                        }, eventImage.getWidth(), eventImage.getHeight(), ImageView.ScaleType.FIT_CENTER, null,
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.i("error", "error");
+                            }
+                        });
+                request.setRetryPolicy(new DefaultRetryPolicy(
+                        0,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                requestQueue.add(request);
+            }
+        }).start();
     }
 }

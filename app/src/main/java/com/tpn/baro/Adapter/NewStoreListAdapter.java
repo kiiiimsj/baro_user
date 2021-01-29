@@ -25,6 +25,7 @@ import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 
 public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapter.NewStoreViewHolder> {
+    private static String TAG = "NewStoreListAdapter";
     public static Context context;
 
     public interface OnListItemLongSelectedInterface{
@@ -111,29 +112,34 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
     public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
     }
-    public void makeRequestNewStore(String store_image, Context context, final ImageView image){
+    public void makeRequestNewStore(String store_image, final Context context, final ImageView image){
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "UltraNewImageStore.do?image_name=";
         String url = urlMaker.UrlMake(lastUrl);
-        StringBuilder urlBuilder = new StringBuilder()
+        final StringBuilder urlBuilder = new StringBuilder()
                 .append(url)
                 .append(store_image);
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestQueue requestQueue = Volley.newRequestQueue(context);
 
-        ImageRequest request = new ImageRequest(urlBuilder.toString(),
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap response) {
-                        image.setImageBitmap(response);
-                    }
-                }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i("error", "error");
-                    }
-                });
-        requestQueue.add(request);
+                ImageRequest request = new ImageRequest(urlBuilder.toString(),
+                        new Response.Listener<Bitmap>() {
+                            @Override
+                            public void onResponse(Bitmap response) {
+                                image.setImageBitmap(response);
+                            }
+                        }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.i("error", "error");
+                            }
+                        });
+                requestQueue.add(request);
+            }
+        }).start();
     }
     public class NewStoreViewHolder extends RecyclerView.ViewHolder {
         public ImageView storeImage;

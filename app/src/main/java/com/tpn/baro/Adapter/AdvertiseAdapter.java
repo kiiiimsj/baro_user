@@ -24,15 +24,19 @@ import com.tpn.baro.JsonParsingHelper.EventHelperClass;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 
+import java.util.ArrayList;
+
 public class AdvertiseAdapter extends PagerAdapter {
 
+    private final ArrayList<Bitmap> bitmaps;
     Context context;
     LayoutInflater layoutInflater;
     public EventHelperClass eventHelperClass;
     int posi;
-    public AdvertiseAdapter(Context context, EventHelperClass eventHelperClass){
+    public AdvertiseAdapter(Context context, EventHelperClass eventHelperClass, ArrayList<Bitmap> bitmaps){
         this.context = context;
         this.eventHelperClass = eventHelperClass;
+        this.bitmaps = bitmaps;
     }
 
     @Override
@@ -60,7 +64,7 @@ public class AdvertiseAdapter extends PagerAdapter {
         ImageView imageView = view.findViewById(R.id.slider_image);
         EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(realIndex);
         if(!eventHelperParsingClass.event_image.equals("")) {
-            makeRequestForgetImage(eventHelperParsingClass.event_image, imageView, context);
+            imageView.setImageBitmap(bitmaps.get(realIndex));
         }
         container.addView(view);
 //        imageView.setOnClickListener(new View.OnClickListener() {
