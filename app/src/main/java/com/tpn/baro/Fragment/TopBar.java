@@ -268,7 +268,7 @@ public class TopBar extends Fragment {
                 button.setVisibility(View.INVISIBLE);
                 etcImage.setVisibility(View.INVISIBLE);
                 break;
-            case "MainPage":
+            case "NewMainPage":
                 //no top bar activity
                 break;
             case "ChangeEmail2":

@@ -28,9 +28,8 @@ import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.HelperDatabase.StoreDetail;
 import com.tpn.baro.JsonParsingHelper.MapListParsing;
 import com.tpn.baro.JsonParsingHelper.MapParsing;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
-import com.tpn.baro.helperClass.myGPSListener;
+import com.tpn.baro.helperClass.MyGPSListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,7 +59,7 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
-    myGPSListener GPSListener;
+    MyGPSListener GPSListener;
     LatLng myLatlng;
     RelativeLayout storeDetail;
     Boolean isMarkerClicked = false;
@@ -83,7 +82,7 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
         storeAddress = findViewById(R.id.address);
         mapView.getMapAsync(this);
         mapView.onCreate(savedInstanceState);
-        GPSListener = new myGPSListener(NewMyMap.this);
+        GPSListener = new MyGPSListener(NewMyMap.this);
         myLatlng = GPSListener.startLocationService(null);
         locationSource =
                 new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);

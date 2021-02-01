@@ -110,7 +110,7 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
     }
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainPage.class));
+        startActivity(new Intent(this, NewMainPage.class));
         finish();
     }
 

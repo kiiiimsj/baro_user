@@ -25,7 +25,7 @@ import com.tpn.baro.AdapterHelper.ListStoreHelperClass;
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.JsonParsingHelper.ListStoreParsing;
 import com.tpn.baro.Url.UrlMaker;
-import com.tpn.baro.helperClass.myGPSListener;
+import com.tpn.baro.helperClass.MyGPSListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -89,7 +89,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         fm = getSupportFragmentManager();
         topbar = (TopBar) fm.findFragmentById(R.id.top_bar);
 
-        myGPSListener myGPSListener = new myGPSListener(this);
+        MyGPSListener myGPSListener = new MyGPSListener(this);
         latLng = myGPSListener.startLocationService(null);
         chooseShowList(FIRST);
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
@@ -222,29 +222,29 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
 
     private void mRecyclerView(){
         mRecyclerView.setHasFixedSize(true);
-        ArrayList<ListStoreHelperClass> DataList = new ArrayList<>();
+//        ArrayList<ListStoreHelperClass> DataList = new ArrayList<>();
 //        ArrayList<ListStoreHelperClass> DataListForIsOpen = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        int [] storeIds = new int[listStoreParsing.store.size()];
-        for(int i = 0; i< listStoreParsing.store.size();i++){
-
-            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(listStoreParsing.store.get(i).getStore_name(), listStoreParsing.store.get(i).getStore_location(), listStoreParsing.store.get(i).getStore_image(), listStoreParsing.store.get(i).getDistance(), listStoreParsing.store.get(i).getStore_id(), listStoreParsing.store.get(i).getIs_open());
-
-            listStoreHelperClass.storeNames.add(listStoreParsing.store.get(i).getStore_name());
-            listStoreHelperClass.storeLocations.add(listStoreParsing.store.get(i).getStore_location());
-            listStoreHelperClass.storeImages.add(listStoreParsing.store.get(i).getStore_image());
-            listStoreHelperClass.storeDistances.add(listStoreParsing.store.get(i).getDistance());
-            listStoreHelperClass.storeIds.add(listStoreParsing.store.get(i).getStore_id());
-            storeIds[i] = listStoreParsing.store.get(i).getStore_id();
-
-            listStoreHelperClass.storesIsOpen.add(listStoreParsing.store.get(i).getIs_open());
-//            if(listStoreParsing.store.get(i).getIs_open().equals("Y")) {
-//                DataListForIsOpen.add(listStoreHelperClass);
-//                continue;
-//            }
-            DataList.add(listStoreHelperClass);
-        }
+//        int [] storeIds = new int[listStoreParsing.store.size()];
+//        for(int i = 0; i< listStoreParsing.store.size();i++){
+//
+//            ListStoreHelperClass listStoreHelperClass = new ListStoreHelperClass(listStoreParsing.store.get(i).getStore_name(), listStoreParsing.store.get(i).getStore_location(), listStoreParsing.store.get(i).getStore_image(), listStoreParsing.store.get(i).getDistance(), listStoreParsing.store.get(i).getStore_id(), listStoreParsing.store.get(i).getIs_open());
+//
+//            listStoreHelperClass.storeNames.add(listStoreParsing.store.get(i).getStore_name());
+//            listStoreHelperClass.storeLocations.add(listStoreParsing.store.get(i).getStore_location());
+//            listStoreHelperClass.storeImages.add(listStoreParsing.store.get(i).getStore_image());
+//            listStoreHelperClass.storeDistances.add(listStoreParsing.store.get(i).getDistance());
+//            listStoreHelperClass.storeIds.add(listStoreParsing.store.get(i).getStore_id());
+//            storeIds[i] = listStoreParsing.store.get(i).getStore_id();
+//
+//            listStoreHelperClass.storesIsOpen.add(listStoreParsing.store.get(i).getIs_open());
+////            if(listStoreParsing.store.get(i).getIs_open().equals("Y")) {
+////                DataListForIsOpen.add(listStoreHelperClass);
+////                continue;
+////            }
+//            DataList.add(listStoreHelperClass);
+//        }
 //        DataListForIsOpen.addAll(DataList);
 //        DataList.addAll(DataList);
         SharedPreferences getStoreId = getSharedPreferences("storeID", MODE_PRIVATE);
@@ -254,7 +254,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         getStoreId.edit().commit();
 
 //        adapter = new ListStoreAdapter(DataListForIsOpen, this, this,  this);
-        adapter = new ListStoreAdapter(DataList, this, this,  this);
+        adapter = new ListStoreAdapter(listStoreParsing, this, this,  this);
         mRecyclerView.setAdapter(adapter);
         progressApplication.progressOFF();
         refreshLayout.setRefreshing(false);

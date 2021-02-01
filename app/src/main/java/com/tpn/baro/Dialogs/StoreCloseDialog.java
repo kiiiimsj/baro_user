@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-import com.tpn.baro.MainPage;
+import com.tpn.baro.NewMainPage;
 import com.tpn.baro.OrderDetails;
 import com.tpn.baro.R;
 
@@ -31,7 +31,7 @@ public class StoreCloseDialog {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(context, MainPage.class);
+                Intent intent = new Intent(context, NewMainPage.class);
                 context.startActivity(intent);
                 OrderDetails orderDetails = (OrderDetails)OrderDetails.orderDetails;
                 orderDetails.finish();

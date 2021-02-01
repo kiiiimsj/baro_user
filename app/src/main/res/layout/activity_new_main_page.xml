@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.tpn.baro.NewMainPage">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="20dp"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/baro_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/baro_logo"
+                />
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/baro_logo"
+                android:layout_marginTop="2.2dp"
+                android:letterSpacing="-0.03"
+                android:background="@color/white"
+                android:fontFamily="@font/notosans_bold"
+                android:textStyle="bold"
+                android:text="동작구 상도동"
+                android:textColor="@color/more_bright_gray"
+                android:includeFontPadding="false"
+                android:layout_marginBottom="15dp"
+                android:textSize="16sp"/>
+            <ImageView
+                android:id="@+id/map_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/address"
+                android:layout_marginTop="9dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/address"
+                android:src="@drawable/arrow_down" />
+            <ImageView
+                android:id="@+id/search_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:layout_alignTop="@id/baro_logo"
+                android:src="@drawable/search"
+                android:layout_toStartOf="@id/alert"
+                />
+            <ImageView
+                android:id="@+id/alert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_alignTop="@id/baro_logo"
+                android:background="@drawable/alert_off"
+                />
+        </RelativeLayout>
+        <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+            android:id="@+id/refreshLayout"
+            app:srl_direction="top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bottom_menu"
+            android:layout_below="@id/header">
+            <ScrollView
+                android:id="@+id/advertise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.tpn.baro.helperClass.ViewPagerCustomDuration
+                        android:id="@+id/info_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@color/gray" />
+                    <TextView
+                        android:id="@+id/event_count"
+                        android:background="@drawable/layout_border_5dp_stroke_3dp"
+                        android:backgroundTintMode="src_in"
+                        android:backgroundTint="@color/transparent_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="5dp"
+                        android:letterSpacing="-0.03"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignBottom="@id/info_image"
+                        android:fontFamily="@font/metropolis_regular"
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:text="1  /  2"
+                        android:layout_margin="16dp"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_below="@id/event_count"
+                        android:id="@+id/all_store_list_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </RelativeLayout>
+            </ScrollView>
+        </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+
+
+        <fragment
+            android:id="@+id/cart_click_button"
+            android:name="com.tpn.baro.Fragment.OrderListCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="20dp"
+
+            android:layout_marginBottom="80dp" />
+
+        <fragment
+            android:id="@+id/bottom_menu"
+            android:name="com.tpn.baro.Fragment.BottomMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:backgroundDimEnabled="false"
+            android:windowBackground="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

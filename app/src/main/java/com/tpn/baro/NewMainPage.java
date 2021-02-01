@@ -1,5 +1,14 @@
 package com.tpn.baro;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,16 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,32 +33,26 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.pedro.library.AutoPermissions;
+import com.pedro.library.AutoPermissionsListener;
 import com.tpn.baro.Adapter.AdvertiseAdapter;
-import com.tpn.baro.Adapter.NewStoreListAdapter;
-import com.tpn.baro.Adapter.TypeAdapter;
-import com.tpn.baro.Adapter.UltraStoreListAdapter;
-import com.tpn.baro.AdapterHelper.TypeHelperClass;
+import com.tpn.baro.Adapter.ListStoreAdapter;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.AppStartAdDialog;
 import com.tpn.baro.Dialogs.SearchDialog;
 import com.tpn.baro.JsonParsingHelper.EventHelperClass;
-import com.tpn.baro.JsonParsingHelper.TypeListParsing;
-import com.tpn.baro.JsonParsingHelper.TypeParsing;
-import com.tpn.baro.JsonParsingHelper.ViewPagersListStoreParsing;
+import com.tpn.baro.JsonParsingHelper.ListStoreParsing;
 import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.BaroUtil;
-import com.tpn.baro.helperClass.ViewPagerCustomDuration;
 import com.tpn.baro.helperClass.MyGPSListener;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.pedro.library.AutoPermissions;
-import com.pedro.library.AutoPermissionsListener;
+import com.tpn.baro.helperClass.ViewPagerCustomDuration;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,53 +61,42 @@ import java.util.HashMap;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class MainPage extends AppCompatActivity implements TypeAdapter.OnListItemLongSelectedInterface, TypeAdapter.OnListItemSelectedInterface, UltraStoreListAdapter.OnListItemLongSelectedInterface, UltraStoreListAdapter.OnListItemSelectedInterface,
-        NewStoreListAdapter.OnListItemSelectedInterface, NewStoreListAdapter.OnListItemLongSelectedInterface, AutoPermissionsListener, ActivityCompat.OnRequestPermissionsResultCallback {
-    final private String TAG = this.getClass().getSimpleName();
-    private boolean firstFlag = false;
-    RecyclerView mRecyclerView;
+public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface, AutoPermissionsListener, ActivityCompat.OnRequestPermissionsResultCallback  {
+    SharedPreferences sp;
+    Gson gson;
+    SessionManager userSession;
+    HashMap userData = new HashMap<>();
+
     private Intent serviceIntent;
-    //울트라store recycler
-    RecyclerView ultraStoreRecyclerView;
-    ViewPagersListStoreParsing listStoreParsing;
-    UltraStoreListAdapter ultraAdapter;
-    //New Store recycler
-    RecyclerView newStoreRecyclerView;
-    ViewPagersListStoreParsing newListStoreParsing;
-    NewStoreListAdapter newStoreListAdapter;
+    private boolean firstFlag = false;
+    int getUnReadAlertCount = 0;
 
-    RecyclerView.Adapter adapter;
+    LatLng latLng;
+    MyGPSListener myGPSListener;
 
-    TextView eventCountSet;
     ViewPagerCustomDuration viewPager;
     int currentPos;
     AdvertiseAdapter advertiseAdapter;
-
-    SharedPreferences sp;
-    Gson gson;
-
     ProgressApplication progressApplication;
     EventHelperClass eventHelperClass;
 
     TextView mAddress;
+    TextView eventCountSet;
+
     ImageView mMapButton;
-
-    LatLng latLng;
-    MyGPSListener myGPSListener;
-    ///////// 태영
     ImageView call_search;
-    SwipyRefreshLayout refreshLayout;
-
     ImageView alert;
 
-    SessionManager userSession;
-    HashMap userData = new HashMap<>();
-    int getUnReadAlertCount = 0;
+    SwipyRefreshLayout refreshLayout;
+
+    RecyclerView allStoreList;
+    ListStoreAdapter listStoreAdapter;
+
     /////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page);
+        setContentView(R.layout.activity_new_main_page);
 
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
@@ -123,17 +106,13 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         userData = userSession.getUsersDetailFromSession();
 
         gson = new GsonBuilder().create();
-        mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setNestedScrollingEnabled(false);
-        ultraStoreRecyclerView = findViewById(R.id.ultra_store);
-        newStoreRecyclerView = findViewById(R.id.new_store);
 
         viewPager = findViewById(R.id.info_image);
         eventCountSet = findViewById(R.id.event_count);
 
         alert = findViewById(R.id.alert);
 
-        AppStartAdDialog appStartAdDialog = new AppStartAdDialog(MainPage.this);
+        AppStartAdDialog appStartAdDialog = new AppStartAdDialog(NewMainPage.this);
         appStartAdDialog.callFunction();
 
         mAddress = findViewById(R.id.address);
@@ -141,14 +120,14 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         ///////// 태영
         call_search = findViewById(R.id.search_dialog);
         refreshLayout = findViewById(R.id.refreshLayout);
+        allStoreList = findViewById(R.id.all_store_list_recycler_view);
 
         makeRequestForEventThread();
-        makeRequest();
         makeRequestForAlerts();
 
         myGPSListener = new MyGPSListener(this);
-        latLng = myGPSListener.startLocationService(mAddress); 
-
+        latLng = myGPSListener.startLocationService(mAddress);
+        makeRequestForAllStoreList(setHashDataForStoreList());
 
 //        if(!BaroUtil.checkGPS(this)) {
 //            makeRequestUltraStore(setHashMapData());
@@ -159,10 +138,10 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         alert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!BaroUtil.loginCheck(MainPage.this)) {
+                if(!BaroUtil.loginCheck(NewMainPage.this)) {
                     return;
                 }
-                startActivity(new Intent(MainPage.this, Alerts.class));
+                startActivity(new Intent(NewMainPage.this, Alerts.class));
             }
         });
         mAddress.setOnClickListener(new View.OnClickListener() {
@@ -170,31 +149,29 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), NewMyMap.class);
                 startActivity(intent);
-                CustomIntent.customType(MainPage.this,"right-to-left");
+                CustomIntent.customType(NewMainPage.this,"right-to-left");
             }
         });
         mMapButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainPage.this, NewMyMap.class);
+                Intent intent = new Intent(NewMainPage.this, NewMyMap.class);
                 startActivity(intent);
-                CustomIntent.customType(MainPage.this,"right-to-left");
+                CustomIntent.customType(NewMainPage.this,"right-to-left");
             }
         });
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
-           @Override
-           public void onRefresh(SwipyRefreshLayoutDirection direction) {
-               latLng = myGPSListener.startLocationService(mAddress);
-               makeRequestUltraStore(setHashMapData());
-               makeRequestNewStore(setHashMapData());
-               refreshLayout.setRefreshing(false);
-           }
-       });
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                latLng = myGPSListener.startLocationService(mAddress);
+                refreshLayout.setRefreshing(false);
+            }
+        });
         call_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchDialog searchDialog = new SearchDialog(MainPage.this);
+                SearchDialog searchDialog = new SearchDialog(NewMainPage.this);
                 searchDialog.callFunction();
             }
         });
@@ -212,14 +189,10 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
             makeRequestForAlerts();
         }
         if (!BaroUtil.checkGPS(this)) {
-            makeRequestUltraStore(setHashMapData());
-            makeRequestNewStore(setHashMapData());
+
         } else {
 
         }
-//        latLng = myGPSListener.startLocationService(mAddress);
-//        makeRequestUltraStore(setHashMapData());
-//        makeRequestNewStore(setHashMapData());
     }
 
     @Override
@@ -241,7 +214,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestQueue requestQueue = Volley.newRequestQueue(MainPage.this);
+                RequestQueue requestQueue = Volley.newRequestQueue(NewMainPage.this);
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -309,153 +282,13 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         data.put("longitude",latLng.longitude+"");
         return data;
     }
-    public void makeRequestUltraStore(final HashMap data) {
-        UrlMaker urlMaker = new UrlMaker();
-        String lastUrl = "StoreFindByUltra.do";
-        final String url = urlMaker.UrlMake(lastUrl);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestQueue requestQueue = Volley.newRequestQueue(MainPage.this);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                jsonParsingUltraStore(response.toString());
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
 
-                    }
-                });
-                requestQueue.add(jsonObjectRequest);
-            }
-        }).start();
-    }
-
-    public void makeRequest() {
-        UrlMaker urlMaker = new UrlMaker();
-        String lastUrl = "TypeFindAll.do";
-        final String url = urlMaker.UrlMake(lastUrl);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestQueue requestQueue = Volley.newRequestQueue(MainPage.this);
-                StringRequest request = new StringRequest(Request.Method.GET, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                mRecyclerView(response);
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.i("type", "error");
-                            }
-                        });
-                requestQueue.add(request);
-            }
-        }).start();
-    }
-
-    public void makeRequestNewStore(final HashMap data) {
-        UrlMaker urlMaker = new UrlMaker();
-        String lastUrl = "StoreFindByNew.do";
-        final String url = urlMaker.UrlMake(lastUrl);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestQueue requestQueue = Volley.newRequestQueue(MainPage.this);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                jsonParsingNewStore(response.toString());
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-                requestQueue.add(jsonObjectRequest);
-            }
-        }).start();
-    }
-
-    private void jsonParsingNewStore(String toString) {
-        Gson gson = new Gson();
-        newListStoreParsing=gson.fromJson(toString, ViewPagersListStoreParsing.class);
-        setNewListStoreRecyclerView();
-    }
-
-    private void setNewListStoreRecyclerView() {
-        newStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        newStoreListAdapter = new NewStoreListAdapter(newListStoreParsing, this, this, this);
-        newStoreRecyclerView.setAdapter(newStoreListAdapter);
-    }
-
-    private void mRecyclerView(String result) {
-        ArrayList<TypeHelperClass> DataList = new ArrayList<>();
-        HashMap<String, TypeHelperClass> hashMap = new HashMap<>();
-        hashMap.put("TypeHelperClass", new TypeHelperClass("", "", ""));
-        TypeParsing typeParsing = new TypeParsing();
-        jsonParsing(result, typeParsing);
-        adapter = new TypeAdapter(DataList, this, this, MainPage.this);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        for(int i = 0; i < typeParsing.getTypeList().size();i++){
-            TypeListParsing typeListParsing = typeParsing.getTypeList().get(i);
-            TypeHelperClass typeHelperClass = new TypeHelperClass(typeListParsing.getTypeName(), typeListParsing.getTypeCode(), typeListParsing.getTypeImage());
-            typeHelperClass.typeNames.add(typeListParsing.getTypeName());
-            typeHelperClass.typeCodes.add(typeListParsing.getTypeCode());
-            DataList.add(typeHelperClass);
-        }
-        mRecyclerView.setAdapter(adapter);
-    }
-
-    //ultrastore 가져오기 위한 recyclerview
-    private void ultraStoreRecyclerView() {
-        ultraStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        ultraAdapter = new UltraStoreListAdapter(listStoreParsing, this, this, MainPage.this);
-        ultraStoreRecyclerView.setAdapter(ultraAdapter);
-    }
-
-    private void jsonParsingUltraStore(String result){
-        Gson gson = new Gson();
-        listStoreParsing = gson.fromJson(result, ViewPagersListStoreParsing.class);
-        ultraStoreRecyclerView();
-    }
-
-
-    private synchronized void jsonParsing(String result, TypeParsing typeParsing){
-        try {
-            Boolean result2 = (Boolean) new JSONObject(result).getBoolean("result");
-            typeParsing.setMessage(new JSONObject(result).getString("message"));
-            JSONArray jsonArray = new JSONObject(result).getJSONArray("type");
-            ArrayList<TypeListParsing> typeListParsings = new ArrayList<TypeListParsing>();
-            for(int i = 0; i<jsonArray.length();i++){
-                JSONObject jObject = jsonArray.getJSONObject(i);
-                String type_name = jObject.optString("type_name");
-                String type_code = jObject.optString("type_code");
-                String type_image = jObject.optString("type_image");
-                TypeListParsing typeListParsing = new TypeListParsing(type_name, type_code, type_image);
-                typeListParsings.add(typeListParsing);
-            }
-            typeParsing.setTypeList(typeListParsings);
-        }
-        catch(JSONException e){
-            e.printStackTrace();
-        }
-
-    }
     public void makeRequestForEventThread() {
         final String url = new UrlMaker().UrlMake("EventFindAll.do");
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestQueue requestQueue = Volley.newRequestQueue(MainPage.this);
+                RequestQueue requestQueue = Volley.newRequestQueue(NewMainPage.this);
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -496,7 +329,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         ImageView imageView = view.findViewById(R.id.slider_image);
         ArrayList<Bitmap> bitmaps = new ArrayList<>();
         for (int i = 0;i<eventHelperClass.event.size();i++){
-            makeRequestForgetImage(eventHelperClass.event.get(i).event_image,imageView,MainPage.this,bitmaps,i,eventHelperClass.event.size());
+            makeRequestForgetImage(eventHelperClass.event.get(i).event_image,imageView,NewMainPage.this,bitmaps,i,eventHelperClass.event.size());
         }
 
     }
@@ -517,7 +350,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    advertiseAdapter = new AdvertiseAdapter(MainPage.this, eventHelperClass,bitmaps);
+                                    advertiseAdapter = new AdvertiseAdapter(NewMainPage.this, eventHelperClass,bitmaps);
                                     viewPager.setAdapter(advertiseAdapter);
                                     viewPager.setCurrentItem(eventHelperClass.event.size() * 500);
                                     viewPager.setOffscreenPageLimit(5);
@@ -559,53 +392,65 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                 });
         requestQueue.add(request);
     }
+    public HashMap setHashDataForStoreList() {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("latitude",latLng.latitude);
+        data.put("longitude",latLng.longitude);
+
+        return data;
+    }
+    public void makeRequestForAllStoreList(HashMap data) {
+        String lastUrl = "StoreFindAll.do";
+        UrlMaker urlMaker = new UrlMaker();
+        String url = urlMaker.UrlMake(lastUrl);
+        RequestQueue requestQueue = Volley.newRequestQueue(NewMainPage.this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("data", response.toString());
+                        jsonParsingStoreList(response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("storeList", "error");
+                    }
+                });
+        requestQueue.add(request);
+    }
+
+    private void jsonParsingStoreList(String toString) {
+        ListStoreParsing listStoreParsing = new Gson().fromJson(toString, ListStoreParsing.class);
+        allStoreList.setLayoutManager(new LinearLayoutManager(this));
+        listStoreAdapter = new ListStoreAdapter(listStoreParsing, this, this, this);
+        allStoreList.setAdapter(listStoreAdapter);
+    }
     @Override
-    public void onItemLongSelected(View v, int adapterPosition) {
+    public void onItemLongSelected(View v, int adapterPosition) { // 필요없는기능이라 판단되 막아둠 ( onItemSelected 와 동일한 기능을함)
+//        ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
+//        Intent intent = new Intent(ListStorePage.this, StoreInfoReNewer.class);
+////        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//        intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
+//        intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
+//        startActivity(intent);
     }
 
     @Override
     public void onItemSelected(View v, int position) {
-        TypeAdapter.TypeViewHolder viewHolder = (TypeAdapter.TypeViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
-        Intent intent = new Intent(this, ListStorePage.class);
+        ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)allStoreList.findViewHolderForAdapterPosition(position);
+        Intent intent = new Intent(NewMainPage.this, StoreInfoReNewer.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//        int i = 0;
-        intent.putExtra("type_code", viewHolder.code.getText().toString());
-        intent.putExtra("type_name", viewHolder.title.getText().toString());
-        intent.putExtra("list_type", "find_type");
-        startActivity(intent);
-        CustomIntent.customType(this,"left-to-right");
-//        startActivity(new Intent(this, ListStorePage.class));
-//        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-//
-//        overridePendingTransition(R.anim.anim_slide_out_right, R.anim.anim_slide_in_left);
-
-    }
-
-    @Override
-    public void onNewStoreItemSelected(View v, int position) {
-        NewStoreListAdapter.NewStoreViewHolder viewHolder= (NewStoreListAdapter.NewStoreViewHolder) newStoreRecyclerView.findViewHolderForAdapterPosition(position);
-        Intent intent = new Intent(MainPage.this, StoreInfoReNewer.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra("store_id", viewHolder.storeId.getText().toString());
-        startActivity(intent);
-        CustomIntent.customType(this,"left-to-right");
-    }
-
-    @Override
-    public void onLongNewStoreItemSelected(View v, int adapterPosition) {
-
-    }
-    @Override
-    public void onUltraStoreLongSelected(View v, int adapterPosition) {
-
-    }
-
-    @Override
-    public void onUltraStoreSelected(View v, int position) {
-        UltraStoreListAdapter.UltraStoreListViewHolder viewHolder= (UltraStoreListAdapter.UltraStoreListViewHolder) ultraStoreRecyclerView.findViewHolderForAdapterPosition(position);
-        Intent intent = new Intent(MainPage.this, StoreInfoReNewer.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra("store_id", viewHolder.storeId.getText().toString());
+        if(listStoreViewHolder.storeId == null) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(NewMainPage.this, "해당 가게가 존재하지 않습니다 재접속 해주세요", Toast.LENGTH_LONG);
+                }
+            });
+        }
+        intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
         startActivity(intent);
         CustomIntent.customType(this,"left-to-right");
     }

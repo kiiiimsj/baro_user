@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.tpn.baro.ListStoreFavoritePage;
-import com.tpn.baro.MainPage;
+import com.tpn.baro.NewMainPage;
 import com.tpn.baro.MyPage;
 import com.tpn.baro.OrderHistory;
 import com.tpn.baro.OrderProgressing;
@@ -54,7 +54,7 @@ public class BottomMenu extends Fragment {
 
     private void setBottomButtonColor() {
         switch (getTokenActivityName(getActivity().toString())) {
-            case "MainPage" :
+            case "NewMainPage" :
                 realBottom.getMenu().getItem(0).setChecked(true);
                 break;
             case "ListStoreFavoritePage" :
@@ -78,10 +78,10 @@ public class BottomMenu extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.bottomIconHome:
-                        if (getTokenActivityName(getActivity().toString()).equals("MainPage")) {
+                        if (getTokenActivityName(getActivity().toString()).equals("NewMainPage")) {
                             break;
                         }
-                        Intent intent = new Intent(getActivity(), MainPage.class);
+                        Intent intent = new Intent(getActivity(), NewMainPage.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
