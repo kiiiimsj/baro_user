@@ -31,9 +31,8 @@ import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.HelperDatabase.StoreDetail;
 import com.tpn.baro.JsonParsingHelper.MapListParsing;
 import com.tpn.baro.JsonParsingHelper.MapParsing;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
-import com.tpn.baro.helperClass.myGPSListener;
+import com.tpn.baro.helperClass.MyGPSListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
@@ -79,7 +78,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
 
     MapSetPositionDialog mapSetPositionDialog;
     SharedPreferences setMyNewLocation;
-    myGPSListener GPSListener;
+    MyGPSListener GPSListener;
     SharedPreferences.Editor editor;
 
 
@@ -104,7 +103,7 @@ public class MyMap extends AppCompatActivity implements AutoPermissionsListener,
         distance = findViewById(R.id.distance);
         storeAddress = findViewById(R.id.address);
 
-        GPSListener = new myGPSListener(MyMap.this);
+        GPSListener = new MyGPSListener(MyMap.this);
         mapSetPositionDialog = new MapSetPositionDialog(this, this);
 
         makeRequest(setHashMapData());

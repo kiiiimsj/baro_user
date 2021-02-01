@@ -6,6 +6,7 @@ public class ListStoreParsing {
     public boolean result;
     public String message;
     public ArrayList<ListStoreListParsing> store;
+
     public ArrayList<ListStoreListParsing> getStoreLists() {
         return store;
     }

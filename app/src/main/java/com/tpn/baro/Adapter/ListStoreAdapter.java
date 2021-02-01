@@ -21,10 +21,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.tpn.baro.AdapterHelper.ListStoreHelperClass;
+import com.tpn.baro.JsonParsingHelper.FavoriteListParsing;
+import com.tpn.baro.JsonParsingHelper.FavoriteParsing;
+import com.tpn.baro.JsonParsingHelper.ListStoreListParsing;
+import com.tpn.baro.JsonParsingHelper.ListStoreParsing;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
-
-import java.util.ArrayList;
 
 public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.ListStoreViewHolder> {
 
@@ -42,10 +44,16 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
     private static ListStoreAdapter.OnListItemLongSelectedInterface mLongListener;
 
 
-    static ArrayList<ListStoreHelperClass> listStoreLocations;
-
-    public ListStoreAdapter(ArrayList<ListStoreHelperClass> listStoreLocations, ListStoreAdapter.OnListItemSelectedInterface listener, ListStoreAdapter.OnListItemLongSelectedInterface longListener, Context context){
-        this.listStoreLocations = listStoreLocations; //DataList
+    static ListStoreParsing listStoreParsing;
+    static FavoriteParsing favoriteParsing;
+    public ListStoreAdapter(ListStoreParsing listStoreParsing, ListStoreAdapter.OnListItemSelectedInterface listener, ListStoreAdapter.OnListItemLongSelectedInterface longListener, Context context){
+        this.listStoreParsing = listStoreParsing;
+        this.mListener = listener;
+        this.mLongListener = longListener;
+        this.context = context;
+    }
+    public ListStoreAdapter(FavoriteParsing favoriteParsing, ListStoreAdapter.OnListItemSelectedInterface listener, ListStoreAdapter.OnListItemLongSelectedInterface longListener, Context context){
+        this.favoriteParsing = favoriteParsing;
         this.mListener = listener;
         this.mLongListener = longListener;
         this.context = context;
@@ -70,28 +78,54 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
     @SuppressLint({"ResourceAsColor", "NewApi"})
     @Override
     public void onBindViewHolder(@NonNull ListStoreAdapter.ListStoreViewHolder holder, int position) {
-        ListStoreHelperClass listStoreHelperClass = listStoreLocations.get(position);
-        holder.storeName.setText(listStoreHelperClass.storeName);
-        if (listStoreHelperClass.storeDistance > 1000){
-            holder.mDistance.setText(String.format("%,.1f", ((int)listStoreHelperClass.storeDistance / 100) * 0.1) + "km");
-        }else {
-            holder.mDistance.setText((int) listStoreHelperClass.storeDistance + "m");
-        }
-        holder.storeId.setText(String.valueOf(listStoreHelperClass.storeId));
-        if(listStoreHelperClass.storeIsOpen != null) {
-            if(listStoreHelperClass.storeIsOpen.equals("N")) {
-                holder.isOpen.setText("준비중");
-                holder.isOpen.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.text_info_color)));
+        if(favoriteParsing != null) {
+            FavoriteListParsing favoriteStore = favoriteParsing.getFavorite().get(position);
+
+            holder.storeName.setText(favoriteStore.getStore_name());
+            if (favoriteStore.getDistance() > 1000){
+                holder.mDistance.setText(String.format("%,.1f", ((int)favoriteStore.getDistance() / 100) * 0.1) + "km");
+            }else {
+                holder.mDistance.setText((int) favoriteStore.getDistance() + "m");
             }
-            if(listStoreHelperClass.storeIsOpen.equals("Y")) {
-                holder.isOpen.setText("영업중");
+            holder.storeId.setText(String.valueOf(favoriteStore.getStore_id()));
+            if(favoriteStore.getStore_is_open() != null) {
+                if(favoriteStore.getStore_is_open().equals("N")) {
+                    holder.isOpen.setText("준비중");
+                    holder.isOpen.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.text_info_color)));
+                }
+                if(favoriteStore.getStore_is_open().equals("Y")) {
+                    holder.isOpen.setText("영업중");
+                }
             }
+            makeRequest(favoriteStore.getStore_image(), context, holder.storeImage);
         }
+        else {
+            ListStoreListParsing listStoreHelperClass = listStoreParsing.store.get(position);
+
+            holder.storeName.setText(listStoreHelperClass.getStore_name());
+            if (listStoreHelperClass.getDistance() > 1000){
+                holder.mDistance.setText(String.format("%,.1f", ((int)listStoreHelperClass.getDistance() / 100) * 0.1) + "km");
+            }else {
+                holder.mDistance.setText((int) listStoreHelperClass.getDistance() + "m");
+            }
+            holder.storeId.setText(String.valueOf(listStoreHelperClass.getStore_id()));
+            if(listStoreHelperClass.getIs_open() != null) {
+                if(listStoreHelperClass.getIs_open().equals("N")) {
+                    holder.isOpen.setText("준비중");
+                    holder.isOpen.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.text_info_color)));
+                }
+                if(listStoreHelperClass.getIs_open().equals("Y")) {
+                    holder.isOpen.setText("영업중");
+                }
+            }
+            makeRequest(listStoreHelperClass.getStore_image(), context, holder.storeImage);
+        }
+       
     }
 
     @Override
     public int getItemCount() {
-        return listStoreLocations == null ? 0 : listStoreLocations.size();
+        return listStoreParsing == null ? (favoriteParsing == null ? 0 : favoriteParsing.getFavorite().size()) : listStoreParsing.store.size();
     }
     @Override
     public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -141,8 +175,6 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             storeId = itemView.findViewById(R.id.store_id);
             isOpen = itemView.findViewById(R.id.is_open);
             store = itemView.findViewById(R.id.store);
-            ListStoreHelperClass list =listStoreLocations.get(po);
-            makeRequest(list.storeImage, context, storeImage);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -158,31 +190,30 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
                 }
             });
         }
+    }
+    public void makeRequest(String store_image, Context context, final ImageView image) {
+        //makeRequest(storeHelperClass.storeImages.get(viewType), listStoreViewHolder, context);
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "ImageStore.do?image_name=";
+        String url = urlMaker.UrlMake(lastUrl);
+        StringBuilder urlBuilder = new StringBuilder()
+                .append(url)
+                .append(store_image);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
 
-        public void makeRequest(String store_image, Context context, final ImageView image) {
-            //makeRequest(storeHelperClass.storeImages.get(viewType), listStoreViewHolder, context);
-            UrlMaker urlMaker = new UrlMaker();
-            String lastUrl = "ImageStore.do?image_name=";
-            String url = urlMaker.UrlMake(lastUrl);
-            StringBuilder urlBuilder = new StringBuilder()
-                    .append(url)
-                    .append(store_image);
-            RequestQueue requestQueue = Volley.newRequestQueue(context);
-
-            ImageRequest request = new ImageRequest(urlBuilder.toString(),
-                    new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap response) {
-                            image.setImageBitmap(response);
-                        }
-                    }, 100, 100, ImageView.ScaleType.FIT_CENTER, null,
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.i("error", "error");
-                        }
-                    });
-            requestQueue.add(request);
-        }
+        ImageRequest request = new ImageRequest(urlBuilder.toString(),
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        image.setImageBitmap(response);
+                    }
+                }, 100, 100, ImageView.ScaleType.FIT_CENTER, null,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("error", "error");
+                    }
+                });
+        requestQueue.add(request);
     }
 }

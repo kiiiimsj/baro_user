@@ -8,7 +8,7 @@ import android.view.Window;
 import android.widget.Button;
 
 import com.tpn.baro.Basket;
-import com.tpn.baro.MainPage;
+import com.tpn.baro.NewMainPage;
 import com.tpn.baro.R;
 
 public class OrderDoneDialog {
@@ -30,7 +30,7 @@ public class OrderDoneDialog {
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, MainPage.class);
+                Intent intent = new Intent(context, NewMainPage.class);
                 context.startActivity(intent);
                 Basket basket = (Basket) Basket.basket;
                 basket.finish();

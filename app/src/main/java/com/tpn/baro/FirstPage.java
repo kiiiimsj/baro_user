@@ -105,7 +105,8 @@ public class FirstPage extends AppCompatActivity implements AutoPermissionsListe
             AlertDialog.Builder builder = PermissionHandler.needPermissionDialog(this);
             builder.show();
         }else{
-            Intent intent = new Intent(FirstPage.this, MainPage.class);
+//            Intent intent = new Intent(FirstPage.this, MainPage.class);
+            Intent intent = new Intent(FirstPage.this, NewMainPage.class);
             startActivity(intent);
             finish();
         }

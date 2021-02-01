@@ -253,7 +253,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         if(sessionManager.getUsersDetailFromSession() != null || sessionManager != null) {
             sessionManager.clearDetailUserSession();
         }
-        Intent intent = new Intent(this, MainPage.class);
+        Intent intent = new Intent(this, NewMainPage.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         finish();
@@ -296,7 +296,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainPage.class));
+        startActivity(new Intent(this, NewMainPage.class));
         finish();
     }
 

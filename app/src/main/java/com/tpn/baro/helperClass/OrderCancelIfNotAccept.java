@@ -16,7 +16,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.tpn.baro.MainPage;
+import com.tpn.baro.NewMainPage;
 import com.tpn.baro.R;
 
 public class OrderCancelIfNotAccept extends Service {
@@ -109,7 +109,7 @@ public class OrderCancelIfNotAccept extends Service {
 //    }
 
     private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainPage.class);
+        Intent intent = new Intent(this, NewMainPage.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 

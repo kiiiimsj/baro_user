@@ -30,12 +30,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public class myGPSListener implements LocationListener {
+public class MyGPSListener implements LocationListener {
     Context context;
     double latitude =0;
     double longitude =0;
     SharedPreferences saveLocation;
-    public myGPSListener (Context context) {
+    public MyGPSListener(Context context) {
         this.context = context;
         saveLocation = context.getSharedPreferences("newLocation", Context.MODE_PRIVATE);
     }

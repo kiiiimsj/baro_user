@@ -130,7 +130,7 @@ public class OrderHistory extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainPage.class));
+        startActivity(new Intent(this, NewMainPage.class));
         finish();
     }
 }

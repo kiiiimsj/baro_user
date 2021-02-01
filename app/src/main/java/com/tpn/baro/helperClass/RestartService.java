@@ -12,7 +12,7 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.tpn.baro.MainPage;
+import com.tpn.baro.NewMainPage;
 import com.tpn.baro.R;
 
 public class RestartService extends Service {
@@ -35,7 +35,7 @@ public class RestartService extends Service {
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentTitle(null);
         builder.setContentText(null);
-        Intent notificationIntent = new Intent(this, MainPage.class);
+        Intent notificationIntent = new Intent(this, NewMainPage.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         builder.setContentIntent(pendingIntent);
 
