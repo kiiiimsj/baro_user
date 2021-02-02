@@ -36,8 +36,7 @@ import com.tpn.baro.AdapterHelper.OrderDetailsNonEssential;
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.JsonParsingHelper.OrderDetailsListParsing;
 import com.tpn.baro.JsonParsingHelper.OrderDetailsParsing;
-import com.tpn.baro.Dialogs.CustomDialog;
-import com.tpn.baro.R;
+import com.tpn.baro.Dialogs.BasketDialog;
 import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.DetailsFixToBasket;
@@ -179,7 +178,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                         e.printStackTrace();
                     }
                 }
-                final CustomDialog customDialog = new CustomDialog(OrderDetails.this, store_id);
+                final BasketDialog basketDialog = new BasketDialog(OrderDetails.this, store_id);
 
 
                 if (!(sharedPreferences.getString("currentStoreId", "").equals(String.valueOf(store_id)))) {
@@ -191,7 +190,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                                     public void clickBtn(Boolean OkOrNo) {
 
                                         if(OkOrNo==true){
-                                            customDialog.callFunction();
+                                            basketDialog.callFunction();
                                             ArrayList<DetailsFixToBasket> detailsFixToBaskets = new ArrayList<>();
                                             addNewMenuToBasket(detailsFixToBaskets,editor);
                                         }
@@ -203,12 +202,12 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                         refreshBasketByStoreIdDialog.callFunction();
 
                     }else{;
-                        customDialog.callFunction();
+                        basketDialog.callFunction();
                         addNewMenuToBasket(detailsFixToBaskets,editor);
                     }
 
                 }else{
-                    customDialog.callFunction();
+                    basketDialog.callFunction();
                     addNewMenuToBasket(detailsFixToBaskets,editor);
                 }
                 return;

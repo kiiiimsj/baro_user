@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 //import com.example.baro.Database.SendToServer;
@@ -14,9 +15,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.tpn.baro.Dialogs.CouponRegisterDialog;
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.HelperDatabase.RegisterUser;
+import com.tpn.baro.JsonParsingHelper.DefaultParsing;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.android.material.textfield.TextInputLayout;
@@ -26,7 +30,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class Register2 extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
+public class Register2 extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity, CouponRegisterDialog.OnDismiss {
     //private final static String SERVER= "http://54.180.56.44:8080/";
     private String message;
 
@@ -38,6 +42,9 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         userName = findViewById(R.id.user_name);
         pass1 = findViewById(R.id.login_password);
         pass2 = findViewById(R.id.login_password_confirm);
@@ -123,19 +130,6 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         registerUsers.put("pass", registerUser.getPass());
 
         makeRequestForRegister(urlMaker(), registerUsers);
-        if(getResult) {
-            //storeNewPhoneData();
-            startActivity(new Intent(Register2.this, Login.class));
-            finish();
-        }
-        else {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(Register2.this, message, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
     }
     public String urlMaker() {
         UrlMaker urlMaker = new UrlMaker();
@@ -149,19 +143,61 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         try {
             getResult = jsonObject.getBoolean("result");
             message = jsonObject.getString("message");
+            if(getResult) {
+                makeRequestForInsertCoupon();
+            }
+            
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
     }
+    private void makeRequestForInsertAlertFirstRegister() {
+        String url = new UrlMaker().UrlMake("InsertAllForNew.do?phone="+phone);
+        RequestQueue requestQueue = Volley.newRequestQueue(Register2.this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(Register2.this, Register2.this, null);
+                        couponRegisterDialog.outSideMessage = "바로와 함께하시게 되신걸 축하드립니다!\n1000원 할인 쿠폰을 드렸어요!";
+                        couponRegisterDialog.callFunction();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("TAG",error.toString());
+                    }
+                });
+        requestQueue.add(stringRequest);
+    }
+    private void makeRequestForInsertCoupon() {
+        String url = new UrlMaker().UrlMake("CouponInsertByNumber.do?phone="+phone+"&coupon_id=9");
+        RequestQueue requestQueue = Volley.newRequestQueue(Register2.this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        makeRequestForInsertAlertFirstRegister();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("TAG",error.toString());
+                    }
+                });
+        requestQueue.add(stringRequest);
+    }
 
-//    private void storeNewPhoneData() {
+    //    private void storeNewPhoneData() {
 //        FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
 //        DatabaseReference reference = rootNode.getReference("Users");
 //        reference.child(phone).setValue("");
 //    }
     public void makeRequestForRegister(String url, HashMap data) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Register2.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -186,5 +222,21 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
     @Override
     public void onBack() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void clickDismiss() {
+        if(getResult) {
+            //storeNewPhoneData();
+            finish();
+        }
+        else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(Register2.this, message, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
