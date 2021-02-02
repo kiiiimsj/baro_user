@@ -121,7 +121,7 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
         call_search = findViewById(R.id.search_dialog);
         refreshLayout = findViewById(R.id.refreshLayout);
         allStoreList = findViewById(R.id.all_store_list_recycler_view);
-
+        allStoreList.setNestedScrollingEnabled(false);
         makeRequestForEventThread();
         makeRequestForAlerts();
 
