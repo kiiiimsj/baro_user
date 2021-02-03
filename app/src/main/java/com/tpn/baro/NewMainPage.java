@@ -66,7 +66,6 @@ import java.util.HashMap;
 import maes.tech.intentanim.CustomIntent;
 
 public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface, AutoPermissionsListener, ActivityCompat.OnRequestPermissionsResultCallback  {
-    SharedPreferences sp;
     Gson gson;
     SessionManager userSession;
     HashMap userData = new HashMap<>();
@@ -106,7 +105,6 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
 
-        sp = getSharedPreferences("favorite", MODE_PRIVATE);
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         userData = userSession.getUsersDetailFromSession();
 

@@ -83,12 +83,6 @@ public class OrderHistory extends AppCompatActivity {
                     public void onResponse(final String response) {
                         orderHistoryParsing = jsonParsing(response, state);
                         applyAdapter(orderHistoryParsing);
-                        orderHistoryAdapter.setOnItemClickListener(new OrderHistoryAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View v, int pos) {
-                                Toast.makeText(OrderHistory.this,"asdfaag",Toast.LENGTH_LONG).show();
-                            }
-                        });
                     }
                 },
                 new Response.ErrorListener() {
@@ -101,10 +95,15 @@ public class OrderHistory extends AppCompatActivity {
     }
 
     private void applyAdapter(OrderHistoryParsing order) {
+        if(orderHistoryParsing == null || orderHistoryParsing.getOrder() == null || orderHistoryParsing.order.size() == 0) {
+            Toast.makeText(OrderHistory.this, "존재하는 주문내역이 없습니다.", Toast.LENGTH_SHORT).show();
+            progressApplication.progressOFF();
+            return;
+        }
         orderHistoryAdapter = new OrderHistoryAdapter(order.getOrder(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(OrderHistory.this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(orderHistoryAdapter);
-        progressApplication.progressOFF();
+
         refreshLayout.setRefreshing(false);
     }
 

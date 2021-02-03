@@ -50,7 +50,6 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
 
     //즐겨찾기
     SessionManager sessionManager;
-    SharedPreferences sp;
     Gson gson;
     String phone;
     FavoriteParsing favoriteParsings;
@@ -121,12 +120,13 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         progressApplication.progressOFF();
     }
     private void jsonParsing(String result) {
-        ListStoreParsing listStoreParsing = new ListStoreParsing();
-        JSONArray jsonArray = null;
-        boolean result2 = false;
         favoriteParsings = new Gson().fromJson(result, FavoriteParsing.class);
-        if(!favoriteParsings.isResult()) {
+        if(!favoriteParsings.isResult() || favoriteParsings.getFavorite().size() == 0) {
             Toast.makeText(ListStoreFavoritePage.this, "가게정보를 받아올 수 없습니다.", Toast.LENGTH_SHORT).show();
+            progressApplication.progressOFF();
+            return;
+        }else {
+            mRecyclerView2();
         }
 //        try {
 //            result2 = (Boolean) new JSONObject(result).getBoolean("result");
@@ -160,9 +160,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
 //            e.printStackTrace();
 //        }
         //listStoreParsing.setStoreLists(listStoreListParsings);
-        mRecyclerView2();
     }
-
     private void makeRequestForFavorite(String phone) {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -180,11 +178,6 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        sp = getSharedPreferences("favorite", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("favorite", response.toString());
-                        editor.apply();
-                        editor.commit();
                         jsonParsing(response.toString());
                     }
                 },
