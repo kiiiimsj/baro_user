@@ -33,6 +33,10 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.tpn.baro.Adapter.AdvertiseAdapter;
@@ -109,6 +113,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     SessionManager userSession;
     HashMap userData = new HashMap<>();
     int getUnReadAlertCount = 0;
+    private String userToken;
     /////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +152,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         makeRequestForAlerts();
 
         myGPSListener = new MyGPSListener(this);
-        latLng = myGPSListener.startLocationService(mAddress); 
+        latLng = myGPSListener.startLocationService(mAddress);
 
 
 //        if(!BaroUtil.checkGPS(this)) {
@@ -159,7 +164,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         alert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!BaroUtil.loginCheck(MainPage.this)) {
+                if (!BaroUtil.loginCheck(MainPage.this)) {
                     return;
                 }
                 startActivity(new Intent(MainPage.this, Alerts.class));
@@ -170,27 +175,27 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), NewMyMap.class);
                 startActivity(intent);
-                CustomIntent.customType(MainPage.this,"right-to-left");
+                CustomIntent.customType(MainPage.this, "right-to-left");
             }
         });
-        mMapButton.setOnClickListener(new View.OnClickListener(){
+        mMapButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainPage.this, NewMyMap.class);
                 startActivity(intent);
-                CustomIntent.customType(MainPage.this,"right-to-left");
+                CustomIntent.customType(MainPage.this, "right-to-left");
             }
         });
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
-           @Override
-           public void onRefresh(SwipyRefreshLayoutDirection direction) {
-               latLng = myGPSListener.startLocationService(mAddress);
-               makeRequestUltraStore(setHashMapData());
-               makeRequestNewStore(setHashMapData());
-               refreshLayout.setRefreshing(false);
-           }
-       });
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                latLng = myGPSListener.startLocationService(mAddress);
+                makeRequestUltraStore(setHashMapData());
+                makeRequestNewStore(setHashMapData());
+                refreshLayout.setRefreshing(false);
+            }
+        });
         call_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,6 +204,17 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
             }
         });
         progressApplication.progressOFF();
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    return;
+                }
+                userToken = task.getResult().getToken();
+                Log.e("qqqqqq",userToken);
+            }
+        });
+
     }
 
     @Override
@@ -206,9 +222,9 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         super.onResume();
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         userData = userSession.getUsersDetailFromSession();
-        if(userData.get(SessionManager.KEY_PHONENUMBER) == null) {
+        if (userData.get(SessionManager.KEY_PHONENUMBER) == null) {
             alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
-        }else {
+        } else {
             makeRequestForAlerts();
         }
         if (!BaroUtil.checkGPS(this)) {
@@ -217,15 +233,53 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         } else {
 
         }
-//        latLng = myGPSListener.startLocationService(mAddress);
-//        makeRequestUltraStore(setHashMapData());
-//        makeRequestNewStore(setHashMapData());
+        Log.e("qqqqqq","ewer");
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    return;
+                }
+                final String temp_token = task.getResult().getToken();
+                Log.e("qqqqqqqq",temp_token);
+                if (!temp_token.equals(userToken)){
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            HashMap<String,String> data = new HashMap<>();
+                            data.put("phone",""+userData.get(SessionManager.KEY_PHONENUMBER));
+                            data.put("device_token",temp_token);
+                            String url = new UrlMaker().UrlMake("UpdateToken.do");
+                            RequestQueue requestQueue = Volley.newRequestQueue(MainPage.this);
+                            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
+                                    new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+                                            Log.e("qqqqqqqqqqqq","qqqqqq");
+                                        }
+                                    }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+                                }
+                            });
+                            requestQueue.add(jsonObjectRequest);
+                        }
+                    }).start();
+                }else{
+
+                }
+            }
+        });
+        latLng = myGPSListener.startLocationService(mAddress);
+        makeRequestUltraStore(setHashMapData());
+        makeRequestNewStore(setHashMapData());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (serviceIntent!=null) {
+        if (serviceIntent != null) {
             stopService(serviceIntent);
             serviceIntent = null;
         }
@@ -235,6 +289,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     protected void onPause() {
         super.onPause();
     }
+
     private void makeRequestForAlerts() {
         UrlMaker urlMaker = new UrlMaker();
         final String url = urlMaker.UrlMake("GetNewAlertCount.do?phone=" + userData.get(SessionManager.KEY_PHONENUMBER));
@@ -257,6 +312,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
             }
         });
     }
+
     @SuppressLint("UseCompatLoadingForDrawables")
     private void parsing(String response) {
         try {
@@ -264,17 +320,17 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
             if (jsonObject.getBoolean("result")) {
                 getUnReadAlertCount = jsonObject.getInt("count");
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
 
         }
-        if(getUnReadAlertCount == 0) {
+        if (getUnReadAlertCount == 0) {
             alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
 
-        }
-        else if (getUnReadAlertCount > 0){
+        } else if (getUnReadAlertCount > 0) {
             alert.setBackground(getResources().getDrawable(R.drawable.alert_on));
         }
     }
+
     private void startLocation() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("설정");
@@ -301,14 +357,16 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     }
 
     private void setEventCountSet(int position) {
-        eventCountSet.setText((position % eventHelperClass.event.size() + 1)+"  /  "+eventHelperClass.event.size());
+        eventCountSet.setText((position % eventHelperClass.event.size() + 1) + "  /  " + eventHelperClass.event.size());
     }
+
     public HashMap setHashMapData() {
         HashMap<String, String> data = new HashMap<>();
-        data.put("latitude",latLng.latitude+"");
-        data.put("longitude",latLng.longitude+"");
+        data.put("latitude", latLng.latitude + "");
+        data.put("longitude", latLng.longitude + "");
         return data;
     }
+
     public void makeRequestUltraStore(final HashMap data) {
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "StoreFindByUltra.do";
@@ -387,7 +445,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
 
     private void jsonParsingNewStore(String toString) {
         Gson gson = new Gson();
-        newListStoreParsing=gson.fromJson(toString, ViewPagersListStoreParsing.class);
+        newListStoreParsing = gson.fromJson(toString, ViewPagersListStoreParsing.class);
         setNewListStoreRecyclerView();
     }
 
@@ -405,7 +463,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         jsonParsing(result, typeParsing);
         adapter = new TypeAdapter(DataList, this, this, MainPage.this);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        for(int i = 0; i < typeParsing.getTypeList().size();i++){
+        for (int i = 0; i < typeParsing.getTypeList().size(); i++) {
             TypeListParsing typeListParsing = typeParsing.getTypeList().get(i);
             TypeHelperClass typeHelperClass = new TypeHelperClass(typeListParsing.getTypeName(), typeListParsing.getTypeCode(), typeListParsing.getTypeImage());
             typeHelperClass.typeNames.add(typeListParsing.getTypeName());
@@ -422,20 +480,20 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         ultraStoreRecyclerView.setAdapter(ultraAdapter);
     }
 
-    private void jsonParsingUltraStore(String result){
+    private void jsonParsingUltraStore(String result) {
         Gson gson = new Gson();
         listStoreParsing = gson.fromJson(result, ViewPagersListStoreParsing.class);
         ultraStoreRecyclerView();
     }
 
 
-    private synchronized void jsonParsing(String result, TypeParsing typeParsing){
+    private synchronized void jsonParsing(String result, TypeParsing typeParsing) {
         try {
             Boolean result2 = (Boolean) new JSONObject(result).getBoolean("result");
             typeParsing.setMessage(new JSONObject(result).getString("message"));
             JSONArray jsonArray = new JSONObject(result).getJSONArray("type");
             ArrayList<TypeListParsing> typeListParsings = new ArrayList<TypeListParsing>();
-            for(int i = 0; i<jsonArray.length();i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jObject = jsonArray.getJSONObject(i);
                 String type_name = jObject.optString("type_name");
                 String type_code = jObject.optString("type_code");
@@ -444,12 +502,12 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                 typeListParsings.add(typeListParsing);
             }
             typeParsing.setTypeList(typeListParsings);
-        }
-        catch(JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
+
     public void makeRequestForEventThread() {
         final String url = new UrlMaker().UrlMake("EventFindAll.do");
         new Thread(new Runnable() {
@@ -478,28 +536,32 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 currentPos = position;
             }
+
             @Override
             public void onPageSelected(int position) {
                 setEventCountSet(position);
                 currentPos = position;
             }
+
             @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
     }
+
     private void eventParsing(String response) {
         Gson gson = new Gson();
         eventHelperClass = gson.fromJson(response, EventHelperClass.class);
-        LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.advertise_design, null, false);
         ImageView imageView = view.findViewById(R.id.slider_image);
         ArrayList<Bitmap> bitmaps = new ArrayList<>();
-        for (int i = 0;i<eventHelperClass.event.size();i++){
-            makeRequestForgetImage(eventHelperClass.event.get(i).event_image,imageView,MainPage.this,bitmaps,i,eventHelperClass.event.size());
+        for (int i = 0; i < eventHelperClass.event.size(); i++) {
+            makeRequestForgetImage(eventHelperClass.event.get(i).event_image, imageView, MainPage.this, bitmaps, i, eventHelperClass.event.size());
         }
 
     }
+
     public void makeRequestForgetImage(String type_image, final ImageView imageView, Context context, final ArrayList<Bitmap> bitmaps, final int pos, final int max) {
         String lastUrl = "ImageEvent.do?image_name=";
         UrlMaker urlMaker = new UrlMaker();
@@ -512,12 +574,12 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap response) {
-                        bitmaps.add(pos,response);
-                        if (max-1 == pos){
+                        bitmaps.add(pos, response);
+                        if (max - 1 == pos) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    advertiseAdapter = new AdvertiseAdapter(MainPage.this, eventHelperClass,bitmaps);
+                                    advertiseAdapter = new AdvertiseAdapter(MainPage.this, eventHelperClass, bitmaps);
                                     viewPager.setAdapter(advertiseAdapter);
                                     viewPager.setCurrentItem(eventHelperClass.event.size() * 500);
                                     viewPager.setOffscreenPageLimit(5);
@@ -539,7 +601,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                                                 runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        viewPager.setCurrentItem((currentPos + 1),true);
+                                                        viewPager.setCurrentItem((currentPos + 1), true);
                                                     }
                                                 });
                                             }
@@ -559,13 +621,14 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
                 });
         requestQueue.add(request);
     }
+
     @Override
     public void onItemLongSelected(View v, int adapterPosition) {
     }
 
     @Override
     public void onItemSelected(View v, int position) {
-        TypeAdapter.TypeViewHolder viewHolder = (TypeAdapter.TypeViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
+        TypeAdapter.TypeViewHolder viewHolder = (TypeAdapter.TypeViewHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(this, ListStorePage.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 //        int i = 0;
@@ -573,7 +636,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         intent.putExtra("type_name", viewHolder.title.getText().toString());
         intent.putExtra("list_type", "find_type");
         startActivity(intent);
-        CustomIntent.customType(this,"left-to-right");
+        CustomIntent.customType(this, "left-to-right");
 //        startActivity(new Intent(this, ListStorePage.class));
 //        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
 //
@@ -583,18 +646,19 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
 
     @Override
     public void onNewStoreItemSelected(View v, int position) {
-        NewStoreListAdapter.NewStoreViewHolder viewHolder= (NewStoreListAdapter.NewStoreViewHolder) newStoreRecyclerView.findViewHolderForAdapterPosition(position);
+        NewStoreListAdapter.NewStoreViewHolder viewHolder = (NewStoreListAdapter.NewStoreViewHolder) newStoreRecyclerView.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(MainPage.this, StoreInfoReNewer.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", viewHolder.storeId.getText().toString());
         startActivity(intent);
-        CustomIntent.customType(this,"left-to-right");
+        CustomIntent.customType(this, "left-to-right");
     }
 
     @Override
     public void onLongNewStoreItemSelected(View v, int adapterPosition) {
 
     }
+
     @Override
     public void onUltraStoreLongSelected(View v, int adapterPosition) {
 
@@ -602,12 +666,12 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
 
     @Override
     public void onUltraStoreSelected(View v, int position) {
-        UltraStoreListAdapter.UltraStoreListViewHolder viewHolder= (UltraStoreListAdapter.UltraStoreListViewHolder) ultraStoreRecyclerView.findViewHolderForAdapterPosition(position);
+        UltraStoreListAdapter.UltraStoreListViewHolder viewHolder = (UltraStoreListAdapter.UltraStoreListViewHolder) ultraStoreRecyclerView.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(MainPage.this, StoreInfoReNewer.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", viewHolder.storeId.getText().toString());
         startActivity(intent);
-        CustomIntent.customType(this,"left-to-right");
+        CustomIntent.customType(this, "left-to-right");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -617,11 +681,13 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         finishAndRemoveTask();
         android.os.Process.killProcess(android.os.Process.myPid());
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         AutoPermissions.Companion.parsePermissions(this, requestCode, permissions, this);
     }
+
     @Override
     public void onDenied(int i, @NotNull String[] strings) {
         firstFlag = true;

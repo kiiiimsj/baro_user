@@ -34,6 +34,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -70,6 +74,7 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
     private Intent serviceIntent;
     private boolean firstFlag = false;
     int getUnReadAlertCount = 0;
+    private String userToken;
 
     LatLng latLng;
     MyGPSListener myGPSListener;
@@ -176,6 +181,7 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
             }
         });
         progressApplication.progressOFF();
+
     }
 
     @Override
@@ -193,6 +199,44 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
         } else {
 
         }
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    return;
+                }
+                final String temp_token = task.getResult().getToken();
+                String phone = String.valueOf(userData.get(SessionManager.KEY_PHONENUMBER));
+                Log.e("qqqqqqqq",temp_token);
+                if (!temp_token.equals(userToken) || phone !=null){
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            HashMap<String,String> data = new HashMap<>();
+                            data.put("phone",""+userData.get(SessionManager.KEY_PHONENUMBER));
+                            data.put("device_token",temp_token);
+                            String url = new UrlMaker().UrlMake("UpdateToken.do");
+                            RequestQueue requestQueue = Volley.newRequestQueue(NewMainPage.this);
+                            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
+                                    new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+                                            Log.e("qqqqqqqqqqqq","qqqqqq");
+                                        }
+                                    }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+                                }
+                            });
+                            requestQueue.add(jsonObjectRequest);
+                        }
+                    }).start();
+                }else{
+
+                }
+            }
+        });
     }
 
     @Override

@@ -50,4 +50,5 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         super.onNewToken(token);
         Log.i("FIREBASE New Token : ", token);
     }
+
 }
