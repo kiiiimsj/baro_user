@@ -93,7 +93,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
     int currentPos;
     AdvertiseAdapter advertiseAdapter;
 
-    SharedPreferences sp;
     Gson gson;
 
     ProgressApplication progressApplication;
@@ -123,7 +122,6 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
 
-        sp = getSharedPreferences("favorite", MODE_PRIVATE);
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         userData = userSession.getUsersDetailFromSession();
 

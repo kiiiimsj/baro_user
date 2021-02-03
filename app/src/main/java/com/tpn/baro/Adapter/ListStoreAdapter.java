@@ -78,7 +78,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
     @SuppressLint({"ResourceAsColor", "NewApi"})
     @Override
     public void onBindViewHolder(@NonNull ListStoreAdapter.ListStoreViewHolder holder, int position) {
-        if(favoriteParsing != null) {
+        if(favoriteParsing != null && favoriteParsing.getFavorite().size() != 0) {
             FavoriteListParsing favoriteStore = favoriteParsing.getFavorite().get(position);
 
             holder.storeName.setText(favoriteStore.getStore_name());
@@ -99,7 +99,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             }
             makeRequest(favoriteStore.getStore_image(), context, holder.storeImage);
         }
-        else {
+        if(listStoreParsing != null && listStoreParsing.store.size() != 0) {
             ListStoreListParsing listStoreHelperClass = listStoreParsing.store.get(position);
 
             holder.storeName.setText(listStoreHelperClass.getStore_name());

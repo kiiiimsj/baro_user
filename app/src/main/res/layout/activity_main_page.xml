@@ -89,11 +89,23 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <com.tpn.baro.helperClass.ViewPagerCustomDuration
-                        android:id="@+id/info_image"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/info_image_layout"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:background="@color/gray" />
+                        >
+                        <com.tpn.baro.helperClass.ViewPagerCustomDuration
+                            android:id="@+id/info_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintDimensionRatio="2:1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:background="@color/gray" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <TextView
                         android:id="@+id/event_count"
                         android:background="@drawable/layout_border_5dp_stroke_3dp"
@@ -105,7 +117,7 @@
                         android:paddingVertical="5dp"
                         android:letterSpacing="-0.03"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignBottom="@id/info_image"
+                        android:layout_alignBottom="@id/info_image_layout"
                         android:fontFamily="@font/metropolis_regular"
                         android:textSize="10sp"
                         android:textColor="@color/white"
@@ -115,7 +127,7 @@
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/info_image"
+                        android:layout_below="@id/info_image_layout"
                         />
                     <View
                         android:layout_below="@id/recyclerView"

@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.android.volley.RequestQueue;
@@ -46,7 +46,7 @@ public class AdvertiseAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == (RelativeLayout) object;
+        return view == (ConstraintLayout) object;
     }
 
     @Override
@@ -82,7 +82,7 @@ public class AdvertiseAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((RelativeLayout) object);
+        container.removeView((ConstraintLayout) object);
     }
     public void makeRequestForgetImage(String type_image, final ImageView imageView, Context context ) {
         String lastUrl = "ImageEvent.do?image_name=";
@@ -98,7 +98,7 @@ public class AdvertiseAdapter extends PagerAdapter {
                     public void onResponse(Bitmap response) {
                         imageView.setImageBitmap(response);
                     }
-                }, imageView.getWidth(), imageView.getHeight(), ImageView.ScaleType.CENTER, null,
+                }, imageView.getWidth(), imageView.getHeight(), ImageView.ScaleType.FIT_XY, null,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {

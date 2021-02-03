@@ -3,6 +3,7 @@ package com.tpn.baro;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -74,7 +75,7 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
                     @Override
                     public void onResponse(String response) {
                         jsonparsing(response);
-                        applyAdapter();
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -87,6 +88,7 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
     }
 
     private void applyAdapter() {
+
         ArrayList<OrderProgressingParsingHelper> orderProgressingParsingHelpers = orderProgressingParsing.getOrder();
         OrderProgressingAdapter orderProgressingAdapter = new OrderProgressingAdapter(orderProgressingParsingHelpers,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -97,6 +99,12 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
 
     private void jsonparsing(String response) {
         orderProgressingParsing = gson.fromJson(response,OrderProgressingParsing.class);
+        if(orderProgressingParsing == null || orderProgressingParsing.getOrder() == null || orderProgressingParsing.getOrder().size() == 0) {
+            Toast.makeText(OrderProgressing.this, "존재하는 주문현황이 없습니다.", Toast.LENGTH_SHORT).show();
+            progressApplication.progressOFF();
+        }else {
+            applyAdapter();
+        }
     }
     @Override
     protected void onPause() {
