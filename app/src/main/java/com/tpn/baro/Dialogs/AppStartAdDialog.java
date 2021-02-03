@@ -59,7 +59,7 @@ public class AppStartAdDialog {
         String url = new UrlMaker().UrlMake("EventFindAdvertising.do");
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
+            @Override   
             public void onResponse(String response) {
                 parsing(response);
             }

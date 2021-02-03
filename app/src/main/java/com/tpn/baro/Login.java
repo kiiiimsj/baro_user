@@ -31,6 +31,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Login extends AppCompatActivity {
@@ -58,8 +59,19 @@ public class Login extends AppCompatActivity {
                     return;
                 }
                 userToken = task.getResult().getToken();
+                Log.e("Login",userToken);
             }
         });
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    FirebaseInstanceId.getInstance().deleteInstanceId();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
 
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         phone = findViewById(R.id.login_phone);
