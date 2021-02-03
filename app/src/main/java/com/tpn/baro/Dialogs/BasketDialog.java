@@ -14,11 +14,11 @@ import com.tpn.baro.R;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class CustomDialog {
+public class BasketDialog {
 
     private Context context;
     private int storeId;
-    public CustomDialog(Context context, int storeId) {
+    public BasketDialog(Context context, int storeId) {
         this.context = context;
         this.storeId = storeId;
     }

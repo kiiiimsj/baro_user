@@ -31,7 +31,7 @@ import java.util.HashMap;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
+public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity, CouponRegisterDialog.OnDismiss {
     private final String TAG = this.getClass().getSimpleName();
     CouponAdapter couponAdapter;
     CouponList couponListData;
@@ -63,7 +63,7 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
                             @Override
                             public void onResponse(String response) {
                                 DefaultParsing defaultParsing = gson.fromJson(response,DefaultParsing.class);
-                                CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(SideMyCoupon.this,defaultParsing);
+                                CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(SideMyCoupon.this, SideMyCoupon.this,defaultParsing);
                                 couponRegisterDialog.callFunction();
                                 makeRequestForCoupon(urlData());
                             }
@@ -138,5 +138,10 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
     public void onBackPressed() {
         super.onBackPressed();
         CustomIntent.customType(this,"right-to-left");
+    }
+
+    @Override
+    public void clickDismiss() {
+
     }
 }

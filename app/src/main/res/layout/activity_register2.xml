@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="@color/main"
     tools:context="com.tpn.baro.Register2">
-
     <fragment
         android:id="@+id/top_bar"
         android:name="com.tpn.baro.Fragment.TopBar"
@@ -15,89 +14,93 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:layout_marginTop="90dp"
-        android:includeFontPadding="false"
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:fontFamily="@font/notosans_regular"
-        android:text="BARO"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        />
-    <TextView
-        android:id="@+id/textView2"
-        android:textSize="24sp"
-        android:text="회원가입"
-        android:letterSpacing="-0.02"
-        android:textColor="@color/white"
-        android:fontFamily="@font/notosans_black"
-        android:gravity="center"
-        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/content"/>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/content"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView"/>
-    <ScrollView
-
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/layout_border_50dp_top_left_top_right"
-        app:layout_constraintTop_toBottomOf="@id/textView2"
-        android:layout_marginTop="27dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-        <LinearLayout
-            android:padding="21dp"
-            android:orientation="vertical"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_alignParentTop="true"
+            android:includeFontPadding="false"
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosans_regular"
+            android:layout_centerHorizontal="true"
+            android:text="BARO"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            />
+        <TextView
+            android:layout_below="@id/imageView"
+            android:id="@+id/textView2"
+            android:textSize="24sp"
+            android:text="회원가입"
+            android:letterSpacing="-0.02"
+            android:textColor="@color/white"
+            android:fontFamily="@font/notosans_black"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_marginTop="27dp"
+            android:background="@drawable/layout_border_50dp_top_left_top_right"
+            android:layout_below="@id/textView2"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
             <TextView
+                android:layout_alignParentTop="true"
                 android:id="@+id/text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textColor="@color/black"
                 android:letterSpacing="-0.02"
                 android:text="이름"
                 android:fontFamily="@font/notosans_bold"
                 android:includeFontPadding="false"
-                android:layout_marginTop="58dp"
                 />
             <com.google.android.material.textfield.TextInputLayout
+                android:layout_below="@id/text2"
                 android:id="@+id/user_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginBottom="20dp"
+                app:boxBackgroundMode="filled"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconTint="@color/black"
                 app:errorEnabled="true"
                 app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
                 app:startIconTint="@color/black">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_name_editText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="12sp"
+                    android:background="@null"
                     android:includeFontPadding="false"
                     android:fontFamily="@font/notosans_regular"
                     android:inputType="text"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
             <TextView
+                android:layout_below="@id/user_name"
                 android:id="@+id/text3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textColor="@color/black"
                 android:letterSpacing="-0.02"
                 android:text="비밀번호"
@@ -105,35 +108,39 @@
                 android:includeFontPadding="false"
                 />
             <com.google.android.material.textfield.TextInputLayout
+                android:layout_below="@id/text3"
                 android:id="@+id/login_password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="password_toggle"
                 app:endIconTint="@color/black"
                 app:errorEnabled="true"
                 app:hintTextColor="@color/black"
+                app:boxBackgroundMode="filled"
+                android:layout_marginBottom="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/user_name"
                 app:startIconTint="@color/black">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/login_password_editText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="12sp"
+                    android:background="@null"
                     android:includeFontPadding="false"
                     android:fontFamily="@font/notosans_regular"
                     android:inputType="textPassword"
                     android:textColor="@color/black" />
-
             </com.google.android.material.textfield.TextInputLayout>
             <TextView
+                android:layout_below="@id/login_password"
                 android:id="@+id/text4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textColor="@color/black"
                 android:letterSpacing="-0.02"
                 android:text="비밀번호 확인"
@@ -141,11 +148,14 @@
                 android:includeFontPadding="false"
                 />
             <com.google.android.material.textfield.TextInputLayout
+                android:layout_below="@id/text4"
                 android:id="@+id/login_password_confirm"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
+                app:boxBackgroundMode="filled"
+                android:layout_marginBottom="20dp"
                 app:endIconMode="password_toggle"
                 app:endIconTint="@color/black"
                 app:errorEnabled="true"
@@ -158,7 +168,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/login_password_confirm_editText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="12sp"
+                    android:background="@null"
                     android:includeFontPadding="false"
                     android:fontFamily="@font/notosans_regular"
                     android:inputType="textPassword"
@@ -166,10 +178,11 @@
 
             </com.google.android.material.textfield.TextInputLayout>
             <TextView
+                android:layout_below="@id/login_password_confirm"
                 android:id="@+id/text5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textColor="@color/black"
                 android:letterSpacing="-0.02"
                 android:text="이메일 입력"
@@ -177,32 +190,34 @@
                 android:includeFontPadding="false"
                 />
             <com.google.android.material.textfield.TextInputLayout
+                android:layout_below="@id/text5"
                 android:id="@+id/signup_email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
+                app:boxBackgroundMode="filled"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/black"
                 app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/login_password_confirm"
                 app:startIconTint="@color/black">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/signup_email_editText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:includeFontPadding="false"
+                    android:textSize="12sp"
                     android:fontFamily="@font/notosans_regular"
                     android:inputType="textEmailAddress"
                     android:textColor="@color/black"
+                    android:background="@null"
                     android:textCursorDrawable="@null" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
+                android:layout_below="@id/signup_email"
                 android:id="@+id/button3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -217,9 +232,6 @@
                 app:layout_constraintTop_toBottomOf="@id/signup_email"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-        </LinearLayout>
-    </ScrollView>
-
-
-
+        </RelativeLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
