@@ -15,7 +15,6 @@
         android:layout_height="wrap_content" />
     <WebView
         android:layout_below="@id/top_bar"
-        android:layout_marginBottom="30dp"
         android:layout_alignParentBottom="true"
         android:id="@+id/terms_of_use"
         app:layout_constraintTop_toBottomOf="@id/top_bar"
