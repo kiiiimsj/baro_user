@@ -207,7 +207,6 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
                 }
                 final String temp_token = task.getResult().getToken();
                 String phone = String.valueOf(userData.get(SessionManager.KEY_PHONENUMBER));
-                Log.e("qqqqqqqq",temp_token);
                 if (!temp_token.equals(userToken) || phone !=null){
                     new Thread(new Runnable() {
                         @Override
@@ -221,12 +220,11 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
                                     new Response.Listener<JSONObject>() {
                                         @Override
                                         public void onResponse(JSONObject response) {
-                                            Log.e("qqqqqqqqqqqq","qqqqqq");
                                         }
                                     }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-
+                                    Log.e("UPDATEDEVICETOKEN",error.toString());
                                 }
                             });
                             requestQueue.add(jsonObjectRequest);

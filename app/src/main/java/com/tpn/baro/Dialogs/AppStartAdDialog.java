@@ -25,7 +25,13 @@ import com.tpn.baro.Url.UrlMaker;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class AppStartAdDialog {
+    private static final String TAG = "AppStartAdDialog";
     private Context context;
     int eventId = 0;
     String imageStr;
@@ -89,22 +95,47 @@ public class AppStartAdDialog {
     }
 
     private void compareEventIdWithSp() {
-        setClickEvent();
+
         SharedPreferences sf = context.getSharedPreferences("saveEventId", Context.MODE_PRIVATE);
-        int saveEventId = sf.getInt("event_id", 0);
-        if(saveEventId == eventId) {
-            return;
+//        int saveEventId = sf.getInt("event_id", 0);
+//        if(saveEventId == eventId) {
+//            return;
+//        }
+//        else {
+//            dlg.show();
+//            makeRequestForImage();
+//        }
+
+        long now = System.currentTimeMillis();
+        Date mDate = new Date(now);
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
+        String getTime = simpleDate.format(mDate);
+        String prevTime = sf.getString("prevTime","1970-01-01");
+        Log.e(TAG,prevTime);
+        Log.e(TAG,getTime);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            Date date1 = null;
+            try {
+                date1 = simpleDate.parse(prevTime);
+                Date date2 = simpleDate.parse(getTime);
+                if (!date1.equals(date2)) {
+                    dlg.show();
+                    makeRequestForImage();
+                    setClickEvent(prevTime,getTime);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         }
-        else {
-            dlg.show();
-            makeRequestForImage();
-        }
+
     }
-    private void setClickEvent() {
+    private void setClickEvent(String prevTime, final String getTime) {
         closeEver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putInt("event_id", eventId);
+//                editor.putInt("event_id", eventId);
+                editor.putString("prevTime",getTime);
                 editor.apply();
                 editor.commit();
                 dlg.dismiss();
