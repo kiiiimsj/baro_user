@@ -51,7 +51,11 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         email = findViewById(R.id.signup_email);
 
         Intent intent = getIntent();
-        phone = intent.getStringExtra("phone");
+        String phoneStr = intent.getStringExtra("phone");
+
+        assert phoneStr != null;
+        phone ="0"+phoneStr.substring(3);
+        Log.e("phone", phone);
     }
 
     private boolean checkInput() {
@@ -120,8 +124,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         String userNameStr = userName.getEditText().getText().toString();
         String pass1Str = pass1.getEditText().getText().toString();
         String emailStr = email.getEditText().getText().toString();
-        String phoneSubString = "0" + phone.substring(3);
-        RegisterUser registerUser = new RegisterUser(phoneSubString, emailStr, userNameStr, pass1Str);
+        RegisterUser registerUser = new RegisterUser(phone, emailStr, userNameStr, pass1Str);
 
         HashMap<String, String> registerUsers = new HashMap<>();
         registerUsers.put("phone", registerUser.getPhone());
@@ -144,7 +147,11 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
             getResult = jsonObject.getBoolean("result");
             message = jsonObject.getString("message");
             if(getResult) {
+                Log.e("passParsing", "1");
                 makeRequestForInsertCoupon();
+            }
+            else {
+                Toast.makeText(Register2.this, "회원가입 오류 발생\n 문자인증부터 다시 시도부탁드립니다.", Toast.LENGTH_SHORT).show();
             }
             
         }
@@ -159,6 +166,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.e("response",response);
                         CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(Register2.this, Register2.this, null);
                         couponRegisterDialog.outSideMessage = "바로와 함께하시게 되신걸 축하드립니다!\n1000원 할인 쿠폰을 드렸어요!";
                         couponRegisterDialog.callFunction();
@@ -179,6 +187,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.e("response", response);
                         makeRequestForInsertAlertFirstRegister();
                     }
                 },
@@ -190,12 +199,6 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
                 });
         requestQueue.add(stringRequest);
     }
-
-    //    private void storeNewPhoneData() {
-//        FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
-//        DatabaseReference reference = rootNode.getReference("Users");
-//        reference.child(phone).setValue("");
-//    }
     public void makeRequestForRegister(String url, HashMap data) {
         RequestQueue requestQueue = Volley.newRequestQueue(Register2.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(data),
@@ -213,6 +216,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Register2.this, "회원가입 오류 발생\n 문자인증부터 다시 시도부탁드립니다.", Toast.LENGTH_SHORT).show();
                         Log.i("login-error", error.toString());
                     }
                 });

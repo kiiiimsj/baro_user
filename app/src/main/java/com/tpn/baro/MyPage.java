@@ -113,7 +113,8 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         lists.add("비밀번호 변경");
         lists.add("이메일 변경");
         lists.add("이용약관");
-        lists.add("개인정보 처리방침");
+        lists.add("개인정보 취급방침");
+        lists.add("위치정보 이용약관");
     }
     private void setEvent() {
         orderHistoryButton.setOnClickListener(new View.OnClickListener() {
@@ -289,6 +290,12 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
                 Intent intent2 = new Intent(MyPage.this, Terms.class);
                 intent2.putExtra(Terms.SET_WEB_VIEW, Terms.PRIVACY_STATEMENT);
                 startActivity(intent2);
+                CustomIntent.customType(MyPage.this,"left-to-right");
+                break;
+            case 6:
+                Intent intent3 = new Intent(MyPage.this, Terms.class);
+                intent3.putExtra(Terms.SET_WEB_VIEW, Terms.LOCATION_INFORMATION);
+                startActivity(intent3);
                 CustomIntent.customType(MyPage.this,"left-to-right");
                 break;
         }

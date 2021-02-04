@@ -1,6 +1,7 @@
 package com.tpn.baro;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.webkit.WebSettings;
@@ -20,6 +21,8 @@ public class Terms extends AppCompatActivity implements TopBar.OnBackPressedInPa
 
     public final static String SET_WEB_VIEW = "set_web_view";
 
+    public TopBar topBar;
+    private FragmentManager fm;
     private int BRANCH_WEB_VIEW;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,10 @@ public class Terms extends AppCompatActivity implements TopBar.OnBackPressedInPa
         mWebView = (WebView) findViewById(R.id.terms_of_use);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-
+        
+        fm = getSupportFragmentManager();
+        topBar = (TopBar)fm.findFragmentById(R.id.top_bar); 
+                
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -39,12 +45,15 @@ public class Terms extends AppCompatActivity implements TopBar.OnBackPressedInPa
         });
 
         if(BRANCH_WEB_VIEW == LOCATION_INFORMATION) {
+            topBar.setTitleStringWhereUsedEventsAndListStore("위치정보 이용약관");
             mWebView.loadUrl("file:///android_asset/www/location_information.html");
         }
         if(BRANCH_WEB_VIEW == PRIVACY_STATEMENT) {
+            topBar.setTitleStringWhereUsedEventsAndListStore("개인정보 취급방칭");
             mWebView.loadUrl("file:///android_asset/www/privacy_statement.html");
         }
         if(BRANCH_WEB_VIEW == TERMS_OF_SERVICE) {
+            topBar.setTitleStringWhereUsedEventsAndListStore("이용약관");
             mWebView.loadUrl("file:///android_asset/www/terms_of_service.html");
         }
 
