@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,21 +12,31 @@
         android:name="com.tpn.baro.Fragment.TopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" />
-    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-        android:layout_below="@id/top_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <com.tpn.baro.helperClass.LowSensitiveSwipeRefreshLayout
         android:id="@+id/refresh_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         app:srl_direction="bottom"
-        android:layout_above="@id/bottom_menu"
         >
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/orderHistorylist"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/orderHistorylist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </androidx.core.widget.NestedScrollView>
+
+    </com.tpn.baro.helperClass.LowSensitiveSwipeRefreshLayout>
 
 
     <FrameLayout
@@ -34,7 +44,10 @@
         android:name="com.tpn.baro.Fragment.HistoryDetail"
         android:layout_width="300dp"
         android:layout_height="500dp"
-        android:layout_centerInParent="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:layout="@layout/activity_order_history"/>
     <fragment
         android:id="@+id/cart_click_button"
@@ -45,6 +58,8 @@
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="@dimen/order_list_cart_dp"/>
     <fragment
@@ -52,6 +67,8 @@
         android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_gravity="bottom"/>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -39,7 +39,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ListStoreFavoritePage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface {
+public class ListStoreFavoritePage extends AppCompatActivity implements ListStoreAdapter.OnListItemSelectedInterface {
     final private String TAG = this.getClass().getSimpleName();
     ImageView backButton;
 
@@ -115,7 +115,8 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
 //            DataList.add(listStoreHelperClass);
 //        }
 //        DataListForIsOpen.addAll(DataList);
-        adapter = new ListStoreAdapter(favoriteParsings, this, this, this);
+        Log.e("inFavorite", favoriteParsings.getFavorite().size()+"");
+        adapter = new ListStoreAdapter(favoriteParsings, this, this);
         mRecyclerView.setAdapter(adapter);
         progressApplication.progressOFF();
     }
@@ -124,7 +125,6 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         if(!favoriteParsings.isResult() || favoriteParsings.getFavorite().size() == 0) {
             Toast.makeText(ListStoreFavoritePage.this, "가게정보를 받아올 수 없습니다.", Toast.LENGTH_SHORT).show();
             progressApplication.progressOFF();
-            return;
         }else {
             mRecyclerView2();
         }
@@ -189,17 +189,6 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
                 });
         requestQueue.add(request);
     }
-
-    @Override
-    public void onItemLongSelected(View v, int adapterPosition) {
-        ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
-        Intent intent = new Intent(ListStoreFavoritePage.this, StoreInfoReNewer.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
-        intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
-        startActivity(intent);
-    }
-
     @Override
     public void onItemSelected(View v, int position) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);

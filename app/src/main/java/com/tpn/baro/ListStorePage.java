@@ -44,7 +44,7 @@ import maes.tech.intentanim.CustomIntent;
 
 //import com.example.baro.Database.SendToServer;
 
-public class ListStorePage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface , AutoPermissionsListener, TopBar.OnBackPressedInParentActivity {
+public class ListStorePage extends AppCompatActivity implements ListStoreAdapter.OnListItemSelectedInterface , AutoPermissionsListener, TopBar.OnBackPressedInParentActivity {
     private final static int FIRST = 1;
     private final static int AFTER_FIRST =2;
     private final static int ON_RESTART = 3;
@@ -254,7 +254,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         getStoreId.edit().commit();
 
 //        adapter = new ListStoreAdapter(DataListForIsOpen, this, this,  this);
-        adapter = new ListStoreAdapter(listStoreParsing, this, this,  this);
+        adapter = new ListStoreAdapter(listStoreParsing, this,  this);
         mRecyclerView.setAdapter(adapter);
         progressApplication.progressOFF();
         refreshLayout.setRefreshing(false);
@@ -322,16 +322,6 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
             e.printStackTrace();
         }
         return jsonArray;
-    }
-
-    @Override
-    public void onItemLongSelected(View v, int adapterPosition) { // 필요없는기능이라 판단되 막아둠 ( onItemSelected 와 동일한 기능을함)
-//        ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
-//        Intent intent = new Intent(ListStorePage.this, StoreInfoReNewer.class);
-////        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//        intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
-//        intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
-//        startActivity(intent);
     }
     @Override
     public void onItemSelected(View v, int position) {

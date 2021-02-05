@@ -31,6 +31,8 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     String codeBySystem;
     String pageType;
     TextView timer;
+    ProgressApplication progressApplication;
+
     int sec = 120;
     int min;
     @Override
@@ -40,6 +42,9 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
 
         timer = findViewById(R.id.timer);
         pinFromUser = findViewById(R.id.pin_view);
+
+        progressApplication = new ProgressApplication();
+
         Intent intent = getIntent();
         pageType = intent.getStringExtra("pageType");
         phoneNumber = intent.getStringExtra("phone");
@@ -83,7 +88,6 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
                     super.onCodeSent(s, forceResendingToken);
                     codeBySystem = s;
                 }
-
                 @Override
                 public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
                     String code = phoneAuthCredential.getSmsCode();
@@ -92,19 +96,40 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
                         verifyCode(code);
                     }
                 }
-
                 @Override
                 public void onVerificationFailed(@NonNull FirebaseException e) {
-                    Toast.makeText(VerifyOTP.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerifyOTP.this, "인증 메세지 전송에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             };
 
     private void verifyCode(String code) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeBySystem, code);
-        signInWithPhoneAuthCredential(credential);
+        if(credential == null ){
+            progressApplication.progressOFF();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(VerifyOTP.this, "핸드폰 인증에 실패 하였습니다 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            finish();
+        }else {
+            signInWithPhoneAuthCredential(credential);
+        }
     }
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth == null) {
+            progressApplication.progressOFF();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(VerifyOTP.this, "핸드폰 인증에 실패 하였습니다 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            finish();
+        }
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -141,6 +166,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     }
 
     public void onClickVerify(View view) {
+        progressApplication.progressON(this);
         String code = pinFromUser.getText().toString();
         if (!code.isEmpty()) {
             verifyCode(code);
@@ -150,6 +176,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
                 @Override
                 public void run() {
                     Toast.makeText(VerifyOTP.this, "입력코드가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    progressApplication.progressOFF();
                 }
             });
         }

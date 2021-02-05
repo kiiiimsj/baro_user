@@ -27,12 +27,14 @@ public class Register1 extends AppCompatActivity implements TopBar.OnBackPressed
     private final static String KOREA = "+82";
     public TextInputLayout phoneTextInput;
     public Button nextButton;
+    ProgressApplication progressApplication;
 
     String _phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register1);
+        progressApplication = new ProgressApplication();
 
         phoneTextInput = findViewById(R.id.register_phone_number);
         nextButton = findViewById(R.id.next_button);
@@ -42,6 +44,7 @@ public class Register1 extends AppCompatActivity implements TopBar.OnBackPressed
         if(!validateFields()){
             return;
         }
+        progressApplication.progressON(this);
 
         String _getUserEnteredPhoneNumber = phoneTextInput.getEditText().getText().toString().trim(); //Get Phone Number
         if (_getUserEnteredPhoneNumber.charAt(0) == '0') {
@@ -104,13 +107,14 @@ public class Register1 extends AppCompatActivity implements TopBar.OnBackPressed
                     Toast.makeText(Register1.this, "이미 존재하는 핸드폰 입니다.", Toast.LENGTH_LONG).show();
                 }
             });
+            progressApplication.progressOFF();
         }
         else {
             Intent intent = new Intent(Register1.this, VerifyOTP.class);
             intent.putExtra("phone", _phone);
             intent.putExtra("pageType",Register1.this.getClass().getSimpleName());
             startActivity(intent);
-            finish();
+            progressApplication.progressOFF();
         }
     }
 

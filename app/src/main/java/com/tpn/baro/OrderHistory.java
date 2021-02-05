@@ -1,5 +1,6 @@
 package com.tpn.baro;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -25,6 +26,7 @@ import com.tpn.baro.Url.UrlMaker;
 import com.google.gson.Gson;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.tpn.baro.helperClass.LowSensitiveSwipeRefreshLayout;
 
 import java.util.HashMap;
 
@@ -34,7 +36,7 @@ public class OrderHistory extends AppCompatActivity {
     private final static int AFTER_FIRST = 2;
     String phoneNumber;
     int currentPos = 0;
-    SwipyRefreshLayout refreshLayout;
+    LowSensitiveSwipeRefreshLayout refreshLayout;
     SessionManager sessionManager;
     OrderHistoryParsing orderHistoryParsing;
     RecyclerView recyclerView;
@@ -53,7 +55,8 @@ public class OrderHistory extends AppCompatActivity {
         HashMap<String,String> hashMap = sessionManager.getUsersDetailFromSession();
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        refreshLayout.setDistanceToTriggerSync((metrics.heightPixels /4) + 50);
+
+
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
@@ -105,6 +108,7 @@ public class OrderHistory extends AppCompatActivity {
         recyclerView.setAdapter(orderHistoryAdapter);
 
         refreshLayout.setRefreshing(false);
+        progressApplication.progressOFF();
     }
 
     private OrderHistoryParsing jsonParsing(String result, int state) {

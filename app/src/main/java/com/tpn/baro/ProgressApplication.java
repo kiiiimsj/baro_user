@@ -48,7 +48,6 @@ public class ProgressApplication extends Application {
     }
 
     public void progressSET() {
-
         if (progressDialog == null || !progressDialog.isShowing()) {
             return;
         }
