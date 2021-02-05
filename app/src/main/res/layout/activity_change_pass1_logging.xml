@@ -88,6 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
+                android:hint="현재 비밀번호 입력"
                 android:fontFamily="@font/notosans_regular"
                 android:inputType="textPassword"
                 android:textColor="@color/black" />

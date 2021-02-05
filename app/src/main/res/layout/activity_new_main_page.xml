@@ -73,7 +73,7 @@
                 android:background="@drawable/alert_off"
                 />
         </RelativeLayout>
-        <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+        <com.tpn.baro.helperClass.LowSensitiveSwipeRefreshLayout
             android:id="@+id/refreshLayout"
             app:srl_direction="top"
             android:layout_width="match_parent"
@@ -134,7 +134,7 @@
                         />
                 </RelativeLayout>
             </ScrollView>
-        </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+        </com.tpn.baro.helperClass.LowSensitiveSwipeRefreshLayout>
 
 
         <fragment

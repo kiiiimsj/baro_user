@@ -28,41 +28,44 @@ import com.tpn.baro.JsonParsingHelper.ListStoreParsing;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 
+import java.util.List;
+
 public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.ListStoreViewHolder> {
 
-    static public Context context;
-
-    public interface OnListItemLongSelectedInterface{
-        void onItemLongSelected(View v, int adapterPosition);
-    }
-
+    private Context context;
     public interface OnListItemSelectedInterface {
         void onItemSelected(View v, int position);
     }
 
     private static ListStoreAdapter.OnListItemSelectedInterface mListener;
-    private static ListStoreAdapter.OnListItemLongSelectedInterface mLongListener;
 
 
-    static ListStoreParsing listStoreParsing;
-    static FavoriteParsing favoriteParsing;
-    public ListStoreAdapter(ListStoreParsing listStoreParsing, ListStoreAdapter.OnListItemSelectedInterface listener, ListStoreAdapter.OnListItemLongSelectedInterface longListener, Context context){
+    public ListStoreParsing listStoreParsing;
+    public FavoriteParsing favoriteParsing;
+    public ListStoreAdapter(ListStoreParsing listStoreParsing, ListStoreAdapter.OnListItemSelectedInterface listener, Context context){
         this.listStoreParsing = listStoreParsing;
-        this.mListener = listener;
-        this.mLongListener = longListener;
+        this.favoriteParsing = null;
+        mListener = listener;
         this.context = context;
     }
-    public ListStoreAdapter(FavoriteParsing favoriteParsing, ListStoreAdapter.OnListItemSelectedInterface listener, ListStoreAdapter.OnListItemLongSelectedInterface longListener, Context context){
+    public ListStoreAdapter(FavoriteParsing favoriteParsing, ListStoreAdapter.OnListItemSelectedInterface listener, Context context){
         this.favoriteParsing = favoriteParsing;
-        this.mListener = listener;
-        this.mLongListener = longListener;
+        this.listStoreParsing = null;
+        mListener = listener;
         this.context = context;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position;
+        Log.e("position", position+"");
+        return super.getItemViewType(position);
     }
+
+//    @Override
+//    public long getItemId(int position) {
+//        return super.getItemId(position);
+//    }
+
 
     @NonNull
     @Override
@@ -71,7 +74,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.store_design, parent, false);
-        ListStoreViewHolder listStoreViewHolder = new ListStoreViewHolder(view, viewType);
+        ListStoreViewHolder listStoreViewHolder = new ListStoreViewHolder(view);
         return listStoreViewHolder;
     }
 
@@ -80,7 +83,6 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
     public void onBindViewHolder(@NonNull ListStoreAdapter.ListStoreViewHolder holder, int position) {
         if(favoriteParsing != null && favoriteParsing.getFavorite().size() != 0) {
             FavoriteListParsing favoriteStore = favoriteParsing.getFavorite().get(position);
-
             holder.storeName.setText(favoriteStore.getStore_name());
             if (favoriteStore.getDistance() > 1000){
                 holder.mDistance.setText(String.format("%,.1f", ((int)favoriteStore.getDistance() / 100) * 0.1) + "km");
@@ -120,7 +122,6 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             }
             makeRequest(listStoreHelperClass.getStore_image(), context, holder.storeImage);
         }
-       
     }
 
     @Override
@@ -166,7 +167,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
         public TextView isOpen;
         public LinearLayout store;
 
-        public ListStoreViewHolder(@NonNull View itemView, int po) {
+        public ListStoreViewHolder(@NonNull View itemView) {
             super(itemView);
 
             storeName = itemView.findViewById(R.id.store_name);
@@ -179,14 +180,6 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
                 @Override
                 public void onClick(View view) {
                     mListener.onItemSelected(view, getAdapterPosition());
-                }
-            });
-
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    mLongListener.onItemLongSelected(v, getAdapterPosition());
-                    return false;
                 }
             });
         }

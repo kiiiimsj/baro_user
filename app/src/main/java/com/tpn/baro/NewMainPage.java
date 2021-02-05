@@ -53,6 +53,7 @@ import com.tpn.baro.JsonParsingHelper.EventHelperClass;
 import com.tpn.baro.JsonParsingHelper.ListStoreParsing;
 import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.BaroUtil;
+import com.tpn.baro.helperClass.LowSensitiveSwipeRefreshLayout;
 import com.tpn.baro.helperClass.MyGPSListener;
 import com.tpn.baro.helperClass.ViewPagerCustomDuration;
 
@@ -65,7 +66,7 @@ import java.util.HashMap;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.OnListItemLongSelectedInterface, ListStoreAdapter.OnListItemSelectedInterface, AutoPermissionsListener, ActivityCompat.OnRequestPermissionsResultCallback  {
+public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.OnListItemSelectedInterface, AutoPermissionsListener, ActivityCompat.OnRequestPermissionsResultCallback  {
     Gson gson;
     SessionManager userSession;
     HashMap userData = new HashMap<>();
@@ -91,12 +92,13 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
     ImageView call_search;
     ImageView alert;
 
-    SwipyRefreshLayout refreshLayout;
+    LowSensitiveSwipeRefreshLayout refreshLayout;
 
     RecyclerView allStoreList;
     ListStoreAdapter listStoreAdapter;
 
     /////////
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +113,8 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
         gson = new GsonBuilder().create();
 
         viewPager = findViewById(R.id.info_image);
+        viewPager.setNestedScrollingEnabled(false);
+
         eventCountSet = findViewById(R.id.event_count);
 
         alert = findViewById(R.id.alert);
@@ -448,7 +452,6 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("data", response.toString());
                         jsonParsingStoreList(response.toString());
                     }
                 },
@@ -464,19 +467,9 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
     private void jsonParsingStoreList(String toString) {
         ListStoreParsing listStoreParsing = new Gson().fromJson(toString, ListStoreParsing.class);
         allStoreList.setLayoutManager(new LinearLayoutManager(this));
-        listStoreAdapter = new ListStoreAdapter(listStoreParsing, this, this, this);
+        listStoreAdapter = new ListStoreAdapter(listStoreParsing, this, this);
         allStoreList.setAdapter(listStoreAdapter);
     }
-    @Override
-    public void onItemLongSelected(View v, int adapterPosition) { // 필요없는기능이라 판단되 막아둠 ( onItemSelected 와 동일한 기능을함)
-//        ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
-//        Intent intent = new Intent(ListStorePage.this, StoreInfoReNewer.class);
-////        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//        intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
-//        intent.putExtra("store_name", listStoreViewHolder.storeName.getText().toString());
-//        startActivity(intent);
-    }
-
     @Override
     public void onItemSelected(View v, int position) {
         ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)allStoreList.findViewHolderForAdapterPosition(position);
