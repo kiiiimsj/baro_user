@@ -57,7 +57,6 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
 
     @Override
     public int getItemViewType(int position) {
-        Log.e("position", position+"");
         return super.getItemViewType(position);
     }
 

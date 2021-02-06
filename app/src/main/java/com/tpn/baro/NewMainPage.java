@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
@@ -168,13 +169,20 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
                 CustomIntent.customType(NewMainPage.this,"right-to-left");
             }
         });
-        refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+        refreshLayout.setDistanceToTriggerSync(150);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+            public void onRefresh() {
                 latLng = myGPSListener.startLocationService(mAddress);
                 refreshLayout.setRefreshing(false);
             }
         });
+//        refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+//
+//            }
+//        });
         call_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

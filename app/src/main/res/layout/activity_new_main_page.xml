@@ -75,7 +75,6 @@
         </RelativeLayout>
         <com.tpn.baro.helperClass.LowSensitiveSwipeRefreshLayout
             android:id="@+id/refreshLayout"
-            app:srl_direction="top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/bottom_menu"
