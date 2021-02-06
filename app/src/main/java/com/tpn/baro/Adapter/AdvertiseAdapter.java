@@ -59,6 +59,7 @@ public class AdvertiseAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         posi = position;
         final int realIndex = position % eventHelperClass.event.size();
+
         layoutInflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.advertise_design, container, false);
         ImageView imageView = view.findViewById(R.id.slider_image);
