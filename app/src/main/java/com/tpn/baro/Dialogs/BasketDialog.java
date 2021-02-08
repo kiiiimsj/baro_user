@@ -18,9 +18,11 @@ public class BasketDialog {
 
     private Context context;
     private int storeId;
-    public BasketDialog(Context context, int storeId) {
+    private int discountRate;
+    public BasketDialog(Context context, int storeId, int discountRate) {
         this.context = context;
         this.storeId = storeId;
+        this.discountRate = discountRate;
     }
 
     public void callFunction() {
@@ -38,9 +40,11 @@ public class BasketDialog {
             public void onClick(View view) {
                 Intent intent = new Intent(context, Basket.class);
                 intent.putExtra("onDialog", true);
+                intent.putExtra("discount_rate", discountRate);
                 context.startActivity(intent);
 
                 OrderDetails orderDetails = (OrderDetails)OrderDetails.orderDetails;
+
                 orderDetails.finish();
                 CustomIntent.customType(context,"left-to-right");
                 dlg.dismiss();

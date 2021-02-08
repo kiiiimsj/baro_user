@@ -1,15 +1,19 @@
 package com.tpn.baro.Fragment;
 
+import android.animation.Keyframe;
+import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.textclassifier.TextClassifierEvent;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,11 +21,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.motion.widget.KeyFrames;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.events.EventHandler;
 import com.tpn.baro.R;
+import com.tpn.baro.helperClass.BaroUtil;
 
+import java.time.Duration;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
+import java.util.Timer;
 
 public class TopBar extends Fragment {
     View rootView;
@@ -30,7 +41,10 @@ public class TopBar extends Fragment {
     ImageView backButton;
     Button button;
     ImageView etcImage;
+    TextView timer;
+    TextView discountRate;
 
+    Activity activity;
     public interface OnBackPressedInParentActivity {
         void onBack();
     }
@@ -72,11 +86,24 @@ public class TopBar extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        activity = getActivity();
         rootView = inflater.inflate(R.layout.top_bar, container, false);
         title = rootView.findViewById(R.id.title);
         backButton = rootView.findViewById(R.id.back_pressed);
         button = rootView.findViewById(R.id.when_has_button);
         etcImage = rootView.findViewById(R.id.when_has_image);
+        timer = rootView.findViewById(R.id.timer);
+        discountRate = rootView.findViewById(R.id.discount_rate);
+
+        backButton.setVisibility(View.INVISIBLE);
+        timer.setVisibility(View.INVISIBLE);
+        title.setVisibility(View.INVISIBLE);
+        button.setVisibility(View.INVISIBLE);
+        etcImage.setVisibility(View.INVISIBLE);
+        discountRate.setVisibility(View.INVISIBLE);
+
+        //new BaroUtil().fifteenTimer(timer, activity);
+        Log.e("dis", discountRate.getText().toString());
         switch (getTokenActivityName(getActivity().toString())) {
             case "Register1":
             case "Register2":
@@ -86,17 +113,48 @@ public class TopBar extends Fragment {
             case "VerifyOTP":
             case "ChangeEmail":
                 rootView.setBackgroundColor(getResources().getColor(R.color.main));
+                backButton.setVisibility(View.VISIBLE);
+                title.setVisibility(View.VISIBLE);
+
+                backButton.setBackgroundTintMode(PorterDuff.Mode.MULTIPLY);
+                backButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mListener.onBack();
                     }
                 });
-                title.setVisibility(View.INVISIBLE);
-                button.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
                 break;
+            case "Events":
+            case "Terms":
+            case "Alert":
+                backButton.setVisibility(View.VISIBLE);
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onBack();
+                    }
+                });
+                break;
+            case "ListStorePage":
+            case "OrderDetails":
+                backButton.setVisibility(View.VISIBLE);
+                title.setVisibility(View.VISIBLE);
+                timer.setVisibility(View.VISIBLE);
+                discountRate.setVisibility(View.VISIBLE);
+
+                new BaroUtil().fifteenTimer(timer, activity);
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onBack();
+                    }
+                });
+                break;
+
             case "SideMyCoupon":
+                backButton.setVisibility(View.VISIBLE);
+                title.setVisibility(View.VISIBLE);
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -104,10 +162,10 @@ public class TopBar extends Fragment {
                     }
                 });
                 title.setText("내 쿠폰 리스트");
-                button.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "Notice":
+                backButton.setVisibility(View.VISIBLE);
+                title.setVisibility(View.VISIBLE);
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -115,34 +173,11 @@ public class TopBar extends Fragment {
                     }
                 });
                 title.setText("공지사항");
-                button.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
-                break;
-            case "Events":
-            case "ListStorePage":
-            case "OrderDetails":
-            case "Terms":
-                backButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.onBack();
-                    }
-                });
-                button.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
-                break;
-            case "Alert":
-                backButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.onBack();
-                    }
-                });
-                title.setVisibility(View.INVISIBLE);
-                button.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "Alerts":
+                backButton.setVisibility(View.VISIBLE);
+                title.setVisibility(View.VISIBLE);
+
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -150,10 +185,12 @@ public class TopBar extends Fragment {
                     }
                 });
                 title.setText("알 림");
-                button.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "MyMap":
+                backButton.setVisibility(View.VISIBLE);
+                title.setVisibility(View.VISIBLE);
+                button.setVisibility(View.VISIBLE);
+
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -168,9 +205,11 @@ public class TopBar extends Fragment {
                 });
                 title.setText("주변 가게");
                 button.setText("위치 설정");
-                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "NewMyMap":
+                backButton.setVisibility(View.VISIBLE);
+                title.setVisibility(View.VISIBLE);
+
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -178,10 +217,15 @@ public class TopBar extends Fragment {
                     }
                 });
                 title.setText("내 주변 가게");
-                button.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "StoreInfoReNewer":
+                backButton.setVisibility(View.VISIBLE);
+                etcImage.setVisibility(View.VISIBLE);
+                title.setVisibility(View.VISIBLE);
+                timer.setVisibility(View.VISIBLE);
+                discountRate.setVisibility(View.VISIBLE);
+
+                new BaroUtil().fifteenTimer(timer, activity);
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -194,11 +238,12 @@ public class TopBar extends Fragment {
                         clickImageListener.clickImage();
                     }
                 });
-                button.setVisibility(View.INVISIBLE);
                 break;
             case "OrderProgressing":
-                title.setText("주문현황");
+                title.setVisibility(View.VISIBLE);
                 etcImage.setVisibility(View.VISIBLE);
+
+                title.setText("주문현황");
                 etcImage.setBackgroundResource(R.drawable.icon_refresh);
                 etcImage.setBackgroundTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.main)));
                 etcImage.setBackgroundTintMode(PorterDuff.Mode.MULTIPLY);
@@ -215,22 +260,22 @@ public class TopBar extends Fragment {
                         }, 1000);
                     }
                 });
-                backButton.setVisibility(View.INVISIBLE);
-                button.setVisibility(View.INVISIBLE);
                 break;
             case "OrderHistory":
+                title.setVisibility(View.VISIBLE);
                 title.setText("주문내역");
-                button.setVisibility(View.INVISIBLE);
-                backButton.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "MyPage":
+                title.setVisibility(View.VISIBLE);
                 title.setText("마이페이지");
-                backButton.setVisibility(View.INVISIBLE);
-                button.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "Basket":
+                backButton.setVisibility(View.VISIBLE);
+                title.setVisibility(View.VISIBLE);
+                timer.setVisibility(View.VISIBLE);
+                discountRate.setVisibility(View.VISIBLE);
+
+                new BaroUtil().fifteenTimer(timer, activity);
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -238,16 +283,15 @@ public class TopBar extends Fragment {
                     }
                 });
                 title.setText("장바구니");
-                button.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "ListStoreFavoritePage":
+                title.setVisibility(View.VISIBLE);
                 title.setText("찜한가게");
-                backButton.setVisibility(View.INVISIBLE);
-                button.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "MyInfoView":
+                backButton.setVisibility(View.VISIBLE);
+                title.setVisibility(View.VISIBLE);
+
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -255,8 +299,6 @@ public class TopBar extends Fragment {
                     }
                 });
                 title.setText("내 정보 수정");
-                button.setVisibility(View.INVISIBLE);
-                etcImage.setVisibility(View.INVISIBLE);
                 break;
             case "NewMainPage":
                 //no top bar activity
@@ -292,5 +334,8 @@ public class TopBar extends Fragment {
 
     public void setEtcImageWhereUsedStoreInfo(int image) {
         etcImage.setImageResource(image);
+    }
+    public void getDiscountRate(int rate) {
+        discountRate.setText("-"+rate+"%");
     }
 }

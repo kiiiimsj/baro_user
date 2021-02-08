@@ -44,6 +44,8 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     SessionManager sessionManager;
     String _phone;
     String storedIdStr;
+    int discountRate;
+
     TabLayout tabs;
     TextView tabMenu;
     TextView tabStoreInfo;
@@ -54,6 +56,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     StoreMenuFragment storeMenuFragment;
     StoreDetailInfoFragment storeDetailInfoFragment;
     StoreDetail storeDetailData;
+
     Intent myIntent;
 
     FragmentManager fm;
@@ -76,7 +79,12 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
         myIntent = getIntent();
-        storedIdStr=myIntent.getStringExtra("store_id");
+        storedIdStr = myIntent.getStringExtra("store_id");
+        discountRate = myIntent.getIntExtra("discount_rate", 0);
+
+
+        Log.e("discountRate", discountRate+"");
+        topBar.getDiscountRate(discountRate);
         saveFavoriteOnce();
 //        if (_phone.equals("")) {
 //            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_empty);
@@ -308,6 +316,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         fm.beginTransaction().show(storeMenuFragment).commit();
         fm.beginTransaction().hide(storeDetailInfoFragment).commit();
 
+        storeMenuFragment.getDiscountRate = discountRate;
         TextView tv = (TextView)(((LinearLayout)((LinearLayout)tabs.getChildAt(0)).getChildAt(0)).getChildAt(1));
         tv.setTextColor(getResources().getColor(R.color.main));
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

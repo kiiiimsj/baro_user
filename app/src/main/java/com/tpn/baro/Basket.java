@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -108,6 +110,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     String email;
     String user_name;
     String receiptId;
+    int discountRate;
     OrderInsertParsing orderInsertParsing;
     Boolean pay =false;
     private int stuck = 1;
@@ -126,10 +129,15 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
     ProgressApplication progressApplication;
     TextView finalPayValue;
+    TopBar topBar;
+    FragmentManager fm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
+
+        fm = getSupportFragmentManager();
+        topBar = (TopBar)fm.findFragmentById(R.id.top_bar);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
 
@@ -150,6 +158,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         storeName = sharedPreferences.getString("currentStoreName", "");
         StringTokenizer stringTokenizer = new StringTokenizer(storeName, "\"");
         store_id = Integer.parseInt(sharedPreferences.getString("currentStoreId", "0"));
+        discountRate = getIntent().getIntExtra("discount_rate",  0);
         storeNumber = sharedPreferences.getString("currentStoreNumber", "");
         if (store_id == 0) {
             Toast.makeText(this, "잘못된 접근 요청입니다", Toast.LENGTH_LONG);
@@ -180,6 +189,8 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             clarityIsOpenStore();
         }
 
+        topBar.getDiscountRate(discountRate);
+
         // 초기설정 - 해당 프로젝트(안드로이드)의 application id 값을 설정합니다. 결제와 통계를 위해 꼭 필요합니다.
         BootpayAnalytics.init(this, application_id);
 
@@ -207,6 +218,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         Gson gson = new Gson();
         pay = true;
         orderInsertParsing = new OrderInsertParsing();
+        orderInsertParsing.setDiscount_rate(discountRate);
         orderInsertParsing.setPhone(phone);
         orderInsertParsing.setStore_id(store_id);
         orderInsertParsing.setReceipt_id(receiptId);

@@ -65,6 +65,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     TextView totalPriceText;
     String menu_name;
     String menu_code;
+    int discountRate;
     int store_id;
     String store_name;
     String store_number;
@@ -102,6 +103,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         store_id = intent.getExtras().getInt("storeId");
         store_name = intent.getExtras().getString("storeName");
         store_number = intent.getExtras().getString("storeNumber");
+        discountRate = intent.getIntExtra("discount_rate", 0);
 
         arrayList = new ArrayList<>(); // 세부 항목 넣는곳
         arrayList2 = new ArrayList<>(); // 세부 항목 넣는곳
@@ -128,6 +130,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         //--------------------------------------------------------
         itemName.setText(menu_name);
         topBar.setTitleStringWhereUsedEventsAndListStore(store_name);
+        topBar.getDiscountRate(discountRate);
         // 이벤트 심는곳
         fix.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,7 +181,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                         e.printStackTrace();
                     }
                 }
-                final BasketDialog basketDialog = new BasketDialog(OrderDetails.this, store_id);
+                final BasketDialog basketDialog = new BasketDialog(OrderDetails.this, store_id, discountRate);
 
 
                 if (!(sharedPreferences.getString("currentStoreId", "").equals(String.valueOf(store_id)))) {

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="20dp"
+    android:paddingBottom="5dp"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
@@ -28,6 +29,45 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/layout_border_5dp"
+            android:backgroundTint="@color/main"
+            android:backgroundTintMode="multiply"
+            android:textColor="@color/white"
+            android:fontFamily="@font/notosans_light"
+            android:includeFontPadding="false"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:id="@+id/discount_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:paddingHorizontal="5dp"
+            android:layout_toEndOf="@id/timer"
+            android:background="@drawable/layout_border_5dp"
+            android:backgroundTint="@color/orange"
+            android:backgroundTintMode="src_over"
+            android:textColor="@color/white"
+            android:fontFamily="@font/notosans_light"
+            android:includeFontPadding="false"
+            android:textSize="15sp"
+            />
+    </RelativeLayout>
+
     <Button
         android:id="@+id/when_has_button"
         android:layout_width="wrap_content"

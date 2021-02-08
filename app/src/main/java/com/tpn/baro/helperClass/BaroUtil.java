@@ -6,14 +6,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.NeedLoginDialog;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class BaroUtil {
     static SharedPreferences sf;
@@ -73,5 +79,53 @@ public class BaroUtil {
         }
 
         return isClose;
+    }
+    public static String pad(int fieldWidth, char padChar, String s) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = s.length(); i < fieldWidth; i++) {
+            sb.append(padChar);
+        }
+        sb.append(s);
+
+        return sb.toString();
+    }
+    public void fifteenTimer(final TextView timerTextView, final Activity activity) {
+        new Thread((new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void run() {
+                while (true) {
+                    Calendar calendar = GregorianCalendar.getInstance();
+                    String minuteString = BaroUtil.pad(2, '0', calendar.get(Calendar.MINUTE) + "");
+                    String secondString = BaroUtil.pad(2, '0', calendar.get(Calendar.SECOND) +"");
+//                    String milSecondString = BaroUtil.pad(2, '0', calendar.get(Calendar.MILLISECOND) +"");
+                    int minute = 0;
+                    int second = 0;
+
+                    minute = 14 - (Integer.parseInt(minuteString) % 14);
+                    second = 60 - Integer.parseInt(secondString);
+                    if(minute==0 && second ==0) {
+                        activity.onCreate(null,null);
+                    }
+                    try {
+                        Thread.sleep(1000);
+                        if(second == 0) {
+                            second = 60;
+                        }
+                        second--;
+                        final int minuteFinal = minute;
+                        final int secondFinal = second;
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                timerTextView.setText(BaroUtil.pad(2,'0', minuteFinal+"")+":"+BaroUtil.pad(2, '0',secondFinal+""));
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        })).start();
     }
 }
