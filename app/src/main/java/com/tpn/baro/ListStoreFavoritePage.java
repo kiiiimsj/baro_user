@@ -195,6 +195,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
         Intent intent = new Intent(ListStoreFavoritePage.this, StoreInfoReNewer.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
+        intent.putExtra("discount_rate", Integer.parseInt(listStoreViewHolder.discountRate.getText().toString().substring(1, listStoreViewHolder.discountRate.getText().toString().lastIndexOf("%"))));
         startActivity(intent);
     }
     private double getDistance(Location myLocation, Location storeLocation){

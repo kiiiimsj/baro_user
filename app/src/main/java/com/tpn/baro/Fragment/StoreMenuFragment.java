@@ -50,7 +50,7 @@ import java.util.StringTokenizer;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnListItemSelectedInterfaceForMenu, MenuListAdapter.OnListItemLongSelectedInterfaceForMenu {
+public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnListItemSelectedInterfaceForMenu {
     private final static int SEND_CODE = 1;
     //RecyclerView 설정
     TabLayout mCategoryTabLayout;
@@ -78,9 +78,10 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     FragmentManager fm;
     BottomMenu bottomMenu;
     View rootView;
-    public StoreMenuFragment() {
 
-    }
+    public int getDiscountRate;
+
+    public StoreMenuFragment() { }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -148,7 +149,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 DataList.add(listMenuHelperClass);
             }
         }
-        mMenuAdapter = new MenuListAdapter(DataList, this, this, getContext(), storedIdStr);
+        mMenuAdapter = new MenuListAdapter(DataList, this, getContext(), storedIdStr, getDiscountRate);
         mRecyclerViewMenu.setAdapter(mMenuAdapter);
     }
     private void setMRecyclerViewCategory() {
@@ -311,31 +312,27 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         setDrawStoreInfo();
     }
     @Override
-    public void onItemSelectedForMenu(View v, int position) {
+    public void onItemSelectedForMenu(View v, int position, int realPrice) {
         MenuListAdapter.MenuViewHolder viewHolder = (MenuListAdapter.MenuViewHolder)mRecyclerViewMenu.findViewHolderForAdapterPosition(position);
         String getMenuName = viewHolder.menuName.getText().toString();
 
-        String getMenuPrice = viewHolder.menuPrice.getText().toString();
-        StringTokenizer stringTokenizer = new StringTokenizer(getMenuPrice, " 원");
-        String str =stringTokenizer.nextToken();
+//        String getMenuPrice = viewHolder.menuPrice.getText().toString();
+//        StringTokenizer stringTokenizer = new StringTokenizer(getMenuPrice, " 원");
+//        String str =stringTokenizer.nextToken();
 
         String getMenuId = viewHolder.menuId.getText().toString();
 
         Intent intent = new Intent(getActivity(), OrderDetails.class);
         intent.putExtra("menuName", getMenuName);
-        intent.putExtra("menuDefaultPrice", Integer.parseInt(str));
+        intent.putExtra("menuDefaultPrice", realPrice);
         intent.putExtra("menuId", Integer.parseInt(getMenuId));
         intent.putExtra("storeName", storeDetail.getStore_name());
         intent.putExtra("storeId", storeDetail.getStore_id());
         intent.putExtra("storeNumber",storeDetail.getStore_phone());//가게 전화번호
+        intent.putExtra("discount_rate", getDiscountRate);
 
         startActivity(intent);
         CustomIntent.customType(mContext,"left-to-right");
-    }
-
-    @Override
-    public void onItemLongSelectedForMenu(View v, int adapterPosition) {
-
     }
     //--------------------------------------------------------------------------------------
     ///Volley 구간 -----------------------------------------------------------------------
@@ -400,17 +397,4 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         requestQueue.add(request);
     }
     ///Volley 구간 -----------------------------------------------------------------
-
-    public void printLog(String s) {
-        final int MAX_LEN = 2000; // 2000 bytes 마다 끊어서 출력
-        int len = s.length();
-        if(len > MAX_LEN) {
-            int idx = 0, nextIdx = 0;
-            while(idx < len) {
-                nextIdx += MAX_LEN;
-                Log.i("LOG : ", s.substring(idx, nextIdx > len ? len : nextIdx));
-                idx = nextIdx;
-            }
-        }
-    }
 }

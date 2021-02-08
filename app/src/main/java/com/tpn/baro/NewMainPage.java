@@ -88,6 +88,7 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
 
     TextView mAddress;
     TextView eventCountSet;
+    TextView main_timer;
 
     ImageView mMapButton;
     ImageView call_search;
@@ -103,6 +104,7 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("onCreate" , "true");
         setContentView(R.layout.activity_new_main_page);
 
         progressApplication = new ProgressApplication();
@@ -115,7 +117,9 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
 
         viewPager = findViewById(R.id.info_image);
         viewPager.setNestedScrollingEnabled(false);
+        main_timer = findViewById(R.id.main_timer);
 
+        new BaroUtil().fifteenTimer(main_timer, this);
         eventCountSet = findViewById(R.id.event_count);
 
         alert = findViewById(R.id.alert);
@@ -492,6 +496,7 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
             });
         }
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
+        intent.putExtra("discount_rate", Integer.parseInt(listStoreViewHolder.discountRate.getText().toString().substring(1, listStoreViewHolder.discountRate.getText().toString().lastIndexOf("%"))));
         startActivity(intent);
         CustomIntent.customType(this,"left-to-right");
     }

@@ -27,27 +27,24 @@ import java.util.ArrayList;
 
 public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuViewHolder> {
 
-    static public Context context;
-    static public String store_id;
-
-    public interface OnListItemLongSelectedInterfaceForMenu {
-        void onItemLongSelectedForMenu(View v, int adapterPosition);
-    }
+    private Context context;
+    private String store_id;
+    private int discountRate;
 
     public interface OnListItemSelectedInterfaceForMenu {
-        void onItemSelectedForMenu(View v, int position);
+        void onItemSelectedForMenu(View v, int position, int realPrice);
     }
 
     private static OnListItemSelectedInterfaceForMenu mListener;
-    private static OnListItemLongSelectedInterfaceForMenu mLongListener;
 
-    static ArrayList<ListMenuHelperClass> listMenuHelperClasses;
-    public MenuListAdapter(ArrayList<ListMenuHelperClass> list, OnListItemSelectedInterfaceForMenu listener, OnListItemLongSelectedInterfaceForMenu longListener, Context context, String store_id) {
+    private ArrayList<ListMenuHelperClass> listMenuHelperClasses;
+
+    public MenuListAdapter(ArrayList<ListMenuHelperClass> list, OnListItemSelectedInterfaceForMenu listener, Context context, String store_id, int discountRate) {
         listMenuHelperClasses = list;
         mListener = listener;
-        mLongListener = longListener;
         this.context = context;
         this.store_id = store_id;
+        this.discountRate = discountRate;
     }
     @NonNull
     @Override
@@ -59,24 +56,42 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         return menuViewHolder;
     }
     @Override
-    public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
-        ListMenuHelperClass listMenuHelperClass = listMenuHelperClasses.get(position);
+    public void onBindViewHolder(@NonNull MenuViewHolder holder, final int position) {
+        final ListMenuHelperClass listMenuHelperClass = listMenuHelperClasses.get(position);
+        if(discountRate != 0) {
+            holder.menuPrice.setText((int)(listMenuHelperClass.menuPrice - (listMenuHelperClass.menuPrice * (discountRate / 100.0))) +" 원");
+        }else {
+            holder.menuPrice.setText(listMenuHelperClass.menuPrice +" 원");
+        }
 
         holder.menuName.setText(listMenuHelperClass.menus);
-        holder.menuPrice.setText(Integer.toString(listMenuHelperClass.menuPrice)+" 원");
         holder.menuId.setText(Integer.toString(listMenuHelperClass.menuId));
         holder.menuImage.setBackground(Drawable.createFromPath(listMenuHelperClass.menuImage));
+        makeRequest(listMenuHelperClass.menuImage, context, holder.menuImage);
         holder.subscription.setText(listMenuHelperClass.menu_info);
         if(listMenuHelperClass.is_soldout.equals("Y")){
             holder.sold_out.setVisibility(View.VISIBLE);
             holder.background.setClickable(false);
             holder.background.setEnabled(false);
         }
+        holder.background.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onItemSelectedForMenu(v, position, ((int)(listMenuHelperClass.menuPrice - (listMenuHelperClass.menuPrice * (discountRate / 100.0)))) );
+            }
+        });
     }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
     @Override
     public int getItemViewType(int position) {
-        return position;
+        return super.getItemViewType(position);
     }
+
     @Override
     public int getItemCount() {
         return listMenuHelperClasses == null ? 0 : listMenuHelperClasses.size();
@@ -127,27 +142,10 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
             menuImage = itemView.findViewById(R.id.baro_logo);
             subscription = itemView.findViewById(R.id.subscription);
             sold_out = itemView.findViewById(R.id.sold_out);
-
-            ListMenuHelperClass list = listMenuHelperClasses.get(po);
-            makeRequest(list.menuImage, context, menuImage);
-
-            background.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onItemSelectedForMenu(v, getAdapterPosition());
-                }
-            });
-            background.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    mLongListener.onItemLongSelectedForMenu(v, getAdapterPosition());
-                    return false;
-                }
-            });
         }
     }
 
-    public static void makeRequest(String menu_image, Context context, final ImageView image) {
+    public void makeRequest(String menu_image, Context context, final ImageView image) {
         UrlMaker urlMaker = new UrlMaker();
         String lastUrl = "ImageMenu.do?store_id=" + store_id + "&image_name=";
         String url = urlMaker.UrlMake(lastUrl);

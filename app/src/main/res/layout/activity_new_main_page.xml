@@ -72,6 +72,19 @@
                 android:layout_alignTop="@id/baro_logo"
                 android:background="@drawable/alert_off"
                 />
+            <TextView
+                android:id="@+id/main_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/alert"
+                android:layout_alignStart="@id/search_dialog"
+                android:background="@drawable/layout_border_5dp"
+                android:backgroundTint="@color/main"
+                android:backgroundTintMode="multiply"
+                android:textColor="@color/white"
+                android:paddingHorizontal="10dp"
+                />
         </RelativeLayout>
         <com.tpn.baro.helperClass.LowSensitiveSwipeRefreshLayout
             android:id="@+id/refreshLayout"

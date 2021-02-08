@@ -11,6 +11,7 @@ public class OrderInsertParsing {
     private int coupon_id;
     private String order_date;
     private int each_count;
+    int discount_rate;
     private String requests;
 
     public String getRequest() {
@@ -94,5 +95,21 @@ public class OrderInsertParsing {
 
     public void setOrders(ArrayList<OrderInsertParsingChild> orders) {
         this.orders = orders;
+    }
+
+    public int getDiscount_rate() {
+        return discount_rate;
+    }
+
+    public void setDiscount_rate(int discount_rate) {
+        this.discount_rate = discount_rate;
+    }
+
+    public String getRequests() {
+        return requests;
+    }
+
+    public void setRequests(String requests) {
+        this.requests = requests;
     }
 }

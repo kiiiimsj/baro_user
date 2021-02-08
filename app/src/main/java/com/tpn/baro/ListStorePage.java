@@ -337,7 +337,10 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
                 }
             });
         }
+
+
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
+        intent.putExtra("discount_rate", Integer.parseInt(listStoreViewHolder.discountRate.getText().toString().substring(1, listStoreViewHolder.discountRate.getText().toString().lastIndexOf("%"))));
         startActivity(intent);
         CustomIntent.customType(this,"left-to-right");
     }

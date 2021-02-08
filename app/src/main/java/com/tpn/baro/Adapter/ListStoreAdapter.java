@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -98,6 +99,11 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
                     holder.isOpen.setText("영업중");
                 }
             }
+            if(favoriteStore.getDiscount_rate() != 0 ) {
+                holder.discountRate.setText("-"+favoriteStore.getDiscount_rate()+"%");
+            }else {
+                holder.discountRate.setVisibility(View.INVISIBLE);
+            }
             makeRequest(favoriteStore.getStore_image(), context, holder.storeImage);
         }
         if(listStoreParsing != null && listStoreParsing.store.size() != 0) {
@@ -118,6 +124,11 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
                 if(listStoreHelperClass.getIs_open().equals("Y")) {
                     holder.isOpen.setText("영업중");
                 }
+            }
+            if(listStoreHelperClass.getDiscount_rate() != 0 ) {
+                holder.discountRate.setText("-"+listStoreHelperClass.getDiscount_rate()+"%");
+            }else {
+                holder.discountRate.setVisibility(View.INVISIBLE);
             }
             makeRequest(listStoreHelperClass.getStore_image(), context, holder.storeImage);
         }
@@ -164,7 +175,8 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
         public TextView mDistance;
         public TextView storeId;
         public TextView isOpen;
-        public LinearLayout store;
+        public TextView discountRate;
+        public RelativeLayout store;
 
         public ListStoreViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -174,6 +186,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             mDistance = itemView.findViewById(R.id.distance);
             storeId = itemView.findViewById(R.id.store_id);
             isOpen = itemView.findViewById(R.id.is_open);
+            discountRate = itemView.findViewById(R.id.discount_rate);
             store = itemView.findViewById(R.id.store);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
