@@ -103,7 +103,6 @@ public class TopBar extends Fragment {
         discountRate.setVisibility(View.INVISIBLE);
 
         //new BaroUtil().fifteenTimer(timer, activity);
-        Log.e("dis", discountRate.getText().toString());
         switch (getTokenActivityName(getActivity().toString())) {
             case "Register1":
             case "Register2":
@@ -141,7 +140,7 @@ public class TopBar extends Fragment {
                 backButton.setVisibility(View.VISIBLE);
                 title.setVisibility(View.VISIBLE);
                 timer.setVisibility(View.VISIBLE);
-                discountRate.setVisibility(View.VISIBLE);
+                
 
                 new BaroUtil().fifteenTimer(timer, activity);
                 backButton.setOnClickListener(new View.OnClickListener() {
@@ -223,7 +222,7 @@ public class TopBar extends Fragment {
                 etcImage.setVisibility(View.VISIBLE);
                 title.setVisibility(View.VISIBLE);
                 timer.setVisibility(View.VISIBLE);
-                discountRate.setVisibility(View.VISIBLE);
+                
 
                 new BaroUtil().fifteenTimer(timer, activity);
                 backButton.setOnClickListener(new View.OnClickListener() {
@@ -273,7 +272,7 @@ public class TopBar extends Fragment {
                 backButton.setVisibility(View.VISIBLE);
                 title.setVisibility(View.VISIBLE);
                 timer.setVisibility(View.VISIBLE);
-                discountRate.setVisibility(View.VISIBLE);
+                
 
                 new BaroUtil().fifteenTimer(timer, activity);
                 backButton.setOnClickListener(new View.OnClickListener() {
@@ -336,6 +335,12 @@ public class TopBar extends Fragment {
         etcImage.setImageResource(image);
     }
     public void getDiscountRate(int rate) {
+        Log.e("rate", rate+"");
+        if(rate == 0 ) {
+            discountRate.setVisibility(View.GONE);
+        }else {
+            discountRate.setVisibility(View.VISIBLE);
+        }
         discountRate.setText("-"+rate+"%");
     }
 }

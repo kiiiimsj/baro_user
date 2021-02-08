@@ -98,6 +98,7 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
 
     RecyclerView allStoreList;
     ListStoreAdapter listStoreAdapter;
+    ListStoreParsing listStoreParsing;
 
     /////////
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -477,17 +478,17 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
     }
 
     private void jsonParsingStoreList(String toString) {
-        ListStoreParsing listStoreParsing = new Gson().fromJson(toString, ListStoreParsing.class);
+        listStoreParsing = new Gson().fromJson(toString, ListStoreParsing.class);
         allStoreList.setLayoutManager(new LinearLayoutManager(this));
         listStoreAdapter = new ListStoreAdapter(listStoreParsing, this, this);
         allStoreList.setAdapter(listStoreAdapter);
     }
     @Override
     public void onItemSelected(View v, int position) {
-        ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)allStoreList.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(NewMainPage.this, StoreInfoReNewer.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        if(listStoreViewHolder.storeId == null) {
+        Log.e("id ", listStoreParsing.store.get(position).getStore_id()+"");
+        if(listStoreParsing.store.get(position) == null ||listStoreParsing.store.get(position).getStore_id() == 0) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -495,8 +496,9 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
                 }
             });
         }
-        intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
-        intent.putExtra("discount_rate", Integer.parseInt(listStoreViewHolder.discountRate.getText().toString().substring(1, listStoreViewHolder.discountRate.getText().toString().lastIndexOf("%"))));
+        intent.putExtra("store_id", listStoreParsing.store.get(position).getStore_id()+"");
+        //intent.putExtra("discount_rate", Integer.parseInt(listStoreViewHolder.discountRate.getText().toString().substring(1, listStoreViewHolder.discountRate.getText().toString().lastIndexOf("%"))));
+        intent.putExtra("discount_rate", listStoreParsing.store.get(position).getDiscount_rate());
         startActivity(intent);
         CustomIntent.customType(this,"left-to-right");
     }
