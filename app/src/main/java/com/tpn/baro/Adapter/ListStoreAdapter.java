@@ -61,11 +61,10 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
         return super.getItemViewType(position);
     }
 
-//    @Override
-//    public long getItemId(int position) {
-//        return super.getItemId(position);
-//    }
-
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
 
     @NonNull
     @Override
@@ -80,7 +79,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
 
     @SuppressLint({"ResourceAsColor", "NewApi"})
     @Override
-    public void onBindViewHolder(@NonNull ListStoreAdapter.ListStoreViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListStoreAdapter.ListStoreViewHolder holder, final int position) {
         if(favoriteParsing != null && favoriteParsing.getFavorite().size() != 0) {
             FavoriteListParsing favoriteStore = favoriteParsing.getFavorite().get(position);
             holder.storeName.setText(favoriteStore.getStore_name());
@@ -132,6 +131,12 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             }
             makeRequest(listStoreHelperClass.getStore_image(), context, holder.storeImage);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onItemSelected(view, position);
+            }
+        });
     }
 
     @Override
@@ -188,12 +193,6 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
             isOpen = itemView.findViewById(R.id.is_open);
             discountRate = itemView.findViewById(R.id.discount_rate);
             store = itemView.findViewById(R.id.store);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mListener.onItemSelected(view, getAdapterPosition());
-                }
-            });
         }
     }
     public void makeRequest(String store_image, Context context, final ImageView image) {
