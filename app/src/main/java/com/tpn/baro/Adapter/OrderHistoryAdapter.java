@@ -90,6 +90,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 //                Bundle bundle = new Bundle();
                 HistoryDetailDialog fragment = HistoryDetailDialog.newInstance(context);
                 Bundle bundle = fragment.getBundle();
+                bundle.putInt("discount_rate", reverse.getDiscount_rate());
                 bundle.putString("receipt_id",reverse.getReceipt_id());
                 bundle.putString("storeName",reverse.getStore_name());
                 bundle.putString("orderedDate",reverse.getOrder_date());
@@ -151,6 +152,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         TextView totalPrice;
         TextView receipt_id;
         TextView order_state;
+
         RelativeLayout relativeLayout;
         ImageView store_image;
         Button goStore;
@@ -166,6 +168,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             store_image = (itemView).findViewById(R.id.store_image);
             goStore = (itemView).findViewById(R.id.go_to_store);
             goDetail = (itemView).findViewById(R.id.history_detail);
+
             RequestQueue requestQueue = Volley.newRequestQueue(context);
 
             UrlMaker urlMaker = new UrlMaker();

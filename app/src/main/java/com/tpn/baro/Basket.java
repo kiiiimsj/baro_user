@@ -131,10 +131,12 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     TextView finalPayValue;
     TopBar topBar;
     FragmentManager fm;
+    public static boolean onPause = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
+        onPause = false;
 
         fm = getSupportFragmentManager();
         topBar = (TopBar)fm.findFragmentById(R.id.top_bar);
@@ -273,6 +275,11 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             e.printStackTrace();
         }
     }
+    protected void onRestart() {
+        onPause = false;
+        super.onRestart();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -284,6 +291,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
     @Override
     protected void onPause() {
+        onPause = true;
         super.onPause();
         SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

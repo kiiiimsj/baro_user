@@ -14,7 +14,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,8 +40,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
-import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
 import com.tpn.baro.Adapter.AdvertiseAdapter;
@@ -100,12 +97,14 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
     ListStoreAdapter listStoreAdapter;
     ListStoreParsing listStoreParsing;
 
+    public static boolean onPause = false;
     /////////
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("onCreate" , "true");
+        onPause = false;
         setContentView(R.layout.activity_new_main_page);
 
         progressApplication = new ProgressApplication();
@@ -200,8 +199,16 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
     }
 
     @Override
+    protected void onRestart() {
+        onPause = false;
+        new BaroUtil().fifteenTimer(main_timer, this);
+        super.onRestart();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         userData = userSession.getUsersDetailFromSession();
         if(userData.get(SessionManager.KEY_PHONENUMBER) == null) {
@@ -263,6 +270,7 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
 
     @Override
     protected void onPause() {
+        onPause = true;
         super.onPause();
     }
     private void makeRequestForAlerts() {
