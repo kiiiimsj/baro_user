@@ -89,15 +89,14 @@
             android:layout_marginTop="40dp"
             android:layout_below="@id/pin_view"
             android:layout_centerHorizontal="true"
-            android:id="@+id/timer"
+            android:id="@+id/twoMintimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="02 : 00 분"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
         <Button
-            android:layout_below="@id/timer"
+            android:layout_below="@id/twoMintimer"
             android:layout_marginTop="40dp"
             android:id="@+id/verify_button"
             android:layout_width="match_parent"

@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chaos.view.PinView;
 import com.tpn.baro.Fragment.TopBar;
-import com.tpn.baro.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.tpn.baro.helperClass.BaroUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,7 +41,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_o_t_p);
 
-        timer = findViewById(R.id.timer);
+        timer = findViewById(R.id.twoMintimer);
         pinFromUser = findViewById(R.id.pin_view);
 
         progressApplication = new ProgressApplication();
@@ -60,13 +61,23 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                timer.setText(min + " : " +(sec % 60));
+                                timer.setText( (BaroUtil.pad(2, '0', min+"")) + " : " + (BaroUtil.pad(2, '0', (sec% 60+"")))  +" 분");
                             }
                         });
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
+
+                Looper.prepare();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(VerifyOTP.this, "인증시간이 지났습니다. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                Looper.loop();
+                finish();
             }
         }).start();
 

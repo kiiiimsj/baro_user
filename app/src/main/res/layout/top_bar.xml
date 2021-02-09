@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         >
         <TextView
-            android:id="@+id/timer"
+            android:id="@+id/fifteenTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:paddingHorizontal="5dp"
-            android:layout_toEndOf="@id/timer"
+            android:layout_toEndOf="@id/fifteenTimer"
             android:background="@drawable/layout_border_5dp"
             android:backgroundTint="@color/orange"
             android:backgroundTintMode="src_over"

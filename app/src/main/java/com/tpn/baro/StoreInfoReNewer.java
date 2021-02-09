@@ -51,6 +51,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     TextView tabStoreInfo;
 
     boolean result =false;
+    public static boolean onPause = false;
 
     SharedPreferences sp;
     StoreMenuFragment storeMenuFragment;
@@ -66,6 +67,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onPause = false;
         setContentView(R.layout.activity_store_info_re_newer);
         setOnClickFavorite();
         fm = getSupportFragmentManager();
@@ -108,6 +110,10 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         editor.putString("store_id", storedIdStr);
         editor.commit();
     }
+    protected void onRestart() {
+        onPause = false;
+        super.onRestart();
+    }
 
     @Override
     protected void onResume() {
@@ -119,6 +125,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     }
     @Override
     protected void onPause() {
+        onPause = true;
         super.onPause();
 //        overridePendingTransition(0, 0);
     }
