@@ -79,28 +79,9 @@ public class OrderHistory extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setScrollEvent() {
-//        refreshLayout.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-//            @Override
-//            public void onScrollChanged() {
-//                if(refreshLayout.getChildAt(0).getBottom() == (refreshLayout.getHeight() + refreshLayout.getScrollY()) && !isLoading) {
-//                    Log.e("noMoreData", noMoreData+"");
-//                    if(noMoreData) {
-//                        refreshCircle.setVisibility(View.GONE);
-//                    }else {
-//                        refreshCircle.setVisibility(View.VISIBLE);
-//                        isLoading = true;
-//                        currentPos+=20;
-//                        makeRequest(AFTER_FIRST);
-//                    }
-//                    noMoreData = false;
-//                }
-//            }
-//        });
-
         View.OnTouchListener li = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                Log.e("Motion" , motionEvent.getAction()+"");
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_UP:
                         if(refreshLayout.getChildAt(0).getBottom() == (refreshLayout.getHeight() + refreshLayout.getScrollY()) && !isLoading) {
@@ -146,6 +127,7 @@ public class OrderHistory extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(OrderHistory.this, "잠시후에 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
                         refreshCircle.setVisibility(View.GONE);
                         progressApplication.progressOFF();
                     }

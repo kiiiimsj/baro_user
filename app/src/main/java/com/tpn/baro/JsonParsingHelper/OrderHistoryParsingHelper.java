@@ -12,12 +12,21 @@ public class OrderHistoryParsingHelper implements Comparable<OrderHistoryParsing
     private String order_state;
     private String store_id;
     private String store_image;
+    private int coupon_discount;
+
+    public int getCoupon_discount() {
+        return coupon_discount;
+    }
+
+    public void setCoupon_discount(int coupon_discount) {
+        this.coupon_discount = coupon_discount;
+    }
 
     public String getOrder_state() {
         return order_state;
     }
 
-    public OrderHistoryParsingHelper(String order_date, String store_name, String receipt_id, int total_price, int total_count, int discount_rate, String order_state, String store_id, String store_image) {
+    public OrderHistoryParsingHelper(String order_date, String store_name, String receipt_id, int total_price, int total_count, int discount_rate, String order_state, String store_id, String store_image, int coupon_discount) {
         this.order_date = order_date;
         this.store_name = store_name;
         this.receipt_id = receipt_id;
@@ -27,6 +36,7 @@ public class OrderHistoryParsingHelper implements Comparable<OrderHistoryParsing
         this.order_state = order_state;
         this.store_id = store_id;
         this.store_image = store_image;
+        this.coupon_discount = coupon_discount;
     }
 
     public void setOrder_date(String order_date) {
