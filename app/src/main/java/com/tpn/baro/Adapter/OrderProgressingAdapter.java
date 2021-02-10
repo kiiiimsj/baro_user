@@ -85,7 +85,6 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         if(reverse.getOrder_state().equals(ACCEPT)){
             holder.order_state.setText("제 조 중");
             holder.chageViewColor(2);
-
         }
         else if(reverse.getOrder_state().equals(PREPARING)){
             holder.order_state.setText("접 수 대 기");

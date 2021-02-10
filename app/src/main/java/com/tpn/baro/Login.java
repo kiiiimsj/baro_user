@@ -169,29 +169,31 @@ public class Login extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
     public void applyJson(final JSONObject result) {
-        String name = null;
-        String phone = null;
-        String createdDate = null;
-        String email = null;
-        String message = null;
-        boolean result2 = false;
         try {
-            result2 = result.getBoolean("result");
-            name = result.getString("nick");
-            phone = result.getString("phone");
-            createdDate = result.getString("created_date");
-            email = result.getString("email");
+            String name = null;
+            String phone = null;
+            String createdDate = null;
+            String email = null;
+            String message = null;
+
             message = result.getString("message");
+
+            if (result.getBoolean("result")) {
+
+                name = result.getString("nick");
+                phone = result.getString("phone");
+                createdDate = result.getString("created_date");
+                email = result.getString("email");
+
+                userSession.createLoginSession(name, phone, createdDate, email, userToken);
+                finish();
+            }
+            else {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            }
         }
-        catch(JSONException e ) {
-            e.printStackTrace();
-        }
-        if(result2) {
-            userSession.createLoginSession(name, phone, createdDate, email, userToken);
-            finish();
-        }
-        else {
-            Toast.makeText(Login.this, message, Toast.LENGTH_LONG).show();
+       catch(JSONException e){
+        e.printStackTrace();
         }
     }
     private boolean validateFields() {

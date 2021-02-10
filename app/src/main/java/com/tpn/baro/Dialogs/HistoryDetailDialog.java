@@ -52,7 +52,9 @@ public class HistoryDetailDialog extends DialogFragment {
         String receipt_id = getArguments().getString("receipt_id");
         String store_name = getArguments().getString("storeName");
         String ordered_date = getArguments().getString("orderedDate");
+        int discountRate = getArguments().getInt("discount_rate");
         int total_Price = getArguments().getInt("totalPrice");
+
         orderDetail.setVisibility(View.VISIBLE);
         close_btn = orderDetail.findViewById(R.id.close_dialog);
         recyclerView = orderDetail.findViewById(R.id.historyDetailList);

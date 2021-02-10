@@ -52,7 +52,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
         View view = inflater.inflate(R.layout.menu_layout, parent, false);
-        MenuViewHolder menuViewHolder = new MenuViewHolder(view, viewType);
+        MenuViewHolder menuViewHolder = new MenuViewHolder(view);
         return menuViewHolder;
     }
     @Override
@@ -60,8 +60,15 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         final ListMenuHelperClass listMenuHelperClass = listMenuHelperClasses.get(position);
         if(discountRate != 0) {
             holder.menuPrice.setText((int)(listMenuHelperClass.menuPrice - (listMenuHelperClass.menuPrice * (discountRate / 100.0))) +" 원");
+            holder.menuDefaultPrice.setText(listMenuHelperClass.menuPrice+"");
+            holder.menuDefaultPrice.setVisibility(View.VISIBLE);
+            holder.priceCancelImage.setVisibility(View.VISIBLE);
+            holder.arrowRight.setVisibility(View.VISIBLE);
         }else {
             holder.menuPrice.setText(listMenuHelperClass.menuPrice +" 원");
+            holder.menuDefaultPrice.setVisibility(View.GONE);
+            holder.priceCancelImage.setVisibility(View.GONE);
+            holder.arrowRight.setVisibility(View.GONE);
         }
 
         holder.menuName.setText(listMenuHelperClass.menus);
@@ -128,15 +135,25 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
     public static class MenuViewHolder extends RecyclerView.ViewHolder {
         public TextView menuName;
         public TextView menuPrice;
+        public TextView menuDefaultPrice;
+        public ImageView priceCancelImage;
         public TextView menuId;
         public RelativeLayout background;
         public ImageView menuImage;
         public TextView subscription;
         public TextView sold_out;
-        public MenuViewHolder(@NonNull View itemView, int po) {
+        public ImageView arrowRight;
+        public MenuViewHolder(@NonNull View itemView) {
             super(itemView);
             menuName = itemView.findViewById(R.id.menu_button);
             menuPrice = itemView.findViewById(R.id.menu_price);
+            priceCancelImage = itemView.findViewById(R.id.price_cancel_cross_line);
+            menuDefaultPrice = itemView.findViewById(R.id.menu_default_price);
+            arrowRight = itemView.findViewById(R.id.arrow_right);
+            priceCancelImage.setVisibility(View.GONE);
+            menuDefaultPrice.setVisibility(View.GONE);
+            arrowRight.setVisibility(View.GONE);
+
             menuId = itemView.findViewById(R.id.menu_id);
             background = itemView.findViewById(R.id.background);
             menuImage = itemView.findViewById(R.id.baro_logo);

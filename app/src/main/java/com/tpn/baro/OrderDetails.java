@@ -86,10 +86,11 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     ProgressApplication progressApplication;
     TopBar topBar;
     FragmentManager fm;
+    public static boolean onPause = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        onPause = false;
         setContentView(R.layout.activity_order_details);
 
         progressApplication = new ProgressApplication();
@@ -242,6 +243,22 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
             }
         });
 
+    }
+    @Override
+    protected void onRestart() {
+        onPause = false;
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        onPause = true;
+        super.onPause();
     }
 
     private void addNewMenuToBasket(ArrayList<DetailsFixToBasket> detailsFixToBaskets, SharedPreferences.Editor editor){

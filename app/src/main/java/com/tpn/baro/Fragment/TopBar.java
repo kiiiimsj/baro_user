@@ -1,6 +1,5 @@
 package com.tpn.baro.Fragment;
 
-import android.animation.Keyframe;
 import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.textclassifier.TextClassifierEvent;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,20 +19,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.motion.widget.KeyFrames;
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.events.EventHandler;
 import com.tpn.baro.R;
 import com.tpn.baro.helperClass.BaroUtil;
 
-import java.time.Duration;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
-import java.util.Timer;
 
-public class TopBar extends Fragment {
+public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     View rootView;
 
     TextView title;
@@ -45,6 +37,12 @@ public class TopBar extends Fragment {
     TextView discountRate;
 
     Activity activity;
+
+//    @Override
+//    public void reload() {
+//
+//    }
+
     public interface OnBackPressedInParentActivity {
         void onBack();
     }
@@ -92,7 +90,7 @@ public class TopBar extends Fragment {
         backButton = rootView.findViewById(R.id.back_pressed);
         button = rootView.findViewById(R.id.when_has_button);
         etcImage = rootView.findViewById(R.id.when_has_image);
-        timer = rootView.findViewById(R.id.timer);
+        timer = rootView.findViewById(R.id.fifteenTimer);
         discountRate = rootView.findViewById(R.id.discount_rate);
 
         backButton.setVisibility(View.INVISIBLE);
@@ -142,7 +140,7 @@ public class TopBar extends Fragment {
                 timer.setVisibility(View.VISIBLE);
                 
 
-                new BaroUtil().fifteenTimer(timer, activity);
+
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -222,9 +220,7 @@ public class TopBar extends Fragment {
                 etcImage.setVisibility(View.VISIBLE);
                 title.setVisibility(View.VISIBLE);
                 timer.setVisibility(View.VISIBLE);
-                
 
-                new BaroUtil().fifteenTimer(timer, activity);
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -314,13 +310,18 @@ public class TopBar extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        new BaroUtil().fifteenTimer(timer, activity);
+        super.onResume();
+    }
+
     public String getTokenActivityName(String activityName) {
         StringTokenizer stringTokenizer = new StringTokenizer(activityName, ".");
         String getName = "";
         while(stringTokenizer.hasMoreTokens()) {
             getName = stringTokenizer.nextToken();
         }
-
         return new StringTokenizer(getName, "@").nextToken();
     }
 

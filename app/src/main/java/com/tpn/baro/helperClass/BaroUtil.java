@@ -1,12 +1,14 @@
 package com.tpn.baro.helperClass;
 
 import android.app.Activity;
+import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -15,13 +17,23 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
+import com.tpn.baro.Basket;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.NeedLoginDialog;
+import com.tpn.baro.Fragment.TopBar;
+import com.tpn.baro.NewMainPage;
+import com.tpn.baro.OrderDetails;
+import com.tpn.baro.StoreInfoReNewer;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.StringTokenizer;
 
 public class BaroUtil {
+    public interface ReloadActivity {
+        void reload();
+    }
+
     static SharedPreferences sf;
     public static boolean loginCheck(final Activity activity){
         SessionManager sm = new SessionManager(activity, SessionManager.SESSION_USERSESSION);
@@ -77,7 +89,6 @@ public class BaroUtil {
         }else {
             isClose = false;
         }
-
         return isClose;
     }
     public static String pad(int fieldWidth, char padChar, String s) {
@@ -86,15 +97,45 @@ public class BaroUtil {
             sb.append(padChar);
         }
         sb.append(s);
-
         return sb.toString();
     }
-    public void fifteenTimer(final TextView timerTextView, final Activity activity) {
+    public boolean getActivityOnPause(Activity activity) {
+        if(new TopBar().getTokenActivityName(activity.toString()).equals("NewMainPage")) {
+            return NewMainPage.onPause;
+        }
+        if(new TopBar().getTokenActivityName(activity.toString()).equals("StoreInfoReNewer")) {
+            return StoreInfoReNewer.onPause;
+        }
+        if(new TopBar().getTokenActivityName(activity.toString()).equals("OrderDetails")) {
+            return OrderDetails.onPause;
+        }
+        if(new TopBar().getTokenActivityName(activity.toString()).equals("Basket")) {
+            return Basket.onPause;
+        }
+
+        return false;
+    }
+    public boolean checkTopBarTimeThreadActivity(Activity activity) {
+        switch (new TopBar().getTokenActivityName(activity.toString())) {
+            case "NewMainPage":
+            case "StoreInfoReNewer":
+            case "OrderDetails":
+            case "Basket":
+                return true;
+            default:
+                return false;
+        }
+    }
+    public void fifteenTimer(final TextView timerTextView, final Activity activity /*,final ReloadActivity reloadActivity*/) {
+        if(!checkTopBarTimeThreadActivity(activity)) {
+            return;
+        }
         new Thread((new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void run() {
-                while (true) {
+                while (!getActivityOnPause(activity)) {
+                    Log.e("activity : ", activity.toString());
                     Calendar calendar = GregorianCalendar.getInstance();
                     String minuteString = BaroUtil.pad(2, '0', calendar.get(Calendar.MINUTE) + "");
                     String secondString = BaroUtil.pad(2, '0', calendar.get(Calendar.SECOND) +"");
@@ -105,22 +146,29 @@ public class BaroUtil {
                     minute = 14 - (Integer.parseInt(minuteString) % 14);
                     second = 60 - Integer.parseInt(secondString);
                     if(minute==0 && second ==0) {
-                        activity.onCreate(null,null);
+                        /*reloadActivity.reload();*/
+                        Log.e("refresh", true+"");
+//                        activity.finish();
+//                        activity.overridePendingTransition(0, 0);
+//                        activity.startActivity(activity.getIntent());
+//                        activity.overridePendingTransition(0, 0);
                     }
                     try {
                         Thread.sleep(1000);
-                        if(second == 0) {
-                            second = 60;
-                        }
-                        second--;
+//                        if(second == 0) {
+//                            second = 60;
+//                        }
+//                        second--;
                         final int minuteFinal = minute;
                         final int secondFinal = second;
+
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 timerTextView.setText(BaroUtil.pad(2,'0', minuteFinal+"")+":"+BaroUtil.pad(2, '0',secondFinal+""));
                             }
                         });
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
