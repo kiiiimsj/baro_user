@@ -84,6 +84,7 @@ public class HistoryDetailDialog extends DialogFragment {
                 dismissDialog();
             }
         });
+        Log.e("coupon_discount", coupon_discount+"");
         if(discountRate == 0 && coupon_discount == 0) {
             discountPrice.setVisibility(View.GONE);
         }

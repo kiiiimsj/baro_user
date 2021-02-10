@@ -43,7 +43,6 @@ public class ProgressingDetailDialog extends DialogFragment {
     RecyclerView progressDetail;
     Gson gson;
 
-    int totalDiscountPrice = 0;
     OrderProgressDetailParsing orderProgressDetailParsing;
     public static ProgressingDetailDialog newInstance(Context context){
         Bundle bundle = new Bundle();
@@ -59,6 +58,7 @@ public class ProgressingDetailDialog extends DialogFragment {
         final View progressingDetail = getActivity().getLayoutInflater().inflate(R.layout.fragment_progressing_detail, null);
 
         String json = getArguments().getString("json");
+        Log.e("json" , json);
         gson = new Gson();
         OrderProgressingParsingHelper data = gson.fromJson(json,OrderProgressingParsingHelper.class);
 
@@ -87,11 +87,6 @@ public class ProgressingDetailDialog extends DialogFragment {
             }
         });
         store_name.setText(data.getStore_name());
-        if(data.getDiscount_rate() == 0 && data.getCoupon_discount() == 0) {
-            discountPrice.setVisibility(View.GONE);
-        }
-        totalDiscountPrice += data.getCoupon_discount();
-        Log.e("coupon_discount", data.getCoupon_discount()+"");
         progressDetail.setLayoutManager(new LinearLayoutManager(context));
 
         totals.setText("총 결제 금액 : " + data.getTotal_price()+"원");
@@ -140,9 +135,13 @@ public class ProgressingDetailDialog extends DialogFragment {
             OrderProgressDetailParsing.OrderProgressDetailParsingHelper order = orders.get(i);
             dicounted_price += order.getMenu_defaultprice();
         }
+        if(orderProgressDetailParsing.getDiscount_rate() == 0 && orderProgressDetailParsing.getCoupon_discount() == 0) {
+            discountPrice.setVisibility(View.GONE);
+        }
+
         int productOriginPrice = ((dicounted_price * 100) / (100 - discountRate));
 
-        discountPrice.setText("총 할인 금액 : " + (totalDiscountPrice + (productOriginPrice - dicounted_price)) +"원");
+        discountPrice.setText("총 할인 금액 : " + (orderProgressDetailParsing.getCoupon_discount() + (productOriginPrice - dicounted_price)) +"원");
 
     }
 

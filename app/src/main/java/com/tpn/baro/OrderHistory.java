@@ -120,6 +120,7 @@ public class OrderHistory extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
+                        Log.e("response", response);
                         orderHistoryParsing = jsonParsing(response, state);
                         applyAdapter(orderHistoryParsing);
                     }
