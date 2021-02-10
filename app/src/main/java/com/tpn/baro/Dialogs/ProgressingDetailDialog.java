@@ -37,10 +37,13 @@ public class ProgressingDetailDialog extends DialogFragment {
     TextView store_name;
     TextView totals;
     TextView request;
+    TextView discountPrice;
     ImageButton delete_this;
     Button okay;
     RecyclerView progressDetail;
     Gson gson;
+
+    int totalDiscountPrice = 0;
     OrderProgressDetailParsing orderProgressDetailParsing;
     public static ProgressingDetailDialog newInstance(Context context){
         Bundle bundle = new Bundle();
@@ -59,11 +62,13 @@ public class ProgressingDetailDialog extends DialogFragment {
         gson = new Gson();
         OrderProgressingParsingHelper data = gson.fromJson(json,OrderProgressingParsingHelper.class);
 
+        makeRequest(data.getReceipt_id(), data.getDiscount_rate());
         //////////////////////////////
         store_name = progressingDetail.findViewById(R.id.store_name);
         totals = progressingDetail.findViewById(R.id.totals);
         request = progressingDetail.findViewById(R.id.request);
         delete_this = progressingDetail.findViewById(R.id.deleteThis);
+        discountPrice = progressingDetail.findViewById(R.id.discount_price);
         progressDetail = progressingDetail.findViewById(R.id.ProgressDetailList);
         okay = progressingDetail.findViewById(R.id.okay);
 
@@ -82,28 +87,33 @@ public class ProgressingDetailDialog extends DialogFragment {
             }
         });
         store_name.setText(data.getStore_name());
-        totals.setText("총 결제 금액 : " + data.getTotal_price()+"");
+        if(data.getDiscount_rate() == 0 && data.getCoupon_discount() == 0) {
+            discountPrice.setVisibility(View.GONE);
+        }
+        totalDiscountPrice += data.getCoupon_discount();
+        Log.e("coupon_discount", data.getCoupon_discount()+"");
         progressDetail.setLayoutManager(new LinearLayoutManager(context));
 
-
+        totals.setText("총 결제 금액 : " + data.getTotal_price()+"원");
         /////////////////////////////
         builder.setView(progressingDetail);
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        makeRequest(data.getReceipt_id());
+
         return dialog;
     }
 
-    private void makeRequest(final String receipt_id) {
+    private void makeRequest(final String receipt_id, final int discountRate) {
         String url = new UrlMaker().UrlMake("OrderProgressingDetail.do?receipt_id=") + receipt_id;
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.e("response", response);
                         jsonParsing(response);
-                        applyAdapter(orderProgressDetailParsing.getOrders());
+                        applyAdapter(orderProgressDetailParsing.getOrders(), discountRate);
                         if (orderProgressDetailParsing.getRequests().equals("")) {
                             request.setText("요청사항이 없었습니다.");
                         } else {
@@ -121,9 +131,19 @@ public class ProgressingDetailDialog extends DialogFragment {
         requestQueue.add(stringRequest);
     }
 
-    private void applyAdapter(ArrayList<OrderProgressDetailParsing.OrderProgressDetailParsingHelper> orders) {
+    private void applyAdapter(ArrayList<OrderProgressDetailParsing.OrderProgressDetailParsingHelper> orders, int discountRate) {
         ProgressDetailAdapter adapter = new ProgressDetailAdapter(orders,context);
         progressDetail.setAdapter(adapter);
+
+        int dicounted_price = 0;
+        for (int i = 0; i < orders.size() ; i++) {
+            OrderProgressDetailParsing.OrderProgressDetailParsingHelper order = orders.get(i);
+            dicounted_price += order.getMenu_defaultprice();
+        }
+        int productOriginPrice = ((dicounted_price * 100) / (100 - discountRate));
+
+        discountPrice.setText("총 할인 금액 : " + (totalDiscountPrice + (productOriginPrice - dicounted_price)) +"원");
+
     }
 
     private void jsonParsing(String response) {

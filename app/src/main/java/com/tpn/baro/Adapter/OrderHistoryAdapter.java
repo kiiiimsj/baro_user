@@ -86,7 +86,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         holder.goDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 //                Bundle bundle = new Bundle();
                 HistoryDetailDialog fragment = HistoryDetailDialog.newInstance(context);
                 Bundle bundle = fragment.getBundle();
@@ -95,6 +94,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                 bundle.putString("storeName",reverse.getStore_name());
                 bundle.putString("orderedDate",reverse.getOrder_date());
                 bundle.putInt("totalPrice",reverse.getTotal_price());
+                bundle.putInt("coupon_discount", reverse.getCoupon_discount());
                 fragment.show(((AppCompatActivity)context).getSupportFragmentManager(),"dialog");
             }
         });

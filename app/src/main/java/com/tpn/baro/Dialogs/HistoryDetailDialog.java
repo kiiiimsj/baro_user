@@ -22,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.tpn.baro.Adapter.HistoryDetailAdapter;
 import com.tpn.baro.JsonParsingHelper.HistoryDetailParsing;
+import com.tpn.baro.JsonParsingHelper.OrderProgressDetailParsing;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.gson.Gson;
@@ -35,8 +36,11 @@ public class HistoryDetailDialog extends DialogFragment {
     TextView totals;
     TextView store;
     TextView requests;
+    TextView discountPrice;
     HistoryDetailAdapter historyDetailAdapter;
     Button close_btn;
+    int discountRate = 0;
+    int coupon_discount = 0;
     public static HistoryDetailDialog newInstance(Context context) {
         Bundle bundle = new Bundle();
         HistoryDetailDialog fragment = new HistoryDetailDialog();
@@ -52,8 +56,11 @@ public class HistoryDetailDialog extends DialogFragment {
         String receipt_id = getArguments().getString("receipt_id");
         String store_name = getArguments().getString("storeName");
         String ordered_date = getArguments().getString("orderedDate");
-        int discountRate = getArguments().getInt("discount_rate");
+        discountRate = getArguments().getInt("discount_rate");
         int total_Price = getArguments().getInt("totalPrice");
+        coupon_discount = getArguments().getInt("coupon_discount");
+
+        makeRequest(context,receipt_id);
 
         orderDetail.setVisibility(View.VISIBLE);
         close_btn = orderDetail.findViewById(R.id.close_dialog);
@@ -61,6 +68,7 @@ public class HistoryDetailDialog extends DialogFragment {
         requests = orderDetail.findViewById(R.id.request);
         store = orderDetail.findViewById(R.id.store_name);
         totals = orderDetail.findViewById(R.id.totals);
+        discountPrice = orderDetail.findViewById(R.id.discount_price);
         recyclerView.setLayoutManager(new LinearLayoutManager(orderDetail.getContext()));
         deleteThis = orderDetail.findViewById(R.id.deleteThis);
         deleteThis.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +84,12 @@ public class HistoryDetailDialog extends DialogFragment {
                 dismissDialog();
             }
         });
+        if(discountRate == 0 && coupon_discount == 0) {
+            discountPrice.setVisibility(View.GONE);
+        }
+
         totals.setText("총 결제 금액 : " + total_Price+"원");
-        makeRequest(context,receipt_id);
+
         store.setText(store_name);
         builder.setView(orderDetail);
         Dialog dialog = builder.create();
@@ -95,6 +107,7 @@ public class HistoryDetailDialog extends DialogFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
+                        Log.e("response", response);
                         ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> historyDetailParsingHelpers
                                 = jsonParsing(response);
                         applyAdapter(historyDetailParsingHelpers,context);
@@ -122,6 +135,16 @@ public class HistoryDetailDialog extends DialogFragment {
     private void applyAdapter(ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> historyDetailParsingHelpers,Context context){
         historyDetailAdapter = new HistoryDetailAdapter(historyDetailParsingHelpers,context);
         recyclerView.setAdapter(historyDetailAdapter);
+
+        int dicounted_price = 0;
+        for (int i = 0; i < historyDetailParsingHelpers.size() ; i++) {
+            HistoryDetailParsing.HistoryDetailParsingHelper historyDetailParsingHelper = historyDetailParsingHelpers.get(i);
+            dicounted_price += historyDetailParsingHelper.getMenu_defaultprice();
+        }
+
+        int productOriginPrice = ((dicounted_price * 100) / (100 - discountRate));
+
+        discountPrice.setText("총 할인 금액 : " + (coupon_discount +(productOriginPrice-dicounted_price)) +"원");
     }
 
     public Bundle getBundle() {

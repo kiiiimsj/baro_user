@@ -135,33 +135,24 @@ public class BaroUtil {
             @Override
             public void run() {
                 while (!getActivityOnPause(activity)) {
-                    Log.e("activity : ", activity.toString());
+
                     Calendar calendar = GregorianCalendar.getInstance();
                     String minuteString = BaroUtil.pad(2, '0', calendar.get(Calendar.MINUTE) + "");
                     String secondString = BaroUtil.pad(2, '0', calendar.get(Calendar.SECOND) +"");
-//                    String milSecondString = BaroUtil.pad(2, '0', calendar.get(Calendar.MILLISECOND) +"");
-                    int minute = 0;
-                    int second = 0;
-
-                    minute = 14 - (Integer.parseInt(minuteString) % 14);
-                    second = 60 - Integer.parseInt(secondString);
-                    if(minute==0 && second ==0) {
-                        /*reloadActivity.reload();*/
-                        Log.e("refresh", true+"");
-//                        activity.finish();
-//                        activity.overridePendingTransition(0, 0);
-//                        activity.startActivity(activity.getIntent());
-//                        activity.overridePendingTransition(0, 0);
-                    }
+                    Log.i("activity : ", activity.toString()+secondString);
                     try {
                         Thread.sleep(1000);
-//                        if(second == 0) {
-//                            second = 60;
-//                        }
-//                        second--;
-                        final int minuteFinal = minute;
-                        final int secondFinal = second;
+                        final int minuteFinal = 14 - (Integer.parseInt(minuteString) % 15);;
+                        final int secondFinal = 60 - Integer.parseInt(secondString);
 
+                        if(minuteFinal==0 && secondFinal == 1) {
+                            /*reloadActivity.reload();*/
+                            Log.e("refresh", true+"");
+                            activity.finish();
+                            activity.overridePendingTransition(0, 0);
+                            activity.startActivity(activity.getIntent());
+                            activity.overridePendingTransition(0, 0);
+                        }
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

@@ -74,6 +74,7 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.e("response", response);
                         jsonparsing(response);
 
                     }
@@ -82,6 +83,8 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("fail",error.toString());
+                        Toast.makeText(OrderProgressing.this, "잠시후에 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
+                        progressApplication.progressOFF();
                     }
                 });
         requestQueue.add(stringRequest);
