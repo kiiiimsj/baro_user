@@ -143,7 +143,7 @@ public class BaroUtil {
                     try {
                         Thread.sleep(1000);
                         final int minuteFinal = 14 - (Integer.parseInt(minuteString) % 15);;
-                        final int secondFinal = 60 - Integer.parseInt(secondString);
+                        final int secondFinal = 59 - Integer.parseInt(secondString);
 
                         if(minuteFinal==0 && secondFinal == 1) {
                             /*reloadActivity.reload();*/
