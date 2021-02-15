@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/price_cancel_cross_line"
-                android:background="@drawable/layout_cross_line"
+                android:background="@drawable/layout_cancel_line"
                 android:layout_alignEnd="@id/menu_default_price"
                 android:layout_alignStart="@id/menu_default_price"
                 android:layout_alignTop="@id/menu_default_price"
