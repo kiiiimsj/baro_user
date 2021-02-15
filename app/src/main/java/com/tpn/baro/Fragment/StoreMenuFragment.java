@@ -312,7 +312,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         setDrawStoreInfo();
     }
     @Override
-    public void onItemSelectedForMenu(View v, int position, int realPrice) {
+    public void onItemSelectedForMenu(View v, int position, int realPrice, int defaultPrice) {
         MenuListAdapter.MenuViewHolder viewHolder = (MenuListAdapter.MenuViewHolder)mRecyclerViewMenu.findViewHolderForAdapterPosition(position);
         String getMenuName = viewHolder.menuName.getText().toString();
 
@@ -324,7 +324,8 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
 
         Intent intent = new Intent(getActivity(), OrderDetails.class);
         intent.putExtra("menuName", getMenuName);
-        intent.putExtra("menuDefaultPrice", realPrice);
+        intent.putExtra("menuDefaultPrice", defaultPrice);
+        intent.putExtra("realPrice", realPrice);
         intent.putExtra("menuId", Integer.parseInt(getMenuId));
         intent.putExtra("storeName", storeDetail.getStore_name());
         intent.putExtra("storeId", storeDetail.getStore_id());

@@ -162,6 +162,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         store_id = Integer.parseInt(sharedPreferences.getString("currentStoreId", "0"));
         discountRate = getIntent().getIntExtra("discount_rate",  0);
         storeNumber = sharedPreferences.getString("currentStoreNumber", "");
+
         if (store_id == 0) {
             Toast.makeText(this, "잘못된 접근 요청입니다", Toast.LENGTH_LONG);
         }
@@ -232,10 +233,12 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         for (int i = 0; i < detailsFixToBaskets.size(); i++) {
             OrderInsertParsingChild orderInsertParsingChild = new OrderInsertParsingChild();
             DetailsFixToBasket detailsFixToBasket = detailsFixToBaskets.get(i);
+
             orderInsertParsingChild.setMenu_id(detailsFixToBasket.getMenu_id());
             orderInsertParsingChild.setMenu_defaultprice(detailsFixToBasket.getDefaultPrice());
             orderInsertParsingChild.setOrder_count(detailsFixToBasket.getCount());
             orderInsertParsingChild.setMenu_name(detailsFixToBasket.getName());
+
             eachCount+=detailsFixToBasket.getCount();
             OrderInsertParsingChild2 orderInsertParsingChild2 = null;
             ArrayList<OrderInsertParsingChild2> orderInsertParsingChild2s = new ArrayList<>();
@@ -370,7 +373,12 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             if((detailsFixToBaskets.get(i).getName().equals(""))){
                 continue;
             }
-            totalPrice += detailsFixToBaskets.get(i).getPrice();
+            if(detailsFixToBaskets.get(i).getDiscountPrice() == 0 ){
+                totalPrice += detailsFixToBaskets.get(i).getDiscountPrice();
+            }else {
+                totalPrice += detailsFixToBaskets.get(i).getPrice();
+            }
+
         }
         finalPayValue.setText(totalPrice+" 원");
 
@@ -483,7 +491,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.POST, url, 
+        StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

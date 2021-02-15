@@ -10,6 +10,7 @@ public class DetailsFixToBasket {
     private int count;
     private int defaultPrice;
     private int price;
+    private int discountPrice;
     private HashMap<String, ExtraOrder> essentialOptions;
     private HashMap<String, ExtraOrder> nonEssentialoptions;
 
@@ -21,14 +22,23 @@ public class DetailsFixToBasket {
         this.menu_id = menu_id;
     }
 
-    public DetailsFixToBasket(String name, int menu_id, int count, int defaultPrice, int price, HashMap<String, ExtraOrder> essentialOptions, HashMap<String, ExtraOrder> nonEssentialoptions) {
+    public DetailsFixToBasket(String name, int menu_id, int count, int defaultPrice, int price, int discountPrice, HashMap<String, ExtraOrder> essentialOptions, HashMap<String, ExtraOrder> nonEssentialoptions) {
         this.name = name;
         this.menu_id = menu_id;
         this.count = count;
         this.defaultPrice = defaultPrice;
         this.price = price;
+        this.discountPrice = discountPrice;
         this.essentialOptions = essentialOptions;
         this.nonEssentialoptions = nonEssentialoptions;
+    }
+
+    public int getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(int discountPrice) {
+        this.discountPrice = discountPrice;
     }
 
     public int getCount() {
