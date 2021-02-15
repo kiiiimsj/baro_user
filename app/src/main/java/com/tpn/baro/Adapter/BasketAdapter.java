@@ -66,7 +66,12 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
             return;
         }
         ((TextView)holder.itemName.getChildAt(0)).setText(detailsFixToBasket.getName());
-        ((TextView)holder.itemName.getChildAt(1)).setText(""+detailsFixToBasket.getDefaultPrice());
+        if(detailsFixToBasket.getDiscountPrice() != 0 ){
+            ((TextView)holder.itemName.getChildAt(1)).setText(""+detailsFixToBasket.getDiscountPrice());
+        }else {
+            ((TextView)holder.itemName.getChildAt(1)).setText(""+detailsFixToBasket.getDefaultPrice());
+        }
+
         if(essentials.size()!=0) {
             holder.essential.setVisibility(View.VISIBLE);
             iterator = essentials.keySet().iterator();

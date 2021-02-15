@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     ImageView etcImage;
     TextView timer;
     TextView discountRate;
+    RelativeLayout timerLayout;
 
     Activity activity;
 
@@ -91,6 +93,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
         button = rootView.findViewById(R.id.when_has_button);
         etcImage = rootView.findViewById(R.id.when_has_image);
         timer = rootView.findViewById(R.id.fifteenTimer);
+        timerLayout = rootView.findViewById(R.id.timer_layout);
         discountRate = rootView.findViewById(R.id.discount_rate);
 
         backButton.setVisibility(View.INVISIBLE);
@@ -99,8 +102,8 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
         button.setVisibility(View.INVISIBLE);
         etcImage.setVisibility(View.INVISIBLE);
         discountRate.setVisibility(View.INVISIBLE);
+        timerLayout.setVisibility(View.INVISIBLE);
 
-        //new BaroUtil().fifteenTimer(timer, activity);
         switch (getTokenActivityName(getActivity().toString())) {
             case "Register1":
             case "Register2":
@@ -138,8 +141,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
                 backButton.setVisibility(View.VISIBLE);
                 title.setVisibility(View.VISIBLE);
                 timer.setVisibility(View.VISIBLE);
-                
-
+                timerLayout.setVisibility(View.VISIBLE);
 
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -220,6 +222,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
                 etcImage.setVisibility(View.VISIBLE);
                 title.setVisibility(View.VISIBLE);
                 timer.setVisibility(View.VISIBLE);
+                timerLayout.setVisibility(View.VISIBLE);
 
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -268,9 +271,8 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
                 backButton.setVisibility(View.VISIBLE);
                 title.setVisibility(View.VISIBLE);
                 timer.setVisibility(View.VISIBLE);
-                
+                timerLayout.setVisibility(View.VISIBLE);
 
-                new BaroUtil().fifteenTimer(timer, activity);
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

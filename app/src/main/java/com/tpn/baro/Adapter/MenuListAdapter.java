@@ -32,7 +32,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
     private int discountRate;
 
     public interface OnListItemSelectedInterfaceForMenu {
-        void onItemSelectedForMenu(View v, int position, int realPrice);
+        void onItemSelectedForMenu(View v, int position, int realPrice, int defaultPrice);
     }
 
     private static OnListItemSelectedInterfaceForMenu mListener;
@@ -84,7 +84,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         holder.background.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onItemSelectedForMenu(v, position, ((int)(listMenuHelperClass.menuPrice - (listMenuHelperClass.menuPrice * (discountRate / 100.0)))) );
+                mListener.onItemSelectedForMenu(v, position, (int)(listMenuHelperClass.menuPrice - (listMenuHelperClass.menuPrice * (discountRate / 100.0))), listMenuHelperClass.storeMenusPrice.get(position));
             }
         });
     }

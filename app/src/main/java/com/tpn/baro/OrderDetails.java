@@ -66,6 +66,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     String menu_name;
     String menu_code;
     int discountRate;
+    int realPrice;
     int store_id;
     String store_name;
     String store_number;
@@ -105,6 +106,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         store_name = intent.getExtras().getString("storeName");
         store_number = intent.getExtras().getString("storeNumber");
         discountRate = intent.getIntExtra("discount_rate", 0);
+        realPrice = intent.getIntExtra("realPrice", 0);
 
         arrayList = new ArrayList<>(); // 세부 항목 넣는곳
         arrayList2 = new ArrayList<>(); // 세부 항목 넣는곳
@@ -121,7 +123,12 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         itemPlus = findViewById(R.id.itemPlus);
         itemCount = findViewById(R.id.itemCount);
         totalPriceText = findViewById(R.id.totalPrice);
-        totalPriceText.setText(String.valueOf(defaultPrice));
+        if(realPrice == 0) {
+            totalPriceText.setText(String.valueOf(defaultPrice));
+        }else {
+            totalPriceText.setText(String.valueOf(realPrice));
+        }
+
         expandListViewShell = findViewById(R.id.expandListViewShell);
         recyclerViewShell = findViewById(R.id.essentialOptionShell);
         fix = findViewById(R.id.fix);
@@ -164,7 +171,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                     nonEssentialOptionsFixed = nonEssentialAdapter.getNonEssentialOptions();
                 }
 
-                detailsFixToBasket = new DetailsFixToBasket(menu_name, Integer.parseInt(menu_code), menu_count, defaultPrice, totalPrice, essentialOptionFixed, nonEssentialOptionsFixed);
+                detailsFixToBasket = new DetailsFixToBasket(menu_name, Integer.parseInt(menu_code), menu_count, defaultPrice, totalPrice, realPrice, essentialOptionFixed, nonEssentialOptionsFixed);
 
 
                 String inMyBasket = sharedPreferences.getString(Basket.IN_MY_BASEKT, "");
@@ -274,7 +281,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         editor.putString("currentStoreName", gson.toJson(store_name));
         editor.putString("currentStoreId", gson.toJson(store_id));
         editor.putString("currentStoreNumber", gson.toJson(store_id));
-        editor.putString("munuId", gson.toJson(menu_code));
+        editor.putString("menuId", gson.toJson(menu_code));
         editor.commit();
     }
 
