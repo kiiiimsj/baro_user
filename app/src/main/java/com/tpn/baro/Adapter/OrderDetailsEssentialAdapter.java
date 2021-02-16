@@ -27,6 +27,8 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
     private Context context;
     private TextView priceTotal;
     private TextView itemCountText;
+    private int discountRate;
+    private int defaultPrice;
     HashMap<String,ExtraOrder> selectOptions;
     int must;
     int memory;
@@ -35,14 +37,30 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
     public int getMust() {
         return must;
     }
-
+    public interface ChangeDefaultPriceInEssential {
+        void changeEssentialValue(int newDefaultPrice);
+    }
+    public ChangeDefaultPriceInEssential changeDefaultPriceInEssential;
+//    public OrderDetailsEssentialAdapter(ArrayList<String> mData, HashMap<String,ArrayList<ExtraOrder>> mTableData,
+//                                        Context context, TextView priceTotal, TextView itemCountText) {
+//        this.mData = mData;
+//        this.mTableData =mTableData;
+//        this.context = context;
+//        this.priceTotal = priceTotal;
+//        this.itemCountText = itemCountText;
+//        selectOptions = new HashMap<>();
+//        must = 0;
+//    }
     public OrderDetailsEssentialAdapter(ArrayList<String> mData, HashMap<String,ArrayList<ExtraOrder>> mTableData,
-                                        Context context, TextView priceTotal, TextView itemCountText) {
+                                        Context context, TextView priceTotal, TextView itemCountText, int defaultPrice, int discountRate, ChangeDefaultPriceInEssential changeDefaultPriceInEssential) {
         this.mData = mData;
         this.mTableData =mTableData;
         this.context = context;
+        this.defaultPrice = defaultPrice;
+        this.discountRate = discountRate;
         this.priceTotal = priceTotal;
         this.itemCountText = itemCountText;
+        this.changeDefaultPriceInEssential = changeDefaultPriceInEssential;
         selectOptions = new HashMap<>();
         must = 0;
     }
@@ -86,6 +104,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
 //            Log.i("size",String.valueOf(nameList.size()));
 
             if(extraOrders.size() > ONE_ROW){
+                Log.e("Essential", 1+"");
                 parent = (LinearLayout) inflater.inflate(R.layout.activity_order_details_radio, null, false);
                 for(int i = 0;i<extraOrders.size();i++){
                     final ExtraOrder extraOrder = extraOrders.get(i);
@@ -101,10 +120,15 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                             holder.selectedOptions.setText(radioButton.getText());
                             int itemCount = Integer.parseInt(itemCountText.getText().toString());
                             int changePrice = extraOrder.getExtra_price();
-                            int originPrice = Integer.valueOf(priceTotal.getText().toString());
+                            int originPrice = Integer.parseInt(priceTotal.getText().toString());
+                            originPrice = (originPrice * 100) / (100 - discountRate);
+
                             ExtraOrder select = new ExtraOrder(extraOrder.getExtra_id(), extraOrder.getExtra_price(), extraOrder.getExtra_name(), 1);
                             select.setExtra_count(1);
-                            priceTotal.setText(String.valueOf(originPrice + (itemCount * (changePrice - memory))));
+                            defaultPrice = originPrice + (itemCount * (changePrice - memory));
+                            changeDefaultPriceInEssential.changeEssentialValue(defaultPrice);
+                            priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
+
                             selectOptions.put(text, select);
                             memory = changePrice;
                         }
@@ -112,6 +136,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                     ((LinearLayout)parent.getChildAt(0)).addView(radioButton);
                 }
             }else {
+                Log.e("Essential", 2+"");
                 parent = (LinearLayout) inflater.inflate(R.layout.activity_order_details_essential_table_child, null, false);
 
 
@@ -131,10 +156,11 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                         public void onClick(View view) {
                             int itemCount = Integer.parseInt(itemCountText.getText().toString());
                             int changePrice = Integer.parseInt(price.getText().toString());
-                            int originPrice = Integer.valueOf(priceTotal.getText().toString());
+                            int originPrice = Integer.parseInt(priceTotal.getText().toString());
+                            originPrice = (originPrice * 100) / (100 - discountRate);
                             int deletePrice = 0;
                             if (name.isChecked()) {
-
+                                Log.e("Essential", "toggle");
                                 for (int i = 0; i < toggleButtons.size(); i++) {
                                     if (toggleButtons.get(i) != name && toggleButtons.get(i).isChecked()) {
                                         must--;
@@ -147,18 +173,29 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                                 holder.selectedOptions.setText(name.getText().toString() + "(+" + changePrice + "원)");
                                 must++;
                                 HashMap<String, Integer> selectOption = new HashMap<>();
+
                                 ExtraOrder select = new ExtraOrder(Integer.parseInt(id.getText().toString()), Integer.parseInt(price.getText().toString()), name.getText().toString(), 1);
                                 select.setExtra_count(1);
                                 selectOption.put(name.getText().toString(), Integer.parseInt(price.getText().toString()));
                                 selectOptions.put(text, select);
-                                priceTotal.setText(String.valueOf(originPrice + (itemCount * (changePrice - deletePrice))));
+
+                                defaultPrice = originPrice + (itemCount * (changePrice - deletePrice));
+                                changeDefaultPriceInEssential.changeEssentialValue(defaultPrice);
+
+                                priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
+
                                 name.setChecked(true);
                                 name.setBackgroundResource(R.drawable.menu_select);
                                 name.setTextColor(ContextCompat.getColor(context, R.color.white));
                             } else {
+                                Log.e("Essential", "NotToggle");
                                 must--;
                                 holder.selectedOptions.setText("");
-                                priceTotal.setText(String.valueOf(originPrice - (itemCount * changePrice)));
+
+                                defaultPrice = originPrice - (itemCount * changePrice);
+                                changeDefaultPriceInEssential.changeEssentialValue(defaultPrice);
+                                priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
+
                                 name.setBackgroundResource(R.drawable.menu_non_select);
                                 name.setTextColor(ContextCompat.getColor(context, R.color.lightGray));
                             }

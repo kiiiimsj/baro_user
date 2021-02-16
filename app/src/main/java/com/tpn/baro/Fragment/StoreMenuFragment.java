@@ -312,29 +312,32 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         setDrawStoreInfo();
     }
     @Override
-    public void onItemSelectedForMenu(View v, int position, int realPrice, int defaultPrice) {
+    public void onItemSelectedForMenu(View v, int position) {
         MenuListAdapter.MenuViewHolder viewHolder = (MenuListAdapter.MenuViewHolder)mRecyclerViewMenu.findViewHolderForAdapterPosition(position);
         String getMenuName = viewHolder.menuName.getText().toString();
 
-//        String getMenuPrice = viewHolder.menuPrice.getText().toString();
-//        StringTokenizer stringTokenizer = new StringTokenizer(getMenuPrice, " 원");
-//        String str =stringTokenizer.nextToken();
+        String getMenuPrice = viewHolder.menuPrice.getText().toString();
+        StringTokenizer stringTokenizer = new StringTokenizer(getMenuPrice, " 원");
+        int defaultPrice = Integer.parseInt(stringTokenizer.nextToken());
 
         String getMenuId = viewHolder.menuId.getText().toString();
 
+        if(getDiscountRate != 0 ) {
+            defaultPrice = (defaultPrice * 100) / (100 - getDiscountRate);
+        }
         Intent intent = new Intent(getActivity(), OrderDetails.class);
         intent.putExtra("menuName", getMenuName);
         intent.putExtra("menuDefaultPrice", defaultPrice);
-        intent.putExtra("realPrice", realPrice);
         intent.putExtra("menuId", Integer.parseInt(getMenuId));
         intent.putExtra("storeName", storeDetail.getStore_name());
         intent.putExtra("storeId", storeDetail.getStore_id());
         intent.putExtra("storeNumber",storeDetail.getStore_phone());//가게 전화번호
         intent.putExtra("discount_rate", getDiscountRate);
-
+        Log.e("intent", intent.getIntExtra("menuDefaultPrice", 0)+"");
         startActivity(intent);
         CustomIntent.customType(mContext,"left-to-right");
     }
+
     //--------------------------------------------------------------------------------------
     ///Volley 구간 -----------------------------------------------------------------------
     //상점 Volley : StoreFindById.do?store_id=가게id값

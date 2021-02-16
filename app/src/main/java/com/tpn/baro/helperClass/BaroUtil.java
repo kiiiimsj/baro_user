@@ -139,7 +139,7 @@ public class BaroUtil {
                     Calendar calendar = GregorianCalendar.getInstance();
                     String minuteString = BaroUtil.pad(2, '0', calendar.get(Calendar.MINUTE) + "");
                     String secondString = BaroUtil.pad(2, '0', calendar.get(Calendar.SECOND) +"");
-                    Log.i("activity : ", activity.toString()+secondString);
+//                    Log.i("activity : ", activity.toString()+secondString);
                     try {
                         Thread.sleep(1000);
                         final int minuteFinal = 14 - (Integer.parseInt(minuteString) % 15);;
@@ -147,7 +147,7 @@ public class BaroUtil {
 
                         if(minuteFinal==0 && secondFinal == 1) {
                             /*reloadActivity.reload();*/
-                            Log.e("refresh", true+"");
+//                            Log.e("refresh", true+"");
                             activity.finish();
                             activity.overridePendingTransition(0, 0);
                             activity.startActivity(activity.getIntent());

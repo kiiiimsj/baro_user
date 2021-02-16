@@ -52,7 +52,7 @@ import java.util.HashMap;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
+public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity, OrderDetailsEssentialAdapter.ChangeDefaultPriceInEssential, OrderDetailsNonEssentialAdapter.ChangeDefaultPriceNonEssential {
     public static OrderDetails orderDetails;
     ImageView imageView;
     LinearLayout expandListViewShell;
@@ -63,15 +63,19 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     TextView itemName;
     TextView itemCount;
     TextView totalPriceText;
+
     String menu_name;
     String menu_code;
-    int discountRate;
-    int realPrice;
-    int store_id;
     String store_name;
     String store_number;
     int menu_count;
     int totalPrice;
+    int discountRate;
+    int store_id;
+    int menuDefaultPrice;
+
+    int defaultPrice = 0;
+
     HashMap<String, HashMap<String, ArrayList<ExtraOrder>>> essentialOrNot;
     HashMap<String, ArrayList<ExtraOrder>> extraOptions;
     ArrayList<String> arrayList;
@@ -81,9 +85,9 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     DetailsFixToBasket detailsFixToBasket;
     OrderDetailsEssentialAdapter adapter;
     OrderDetailsNonEssentialAdapter nonEssentialAdapter;
-    View v;
+//    View v;
     Button fix;
-    Bitmap bitmap = null;
+//    Bitmap bitmap = null;
     ProgressApplication progressApplication;
     TopBar topBar;
     FragmentManager fm;
@@ -99,14 +103,15 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         orderDetails = OrderDetails.this;
         Intent intent = getIntent();
 
-        final int defaultPrice = intent.getExtras().getInt("menuDefaultPrice");
+        menuDefaultPrice = intent.getExtras().getInt("menuDefaultPrice");
         menu_code = String.valueOf(intent.getExtras().getInt("menuId"));
         menu_name = intent.getExtras().getString("menuName");
         store_id = intent.getExtras().getInt("storeId");
         store_name = intent.getExtras().getString("storeName");
         store_number = intent.getExtras().getString("storeNumber");
         discountRate = intent.getIntExtra("discount_rate", 0);
-        realPrice = intent.getIntExtra("realPrice", 0);
+
+        defaultPrice = menuDefaultPrice;
 
         arrayList = new ArrayList<>(); // 세부 항목 넣는곳
         arrayList2 = new ArrayList<>(); // 세부 항목 넣는곳
@@ -123,10 +128,10 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         itemPlus = findViewById(R.id.itemPlus);
         itemCount = findViewById(R.id.itemCount);
         totalPriceText = findViewById(R.id.totalPrice);
-        if(realPrice == 0) {
+        if(discountRate == 0) {
             totalPriceText.setText(String.valueOf(defaultPrice));
         }else {
-            totalPriceText.setText(String.valueOf(realPrice));
+            totalPriceText.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
         }
 
         expandListViewShell = findViewById(R.id.expandListViewShell);
@@ -160,7 +165,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                     return;
                 }
                 menu_count = Integer.parseInt(itemCount.getText().toString());
-                totalPrice = Integer.parseInt(totalPriceText.getText().toString());
+                totalPrice = defaultPrice;//Integer.parseInt(totalPriceText.getText().toString());
                 HashMap<String, ExtraOrder> essentialOptionFixed = new HashMap<>();
                 if (adapter != null) {
                     essentialOptionFixed = adapter.getSelectOptions();
@@ -171,7 +176,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                     nonEssentialOptionsFixed = nonEssentialAdapter.getNonEssentialOptions();
                 }
 
-                detailsFixToBasket = new DetailsFixToBasket(menu_name, Integer.parseInt(menu_code), menu_count, defaultPrice, totalPrice, realPrice, essentialOptionFixed, nonEssentialOptionsFixed);
+                detailsFixToBasket = new DetailsFixToBasket(menu_name, Integer.parseInt(menu_code), menu_count, menuDefaultPrice, totalPrice, discountRate, essentialOptionFixed, nonEssentialOptionsFixed);
 
 
                 String inMyBasket = sharedPreferences.getString(Basket.IN_MY_BASEKT, "");
@@ -230,12 +235,15 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 
                 int count = Integer.parseInt(itemCount.getText().toString());
                 int currentPrice = Integer.parseInt(totalPriceText.getText().toString()) / count;
+//                int currentPrice = defaultPrice / count;
                 if (count != 1) {
                     count -= 1;
+                    defaultPrice = (currentPrice * count);
                     itemCount.setText(String.valueOf(count));
-                    totalPriceText.setText(String.valueOf(currentPrice * count));
+//                    totalPriceText.setText(String.valueOf(currentPrice * count));
+                    totalPriceText.setText(String.valueOf(defaultPrice));
+                    Log.e("priceMinus", defaultPrice +"");
                 }
-
             }
         });
 
@@ -244,9 +252,13 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
             public void onClick(View view) {
                 int count = Integer.parseInt(itemCount.getText().toString()) + 1;
                 final int currentPrice = Integer.parseInt(totalPriceText.getText().toString()) / (count - 1);
+//                final int currentPrice = defaultPrice / (count - 1);
+                defaultPrice = (currentPrice * count);
 
                 itemCount.setText(String.valueOf(count));
-                totalPriceText.setText(String.valueOf(currentPrice * count));
+//                totalPriceText.setText(String.valueOf(currentPrice * count));
+                totalPriceText.setText(String.valueOf(defaultPrice));
+                Log.e("pricePlus", defaultPrice +"");
             }
         });
 
@@ -361,15 +373,19 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         essentailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (arrayList.size() != 0) {
-            adapter = new OrderDetailsEssentialAdapter(arrayList, essentialOptions, this, totalPriceText, itemCount);
+//            adapter = new OrderDetailsEssentialAdapter(arrayList, essentialOptions, this, totalPriceText, itemCount);
+            adapter = new OrderDetailsEssentialAdapter(arrayList, essentialOptions, this, totalPriceText, itemCount, defaultPrice, discountRate, this);
             essentailRecyclerView.setAdapter(adapter);
         } else {
             recyclerViewShell.setVisibility(View.GONE);
         }
         if (NonEssentialOptionList.size() != 0) {
+//            nonEssentialAdapter =
+//                    new OrderDetailsNonEssentialAdapter(OrderDetails.this, R.layout.activity_order_details_nonessential_group_parent,
+//                            R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount);
             nonEssentialAdapter =
                     new OrderDetailsNonEssentialAdapter(OrderDetails.this, R.layout.activity_order_details_nonessential_group_parent,
-                            R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount);
+                            R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount, defaultPrice , discountRate, this);
             expandableListView.setAdapter(nonEssentialAdapter);
             setListIndicator();
             setExpandableListViewHeight(expandableListView,-1);
@@ -511,7 +527,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
             }
         }
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight +100+ (listView.getDividerHeight() * (listAdapter.getGroupCount() - 1));
+        params.height = totalHeight + 100 + (listView.getDividerHeight() * (listAdapter.getGroupCount() - 1));
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
@@ -519,5 +535,15 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     public void onBack() {
         super.onBackPressed();
         CustomIntent.customType(this,"right-to-left");
+    }
+
+    @Override
+    public void changeNonEssentialValue(int newDefaultPrice) {
+        defaultPrice = newDefaultPrice;
+    }
+
+    @Override
+    public void changeEssentialValue(int newDefaultPrice) {
+        defaultPrice = newDefaultPrice;
     }
 }
