@@ -165,7 +165,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                     return;
                 }
                 menu_count = Integer.parseInt(itemCount.getText().toString());
-                totalPrice = defaultPrice;//Integer.parseInt(totalPriceText.getText().toString());
+                totalPrice = Integer.parseInt(totalPriceText.getText().toString());
                 HashMap<String, ExtraOrder> essentialOptionFixed = new HashMap<>();
                 if (adapter != null) {
                     essentialOptionFixed = adapter.getSelectOptions();
