@@ -1,6 +1,7 @@
 package com.tpn.baro.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ public class OrderDetailsNonEssentialAdapter extends BaseExpandableListAdapter {
     private Context context;
     private int groupLayout = 0;
     private int chlidLayout = 0;
+    private int defaultPrice;
+    private int discountRate;
     private ArrayList<OrderDetailsNonEssential> DataList;
     private LayoutInflater inflater = null;
     private TextView priceTotal;
@@ -27,19 +30,40 @@ public class OrderDetailsNonEssentialAdapter extends BaseExpandableListAdapter {
     private ArrayList<Integer> optionPrice;
     private ArrayList<Integer> optionCounts;
     private HashMap<String, ExtraOrder> nonEssentialOptions;
+    public interface ChangeDefaultPriceNonEssential {
+        void changeNonEssentialValue(int newDefaultPrice);
+    }
 
+    public ChangeDefaultPriceNonEssential changeDefaultPriceNonEssential;
+//    public OrderDetailsNonEssentialAdapter(Context context, int groupLayout, int chlidLayout,
+//                                           ArrayList<OrderDetailsNonEssential> dataList, TextView priceTotal, TextView itemCountText) {
+//        this.context = context;
+//        this.groupLayout = groupLayout;
+//        this.chlidLayout = chlidLayout;
+//        this.DataList = dataList;
+//        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        this.priceTotal = priceTotal;
+//        this.itemCountText = itemCountText;
+//        this.optionPrice = new ArrayList<>();
+//        this.optionCounts = new ArrayList<>();
+//        this.nonEssentialOptions = new HashMap<>();
+//    }
     public OrderDetailsNonEssentialAdapter(Context context, int groupLayout, int chlidLayout,
-                                           ArrayList<OrderDetailsNonEssential> dataList, TextView priceTotal, TextView itemCountText) {
+                                           ArrayList<OrderDetailsNonEssential> dataList, TextView priceTotal
+            , TextView itemCountText, int defaultPrice , int discountRate, ChangeDefaultPriceNonEssential changeDefaultPriceNonEssential) {
         this.context = context;
         this.groupLayout = groupLayout;
         this.chlidLayout = chlidLayout;
         this.DataList = dataList;
+        this.defaultPrice = defaultPrice;
+        this.discountRate = discountRate;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.priceTotal = priceTotal;
         this.itemCountText = itemCountText;
         this.optionPrice = new ArrayList<>();
         this.optionCounts = new ArrayList<>();
         this.nonEssentialOptions = new HashMap<>();
+        this.changeDefaultPriceNonEssential = changeDefaultPriceNonEssential;
     }
 
     public HashMap<String,ExtraOrder> getNonEssentialOptions() {
@@ -116,10 +140,15 @@ public class OrderDetailsNonEssentialAdapter extends BaseExpandableListAdapter {
                 int itemcount = Integer.parseInt(itemCountText.getText().toString());
                 int optionCnt = Integer.parseInt(optionCount.getText().toString());
                 int currentPrice = Integer.parseInt(priceTotal.getText().toString());
+                currentPrice = (currentPrice * 100) / (100 - discountRate);
                 if(optionCnt!=0){
                     optionCnt-=1;
                     optionCount.setText(String.valueOf(optionCnt));
-                    priceTotal.setText(String.valueOf(currentPrice-(itemcount*DataList.get(childPosition).getOptionPrice())));
+                    defaultPrice = currentPrice-(itemcount*DataList.get(childPosition).getOptionPrice());
+                    changeDefaultPriceNonEssential.changeNonEssentialValue(defaultPrice);
+                    Log.e("price ", defaultPrice + "discount_rate " + discountRate);
+                    priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
+
                     ExtraOrder extraOrder = new ExtraOrder(Integer.parseInt(DataList.get(childPosition).ExtraOption_id),
                             DataList.get(childPosition).optionPrice,DataList.get(childPosition).ExtraOptionName,DataList.get(childPosition).getMaxCount());
                     extraOrder.setExtra_count(optionCnt);
@@ -133,13 +162,18 @@ public class OrderDetailsNonEssentialAdapter extends BaseExpandableListAdapter {
                 int itemcount = Integer.parseInt(itemCountText.getText().toString());
                 int optionCnt = Integer.parseInt(optionCount.getText().toString());
                 int currentPrice = Integer.parseInt(priceTotal.getText().toString());
+                currentPrice = (currentPrice * 100) / (100 - discountRate);
                 if (optionCnt == DataList.get(childPosition).getMaxCount()){
                     Toast.makeText(context, "더이상 옵션을 추가할수가 없습니다",Toast.LENGTH_LONG);
                     return;
                 }
                 optionCnt+=1;
                 optionCount.setText(String.valueOf(optionCnt));
-                priceTotal.setText(String.valueOf(currentPrice+(itemcount*DataList.get(childPosition).getOptionPrice())));
+                defaultPrice = currentPrice+(itemcount*DataList.get(childPosition).getOptionPrice());
+                changeDefaultPriceNonEssential.changeNonEssentialValue(defaultPrice);
+                Log.e("price ", defaultPrice + "discount_rate " + discountRate);
+                priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
+
                 ExtraOrder extraOrder = new ExtraOrder(Integer.parseInt(DataList.get(childPosition).ExtraOption_id),DataList.get(childPosition).optionPrice,
                         DataList.get(childPosition).ExtraOptionName,DataList.get(childPosition).getMaxCount());
                 extraOrder.setExtra_count(optionCnt);

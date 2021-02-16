@@ -32,7 +32,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
     private int discountRate;
 
     public interface OnListItemSelectedInterfaceForMenu {
-        void onItemSelectedForMenu(View v, int position, int realPrice, int defaultPrice);
+        void onItemSelectedForMenu(View v, int position);
     }
 
     private static OnListItemSelectedInterfaceForMenu mListener;
@@ -59,7 +59,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
     public void onBindViewHolder(@NonNull MenuViewHolder holder, final int position) {
         final ListMenuHelperClass listMenuHelperClass = listMenuHelperClasses.get(position);
         if(discountRate != 0) {
-            holder.menuPrice.setText((int)(listMenuHelperClass.menuPrice - (listMenuHelperClass.menuPrice * (discountRate / 100.0))) +" 원");
+            holder.menuPrice.setText((listMenuHelperClass.menuPrice - (int)(listMenuHelperClass.menuPrice * (discountRate / 100.0))) +" 원");
             holder.menuDefaultPrice.setText(listMenuHelperClass.menuPrice+"");
             holder.menuDefaultPrice.setVisibility(View.VISIBLE);
             holder.priceCancelImage.setVisibility(View.VISIBLE);
@@ -84,7 +84,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         holder.background.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onItemSelectedForMenu(v, position, (int)(listMenuHelperClass.menuPrice - (listMenuHelperClass.menuPrice * (discountRate / 100.0))), listMenuHelperClass.storeMenusPrice.get(position));
+                mListener.onItemSelectedForMenu(v, position);
             }
         });
     }

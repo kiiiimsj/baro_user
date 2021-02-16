@@ -66,11 +66,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
             return;
         }
         ((TextView)holder.itemName.getChildAt(0)).setText(detailsFixToBasket.getName());
-        if(detailsFixToBasket.getDiscountPrice() != 0 ){
-            ((TextView)holder.itemName.getChildAt(1)).setText(""+detailsFixToBasket.getDiscountPrice());
-        }else {
-            ((TextView)holder.itemName.getChildAt(1)).setText(""+detailsFixToBasket.getDefaultPrice());
-        }
+        ((TextView)holder.itemName.getChildAt(1)).setText(""+detailsFixToBasket.getDefaultPrice());
 
         if(essentials.size()!=0) {
             holder.essential.setVisibility(View.VISIBLE);
@@ -87,11 +83,11 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
             ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(1)).setText("+ " + essentialPrice);
             holder.essential.removeAllViews();
             holder.essential.addView(linearLayout);
-
         }
         else{
             holder.essential.setVisibility(View.GONE);
         }
+
         if(nonEssentials.size()!=0) {
             holder.nonEssential.setVisibility(View.VISIBLE);
             iterator = nonEssentials.keySet().iterator();
@@ -113,9 +109,10 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         }else{
             holder.nonEssential.setVisibility(View.GONE);
         }
-        ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getPrice()+"원 ");
-        ((TextView)holder.priceLinear.getChildAt(2)).setText(" "+detailsFixToBasket.getCount());
-        ((TextView)holder.priceLinear.getChildAt(0)).setText(""+detailsFixToBasket.getPrice()/detailsFixToBasket.getCount()+" 원");
+
+        ((TextView)holder.priceLinear.getChildAt(0)).setText((detailsFixToBasket.getPrice() / detailsFixToBasket.getCount()+"원 " ));
+        ((TextView)holder.priceLinear.getChildAt(2)).setText(detailsFixToBasket.getCount()+"");
+        ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getPrice() + " 원");
         holder.deleteThis.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -143,6 +140,16 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                 }
             }
         });
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
     }
 
     @Override

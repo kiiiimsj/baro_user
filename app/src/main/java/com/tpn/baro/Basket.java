@@ -150,6 +150,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         recyclerViewShell = findViewById(R.id.linearLayout2);
         storeNameTextView = findViewById(R.id.store_name);
         finalPayValue = findViewById(R.id.total_price_final_pay);
+
         SharedPreferences sharedPreferences = getSharedPreferences(BasketList, MODE_PRIVATE);
         SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
@@ -161,6 +162,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         StringTokenizer stringTokenizer = new StringTokenizer(storeName, "\"");
         store_id = Integer.parseInt(sharedPreferences.getString("currentStoreId", "0"));
         discountRate = getIntent().getIntExtra("discount_rate",  0);
+
         storeNumber = sharedPreferences.getString("currentStoreNumber", "");
 
         if (store_id == 0) {
@@ -184,14 +186,13 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             }
         }
         recalculateTotalPrice();
-        finalPayValue.setText(totalPrice+" 원");
+        //finalPayValue.setText(totalPrice+" 원");
         basketAdapter = new BasketAdapter(detailsFixToBaskets, this,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(basketAdapter);
         if(storeName!="") {
             clarityIsOpenStore();
         }
-
         topBar.getDiscountRate(discountRate);
 
         // 초기설정 - 해당 프로젝트(안드로이드)의 application id 값을 설정합니다. 결제와 통계를 위해 꼭 필요합니다.
@@ -373,15 +374,14 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             if((detailsFixToBaskets.get(i).getName().equals(""))){
                 continue;
             }
-            if(detailsFixToBaskets.get(i).getDiscountPrice() == 0 ){
-                totalPrice += detailsFixToBaskets.get(i).getDiscountPrice();
-            }else {
-                totalPrice += detailsFixToBaskets.get(i).getPrice();
-            }
-
+            totalPrice += detailsFixToBaskets.get(i).getPrice();
         }
-        finalPayValue.setText(totalPrice+" 원");
-
+//        if(discountRate != 0) {
+//            finalPayValue.setText(totalPrice - (int)(totalPrice * (discountRate / 100.0 ))+" 원");
+//        }else {
+//            finalPayValue.setText(totalPrice+" 원");
+//        }
+        finalPayValue.setText(totalPrice +" 원");
     }
     public void pressDeleteAll(View view) {
         if (detailsFixToBaskets.size() > 0) {
