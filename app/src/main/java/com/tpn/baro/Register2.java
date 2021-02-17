@@ -3,6 +3,7 @@ package com.tpn.baro;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,8 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
 
     TextInputLayout pass1, pass2, email, userName;
     private String phone;
+
+    SharedPreferences getMarketingPermission;
 
     boolean getResult = false;
     @Override
@@ -124,6 +127,8 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         String userNameStr = userName.getEditText().getText().toString();
         String pass1Str = pass1.getEditText().getText().toString();
         String emailStr = email.getEditText().getText().toString();
+        getMarketingPermission = getSharedPreferences("marketingSnsPermissionSave", MODE_PRIVATE);
+        boolean isCheckMarketing = getMarketingPermission.getBoolean("marketingSnsPermissionSave" , false);
         RegisterUser registerUser = new RegisterUser(phone, emailStr, userNameStr, pass1Str);
 
         HashMap<String, String> registerUsers = new HashMap<>();
@@ -131,6 +136,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         registerUsers.put("email", registerUser.getEmail());
         registerUsers.put("nick", registerUser.getNick());
         registerUsers.put("pass", registerUser.getPass());
+        registerUsers.put("marketing", isCheckMarketing+"");
 
         makeRequestForRegister(urlMaker(), registerUsers);
     }
@@ -217,6 +223,8 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(Register2.this, "회원가입 오류 발생\n 문자인증부터 다시 시도부탁드립니다.", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Register2.this, Register1.class));
+                        finish();
                         Log.i("login-error", error.toString());
                     }
                 });
