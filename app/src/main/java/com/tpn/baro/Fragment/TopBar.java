@@ -16,14 +16,26 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.tpn.baro.OrderHistory;
 import com.tpn.baro.R;
+import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.BaroUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.StringTokenizer;
 
@@ -39,6 +51,8 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     RelativeLayout timerLayout;
 
     Activity activity;
+
+    public int storeId;
 
 //    @Override
 //    public void reload() {
@@ -315,6 +329,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     @Override
     public void onResume() {
         new BaroUtil().fifteenTimer(timer, activity);
+        makeRequestForDiscountRate(storeId);
         super.onResume();
     }
 
@@ -337,13 +352,43 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     public void setEtcImageWhereUsedStoreInfo(int image) {
         etcImage.setImageResource(image);
     }
-    public void getDiscountRate(int rate) {
-        Log.e("rate", rate+"");
-        if(rate == 0 ) {
-            discountRate.setVisibility(View.GONE);
-        }else {
-            discountRate.setVisibility(View.VISIBLE);
+    public int getDiscountRate() {
+        return Integer.parseInt(discountRate.getText().toString().substring(1,3));
+    }
+    public void setDiscountTextView(String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            if(jsonObject.getBoolean("result")) {
+                discountRate.setVisibility(View.VISIBLE);
+                discountRate.setText("-"+jsonObject.getInt("discount_rate")+"%");
+            }else {
+                discountRate.setVisibility(View.GONE);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        discountRate.setText("-"+rate+"%");
+    }
+    public void makeRequestForDiscountRate(int storeId) {
+        //GetStoreDiscount.do?store_id=
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
+        String url = urlMaker.UrlMake(lastUrl);
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        Log.e("response", response);
+                        setDiscountTextView(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(request);
     }
 }
