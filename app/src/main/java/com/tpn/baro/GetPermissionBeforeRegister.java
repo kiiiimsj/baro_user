@@ -2,6 +2,7 @@ package com.tpn.baro;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,8 @@ public class GetPermissionBeforeRegister extends AppCompatActivity {
     CheckBox marketingSnsPermission;
     Button goNextBtn;
 
+    SharedPreferences marketingSnsPermissionSave;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,8 @@ public class GetPermissionBeforeRegister extends AppCompatActivity {
         privacyPermission = findViewById(R.id.user_privacy_permission);
         marketingSnsPermission = findViewById(R.id.marketing_sns_permission);
         goNextBtn = findViewById(R.id.login_button);
+
+        marketingSnsPermissionSave = getSharedPreferences("marketingSnsPermissionSave", MODE_PRIVATE);
 
         mapPermission.setTag("map");
         storagePermission.setTag("storage");
@@ -104,9 +109,10 @@ public class GetPermissionBeforeRegister extends AppCompatActivity {
         if (mapPermission.isChecked() && storagePermission.isChecked() && privacyPermission.isChecked() ) {
             goNextBtn.setBackgroundColor(Color.rgb(131,51,230));
             if (marketingSnsPermission.isChecked()){
+                marketingSnsPermissionSave.edit().putBoolean("marketingSnsPermissionSave", true).apply();
                 allCheck.setChecked(true);
             }else{
-
+                marketingSnsPermissionSave.edit().putBoolean("marketingSnsPermissionSave", false).apply();
             }
         }else{
             goNextBtn.setBackgroundColor(Color.rgb(171,171,171));
