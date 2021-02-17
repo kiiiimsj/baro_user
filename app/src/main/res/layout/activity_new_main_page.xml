@@ -72,46 +72,62 @@
                 android:layout_alignTop="@id/baro_logo"
                 android:background="@drawable/alert_off"
                 />
-            <RelativeLayout
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/header"
+            android:id="@+id/main_timer_layout"
+            android:background="@color/main"
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/baro_discount_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/address"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                >
-                <TextView
-                    android:id="@+id/baro_discount_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:text="BARO 할인"
-                    android:textColor="@color/main"
-                    android:layout_marginEnd="5dp"
-                    android:includeFontPadding="false"
-                    android:fontFamily="@font/notosans_light"
-                    />
-                <TextView
-                    android:id="@+id/main_timer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/baro_discount_label"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/layout_border_5dp"
-                    android:backgroundTint="@color/main"
-                    android:textSize="25sp"
-                    android:backgroundTintMode="multiply"
-                    android:textColor="@color/white"
-                    android:paddingHorizontal="10dp"
-                    />
-            </RelativeLayout>
-
+                android:fontFamily="@font/notosans_light"
+                android:includeFontPadding="false"
+                android:layout_marginEnd="7dp"
+                android:textStyle="normal"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:letterSpacing="-0.03"
+                android:text="스마트 할인이"
+                />
+            <TextView
+                android:id="@+id/main_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/baro_discount_label"
+                android:textSize="16sp"
+                android:layout_alignTop="@id/baro_discount_label"
+                android:layout_alignBottom="@id/baro_discount_label"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/metropolis_bold"
+                android:text="08:30"
+                android:textColor="@color/white"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/main_timer"
+                android:layout_marginStart="7dp"
+                android:fontFamily="@font/notosans_light"
+                android:includeFontPadding="false"
+                android:textStyle="normal"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:letterSpacing="-0.03"
+                android:text="남았어요!"
+                />
         </RelativeLayout>
         <com.tpn.baro.helperClass.LowSensitiveSwipeRefreshLayout
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/bottom_menu"
-            android:layout_below="@id/header">
+            android:layout_below="@id/main_timer_layout">
             <ScrollView
                 android:id="@+id/advertise"
                 android:layout_width="match_parent"

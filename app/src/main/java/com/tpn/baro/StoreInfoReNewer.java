@@ -72,6 +72,8 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         setOnClickFavorite();
         fm = getSupportFragmentManager();
         topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
+
+
         tabs = findViewById(R.id.tab_tabs);
         tabMenu = (TextView)findViewById(R.id.order_history_list);
         tabStoreInfo = (TextView)findViewById(R.id.calc_history_list);
@@ -82,11 +84,12 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
         myIntent = getIntent();
         storedIdStr = myIntent.getStringExtra("store_id");
-        discountRate = myIntent.getIntExtra("discount_rate", 0);
+        topBar.storeId = Integer.parseInt(storedIdStr);
+
+        discountRate = topBar.getDiscountRate();
 
 
         Log.e("discountRate", discountRate+"");
-        topBar.getDiscountRate(discountRate);
         saveFavoriteOnce();
 //        if (_phone.equals("")) {
 //            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_empty);

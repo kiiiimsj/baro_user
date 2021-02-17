@@ -103,13 +103,18 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         orderDetails = OrderDetails.this;
         Intent intent = getIntent();
 
+        fm = getSupportFragmentManager();
+        topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
+        topBar.setTitleStringWhereUsedEventsAndListStore(store_name);
+        topBar.storeId = store_id;
+
         menuDefaultPrice = intent.getExtras().getInt("menuDefaultPrice");
         menu_code = String.valueOf(intent.getExtras().getInt("menuId"));
         menu_name = intent.getExtras().getString("menuName");
         store_id = intent.getExtras().getInt("storeId");
         store_name = intent.getExtras().getString("storeName");
         store_number = intent.getExtras().getString("storeNumber");
-        discountRate = intent.getIntExtra("discount_rate", 0);
+        discountRate = topBar.getDiscountRate();
 
         defaultPrice = menuDefaultPrice;
 
@@ -128,6 +133,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         itemPlus = findViewById(R.id.itemPlus);
         itemCount = findViewById(R.id.itemCount);
         totalPriceText = findViewById(R.id.totalPrice);
+
         if(discountRate == 0) {
             totalPriceText.setText(String.valueOf(defaultPrice));
         }else {
@@ -138,12 +144,10 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         recyclerViewShell = findViewById(R.id.essentialOptionShell);
         fix = findViewById(R.id.fix);
 
-        fm = getSupportFragmentManager();
-        topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
+
         //--------------------------------------------------------
         itemName.setText(menu_name);
-        topBar.setTitleStringWhereUsedEventsAndListStore(store_name);
-        topBar.getDiscountRate(discountRate);
+
         // 이벤트 심는곳
         fix.setOnClickListener(new View.OnClickListener() {
             @Override

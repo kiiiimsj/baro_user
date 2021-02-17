@@ -89,7 +89,7 @@ public class HistoryDetailDialog extends DialogFragment {
             discountPrice.setVisibility(View.GONE);
         }
 
-        totals.setText("총 결제 금액 : " + total_Price+"원");
+        totals.setText("총 결제 금액 : " + total_Price +"원");
 
         store.setText(store_name);
         builder.setView(orderDetail);
