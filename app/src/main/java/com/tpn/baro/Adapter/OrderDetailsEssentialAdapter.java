@@ -129,7 +129,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                             select.setExtra_count(1);
                             defaultPrice = originPrice + (itemCount * (changePrice - memory));
                             changeDefaultPriceInEssential.changeEssentialValue(defaultPrice);
-                            ifDiscountRate.setText(defaultPrice+"");
+                            ifDiscountRate.setText(/*(int)((defaultPrice * 100) / (100 -discountRate))+""*/defaultPrice+"");
                             priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
 
                             selectOptions.put(text, select);
@@ -184,6 +184,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
 
                                 defaultPrice = originPrice + (itemCount * (changePrice - deletePrice));
                                 changeDefaultPriceInEssential.changeEssentialValue(defaultPrice);
+//                                ifDiscountRate.setText((int)((defaultPrice * 100) / (100 -discountRate))+"");
                                 ifDiscountRate.setText(defaultPrice+"");
                                 priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
 
@@ -197,6 +198,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
 
                                 defaultPrice = originPrice - (itemCount * changePrice);
                                 changeDefaultPriceInEssential.changeEssentialValue(defaultPrice);
+//                                ifDiscountRate.setText((int)((defaultPrice * 100) / (100 -discountRate))+"");
                                 ifDiscountRate.setText(defaultPrice+"");
                                 priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
 

@@ -94,8 +94,8 @@ public class HistoryDetailDialog extends DialogFragment {
         if(discountRate == 0) {
             discountRatePrice.setVisibility(View.GONE);
         }
-        discountRatePrice.setText((int)(total_Price * (discountRate / 100.0))+ "원");
-        totals.setText("총 결제 금액 : " + ((total_Price - (int)(total_Price * (discountRate / 100.0))) - coupon_discount) +"원");
+        discountRatePrice.setText("스마트 할인 금액 : "+(int)(total_Price * (discountRate / 100.0))+ "원");
+        totals.setText("총 결제 금액 : " + (total_Price -(int)(total_Price * (discountRate / 100.0)) - coupon_discount) +"원");
 
         store.setText(store_name);
         builder.setView(orderDetail);
@@ -117,7 +117,7 @@ public class HistoryDetailDialog extends DialogFragment {
                         Log.e("response", response);
                         ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> historyDetailParsingHelpers
                                 = jsonParsing(response);
-                        applyAdapter(historyDetailParsingHelpers,context);
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -135,11 +135,12 @@ public class HistoryDetailDialog extends DialogFragment {
         if (historyDetailParsing.getRequests()==null) {
             requests.setText("요청사항이 없었습니다.");
         } else {
+            applyAdapter(historyDetailParsing,context);
             requests.setText(historyDetailParsing.getRequests());
         }
         return historyDetailParsing.getOrders();
     }
-    private void applyAdapter(ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> historyDetailParsingHelpers,Context context){
+    private void applyAdapter(HistoryDetailParsing historyDetailParsingHelpers,Context context){
         historyDetailAdapter = new HistoryDetailAdapter(historyDetailParsingHelpers,context);
         recyclerView.setAdapter(historyDetailAdapter);
 

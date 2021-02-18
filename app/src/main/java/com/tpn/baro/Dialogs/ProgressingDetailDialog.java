@@ -98,8 +98,8 @@ public class ProgressingDetailDialog extends DialogFragment {
             discountRatePrice.setVisibility(View.GONE);
         }
 
-        discountRatePrice.setText((int)(data.getTotal_price() * (data.getDiscount_rate() / 100.0))+"원");
-        totals.setText("총 결제 금액 : " + (data.getTotal_price() - (int)((data.getTotal_price() * (data.getDiscount_rate() / 100.0))) - data.getCoupon_discount())+"원");
+        discountRatePrice.setText("스마트 할인 금액 : "+ (int)(data.getTotal_price() * (data.getDiscount_rate() / 100.0))+"원");
+        totals.setText("총 결제 금액 : " + (data.getTotal_price() - (int)(data.getTotal_price() * (data.getDiscount_rate() / 100.0)) - data.getCoupon_discount())+"원");
         /////////////////////////////
         builder.setView(progressingDetail);
         Dialog dialog = builder.create();

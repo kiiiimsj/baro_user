@@ -17,7 +17,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.tpn.baro.Database.SessionManager;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.CheckInternet;
@@ -31,7 +30,6 @@ import com.google.firebase.iid.InstanceIdResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 public class Login extends AppCompatActivity {
@@ -76,9 +74,10 @@ public class Login extends AppCompatActivity {
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         phone = findViewById(R.id.login_phone);
         password = findViewById(R.id.login_password);
-        rememberUser = findViewById(R.id.map_permission);
+        rememberUser = findViewById(R.id.login_remember);
         phoneEditText = findViewById(R.id.login_phone_editText);
         passwordEditText =findViewById(R.id.login_password_editText);
+
 
         phoneEditText.setOnClickListener(new View.OnClickListener() {
             @Override

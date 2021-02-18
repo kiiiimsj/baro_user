@@ -99,7 +99,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
                 }
             }
             if(favoriteStore.getDiscount_rate() != 0 ) {
-                holder.discountRate.setText("-"+favoriteStore.getDiscount_rate()+"%");
+                holder.discountRate.setText("SALE "+favoriteStore.getDiscount_rate()+"%");
             }else {
                 holder.discountRate.setVisibility(View.INVISIBLE);
             }
@@ -125,7 +125,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
                 }
             }
             if(listStoreHelperClass.getDiscount_rate() != 0 ) {
-                holder.discountRate.setText("-"+listStoreHelperClass.getDiscount_rate()+"%");
+                holder.discountRate.setText("SALE "+listStoreHelperClass.getDiscount_rate()+"%");
             }else {
                 holder.discountRate.setVisibility(View.INVISIBLE);
             }

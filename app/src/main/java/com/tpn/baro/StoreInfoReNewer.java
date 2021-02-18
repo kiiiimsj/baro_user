@@ -84,27 +84,24 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
         myIntent = getIntent();
         storedIdStr = myIntent.getStringExtra("store_id");
-        topBar.storeId = Integer.parseInt(storedIdStr);
 
-        discountRate = topBar.getDiscountRate();
+        myIntent.getIntExtra("discount_rate", 0);
 
+        makeRequestForDiscountRate(Integer.parseInt(storedIdStr));
 
-        Log.e("discountRate", discountRate+"");
+//        discountRate = topBar.storeId = Integer.parseInt(storedIdStr);
         saveFavoriteOnce();
 //        if (_phone.equals("")) {
 //            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_empty);
 //        }else {
 //            checkFavorite();
 //        }
-        setTabEvent();
 //        if (_phone.equals("")) {
 //            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_empty);
 //        }else {
 //            checkFavorite();
 //        }
         makeRequestGetStore(Integer.parseInt(storedIdStr));
-
-
     }
 
     private void saveFavoriteOnce() {
@@ -318,7 +315,40 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         storeDetailData = gson.fromJson(response, StoreDetail.class);
         setTitleName();
     }
+    public void makeRequestForDiscountRate(int storeId) {
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
+        String url = urlMaker.UrlMake(lastUrl);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        Log.e("response", response);
+                        setDiscountTextView(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(request);
+    }
+    public void setDiscountTextView(String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            if(jsonObject.getBoolean("result")) {
+                discountRate = jsonObject.getInt("discount_rate");
+                topBar.setDiscountTextView(discountRate);
+                setTabEvent();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     private void setTabEvent() {
         final FragmentManager fm = getSupportFragmentManager();
         storeMenuFragment = (StoreMenuFragment) fm.findFragmentById(R.id.store_list_fragment);

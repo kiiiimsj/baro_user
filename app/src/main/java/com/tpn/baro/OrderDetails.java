@@ -107,16 +107,15 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 
         fm = getSupportFragmentManager();
         topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
-        topBar.setTitleStringWhereUsedEventsAndListStore(store_name);
-        topBar.storeId = store_id;
-
         menuDefaultPrice = intent.getExtras().getInt("menuDefaultPrice");
         menu_code = String.valueOf(intent.getExtras().getInt("menuId"));
         menu_name = intent.getExtras().getString("menuName");
         store_id = intent.getExtras().getInt("storeId");
         store_name = intent.getExtras().getString("storeName");
         store_number = intent.getExtras().getString("storeNumber");
-        discountRate = topBar.getDiscountRate();
+
+        topBar.setTitleStringWhereUsedEventsAndListStore(store_name);
+        topBar.storeId = store_id;
 
         defaultPrice = menuDefaultPrice;
 
@@ -126,7 +125,9 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         essentialOptions = new HashMap<>();
         nonEssentialOptions = new HashMap<>();
 
-        makeRequest();
+
+
+        makeRequestForDiscountRate(store_id);
         //--------------------------------------------------------
         imageView = findViewById(R.id.baro_logo);
         expandableListView = findViewById(R.id.menuExpand_NotEssential);
@@ -139,15 +140,6 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         ifDiscountRate = findViewById(R.id.if_discount_rate);
         ifDiscountRate.setVisibility(View.GONE);
         totalPriceText = findViewById(R.id.totalPrice);
-
-        if(discountRate == 0) {
-            totalPriceText.setText(String.valueOf(defaultPrice));
-        }else {
-            ifDiscountRate.setVisibility(View.VISIBLE);
-            arrowRight.setVisibility(View.VISIBLE);
-            ifDiscountRate.setText(defaultPrice+"");
-            totalPriceText.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
-        }
 
         expandListViewShell = findViewById(R.id.expandListViewShell);
         recyclerViewShell = findViewById(R.id.essentialOptionShell);
@@ -294,7 +286,48 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         onPause = true;
         super.onPause();
     }
+    public void makeRequestForDiscountRate(int storeId) {
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
+        String url = urlMaker.UrlMake(lastUrl);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        Log.e("response", response);
+                        setDiscountTextView(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(request);
+    }
+    public void setDiscountTextView(String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            if(jsonObject.getBoolean("result")) {
+                discountRate = jsonObject.getInt("discount_rate");
+                topBar.setDiscountTextView(discountRate);
+                if(discountRate == 0) {
+                    totalPriceText.setText(String.valueOf(defaultPrice));
+                }else {
+                    ifDiscountRate.setVisibility(View.VISIBLE);
+                    arrowRight.setVisibility(View.VISIBLE);
+                    ifDiscountRate.setText(defaultPrice+"");
+                    totalPriceText.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
+                    makeRequest();
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     private void addNewMenuToBasket(ArrayList<DetailsFixToBasket> detailsFixToBaskets, SharedPreferences.Editor editor){
         Gson gson = new Gson();
         detailsFixToBaskets.add(detailsFixToBasket);
@@ -554,11 +587,11 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 
     @Override
     public void changeNonEssentialValue(int newDefaultPrice) {
-        defaultPrice = newDefaultPrice;
+//        defaultPrice = newDefaultPrice;
     }
 
     @Override
     public void changeEssentialValue(int newDefaultPrice) {
-        defaultPrice = newDefaultPrice;
+//        defaultPrice = newDefaultPrice;
     }
 }
