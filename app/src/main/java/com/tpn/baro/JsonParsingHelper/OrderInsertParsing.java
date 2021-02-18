@@ -3,16 +3,18 @@ package com.tpn.baro.JsonParsingHelper;
 import java.util.ArrayList;
 
 public class OrderInsertParsing {
-    private String phone;
     private int store_id;
-    private String receipt_id;
     private int total_price;
     private int discount_price;
     private int coupon_id;
-    private String order_date;
     private int each_count;
-    int discount_rate;
+    private int discount_rate;
+    private String phone;
+    private String receipt_id;
+    private String order_date;
     private String requests;
+
+
 
     public String getRequest() {
         return requests;

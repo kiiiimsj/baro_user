@@ -140,6 +140,8 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
         fm = getSupportFragmentManager();
         topBar = (TopBar)fm.findFragmentById(R.id.top_bar);
+        topBar.storeId = store_id;
+
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
 
@@ -161,7 +163,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         storeName = sharedPreferences.getString("currentStoreName", "");
         StringTokenizer stringTokenizer = new StringTokenizer(storeName, "\"");
         store_id = Integer.parseInt(sharedPreferences.getString("currentStoreId", "0"));
-        discountRate = getIntent().getIntExtra("discount_rate",  0);
+        discountRate = topBar.getDiscountRate();
 
         storeNumber = sharedPreferences.getString("currentStoreNumber", "");
 
@@ -193,7 +195,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         if(storeName!="") {
             clarityIsOpenStore();
         }
-        topBar.getDiscountRate(discountRate);
 
         // 초기설정 - 해당 프로젝트(안드로이드)의 application id 값을 설정합니다. 결제와 통계를 위해 꼭 필요합니다.
         BootpayAnalytics.init(this, application_id);
@@ -234,7 +235,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         for (int i = 0; i < detailsFixToBaskets.size(); i++) {
             OrderInsertParsingChild orderInsertParsingChild = new OrderInsertParsingChild();
             DetailsFixToBasket detailsFixToBasket = detailsFixToBaskets.get(i);
-
             orderInsertParsingChild.setMenu_id(detailsFixToBasket.getMenu_id());
             orderInsertParsingChild.setMenu_defaultprice(detailsFixToBasket.getDefaultPrice());
             orderInsertParsingChild.setOrder_count(detailsFixToBasket.getCount());
@@ -305,8 +305,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             editor.remove("currentStoreName");
             editor.remove("currentStoreId");
             editor.commit();
-
-
         }
         else if(!pay) {
             Gson gson = new Gson();

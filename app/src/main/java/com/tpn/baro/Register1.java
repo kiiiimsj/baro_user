@@ -114,6 +114,7 @@ public class Register1 extends AppCompatActivity implements TopBar.OnBackPressed
             intent.putExtra("phone", _phone);
             intent.putExtra("pageType",Register1.this.getClass().getSimpleName());
             startActivity(intent);
+            finish();
             progressApplication.progressOFF();
         }
     }
