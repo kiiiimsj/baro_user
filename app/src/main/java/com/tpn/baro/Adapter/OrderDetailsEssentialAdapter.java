@@ -27,6 +27,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
     private Context context;
     private TextView priceTotal;
     private TextView itemCountText;
+    private TextView ifDiscountRate;
     private int discountRate;
     private int defaultPrice;
     HashMap<String,ExtraOrder> selectOptions;
@@ -52,13 +53,14 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
 //        must = 0;
 //    }
     public OrderDetailsEssentialAdapter(ArrayList<String> mData, HashMap<String,ArrayList<ExtraOrder>> mTableData,
-                                        Context context, TextView priceTotal, TextView itemCountText, int defaultPrice, int discountRate, ChangeDefaultPriceInEssential changeDefaultPriceInEssential) {
+                                        Context context, TextView priceTotal, TextView itemCountText, int defaultPrice, int discountRate, ChangeDefaultPriceInEssential changeDefaultPriceInEssential, TextView ifDiscountRate) {
         this.mData = mData;
         this.mTableData =mTableData;
         this.context = context;
         this.defaultPrice = defaultPrice;
         this.discountRate = discountRate;
         this.priceTotal = priceTotal;
+        this.ifDiscountRate = ifDiscountRate;
         this.itemCountText = itemCountText;
         this.changeDefaultPriceInEssential = changeDefaultPriceInEssential;
         selectOptions = new HashMap<>();
@@ -127,6 +129,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                             select.setExtra_count(1);
                             defaultPrice = originPrice + (itemCount * (changePrice - memory));
                             changeDefaultPriceInEssential.changeEssentialValue(defaultPrice);
+                            ifDiscountRate.setText(defaultPrice+"");
                             priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
 
                             selectOptions.put(text, select);
@@ -181,7 +184,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
 
                                 defaultPrice = originPrice + (itemCount * (changePrice - deletePrice));
                                 changeDefaultPriceInEssential.changeEssentialValue(defaultPrice);
-
+                                ifDiscountRate.setText(defaultPrice+"");
                                 priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
 
                                 name.setChecked(true);
@@ -194,6 +197,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
 
                                 defaultPrice = originPrice - (itemCount * changePrice);
                                 changeDefaultPriceInEssential.changeEssentialValue(defaultPrice);
+                                ifDiscountRate.setText(defaultPrice+"");
                                 priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
 
                                 name.setBackgroundResource(R.drawable.menu_non_select);

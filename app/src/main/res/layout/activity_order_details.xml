@@ -75,17 +75,28 @@
                             android:layout_marginTop="14dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
-                            <!--                        <ImageView-->
-                            <!--                            android:layout_width="0dp"-->
-                            <!--                            android:layout_height="15dp"-->
-                            <!--                            android:layout_gravity="center"-->
-                            <!--                            android:layout_margin="30px"-->
-                            <!--                            android:layout_weight="1"-->
-                            <!--                            android:src="@drawable/shoplic_currency_won_featured"/>-->
                             <LinearLayout
                                 android:layout_marginBottom="14dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/if_discount_rate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textColor="@color/main"
+                                    android:layout_marginEnd="5dp"
+                                    android:background="@drawable/layout_cancel_line"
+                                    android:text="0"
+                                    android:letterSpacing="-0.02"
+                                    android:fontFamily="@font/metropolis_semibold"
+                                    android:textSize="16sp"
+                                    />
+                                <ImageView
+                                    android:id="@+id/arrow_right"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    />
                                 <TextView
                                     android:id="@+id/totalPrice"
                                     android:layout_width="wrap_content"
@@ -106,7 +117,7 @@
                                     android:letterSpacing="-0.02"
                                     android:text="원"
                                     android:textColor="@color/main"
-                                    android:textSize="16sp"></TextView>
+                                    android:textSize="16sp"/>
                             </LinearLayout>
 
                         </LinearLayout>

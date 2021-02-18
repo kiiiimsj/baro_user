@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -112,7 +113,12 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
 
         ((TextView)holder.priceLinear.getChildAt(0)).setText((detailsFixToBasket.getPrice() / detailsFixToBasket.getCount()+"원 " ));
         ((TextView)holder.priceLinear.getChildAt(2)).setText(detailsFixToBasket.getCount()+"");
-        ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getPrice() + " 원");
+        if(detailsFixToBasket.getDiscount_rate() == 0 ){
+            ((TextView)holder.priceLinear.getChildAt(3)).setVisibility(View.GONE);
+            ((ImageView)holder.priceLinear.getChildAt(4)).setVisibility(View.GONE);
+        }
+        ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getPrice() * 100 / (100 - detailsFixToBasket.getDiscount_rate())+"");
+        ((TextView)holder.priceLinear.getChildAt(5)).setText(detailsFixToBasket.getPrice() + " 원");
 //        ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getPrice() *(100-detailsFixToBasket.getDiscount_rate()) /100 + " 원");
 
         holder.deleteThis.setOnClickListener(new View.OnClickListener(){
