@@ -92,7 +92,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:letterSpacing="-0.03"
-                android:text="스마트 할인이"
+                android:text="BARO 할인이"
                 />
             <TextView
                 android:id="@+id/main_timer"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,8 +19,8 @@ import java.util.ArrayList;
 
 public class ProgressDetailAdapter extends RecyclerView.Adapter<ProgressDetailAdapter.ViewHolder> {
     Context context;
-    ArrayList<OrderProgressDetailParsing.OrderProgressDetailParsingHelper> data;
-    public ProgressDetailAdapter(ArrayList<OrderProgressDetailParsing.OrderProgressDetailParsingHelper> orders, Context context) {
+    OrderProgressDetailParsing data;
+    public ProgressDetailAdapter(OrderProgressDetailParsing orders, Context context) {
         this.context = context;
         this.data = orders;
     }
@@ -37,10 +38,10 @@ public class ProgressDetailAdapter extends RecyclerView.Adapter<ProgressDetailAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ArrayList<OrderProgressDetailParsing.OrderProgressDetailParsingHelper.extras> extras = data.get(position).getExtras();
-        holder.menu_name.setText(data.get(position).getMenu_name());
-        holder.menu_defaultPrice.setText(data.get(position).getMenu_defaultprice()+"");
-        holder.count.setText(data.get(position).getOrder_count()+" 개");
+        ArrayList<OrderProgressDetailParsing.OrderProgressDetailParsingHelper.extras> extras = data.getOrders().get(position).getExtras();
+        holder.menu_name.setText(data.getOrders().get(position).getMenu_name());
+        holder.menu_defaultPrice.setText(data.getOrders().get(position).getMenu_defaultprice()+"");
+        holder.count.setText(data.getOrders().get(position).getOrder_count()+" 개");
         int optionPrices = 0;
         holder.options.removeAllViews();
         for(int i = 0;i<extras.size();i++){
@@ -59,15 +60,26 @@ public class ProgressDetailAdapter extends RecyclerView.Adapter<ProgressDetailAd
             optionPrices +=optionPrice*optionCount;
             holder.options.addView(extraOption);
         }
-        int eachPrice = data.get(position).getMenu_defaultprice()+optionPrices;
+        int eachPrice = data.getOrders().get(position).getMenu_defaultprice()+optionPrices;
         holder.each_price.setText(""+eachPrice+"원");
-        holder.total_price.setText(""+eachPrice*data.get(position).getOrder_count()+"원");
+        if(data.getDiscount_rate() == 0) {
+            holder.ifDiscountRate.setVisibility(View.GONE);
+            holder.arrowRight.setVisibility(View.GONE);
+            holder.total_price.setText(""+eachPrice*data.getOrders().get(position).getOrder_count()+"원");
+        }else {
+            holder.ifDiscountRate.setVisibility(View.VISIBLE);
+            holder.arrowRight.setVisibility(View.VISIBLE);
+            holder.ifDiscountRate.setText(""+eachPrice*data.getOrders().get(position).getOrder_count());
+            holder.total_price.setText(""+ (eachPrice*data.getOrders().get(position).getOrder_count() - (int)( eachPrice*data.getOrders().get(position).getOrder_count() * (data.getDiscount_rate() / 100.0)))+"원");
+        }
+
+
     }
 
 
     @Override
     public int getItemCount() {
-        return (data == null ? 0 : data.size());
+        return (data == null ? 0 : data.getOrders().size());
     }
 
     @Override
@@ -102,6 +114,8 @@ public class ProgressDetailAdapter extends RecyclerView.Adapter<ProgressDetailAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView menu_name;
         TextView menu_defaultPrice;
+        TextView ifDiscountRate;
+        ImageView arrowRight;
         TextView each_price;
         TextView total_price;
         TextView count;
@@ -110,6 +124,8 @@ public class ProgressDetailAdapter extends RecyclerView.Adapter<ProgressDetailAd
             super(itemView);
             menu_name = (itemView).findViewById(R.id.menu_name);
             menu_defaultPrice = (itemView).findViewById(R.id.defaultPrice);
+            ifDiscountRate = (itemView).findViewById(R.id.if_discount_rate);
+            arrowRight = (itemView).findViewById(R.id.arrow_right);
             options = (itemView).findViewById(R.id.options);
             each_price = (itemView).findViewById(R.id.eachPrice);
             total_price = (itemView).findViewById(R.id.totalPrice);

@@ -145,7 +145,8 @@
                         android:id="@+id/login_remember"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:button="@drawable/baro_check_box"
+                        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+                        android:buttonTint="@color/main"
                         android:fontFamily="@font/notosans_bold"
                         android:text="아이디/비밀번호 저장"
                         android:textColor="@color/black" />
