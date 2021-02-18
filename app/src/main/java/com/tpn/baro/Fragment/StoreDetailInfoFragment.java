@@ -63,6 +63,8 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
     //
     View rootView;
 
+    int storeId;
+
     LatLng latLng;
     @Nullable
     @Override
@@ -93,18 +95,35 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getActivity().getIntent();
-        String storeId =intent.getStringExtra("store_id");
-        if(storeId.equals("")){
+        storeId = Integer.parseInt(intent.getStringExtra("store_id"));
+        if(storeId == 0){
             Toast.makeText(getActivity(), "로딩 오류 입니다.", Toast.LENGTH_LONG).show();
             return;
         }
         //jsonParsing(string storeDetail);
-        makeRequestGetStore(Integer.parseInt(storeId));
+
     }
 
-    private void jsonParsing(String storeDetail) {
+    private void jsonParsing(String storeDetail, NaverMap naverMap) {
         Gson gson = new GsonBuilder().create();
         storeDetailData = gson.fromJson(storeDetail, StoreDetail.class);
+
+        LatLng storeLocation = new LatLng(storeDetailData.getStore_latitude(),storeDetailData.getStore_longitude());
+        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(storeLocation);
+        this.naverMap.moveCamera(cameraUpdate);
+        marker = new Marker();
+        marker.setPosition(storeLocation);
+
+        int height = getResources().getDrawable(R.drawable.store_marker).getIntrinsicHeight();
+        int width = getResources().getDrawable(R.drawable.store_marker).getIntrinsicWidth();
+        BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.store_marker);
+        Bitmap b = bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+        marker.setIcon(OverlayImage.fromBitmap(smallMarker));
+
+        marker.setMap(naverMap);
+        marker.setCaptionText(storeDetailData.getStore_name());
+
         setActivity();
     }
     public void setActivity() {
@@ -190,14 +209,14 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
 
         return bitmap;
     }
-    public void makeRequestGetStore(final int number) {
+    public void makeRequestGetStore(final int number,final NaverMap naverMap) {
         String url = new UrlMaker().UrlMake("StoreFindById.do?store_id="+ number);
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        jsonParsing(response);
+                        jsonParsing(response, naverMap);
                     }
                 },
                 new Response.ErrorListener() {
@@ -214,20 +233,6 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
         this.naverMap = naverMap;
-        LatLng storeLocation = new LatLng(storeDetailData.getStore_latitude(),storeDetailData.getStore_longitude());
-        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(storeLocation);
-        this.naverMap.moveCamera(cameraUpdate);
-        marker = new Marker();
-        marker.setPosition(storeLocation);
-
-        int height = getResources().getDrawable(R.drawable.store_marker).getIntrinsicHeight();
-        int width = getResources().getDrawable(R.drawable.store_marker).getIntrinsicWidth();
-        BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.store_marker);
-        Bitmap b = bitmapdraw.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-        marker.setIcon(OverlayImage.fromBitmap(smallMarker));
-
-        marker.setMap(naverMap);
-        marker.setCaptionText(storeDetailData.getStore_name());
+        makeRequestGetStore(storeId, naverMap);
     }
 }

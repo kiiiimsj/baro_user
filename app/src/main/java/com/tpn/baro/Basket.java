@@ -33,6 +33,7 @@ import com.android.volley.toolbox.Volley;
 import com.tpn.baro.Adapter.BasketAdapter;
 import com.tpn.baro.AdapterHelper.ExtraOrder;
 import com.tpn.baro.Database.SessionManager;
+import com.tpn.baro.Dialogs.BootPayFiveMinDialog;
 import com.tpn.baro.Dialogs.LastItemDialog;
 import com.tpn.baro.Dialogs.OrderCancelDialog;
 import com.tpn.baro.Dialogs.OrderDoneDialog;
@@ -67,6 +68,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import kr.co.bootpay.Bootpay;
 import kr.co.bootpay.BootpayAnalytics;
@@ -90,7 +93,7 @@ import kr.co.bootpay.rest.model.RestEasyPayUserTokenData;
 import kr.co.bootpay.rest.model.RestTokenData;
 import maes.tech.intentanim.CustomIntent;
 
-public class Basket extends AppCompatActivity implements BootpayRestImplement, TopBar.OnBackPressedInParentActivity, BasketAdapter.deleteItem {
+public class Basket extends AppCompatActivity implements BootpayRestImplement, TopBar.OnBackPressedInParentActivity, BasketAdapter.deleteItem, BootPayFiveMinDialog.OnDismiss {
     public static Basket basket;
     public static final String IN_MY_BASEKT = "inMyBasket";
     public static final String BasketList = "basketList";
@@ -121,6 +124,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     int realTotalPrice;
     int totalPrice;
     int totalOrderCount = 0;
+    int fiveMin = 300;
     int used_coupon_id;
     int discount_price ;
     String request;
@@ -131,11 +135,15 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     TextView finalPayValue;
     TopBar topBar;
     FragmentManager fm;
+
+    Thread paymentCloseThread;
+    ExecutorService executor;
     public static boolean onPause = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
+        executor = Executors.newFixedThreadPool(1);
         onPause = false;
 
         fm = getSupportFragmentManager();
@@ -163,10 +171,29 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         storeName = sharedPreferences.getString("currentStoreName", "");
         StringTokenizer stringTokenizer = new StringTokenizer(storeName, "\"");
         store_id = Integer.parseInt(sharedPreferences.getString("currentStoreId", "0"));
-        discountRate = topBar.getDiscountRate();
-
+        //discountRate = topBar.getDiscountRate();
+        makeRequestForDiscountRate(store_id);
         storeNumber = sharedPreferences.getString("currentStoreNumber", "");
+        paymentCloseThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(fiveMin != 0) {
+                    try {
+                        try {
+                            if(Thread.interrupted()) throw new InterruptedException();
+                        }catch(InterruptedException e) {
+                            return;
+                        }
 
+                        Thread.sleep(1000);
+                        Log.e("ThreadRun!", fiveMin+"");
+                        fiveMin --;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
         if (store_id == 0) {
             Toast.makeText(this, "잘못된 접근 요청입니다", Toast.LENGTH_LONG);
         }
@@ -287,6 +314,12 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     @Override
     protected void onResume() {
         super.onResume();
+        if(fiveMin == 1) {
+            Log.e("resumed", true+"");
+            BootPayFiveMinDialog bootPayFiveMinDialog = new BootPayFiveMinDialog(this, this);
+            bootPayFiveMinDialog.outSideMessage = "페이지가 만료 되었습니다.\n다시 결제해주세요";
+            bootPayFiveMinDialog.callFunction();
+        }
         SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("orderCnt", detailsFixToBaskets.size());
@@ -297,6 +330,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     protected void onPause() {
         onPause = true;
         super.onPause();
+//        paymentCloseThread.
         SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if(!isOpen){
@@ -604,14 +638,15 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         }
         if(getFragmentManager() ==null){
         }
-        BootUser bootUser = new BootUser().setPhone(phone);
-        BootExtra bootExtra = new BootExtra().setQuotas(new int[]{0, 2, 3});
-        BootpayBuilder bootpayBuilder = Bootpay.init(getFragmentManager());
-
-        bootpayBuilder.setContext(this)
+        final BootUser bootUser = new BootUser().setPhone(phone);
+        final BootExtra bootExtra = new BootExtra().setQuotas(new int[]{0, 2, 3});
+        final BootpayBuilder bootpayBuilder = Bootpay.init(getFragmentManager());
+        executor.submit(paymentCloseThread);
+        //paymentCloseThread.start();
+        bootpayBuilder.setContext(Basket.this)
                 .setApplicationId(application_id) // 해당 프로젝트(안드로이드)의 application id 값
                 .setPG(PG.NICEPAY) // 결제할 PG 사
-                .setContext(this)
+                .setContext(Basket.this)
                 .setEasyPayUserToken(user_token)
                 .setMethodList(Arrays.asList(Method.EASY_CARD, Method.PHONE, Method.BANK, Method.CARD, Method.VBANK))
                 .setBootExtra(bootExtra)
@@ -674,6 +709,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                     @Override
                     public void onError(@Nullable String message) {
                         String getMessage ="";
+                        executor.shutdownNow();
                         try {
                             JSONObject jsonObject = new JSONObject(message);
                             getMessage = jsonObject.getString("msg");
@@ -695,6 +731,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                         new CloseListener() { //결제창이 닫힐때 실행되는 부분
                             @Override
                             public void onClose(String message) {
+                                executor.shutdownNow();
                                 Log.d("close", "close");
                             }
                         });
@@ -707,7 +744,39 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         }
         bootpayBuilder.request();
     }
+    public void makeRequestForDiscountRate(int storeId) {
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
+        String url = urlMaker.UrlMake(lastUrl);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        Log.e("response", response);
+                        setDiscountTextView(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(request);
+    }
+    public void setDiscountTextView(String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            if(jsonObject.getBoolean("result")) {
+                discountRate = jsonObject.getInt("discount_rate");
+                topBar.setDiscountTextView(discountRate);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     private synchronized void makeRequest3(String url, HashMap hashMap) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(hashMap),
@@ -774,12 +843,21 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        executor.shutdownNow();
         CustomIntent.customType(this,"right-to-left");
     }
     @Override
     public void finish() {
         super.finish();
+        executor.shutdownNow();
         CustomIntent.customType(this,"right-to-left");
     }
 
+    @Override
+    public void clickDismiss() {
+        executor.shutdownNow();
+
+        Bootpay.finish();
+        finish();
+    }
 }

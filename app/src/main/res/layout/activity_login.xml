@@ -142,11 +142,10 @@
                     android:layout_height="wrap_content">
                     <CheckBox
                         android:layout_alignParentLeft="true"
-                        android:id="@+id/map_permission"
-                        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                        android:id="@+id/login_remember"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/main"
+                        android:button="@drawable/baro_check_box"
                         android:fontFamily="@font/notosans_bold"
                         android:text="아이디/비밀번호 저장"
                         android:textColor="@color/black" />

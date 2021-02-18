@@ -147,6 +147,7 @@ public class OrderDetailsNonEssentialAdapter extends BaseExpandableListAdapter {
                     optionCnt-=1;
                     optionCount.setText(String.valueOf(optionCnt));
                     defaultPrice = currentPrice-(itemcount*DataList.get(childPosition).getOptionPrice());
+//                    ifDiscountRate.setText((int)((defaultPrice * 100) / (100 -discountRate))+"");
                     ifDiscountRate.setText(defaultPrice+"");
                     changeDefaultPriceNonEssential.changeNonEssentialValue(defaultPrice);
                     Log.e("price ", defaultPrice + "discount_rate " + discountRate);
@@ -175,6 +176,7 @@ public class OrderDetailsNonEssentialAdapter extends BaseExpandableListAdapter {
                 defaultPrice = currentPrice+(itemcount*DataList.get(childPosition).getOptionPrice());
                 changeDefaultPriceNonEssential.changeNonEssentialValue(defaultPrice);
                 Log.e("price ", defaultPrice + "discount_rate " + discountRate);
+//                ifDiscountRate.setText((int)((defaultPrice * 100) / (100 -discountRate))+"");
                 ifDiscountRate.setText(defaultPrice+"");
                 priceTotal.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
 

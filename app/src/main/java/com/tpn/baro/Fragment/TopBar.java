@@ -53,6 +53,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     Activity activity;
 
     public int storeId;
+    public int discountRateInt;
 
 //    @Override
 //    public void reload() {
@@ -107,7 +108,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
         button = rootView.findViewById(R.id.when_has_button);
         etcImage = rootView.findViewById(R.id.when_has_image);
         timer = rootView.findViewById(R.id.fifteenTimer);
-        timerLayout = rootView.findViewById(R.id.timer_layout);
+        timerLayout = rootView.findViewById(R.id.main_timer_layout);
         discountRate = rootView.findViewById(R.id.discount_rate);
 
         backButton.setVisibility(View.INVISIBLE);
@@ -320,8 +321,6 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
             case "ChangePass3":
                 //no top bar activity
                 break;
-
-
         }
         return rootView;
     }
@@ -329,10 +328,9 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     @Override
     public void onResume() {
         new BaroUtil().fifteenTimer(timer, activity);
-        makeRequestForDiscountRate(storeId);
+//        makeRequestForDiscountRate(storeId);
         super.onResume();
     }
-
     public String getTokenActivityName(String activityName) {
         StringTokenizer stringTokenizer = new StringTokenizer(activityName, ".");
         String getName = "";
@@ -341,7 +339,6 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
         }
         return new StringTokenizer(getName, "@").nextToken();
     }
-
     public void setTitleStringWhereUsedEventsAndListStore(String title_name) {
         title.setText(title_name);
         if (title.getText().toString().length() > 6) {
@@ -353,42 +350,51 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
         etcImage.setImageResource(image);
     }
     public int getDiscountRate() {
-        return Integer.parseInt(discountRate.getText().toString().substring(1,3));
+        return discountRateInt;
     }
-    public void setDiscountTextView(String result) {
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            if(jsonObject.getBoolean("result")) {
-                discountRate.setVisibility(View.VISIBLE);
-                discountRate.setText("-"+jsonObject.getInt("discount_rate")+"%");
-            }else {
-                discountRate.setVisibility(View.GONE);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+//    public void setDiscountTextView(String result) {
+//        try {
+//            JSONObject jsonObject = new JSONObject(result);
+//            if(jsonObject.getBoolean("result")) {
+//                discountRate.setVisibility(View.VISIBLE);
+//                discountRateInt = jsonObject.getInt("discount_rate");
+//                discountRate.setText("-"+discountRateInt+"%");
+//            }else {
+//                discountRate.setVisibility(View.GONE);
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+    public void setDiscountTextView(int discountRateInt) {
+        if(discountRateInt == 0 ){
+            discountRate.setVisibility(View.GONE);
+        }else {
+            discountRate.setVisibility(View.VISIBLE);
+            discountRate.setText(discountRateInt+"%");
         }
     }
-    public void makeRequestForDiscountRate(int storeId) {
-        //GetStoreDiscount.do?store_id=
-        UrlMaker urlMaker = new UrlMaker();
-        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
-        String url = urlMaker.UrlMake(lastUrl);
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
-                        Log.e("response", response);
-                        setDiscountTextView(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        requestQueue.add(request);
-    }
+//    public void makeRequestForDiscountRate(int storeId) {
+//        //GetStoreDiscount.do?store_id=
+//        UrlMaker urlMaker = new UrlMaker();
+//        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
+//        String url = urlMaker.UrlMake(lastUrl);
+//        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+//
+//        StringRequest request = new StringRequest(Request.Method.GET, url,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(final String response) {
+//                        Log.e("response", response);
+//                        setDiscountTextView(response);
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                });
+//        requestQueue.add(request);
+//    }
 }

@@ -83,7 +83,7 @@ public class HistoryDetail extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
-                        ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> historyDetailParsingHelpers
+                        HistoryDetailParsing historyDetailParsingHelpers
                                 = jsonParsing(response);
                         applyAdapter(historyDetailParsingHelpers,context);
                     }
@@ -97,12 +97,12 @@ public class HistoryDetail extends Fragment {
         requestQueue.add(request);
     }
 
-    private ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> jsonParsing(String result){
+    private HistoryDetailParsing jsonParsing(String result){
         Gson gson = new Gson();
         HistoryDetailParsing historyDetailParsing = gson.fromJson(result,HistoryDetailParsing.class);
-        return historyDetailParsing.getOrders();
+        return historyDetailParsing;
     }
-    private void applyAdapter(ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> historyDetailParsingHelpers,Context context){
+    private void applyAdapter(HistoryDetailParsing historyDetailParsingHelpers,Context context){
         historyDetailAdapter = new HistoryDetailAdapter(historyDetailParsingHelpers,context);
         recyclerView.setAdapter(historyDetailAdapter);
     }

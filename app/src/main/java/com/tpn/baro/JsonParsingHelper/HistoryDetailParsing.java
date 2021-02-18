@@ -7,11 +7,29 @@ public class HistoryDetailParsing {
     ArrayList<HistoryDetailParsingHelper> orders;
     String message;
     String requests;
+    int discount_rate;
+    int coupon_discount;
 
     public HistoryDetailParsing(Boolean result, ArrayList<HistoryDetailParsingHelper> orders, String message) {
         this.result = result;
         this.orders = orders;
         this.message = message;
+    }
+
+    public int getDiscount_rate() {
+        return discount_rate;
+    }
+
+    public void setDiscount_rate(int discount_rate) {
+        this.discount_rate = discount_rate;
+    }
+
+    public int getCoupon_discount() {
+        return coupon_discount;
+    }
+
+    public void setCoupon_discount(int coupon_discount) {
+        this.coupon_discount = coupon_discount;
     }
 
     public String getRequests() {
