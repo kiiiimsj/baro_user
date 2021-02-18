@@ -24,7 +24,7 @@
             android:id="@+id/tab_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorGravity="top"
+            app:tabIndicatorGravity="bottom"
             app:tabIndicatorColor="@color/bottom_icon_color_select"
             app:tabTextColor="@color/text_info_color"
             app:cardBackgroundColor="@color/black"

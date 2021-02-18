@@ -98,7 +98,7 @@ public class ProgressingDetailDialog extends DialogFragment {
             discountRatePrice.setVisibility(View.GONE);
         }
 
-        discountRatePrice.setText("스마트 할인 금액 : "+ (int)(data.getTotal_price() * (data.getDiscount_rate() / 100.0))+"원");
+        discountRatePrice.setText("바로 할인 금액 : "+ (int)(data.getTotal_price() * (data.getDiscount_rate() / 100.0))+"원");
         totals.setText("총 결제 금액 : " + (data.getTotal_price() - (int)(data.getTotal_price() * (data.getDiscount_rate() / 100.0)) - data.getCoupon_discount())+"원");
         /////////////////////////////
         builder.setView(progressingDetail);
@@ -118,7 +118,7 @@ public class ProgressingDetailDialog extends DialogFragment {
                     public void onResponse(String response) {
                         Log.e("response", response);
                         jsonParsing(response);
-                        applyAdapter(orderProgressDetailParsing.getOrders(), discountRate);
+                        applyAdapter(orderProgressDetailParsing, discountRate);
                         if (orderProgressDetailParsing.getRequests().equals("")) {
                             request.setText("요청사항이 없었습니다.");
                         } else {
@@ -136,7 +136,7 @@ public class ProgressingDetailDialog extends DialogFragment {
         requestQueue.add(stringRequest);
     }
 
-    private void applyAdapter(ArrayList<OrderProgressDetailParsing.OrderProgressDetailParsingHelper> orders, int discountRate) {
+    private void applyAdapter(OrderProgressDetailParsing orders, int discountRate) {
         ProgressDetailAdapter adapter = new ProgressDetailAdapter(orders,context);
         progressDetail.setAdapter(adapter);
 //        int dicounted_price = 0;
