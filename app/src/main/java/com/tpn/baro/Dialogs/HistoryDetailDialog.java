@@ -37,10 +37,12 @@ public class HistoryDetailDialog extends DialogFragment {
     TextView store;
     TextView requests;
     TextView discountPrice;
+    TextView discountRatePrice;
     HistoryDetailAdapter historyDetailAdapter;
     Button close_btn;
     int discountRate = 0;
     int coupon_discount = 0;
+    int total_Price = 0;
     public static HistoryDetailDialog newInstance(Context context) {
         Bundle bundle = new Bundle();
         HistoryDetailDialog fragment = new HistoryDetailDialog();
@@ -57,7 +59,7 @@ public class HistoryDetailDialog extends DialogFragment {
         String store_name = getArguments().getString("storeName");
         String ordered_date = getArguments().getString("orderedDate");
         discountRate = getArguments().getInt("discount_rate");
-        int total_Price = getArguments().getInt("totalPrice");
+        total_Price = getArguments().getInt("totalPrice");
         coupon_discount = getArguments().getInt("coupon_discount");
 
         makeRequest(context,receipt_id);
@@ -69,6 +71,7 @@ public class HistoryDetailDialog extends DialogFragment {
         store = orderDetail.findViewById(R.id.store_name);
         totals = orderDetail.findViewById(R.id.totals);
         discountPrice = orderDetail.findViewById(R.id.discount_price);
+        discountRatePrice = orderDetail.findViewById(R.id.discount_rate_price);
         recyclerView.setLayoutManager(new LinearLayoutManager(orderDetail.getContext()));
         deleteThis = orderDetail.findViewById(R.id.deleteThis);
         deleteThis.setOnClickListener(new View.OnClickListener() {
@@ -85,11 +88,14 @@ public class HistoryDetailDialog extends DialogFragment {
             }
         });
         Log.e("coupon_discount", coupon_discount+"");
-        if(discountRate == 0 && coupon_discount == 0) {
+        if(coupon_discount == 0) {
             discountPrice.setVisibility(View.GONE);
         }
-
-        totals.setText("총 결제 금액 : " + total_Price+"원");
+        if(discountRate == 0) {
+            discountRatePrice.setVisibility(View.GONE);
+        }
+        discountRatePrice.setText((int)(total_Price * (discountRate / 100.0))+ "원");
+        totals.setText("총 결제 금액 : " + ((total_Price - (int)(total_Price * (discountRate / 100.0))) - coupon_discount) +"원");
 
         store.setText(store_name);
         builder.setView(orderDetail);
@@ -137,15 +143,15 @@ public class HistoryDetailDialog extends DialogFragment {
         historyDetailAdapter = new HistoryDetailAdapter(historyDetailParsingHelpers,context);
         recyclerView.setAdapter(historyDetailAdapter);
 
-        int dicounted_price = 0;
-        for (int i = 0; i < historyDetailParsingHelpers.size() ; i++) {
-            HistoryDetailParsing.HistoryDetailParsingHelper historyDetailParsingHelper = historyDetailParsingHelpers.get(i);
-            dicounted_price += historyDetailParsingHelper.getMenu_defaultprice();
-        }
+//        int dicounted_price = 0;
+//        for (int i = 0; i < historyDetailParsingHelpers.size() ; i++) {
+//            HistoryDetailParsing.HistoryDetailParsingHelper historyDetailParsingHelper = historyDetailParsingHelpers.get(i);
+//            dicounted_price += historyDetailParsingHelper.getMenu_defaultprice();
+//        }
+//
+//        int productOriginPrice = ((dicounted_price * 100) / (100 - discountRate));
 
-        int productOriginPrice = ((dicounted_price * 100) / (100 - discountRate));
-
-        discountPrice.setText("총 할인 금액 : " + (coupon_discount +(productOriginPrice-dicounted_price)) +"원");
+        discountPrice.setText("쿠폰 할인 금액 : " + coupon_discount +"원");
     }
 
     public Bundle getBundle() {

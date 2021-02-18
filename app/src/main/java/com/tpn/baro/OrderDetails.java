@@ -63,6 +63,8 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     TextView itemName;
     TextView itemCount;
     TextView totalPriceText;
+    TextView ifDiscountRate;
+    ImageView arrowRight;
 
     String menu_name;
     String menu_code;
@@ -127,10 +129,18 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         itemMinus = findViewById(R.id.itemMinus);
         itemPlus = findViewById(R.id.itemPlus);
         itemCount = findViewById(R.id.itemCount);
+        arrowRight = findViewById(R.id.arrow_right);
+        arrowRight.setVisibility(View.GONE);
+        ifDiscountRate = findViewById(R.id.if_discount_rate);
+        ifDiscountRate.setVisibility(View.GONE);
         totalPriceText = findViewById(R.id.totalPrice);
+
         if(discountRate == 0) {
             totalPriceText.setText(String.valueOf(defaultPrice));
         }else {
+            ifDiscountRate.setVisibility(View.VISIBLE);
+            arrowRight.setVisibility(View.VISIBLE);
+            ifDiscountRate.setText(defaultPrice+"");
             totalPriceText.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
         }
 
@@ -242,6 +252,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                     itemCount.setText(String.valueOf(count));
 //                    totalPriceText.setText(String.valueOf(currentPrice * count));
                     totalPriceText.setText(String.valueOf(defaultPrice));
+                    ifDiscountRate.setText(String.valueOf(defaultPrice * 100 / (100 - discountRate)));
                     Log.e("priceMinus", defaultPrice +"");
                 }
             }
@@ -258,6 +269,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                 itemCount.setText(String.valueOf(count));
 //                totalPriceText.setText(String.valueOf(currentPrice * count));
                 totalPriceText.setText(String.valueOf(defaultPrice));
+                ifDiscountRate.setText(String.valueOf(defaultPrice * 100 / (100 - discountRate)));
                 Log.e("pricePlus", defaultPrice +"");
             }
         });
@@ -374,7 +386,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 
         if (arrayList.size() != 0) {
 //            adapter = new OrderDetailsEssentialAdapter(arrayList, essentialOptions, this, totalPriceText, itemCount);
-            adapter = new OrderDetailsEssentialAdapter(arrayList, essentialOptions, this, totalPriceText, itemCount, defaultPrice, discountRate, this);
+            adapter = new OrderDetailsEssentialAdapter(arrayList, essentialOptions, this, totalPriceText, itemCount, defaultPrice, discountRate, this, ifDiscountRate);
             essentailRecyclerView.setAdapter(adapter);
         } else {
             recyclerViewShell.setVisibility(View.GONE);
@@ -385,7 +397,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 //                            R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount);
             nonEssentialAdapter =
                     new OrderDetailsNonEssentialAdapter(OrderDetails.this, R.layout.activity_order_details_nonessential_group_parent,
-                            R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount, defaultPrice , discountRate, this);
+                            R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount, defaultPrice , discountRate, this, ifDiscountRate);
             expandableListView.setAdapter(nonEssentialAdapter);
             setListIndicator();
             setExpandableListViewHeight(expandableListView,-1);

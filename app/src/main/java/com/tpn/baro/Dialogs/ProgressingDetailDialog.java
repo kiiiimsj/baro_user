@@ -38,9 +38,11 @@ public class ProgressingDetailDialog extends DialogFragment {
     TextView totals;
     TextView request;
     TextView discountPrice;
+    TextView discountRatePrice;
     ImageButton delete_this;
     Button okay;
     RecyclerView progressDetail;
+    OrderProgressingParsingHelper data;
     Gson gson;
 
     OrderProgressDetailParsing orderProgressDetailParsing;
@@ -60,7 +62,7 @@ public class ProgressingDetailDialog extends DialogFragment {
         String json = getArguments().getString("json");
         Log.e("json" , json);
         gson = new Gson();
-        OrderProgressingParsingHelper data = gson.fromJson(json,OrderProgressingParsingHelper.class);
+        data = gson.fromJson(json,OrderProgressingParsingHelper.class);
 
         makeRequest(data.getReceipt_id(), data.getDiscount_rate());
         //////////////////////////////
@@ -69,6 +71,7 @@ public class ProgressingDetailDialog extends DialogFragment {
         request = progressingDetail.findViewById(R.id.request);
         delete_this = progressingDetail.findViewById(R.id.deleteThis);
         discountPrice = progressingDetail.findViewById(R.id.discount_price);
+        discountRatePrice = progressingDetail.findViewById(R.id.discount_rate_price);
         progressDetail = progressingDetail.findViewById(R.id.ProgressDetailList);
         okay = progressingDetail.findViewById(R.id.okay);
 
@@ -88,8 +91,15 @@ public class ProgressingDetailDialog extends DialogFragment {
         });
         store_name.setText(data.getStore_name());
         progressDetail.setLayoutManager(new LinearLayoutManager(context));
+        if(data.getCoupon_discount() == 0 ) {
+            discountPrice.setVisibility(View.GONE);
+        }
+        if(data.getDiscount_rate() == 0 ) {
+            discountRatePrice.setVisibility(View.GONE);
+        }
 
-        totals.setText("총 결제 금액 : " + data.getTotal_price()+"원");
+        discountRatePrice.setText((int)(data.getTotal_price() * (data.getDiscount_rate() / 100.0))+"원");
+        totals.setText("총 결제 금액 : " + (data.getTotal_price() - (int)((data.getTotal_price() * (data.getDiscount_rate() / 100.0))) - data.getCoupon_discount())+"원");
         /////////////////////////////
         builder.setView(progressingDetail);
         Dialog dialog = builder.create();
@@ -129,19 +139,16 @@ public class ProgressingDetailDialog extends DialogFragment {
     private void applyAdapter(ArrayList<OrderProgressDetailParsing.OrderProgressDetailParsingHelper> orders, int discountRate) {
         ProgressDetailAdapter adapter = new ProgressDetailAdapter(orders,context);
         progressDetail.setAdapter(adapter);
-
-        int dicounted_price = 0;
-        for (int i = 0; i < orders.size() ; i++) {
-            OrderProgressDetailParsing.OrderProgressDetailParsingHelper order = orders.get(i);
-            dicounted_price += order.getMenu_defaultprice();
-        }
+//        int dicounted_price = 0;
+//        for (int i = 0; i < orders.size() ; i++) {
+//            OrderProgressDetailParsing.OrderProgressDetailParsingHelper order = orders.get(i);
+//            dicounted_price += order.getMenu_defaultprice();
+//        }
         if(orderProgressDetailParsing.getDiscount_rate() == 0 && orderProgressDetailParsing.getCoupon_discount() == 0) {
             discountPrice.setVisibility(View.GONE);
         }
 
-        int productOriginPrice = ((dicounted_price * 100) / (100 - discountRate));
-
-        discountPrice.setText("총 할인 금액 : " + (orderProgressDetailParsing.getCoupon_discount() + (productOriginPrice - dicounted_price)) +"원");
+        discountPrice.setText("쿠폰 할인 금액 : " + orderProgressDetailParsing.getCoupon_discount() +"원");
 
     }
 
