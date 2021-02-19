@@ -204,7 +204,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                         }
                     });
                 }
-                else {
+                else if(!bootPayisOn){
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -214,6 +214,8 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                             bootPayFiveMinDialog.callFunction();
                         }
                     });
+                }else {
+                    Log.e("정상결제", true+"");
                 }
             }
         });
@@ -622,6 +624,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             @Override
             public void onOpen(ServerHandshake handshakedata) {
                 webSocketClient.send("connect:::" + phone);
+                Log.e("message json", message);
                 webSocketClient.send("message:::" + store_id + ":::" + message);
             }
 
