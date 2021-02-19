@@ -30,7 +30,7 @@ public class BootPayFiveMinDialog {
         dlg.setContentView(R.layout.fragment_add_favorite);
         TextView title = (TextView) dlg.findViewById(R.id.title);
         TextView message = (TextView) dlg.findViewById(R.id.mesgase);
-        if(!outSideTitle.equals("")) {
+        if(outSideTitle == null) {
             title.setText("페이지 만료");
         }else {
             title.setText(outSideTitle);
