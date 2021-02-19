@@ -13,6 +13,7 @@ import com.tpn.baro.R;
 public class BootPayFiveMinDialog {
     private Context context;
     public String outSideMessage;
+    public String outSideTitle;
     public interface OnDismiss{
         void clickDismiss();
     }
@@ -29,8 +30,11 @@ public class BootPayFiveMinDialog {
         dlg.setContentView(R.layout.fragment_add_favorite);
         TextView title = (TextView) dlg.findViewById(R.id.title);
         TextView message = (TextView) dlg.findViewById(R.id.mesgase);
-
-        title.setText("페이지 만료");
+        if(!outSideTitle.equals("")) {
+            title.setText("페이지 만료");
+        }else {
+            title.setText(outSideTitle);
+        }
         message.setText(outSideMessage);
 
         dlg.show();
