@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,7 +44,6 @@ import com.tpn.baro.JsonParsingHelper.OrderInsertParsingChild;
 import com.tpn.baro.JsonParsingHelper.OrderInsertParsingChild2;
 import com.tpn.baro.JsonParsingHelper.ReceiptRecordParsing;
 import com.tpn.baro.Dialogs.CouponDialog;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.DetailsFixToBasket;
 import com.tpn.baro.Dialogs.StoreCloseDialog;
@@ -94,6 +92,7 @@ import kr.co.bootpay.rest.model.RestTokenData;
 import maes.tech.intentanim.CustomIntent;
 
 public class Basket extends AppCompatActivity implements BootpayRestImplement, TopBar.OnBackPressedInParentActivity, BasketAdapter.deleteItem, BootPayFiveMinDialog.OnDismiss {
+
     public static Basket basket;
     public static final String IN_MY_BASEKT = "inMyBasket";
     public static final String BasketList = "basketList";
@@ -124,18 +123,20 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     int realTotalPrice;
     int totalPrice;
     int totalOrderCount = 0;
-    int fiveMin = 300;
+    int fiveMin = BootPayFiveMinDialog.FIVE_MIN;
     int used_coupon_id;
     int discount_price ;
     String request;
     boolean isOpen = true;
-    boolean bootPayisOn = false;
+    int bootPayDialogBranch = BootPayFiveMinDialog.BOOT_PAY_ACTION;
     BasketAdapter basketAdapter =null;
 
     ProgressApplication progressApplication;
     TextView finalPayValue;
     TopBar topBar;
     FragmentManager fm;
+
+    private BootpayBuilder bootpayBuilder;
 
     Thread paymentCloseThread;
     ExecutorService executor;
@@ -180,21 +181,32 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             public void run() {
                 while(fiveMin != 0) {
                     try {
-//                        try {
-//                            if(Thread.interrupted()) throw new InterruptedException();
-//                        }catch(InterruptedException e) {
-//                            return;
-//                        }
+                        if(fiveMin == 0 ) {
+                            bootPayDialogBranch = BootPayFiveMinDialog.OVER_5;
+                        }
                         Thread.sleep(1000);
-                        Log.e("ThreadRun!", fiveMin+"");
                         fiveMin --;
+                        Log.e("bootPayDialogBranch", bootPayDialogBranch+"");
+                        Log.e("thread run ", fiveMin+"");
+                        if(bootPayDialogBranch == BootPayFiveMinDialog.CLOSE_BEFORE){
+                            fiveMin = 0;
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    BootPayFiveMinDialog bootPayFiveMinDialog = new BootPayFiveMinDialog(Basket.this, Basket.this);
+                                    bootPayFiveMinDialog.outSideMessage = "결제가 취소되었습니다.";
+                                    bootPayFiveMinDialog.outSideTitle = "취소";
+                                    bootPayFiveMinDialog.callFunction();
+                                }
+                            });
+                        }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                        fiveMin = 0;
+                        bootPayDialogBranch = BootPayFiveMinDialog.CLOSE_BEFORE;
+                        Log.e("thread end ", fiveMin+"");
                     }
                 }
-                Log.e("thread end" , true+"");
-                if(bootPayisOn) {
+                if(bootPayDialogBranch == BootPayFiveMinDialog.OVER_5) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -204,19 +216,10 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                         }
                     });
                 }
-                else if(!bootPayisOn){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            BootPayFiveMinDialog bootPayFiveMinDialog = new BootPayFiveMinDialog(Basket.this, Basket.this);
-                            bootPayFiveMinDialog.outSideMessage = "결제가 취소되었습니다.";
-                            bootPayFiveMinDialog.outSideTitle = "취소";
-                            bootPayFiveMinDialog.callFunction();
-                        }
-                    });
-                }else {
-                    Log.e("정상결제", true+"");
-                }
+
+//                else {
+//                    Log.e("정상결제", true+"");
+//                }
             }
         });
         if (store_id == 0) {
@@ -661,13 +664,16 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         }
         if(getFragmentManager() ==null){
         }
-        onPause = true;
-        bootPayisOn = true;
+
+
         final BootUser bootUser = new BootUser().setPhone(phone);
         final BootExtra bootExtra = new BootExtra().setQuotas(new int[]{0, 2, 3});
-        final BootpayBuilder bootpayBuilder = Bootpay.init(getFragmentManager());
+        bootpayBuilder = Bootpay.init(getFragmentManager());
+
+        onPause = true;
+        bootPayDialogBranch = BootPayFiveMinDialog.BOOT_PAY_ACTION;
         executor.submit(paymentCloseThread);
-        //paymentCloseThread.start();
+
         bootpayBuilder.setContext(Basket.this)
                 .setApplicationId(application_id) // 해당 프로젝트(안드로이드)의 application id 값
                 .setPG(PG.NICEPAY) // 결제할 PG 사
@@ -716,7 +722,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                         OrderDoneDialog orderDoneDialog = new OrderDoneDialog(Basket.this);
                         orderDoneDialog.callFunction();
                         onPause = false;
-                        bootPayisOn = false;
 
                     }
                 })
@@ -740,7 +745,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                     public void onError(@Nullable String message) {
                         String getMessage ="";
                         onPause = false;
-                        bootPayisOn = false;
                         try {
                             JSONObject jsonObject = new JSONObject(message);
                             getMessage = jsonObject.getString("msg");
@@ -765,7 +769,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                             @Override
                             public void onClose(String message) {
                                 executor.shutdownNow();
-                                bootPayisOn = false;
                                 Log.d("close", "close");
                             }
                         });
@@ -860,11 +863,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
     @Override
     public void onBack() {
-        Log.e("bootPayisOn" , bootPayisOn+"");
-        if(bootPayisOn) {
-            return;
-        }
-        executor.shutdownNow();
         onBackPressed();
     }
 
@@ -881,25 +879,20 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     }
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Log.e("bootPayisOn" , bootPayisOn+"");
-        if(bootPayisOn) {
-            return;
-        }
-        executor.shutdownNow();
-        CustomIntent.customType(this,"right-to-left");
+//        super.onBackPressed();
+        bootPayDialogBranch = BootPayFiveMinDialog.CLOSE_BEFORE;
+//        finish();
+//        CustomIntent.customType(this,"right-to-left");
     }
     @Override
     public void finish() {
         super.finish();
-        executor.shutdownNow();
+        bootPayDialogBranch = BootPayFiveMinDialog.CLOSE_BEFORE;
         CustomIntent.customType(this,"right-to-left");
     }
 
     @Override
     public void clickDismiss() {
-        executor.shutdownNow();
-        Bootpay.finish();
         finish();
     }
 }

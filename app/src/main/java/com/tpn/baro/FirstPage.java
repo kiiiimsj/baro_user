@@ -7,17 +7,23 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.PermissionChecker;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -36,11 +42,31 @@ public class FirstPage extends AppCompatActivity implements AutoPermissionsListe
 
     Animation sideLeftAnim, bottomAnim, rotated_35, rotated_35_to_0;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_first_page);
+
+        DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
+        int screenHeight = metrics.heightPixels;
+        Log.e("getBottomHeight", getNavigationBarHeight(this)+"");
+        Log.e("WindowHeight", screenHeight+"");
+
+        //640x360
+        //window - bottom navigation bar size height
+//        E/WindowHeight: 592
+        //bottom navigation bar size height
+//        E/getBottomHeight: 48
+
+        //3040×1440
+        //window - bottom navigation bar size height
+//        E/WindowHeight: 2759
+        //bottom navigation bar size height
+//        E/getBottomHeight: 281
 
         SharedPreferences shf = this.getSharedPreferences("basketList", MODE_PRIVATE);
         SharedPreferences.Editor editor = shf.edit();
@@ -98,6 +124,22 @@ public class FirstPage extends AppCompatActivity implements AutoPermissionsListe
                 }, 800);
             }
         }, 800);
+    }
+    public static int getNavigationBarHeight(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            DisplayMetrics metrics = new DisplayMetrics();
+            ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            int usableHeight = metrics.heightPixels;
+
+            ((Activity)context).getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+            int realHeight = metrics.heightPixels;
+
+            if (realHeight > usableHeight)
+                return realHeight - usableHeight;
+            else
+                return 0;
+        }
+        return 0;
     }
     public void clarifyPermission(){
         if (!PermissionHandler.checkPermissions(this)){

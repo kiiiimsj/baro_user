@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,8 +8,8 @@
     tools:context="com.tpn.baro.FirstPage">
     <TextView
         android:id="@+id/order_text"
-        app:layout_constraintBottom_toTopOf="@id/baro_logo"
-        app:layout_constraintLeft_toLeftOf="@id/baro_logo"
+        android:layout_alignStart="@id/baro_logo"
+        android:layout_above="@id/baro_logo"
         android:text="주문을"
         android:fontFamily="@font/notosans_regular"
         android:includeFontPadding="false"
@@ -17,11 +17,12 @@
         android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="-10dp"
         />
     <TextView
         android:id="@+id/get_text"
-        app:layout_constraintBottom_toTopOf="@id/baro_logo"
-        app:layout_constraintRight_toRightOf="@id/baro_logo"
+        android:layout_alignEnd="@id/baro_logo"
+        android:layout_above="@id/baro_logo"
         android:text="바로잡다"
         android:fontFamily="@font/notosans_regular"
         android:includeFontPadding="false"
@@ -29,6 +30,7 @@
         android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="-10dp"
         />
     <TextView
         android:id="@+id/baro_logo"
@@ -38,11 +40,8 @@
         android:textColor="@color/white"
         android:textSize="50sp"
         android:fontFamily="@font/notosans_bold"
+        android:layout_centerInParent="true"
+        android:textAlignment="gravity"
         android:includeFontPadding="false"
-        android:translationY="-20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
