@@ -34,6 +34,7 @@
                 android:fontFamily="@font/notosans_regular"
                 android:text="BARO"
                 android:textAlignment="center"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="13dp"
                 />

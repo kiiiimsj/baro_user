@@ -1,11 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
-        <!-- Customize your theme here. -->
+    <!-- 화면 관련 style  -->
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!--        <item name="android:windowNoTitle">true</item>-->
+        <!--        <item name="android:windowActionBar">false</item>-->
+        <!--        <item name="android:windowFullscreen">true</item>-->
+        <!--        <item name="android:windowContentOverlay">@null</item>-->
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <!--        <item name="android:windowTranslucentNavigation">true</item>-->
         <item name="colorPrimary">@color/main</item>
-        <item name="colorPrimaryDark">@color/main</item>
+        <item name="colorPrimaryDark">@color/invisible</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fitsSystemWindows">true</item>
+
         <item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>
     </style>
 
