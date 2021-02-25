@@ -94,7 +94,7 @@ public class HistoryDetailDialog extends DialogFragment {
         if(discountRate == 0) {
             discountRatePrice.setVisibility(View.GONE);
         }
-        discountRatePrice.setText("스마트 할인 금액 : "+(int)(total_Price * (discountRate / 100.0))+ "원");
+        discountRatePrice.setText("바로 할인 금액 : "+(int)(total_Price * (discountRate / 100.0))+ "원");
         totals.setText("총 결제 금액 : " + (total_Price -(int)(total_Price * (discountRate / 100.0)) - coupon_discount) +"원");
 
         store.setText(store_name);

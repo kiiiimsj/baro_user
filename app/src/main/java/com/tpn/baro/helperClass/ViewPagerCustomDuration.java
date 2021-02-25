@@ -1,15 +1,18 @@
 package com.tpn.baro.helperClass;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.animation.Interpolator;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.ViewPager;
 
 import java.lang.reflect.Field;
 
 public class ViewPagerCustomDuration extends ViewPager {
-
     public ViewPagerCustomDuration(Context context) {
         super(context);
         postInitViewPager();

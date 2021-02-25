@@ -43,7 +43,7 @@ import com.google.gson.GsonBuilder;
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
 import com.tpn.baro.Adapter.AdvertiseAdapter;
-import com.tpn.baro.Adapter.ListStoreAdapter;
+import com.tpn.baro.Adapter.StoreListAdapter;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.AppStartAdDialog;
 import com.tpn.baro.Dialogs.SearchDialog;
@@ -64,7 +64,7 @@ import java.util.HashMap;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.OnListItemSelectedInterface, AutoPermissionsListener, ActivityCompat.OnRequestPermissionsResultCallback  {
+public class NewMainPage extends AppCompatActivity implements StoreListAdapter.OnListItemSelectedInterface, AutoPermissionsListener, ActivityCompat.OnRequestPermissionsResultCallback  {
     Gson gson;
     SessionManager userSession;
     HashMap userData = new HashMap<>();
@@ -94,7 +94,7 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
     LowSensitiveSwipeRefreshLayout refreshLayout;
 
     RecyclerView allStoreList;
-    ListStoreAdapter listStoreAdapter;
+    StoreListAdapter storeListAdapter;
     ListStoreParsing listStoreParsing;
 
     public static boolean onPause = false;
@@ -393,12 +393,15 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
         View view = layoutInflater.inflate(R.layout.advertise_design, null, false);
         ImageView imageView = view.findViewById(R.id.slider_image);
         ArrayList<Bitmap> bitmaps = new ArrayList<>();
+        if(eventHelperClass == null || eventHelperClass.event == null || eventHelperClass.event.size() == 0 ) {
+            return;
+        }
         for (int i = 0;i<eventHelperClass.event.size();i++){
-            makeRequestForgetImage(eventHelperClass.event.get(i).event_image,imageView,NewMainPage.this,bitmaps,i,eventHelperClass.event.size());
+            makeRequestForgetImage(eventHelperClass.event.get(i).event_image,imageView,NewMainPage.this,bitmaps,eventHelperClass.event.size());
         }
 
     }
-    public void makeRequestForgetImage(String type_image, final ImageView imageView, Context context, final ArrayList<Bitmap> bitmaps, final int pos, final int max) {
+    public void makeRequestForgetImage(String type_image, final ImageView imageView, Context context, final ArrayList<Bitmap> bitmaps, final int max) {
         String lastUrl = "ImageEvent.do?image_name=";
         UrlMaker urlMaker = new UrlMaker();
         String url = urlMaker.UrlMake(lastUrl);
@@ -410,14 +413,14 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap response) {
-                        bitmaps.add(pos,response);
-                        if (max-1 == pos){
+                        bitmaps.add(response);
+                        if (max == bitmaps.size()){
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     advertiseAdapter = new AdvertiseAdapter(NewMainPage.this, eventHelperClass,bitmaps);
                                     viewPager.setAdapter(advertiseAdapter);
-                                    viewPager.setCurrentItem(eventHelperClass.event.size() * 500);
+                                    viewPager.setCurrentItem(eventHelperClass.event.size());
                                     viewPager.setOffscreenPageLimit(5);
                                     viewPager.setScrollDurationFactor(3);
                                     setEventCountSet(0);
@@ -437,7 +440,7 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
                                                 runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        viewPager.setCurrentItem((currentPos + 1),true);
+                                                        viewPager.setCurrentItem(((currentPos) + 1 % bitmaps.size()),true);
                                                     }
                                                 });
                                             }
@@ -488,8 +491,8 @@ public class NewMainPage extends AppCompatActivity implements ListStoreAdapter.O
     private void jsonParsingStoreList(String toString) {
         listStoreParsing = new Gson().fromJson(toString, ListStoreParsing.class);
         allStoreList.setLayoutManager(new LinearLayoutManager(this));
-        listStoreAdapter = new ListStoreAdapter(listStoreParsing, this, this);
-        allStoreList.setAdapter(listStoreAdapter);
+        storeListAdapter = new StoreListAdapter(listStoreParsing, this, this);
+        allStoreList.setAdapter(storeListAdapter);
     }
     @Override
     public void onItemSelected(View v, int position) {

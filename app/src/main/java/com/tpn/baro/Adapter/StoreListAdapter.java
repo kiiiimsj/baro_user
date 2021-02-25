@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,7 +20,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
-import com.tpn.baro.AdapterHelper.ListStoreHelperClass;
 import com.tpn.baro.JsonParsingHelper.FavoriteListParsing;
 import com.tpn.baro.JsonParsingHelper.FavoriteParsing;
 import com.tpn.baro.JsonParsingHelper.ListStoreListParsing;
@@ -29,27 +27,25 @@ import com.tpn.baro.JsonParsingHelper.ListStoreParsing;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 
-import java.util.List;
-
-public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.ListStoreViewHolder> {
+public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.ListStoreViewHolder> {
 
     private Context context;
     public interface OnListItemSelectedInterface {
         void onItemSelected(View v, int position);
     }
 
-    private static ListStoreAdapter.OnListItemSelectedInterface mListener;
+    private static StoreListAdapter.OnListItemSelectedInterface mListener;
 
 
     public ListStoreParsing listStoreParsing;
     public FavoriteParsing favoriteParsing;
-    public ListStoreAdapter(ListStoreParsing listStoreParsing, ListStoreAdapter.OnListItemSelectedInterface listener, Context context){
+    public StoreListAdapter(ListStoreParsing listStoreParsing, StoreListAdapter.OnListItemSelectedInterface listener, Context context){
         this.listStoreParsing = listStoreParsing;
         this.favoriteParsing = null;
         mListener = listener;
         this.context = context;
     }
-    public ListStoreAdapter(FavoriteParsing favoriteParsing, ListStoreAdapter.OnListItemSelectedInterface listener, Context context){
+    public StoreListAdapter(FavoriteParsing favoriteParsing, StoreListAdapter.OnListItemSelectedInterface listener, Context context){
         this.favoriteParsing = favoriteParsing;
         this.listStoreParsing = null;
         mListener = listener;
@@ -68,7 +64,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
 
     @NonNull
     @Override
-    public ListStoreAdapter.ListStoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public StoreListAdapter.ListStoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -79,7 +75,7 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
 
     @SuppressLint({"ResourceAsColor", "NewApi"})
     @Override
-    public void onBindViewHolder(@NonNull ListStoreAdapter.ListStoreViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull StoreListAdapter.ListStoreViewHolder holder, final int position) {
         if(favoriteParsing != null && favoriteParsing.getFavorite().size() != 0) {
             FavoriteListParsing favoriteStore = favoriteParsing.getFavorite().get(position);
             holder.storeName.setText(favoriteStore.getStore_name());
@@ -149,22 +145,22 @@ public class ListStoreAdapter extends RecyclerView.Adapter<ListStoreAdapter.List
     }
 
     @Override
-    public boolean onFailedToRecycleView(@NonNull ListStoreAdapter.ListStoreViewHolder holder) {
+    public boolean onFailedToRecycleView(@NonNull StoreListAdapter.ListStoreViewHolder holder) {
         return super.onFailedToRecycleView(holder);
     }
 
     @Override
-    public void onViewAttachedToWindow(@NonNull ListStoreAdapter.ListStoreViewHolder  holder) {
+    public void onViewAttachedToWindow(@NonNull StoreListAdapter.ListStoreViewHolder  holder) {
         super.onViewAttachedToWindow(holder);
     }
 
     @Override
-    public void onViewRecycled(@NonNull ListStoreAdapter.ListStoreViewHolder  holder) {
+    public void onViewRecycled(@NonNull StoreListAdapter.ListStoreViewHolder  holder) {
         super.onViewRecycled(holder);
     }
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull ListStoreAdapter.ListStoreViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull StoreListAdapter.ListStoreViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
     }
 

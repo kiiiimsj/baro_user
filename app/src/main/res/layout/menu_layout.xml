@@ -67,12 +67,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@id/arrow_right"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="7dp"
                 android:fontFamily="@font/notosans_black"
                 android:includeFontPadding="false"
                 android:text="1500원"
                 android:textSize="11sp"
-                android:textColor="#343434"
+                android:textColor="@color/gray"
                 android:drawablePadding="10dp"
                 android:letterSpacing="-0.03" />
             <ImageView
@@ -88,13 +88,13 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/arrow_right"
+                android:src="@drawable/arrow_triangle_small"
                 android:id="@+id/arrow_right"
                 android:layout_alignTop="@id/menu_price"
                 android:layout_alignBottom="@id/menu_price"
                 android:layout_toStartOf="@id/menu_price"
-                android:layout_marginEnd="10dp"
-                app:tint="@color/main" />
+                android:layout_marginEnd="7dp"
+                app:tint="@color/gray" />
             <TextView
                 android:layout_marginTop="5dp"
                 android:layout_below="@id/sold_out"
