@@ -268,7 +268,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                 Log.e("pricePlus", defaultPrice +"");
             }
         });
-
+        progressApplication.progressOFF();
     }
     @Override
     protected void onRestart() {
@@ -303,7 +303,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        progressApplication.progressOFF();
                     }
                 });
         requestQueue.add(request);
@@ -326,6 +326,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            progressApplication.progressOFF();
         }
     }
     private void addNewMenuToBasket(ArrayList<DetailsFixToBasket> detailsFixToBaskets, SharedPreferences.Editor editor){
@@ -489,6 +490,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("OrderDetails", "error");
+                        progressApplication.progressOFF();
                     }
                 });
         requestQueue.add(request);

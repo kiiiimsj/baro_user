@@ -41,7 +41,8 @@ public class AdvertiseAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return eventHelperClass.event.size() * 1000;
+//        return eventHelperClass == null ? 0 : eventHelperClass.event.size();
+        return Integer.MAX_VALUE;
     }
 
     @Override
@@ -49,25 +50,30 @@ public class AdvertiseAdapter extends PagerAdapter {
         return view == (ConstraintLayout) object;
     }
 
+
     @Override
     public int getItemPosition(@NonNull Object object) {
-        return super.getItemPosition(object);
+        return super.getItemPosition(object) % bitmaps.size();
     }
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
-        posi = position;
-        final int realIndex = position % eventHelperClass.event.size();
+//        posi = position;
+        final int realIndex = position % bitmaps.size();
 
         layoutInflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.advertise_design, container, false);
         ImageView imageView = view.findViewById(R.id.slider_image);
-        EventHelperClass.EventHelperParsingClass eventHelperParsingClass =eventHelperClass.event.get(realIndex);
-        if(!eventHelperParsingClass.event_image.equals("")) {
+
+        if(!bitmaps.get(realIndex).equals("")) {
             imageView.setImageBitmap(bitmaps.get(realIndex));
+//            imageView.setImageBitmap(bitmaps.get(position));
+//            imageView.setImageBitmap(new Bitmap());
         }
+
         container.addView(view);
+
 //        imageView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -80,9 +86,12 @@ public class AdvertiseAdapter extends PagerAdapter {
 
         return view;
     }
-
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+//        Log.e("call destory", "call");
+//        Log.e("position", position+"");
+//        bitmaps.add(position, bitmaps.get(position));
+//        bitmaps.remove(position+1);
         container.removeView((ConstraintLayout) object);
     }
     public void makeRequestForgetImage(String type_image, final ImageView imageView, Context context ) {

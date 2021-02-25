@@ -20,8 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.tpn.baro.Adapter.ListStoreAdapter;
-import com.tpn.baro.AdapterHelper.ListStoreHelperClass;
+import com.tpn.baro.Adapter.StoreListAdapter;
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.JsonParsingHelper.ListStoreParsing;
 import com.tpn.baro.Url.UrlMaker;
@@ -37,14 +36,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import maes.tech.intentanim.CustomIntent;
 
 //import com.example.baro.Database.SendToServer;
 
-public class ListStorePage extends AppCompatActivity implements ListStoreAdapter.OnListItemSelectedInterface , AutoPermissionsListener, TopBar.OnBackPressedInParentActivity {
+public class ListStorePage extends AppCompatActivity implements StoreListAdapter.OnListItemSelectedInterface , AutoPermissionsListener, TopBar.OnBackPressedInParentActivity {
     private final static int FIRST = 1;
     private final static int AFTER_FIRST =2;
     private final static int ON_RESTART = 3;
@@ -53,7 +51,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     SwipyRefreshLayout refreshLayout;
     int currentPos;
     RecyclerView mRecyclerView;
-    ListStoreAdapter adapter;
+    StoreListAdapter adapter;
 
     TextView typeName;
     //메인페이지에서 넘어온 리스트에 필요한 값들
@@ -254,7 +252,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
         getStoreId.edit().commit();
 
 //        adapter = new ListStoreAdapter(DataListForIsOpen, this, this,  this);
-        adapter = new ListStoreAdapter(listStoreParsing, this,  this);
+        adapter = new StoreListAdapter(listStoreParsing, this,  this);
         mRecyclerView.setAdapter(adapter);
         progressApplication.progressOFF();
         refreshLayout.setRefreshing(false);
@@ -326,7 +324,7 @@ public class ListStorePage extends AppCompatActivity implements ListStoreAdapter
     @Override
     public void onItemSelected(View v, int position) {
 
-        ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
+        StoreListAdapter.ListStoreViewHolder listStoreViewHolder = (StoreListAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(ListStorePage.this, StoreInfoReNewer.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         if(listStoreViewHolder.storeId == null) {

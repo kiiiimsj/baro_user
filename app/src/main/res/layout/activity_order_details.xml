@@ -84,8 +84,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:textColor="@color/main"
-                                    android:layout_marginEnd="5dp"
+                                    android:textColor="@color/gray"
                                     android:background="@drawable/layout_cancel_line"
                                     android:text="0"
                                     android:letterSpacing="-0.02"
@@ -94,8 +93,11 @@
                                     />
                                 <ImageView
                                     android:id="@+id/arrow_right"
+                                    android:src="@drawable/arrow_triangle_small"
+                                    android:layout_marginHorizontal="7dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
                                     />
                                 <TextView
                                     android:id="@+id/totalPrice"

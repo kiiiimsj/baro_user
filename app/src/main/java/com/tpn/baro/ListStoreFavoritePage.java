@@ -1,7 +1,6 @@
 package com.tpn.baro;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,32 +18,27 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.tpn.baro.Adapter.ListStoreAdapter;
+import com.tpn.baro.Adapter.StoreListAdapter;
 import com.tpn.baro.AdapterHelper.FavoriteHelperClass;
-import com.tpn.baro.AdapterHelper.ListStoreHelperClass;
 import com.tpn.baro.Database.SessionManager;
-import com.tpn.baro.JsonParsingHelper.FavoriteListParsing;
 import com.tpn.baro.JsonParsingHelper.FavoriteParsing;
-import com.tpn.baro.JsonParsingHelper.ListStoreParsing;
 import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.MyGPSListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ListStoreFavoritePage extends AppCompatActivity implements ListStoreAdapter.OnListItemSelectedInterface {
+public class ListStoreFavoritePage extends AppCompatActivity implements StoreListAdapter.OnListItemSelectedInterface {
     final private String TAG = this.getClass().getSimpleName();
     ImageView backButton;
 
     RecyclerView mRecyclerView;
-    ListStoreAdapter adapter;
+    StoreListAdapter adapter;
 
     LatLng latLng;
 
@@ -116,7 +110,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
 //        }
 //        DataListForIsOpen.addAll(DataList);
         Log.e("inFavorite", favoriteParsings.getFavorite().size()+"");
-        adapter = new ListStoreAdapter(favoriteParsings, this, this);
+        adapter = new StoreListAdapter(favoriteParsings, this, this);
         mRecyclerView.setAdapter(adapter);
         progressApplication.progressOFF();
     }
@@ -191,7 +185,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements ListStor
     }
     @Override
     public void onItemSelected(View v, int position) {
-        ListStoreAdapter.ListStoreViewHolder listStoreViewHolder = (ListStoreAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
+        StoreListAdapter.ListStoreViewHolder listStoreViewHolder = (StoreListAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
         Intent intent = new Intent(ListStoreFavoritePage.this, StoreInfoReNewer.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());

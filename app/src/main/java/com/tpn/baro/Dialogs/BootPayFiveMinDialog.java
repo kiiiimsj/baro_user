@@ -21,9 +21,13 @@ import com.tpn.baro.R;
 
 public class BootPayFiveMinDialog {
     public static final int BOOT_PAY_ACTION = 0;
-    public static final int OVER_5 = 1;
-    public static final int CLOSE_BEFORE = 2;
-    public static final int FIVE_MIN = 20;
+    public static final int BASKET_PAGE_ACTION = 1;
+    public static final int PAGE_END = 2;
+
+    public static final int OVER_5 = 3;
+    public static final int CLOSE_BEFORE = 4;
+
+    public static final int FIVE_MIN = 300;
 
     private Context context;
     public String outSideMessage;
