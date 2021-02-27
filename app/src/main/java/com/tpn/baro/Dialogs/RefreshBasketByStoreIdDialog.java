@@ -33,6 +33,7 @@ public class RefreshBasketByStoreIdDialog {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dlg.setContentView(R.layout.refresh_basket_by_store_id);
+        dlg.setCancelable(false);
         dlg.show();
 
         final Button okay = (Button) dlg.findViewById(R.id.okay);

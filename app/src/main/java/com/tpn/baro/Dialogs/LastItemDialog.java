@@ -28,6 +28,7 @@ public class LastItemDialog  {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dlg.setContentView(R.layout.last_item_dialog);
+        dlg.setCancelable(false);
         dlg.setCanceledOnTouchOutside(false);
 
 
@@ -35,7 +36,7 @@ public class LastItemDialog  {
         final Button doNotDelete = (Button) dlg.findViewById(R.id.doNotDelete);
 
         TextView title = dlg.findViewById(R.id.title);
-        TextView message = dlg.findViewById(R.id.mesgase);
+        TextView message = dlg.findViewById(R.id.content);
 
         if (isDeleteAll){
             title.setText("모두 비우기");

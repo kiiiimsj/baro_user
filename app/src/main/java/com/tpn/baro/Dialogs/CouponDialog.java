@@ -97,6 +97,7 @@ public class CouponDialog extends DialogFragment {
         /////////////////////////////////////////////////////////////////////////
         builder.setView(coupons);
         Dialog dialog = builder.create();
+        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }

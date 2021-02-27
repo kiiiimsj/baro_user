@@ -100,6 +100,7 @@ public class HistoryDetailDialog extends DialogFragment {
         store.setText(store_name);
         builder.setView(orderDetail);
         Dialog dialog = builder.create();
+        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
 
         return dialog;
