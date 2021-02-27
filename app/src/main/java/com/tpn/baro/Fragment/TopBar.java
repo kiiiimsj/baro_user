@@ -111,13 +111,13 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
         timerLayout = rootView.findViewById(R.id.main_timer_layout);
         discountRate = rootView.findViewById(R.id.discount_rate);
 
-        backButton.setVisibility(View.INVISIBLE);
-        timer.setVisibility(View.INVISIBLE);
-        title.setVisibility(View.INVISIBLE);
-        button.setVisibility(View.INVISIBLE);
-        etcImage.setVisibility(View.INVISIBLE);
-        discountRate.setVisibility(View.INVISIBLE);
-        timerLayout.setVisibility(View.INVISIBLE);
+        backButton.setVisibility(View.GONE);
+        timer.setVisibility(View.GONE);
+        title.setVisibility(View.GONE);
+        button.setVisibility(View.GONE);
+        etcImage.setVisibility(View.GONE);
+        discountRate.setVisibility(View.GONE);
+        timerLayout.setVisibility(View.GONE);
 
         switch (getTokenActivityName(getActivity().toString())) {
             case "Register1":

@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,9 +27,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.tpn.baro.HelperDatabase.StoreDetail;
-import com.tpn.baro.R;
-import com.tpn.baro.Url.UrlMaker;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -40,6 +37,9 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.OverlayImage;
+import com.tpn.baro.HelperDatabase.StoreDetail;
+import com.tpn.baro.R;
+import com.tpn.baro.Url.UrlMaker;
 
 public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallback {
     MapFragment mapFragment;
@@ -59,7 +59,11 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
     TextView eventBenefit;
     TextView storeInfoTitle;
 
-    LinearLayout eventsBenefitsLayout;
+    TextView representativeName;
+    TextView representativePhone;
+    TextView representativeNumber;
+
+    RelativeLayout eventsBenefitsLayout;
     //
     View rootView;
 
@@ -70,16 +74,21 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_store_detail, container, false);
-        storeInfo = rootView.findViewById(R.id.store_distance);
+        storeInfo = rootView.findViewById(R.id.store_infomation);
         openCloseTime = rootView.findViewById(R.id.open_close);
         daysOff = rootView.findViewById(R.id.days_off);
         storePhone = rootView.findViewById(R.id.store_phone);
         storeLocation = rootView.findViewById(R.id.store_location);
 
-        storeIntro = rootView.findViewById(R.id.store_intro_title);
+        storeIntro = rootView.findViewById(R.id.store_title);
         eventBenefit = rootView.findViewById(R.id.events_benefits_title);
         storeInfoTitle = rootView.findViewById(R.id.store_info_title);
         eventsBenefitsLayout = rootView.findViewById(R.id.events_benefits_layout);
+
+        representativeName = rootView.findViewById(R.id.representative_name_content);
+        representativePhone = rootView.findViewById(R.id.representative_phone_content);
+        representativeNumber = rootView.findViewById(R.id.representative_number_content);
+
         FragmentManager fm = getChildFragmentManager();
         mapFragment = (MapFragment)fm.findFragmentById(R.id.map);
         if (mapFragment == null) {
@@ -139,6 +148,10 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
         eventBenefit.setPaintFlags(eventBenefit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         eventsBenefitsLayout.setVisibility(View.GONE);
 
+
+        representativeName.setText(storeDetailData.getRepresentative_name());
+        representativePhone.setText(storeDetailData.getStore_phone());
+        representativeNumber.setText(storeDetailData.getBusiness_number());
 //        storeInfoTitle.setPaintFlags(eventBenefit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 //        mapReady();
     }
@@ -198,7 +211,7 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-        view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        view.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
         view.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
         view.buildDrawingCache();
