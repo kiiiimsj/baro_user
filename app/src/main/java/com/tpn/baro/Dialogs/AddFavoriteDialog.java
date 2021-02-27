@@ -25,6 +25,7 @@ public class AddFavoriteDialog {
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dlg.getWindow().setAttributes(params);
+        dlg.setCancelable(false);
         dlg.show();
 
         final Button okay = (Button) dlg.findViewById(R.id.okay);

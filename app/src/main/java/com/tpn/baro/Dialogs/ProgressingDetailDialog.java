@@ -103,6 +103,7 @@ public class ProgressingDetailDialog extends DialogFragment {
         /////////////////////////////
         builder.setView(progressingDetail);
         Dialog dialog = builder.create();
+        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
 
 

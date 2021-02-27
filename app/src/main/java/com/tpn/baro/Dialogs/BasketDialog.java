@@ -40,7 +40,7 @@ public class BasketDialog {
             public void onClick(View view) {
                 Intent intent = new Intent(context, Basket.class);
                 intent.putExtra("onDialog", true);
-                intent.putExtra("discount_rate", discountRate);
+//                intent.putExtra("discount_rate", discountRate);
                 context.startActivity(intent);
 
                 OrderDetails orderDetails = (OrderDetails)OrderDetails.orderDetails;

@@ -25,7 +25,7 @@
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:paddingBottom="20dp"
-        android:id="@+id/mesgase"
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:layout_below="@id/mesgase">
+        android:layout_below="@id/content">
 
         <Button
             android:id="@+id/okay"
