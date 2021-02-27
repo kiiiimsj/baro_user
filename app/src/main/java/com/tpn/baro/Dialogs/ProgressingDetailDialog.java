@@ -38,7 +38,7 @@ public class ProgressingDetailDialog extends DialogFragment {
     TextView totals;
     TextView request;
     TextView discountPrice;
-    TextView discountRatePrice;
+//    TextView discountRatePrice;
     ImageButton delete_this;
     Button okay;
     RecyclerView progressDetail;
@@ -71,7 +71,7 @@ public class ProgressingDetailDialog extends DialogFragment {
         request = progressingDetail.findViewById(R.id.request);
         delete_this = progressingDetail.findViewById(R.id.deleteThis);
         discountPrice = progressingDetail.findViewById(R.id.discount_price);
-        discountRatePrice = progressingDetail.findViewById(R.id.discount_rate_price);
+//        discountRatePrice = progressingDetail.findViewById(R.id.discount_rate_price);
         progressDetail = progressingDetail.findViewById(R.id.ProgressDetailList);
         okay = progressingDetail.findViewById(R.id.okay);
 
@@ -94,11 +94,11 @@ public class ProgressingDetailDialog extends DialogFragment {
         if(data.getCoupon_discount() == 0 ) {
             discountPrice.setVisibility(View.GONE);
         }
-        if(data.getDiscount_rate() == 0 ) {
-            discountRatePrice.setVisibility(View.GONE);
-        }
+//        if(data.getDiscount_rate() == 0 ) {
+//            discountRatePrice.setVisibility(View.GONE);
+//        }
 
-        discountRatePrice.setText("바로 할인 금액 : "+ (int)(data.getTotal_price() * (data.getDiscount_rate() / 100.0))+"원");
+//        discountRatePrice.setText("바로 할인 금액 : "+ (int)(data.getTotal_price() * (data.getDiscount_rate() / 100.0))+"원");
         totals.setText("총 결제 금액 : " + (data.getTotal_price() - (int)(data.getTotal_price() * (data.getDiscount_rate() / 100.0)) - data.getCoupon_discount())+"원");
         /////////////////////////////
         builder.setView(progressingDetail);

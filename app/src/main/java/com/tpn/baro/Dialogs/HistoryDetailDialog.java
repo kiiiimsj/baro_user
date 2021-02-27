@@ -37,7 +37,7 @@ public class HistoryDetailDialog extends DialogFragment {
     TextView store;
     TextView requests;
     TextView discountPrice;
-    TextView discountRatePrice;
+//    TextView discountRatePrice;
     HistoryDetailAdapter historyDetailAdapter;
     Button close_btn;
     int discountRate = 0;
@@ -71,7 +71,7 @@ public class HistoryDetailDialog extends DialogFragment {
         store = orderDetail.findViewById(R.id.store_name);
         totals = orderDetail.findViewById(R.id.totals);
         discountPrice = orderDetail.findViewById(R.id.discount_price);
-        discountRatePrice = orderDetail.findViewById(R.id.discount_rate_price);
+//        discountRatePrice = orderDetail.findViewById(R.id.discount_rate_price);
         recyclerView.setLayoutManager(new LinearLayoutManager(orderDetail.getContext()));
         deleteThis = orderDetail.findViewById(R.id.deleteThis);
         deleteThis.setOnClickListener(new View.OnClickListener() {
@@ -91,10 +91,10 @@ public class HistoryDetailDialog extends DialogFragment {
         if(coupon_discount == 0) {
             discountPrice.setVisibility(View.GONE);
         }
-        if(discountRate == 0) {
-            discountRatePrice.setVisibility(View.GONE);
-        }
-        discountRatePrice.setText("바로 할인 금액 : "+(int)(total_Price * (discountRate / 100.0))+ "원");
+//        if(discountRate == 0) {
+//            discountRatePrice.setVisibility(View.GONE);
+//        }
+//        discountRatePrice.setText("바로 할인 금액 : "+(int)(total_Price * (discountRate / 100.0))+ "원");
         totals.setText("총 결제 금액 : " + (total_Price -(int)(total_Price * (discountRate / 100.0)) - coupon_discount) +"원");
 
         store.setText(store_name);
