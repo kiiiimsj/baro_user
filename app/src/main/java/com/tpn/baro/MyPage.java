@@ -24,7 +24,6 @@ import com.android.volley.toolbox.Volley;
 import com.tpn.baro.Adapter.MyPageButtonAdapter;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.IfLogoutDialog;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 
 import org.json.JSONException;
@@ -127,7 +126,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         myCouponButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MyPage.this, SideMyCoupon.class));
+                startActivity(new Intent(MyPage.this, Coupon.class));
                 CustomIntent.customType(MyPage.this,"left-to-right");
             }
         });
