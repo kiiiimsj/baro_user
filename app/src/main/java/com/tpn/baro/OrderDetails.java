@@ -321,8 +321,8 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                     arrowRight.setVisibility(View.VISIBLE);
                     ifDiscountRate.setText(defaultPrice+"");
                     totalPriceText.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
-                    makeRequest();
                 }
+                makeRequest();
             }
         } catch (JSONException e) {
             e.printStackTrace();
