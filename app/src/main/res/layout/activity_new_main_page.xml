@@ -196,7 +196,7 @@
 
         <fragment
             android:id="@+id/cart_click_button"
-            android:name="com.tpn.baro.Fragment.OrderListCart"
+            android:name="com.tpn.baro.Fragment.BasketCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

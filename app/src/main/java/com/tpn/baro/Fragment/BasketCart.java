@@ -20,7 +20,7 @@ import maes.tech.intentanim.CustomIntent;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class OrderListCart extends Fragment {
+public class BasketCart extends Fragment {
     ViewGroup rootView;
     TextView orderCount;
     ImageView image;
@@ -29,7 +29,7 @@ public class OrderListCart extends Fragment {
     Context context;
     SharedPreferences shf;
 
-    public OrderListCart() {
+    public BasketCart() {
         // Required empty public constructor
     }
 
@@ -83,7 +83,9 @@ public class OrderListCart extends Fragment {
         image.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), Basket.class));
+                Intent intent = new Intent(getActivity(), Basket.class);
+                intent.putExtra("onDialog", true);
+                startActivity(intent);
                 CustomIntent.customType(context,"left-to-right");
             }
         });

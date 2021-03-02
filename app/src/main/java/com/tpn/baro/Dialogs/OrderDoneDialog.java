@@ -23,6 +23,7 @@ public class OrderDoneDialog {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dlg.setContentView(R.layout.fragment_order_done);
+        dlg.setCancelable(false);
         dlg.show();
 
         final Button okay = (Button) dlg.findViewById(R.id.okay);

@@ -23,7 +23,7 @@
 
     <TextView
         android:layout_below="@id/title"
-        android:id="@+id/mesgase"
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="30dp"
@@ -37,7 +37,7 @@
 
 
     <LinearLayout
-        android:layout_below="@id/mesgase"
+        android:layout_below="@id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

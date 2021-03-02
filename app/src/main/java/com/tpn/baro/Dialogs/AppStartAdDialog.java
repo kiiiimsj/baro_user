@@ -55,6 +55,7 @@ public class AppStartAdDialog {
         dlg.setContentView(R.layout.app_start_ad_dialog);
         dlg.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dlg.setCanceledOnTouchOutside(false);
+        dlg.setCancelable(false);
 
         eventImage = (ImageView) dlg.findViewById(R.id.ad_image);
         closeEver = (Button) dlg.findViewById(R.id.close_ever);

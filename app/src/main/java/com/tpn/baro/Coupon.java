@@ -23,7 +23,6 @@ import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.CouponRegisterDialog;
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.JsonParsingHelper.DefaultParsing;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.gson.Gson;
 
@@ -31,7 +30,7 @@ import java.util.HashMap;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity, CouponRegisterDialog.OnDismiss {
+public class Coupon extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity, CouponRegisterDialog.OnDismiss {
     private final String TAG = this.getClass().getSimpleName();
     CouponAdapter couponAdapter;
     CouponList couponListData;
@@ -56,14 +55,14 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
                 String phone = urlData();
                 String url = new UrlMaker().UrlMake("CouponInsertByNumber.do?phone="+phone+"&coupon_id="+couponInput.getText());
 
-                RequestQueue requestQueue = Volley.newRequestQueue(SideMyCoupon.this);
+                RequestQueue requestQueue = Volley.newRequestQueue(Coupon.this);
 
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 DefaultParsing defaultParsing = gson.fromJson(response,DefaultParsing.class);
-                                CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(SideMyCoupon.this, SideMyCoupon.this,defaultParsing);
+                                CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(Coupon.this, Coupon.this,defaultParsing);
                                 couponRegisterDialog.callFunction();
                                 makeRequestForCoupon(urlData());
                             }
@@ -115,7 +114,7 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(SideMyCoupon.this, "사용자 쿠폰이 존재하지 않습니다.", Toast.LENGTH_LONG);
+                    Toast.makeText(Coupon.this, "사용자 쿠폰이 존재하지 않습니다.", Toast.LENGTH_LONG);
                     progressApplication.progressOFF();
                 }
             });
@@ -126,7 +125,7 @@ public class SideMyCoupon extends AppCompatActivity implements TopBar.OnBackPres
 
     private void setCouponList(CouponList couponListData) {
         couponAdapter = new CouponAdapter(couponListData);
-        recyclerView.setLayoutManager(new LinearLayoutManager(SideMyCoupon.this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(Coupon.this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(couponAdapter);
         progressApplication.progressOFF();
     }

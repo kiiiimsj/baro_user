@@ -64,7 +64,7 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,10 +76,9 @@
                 android:id="@id/order_state"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:layout_marginRight="20dp"
-                android:fontFamily="@font/muli_black"
-                android:text="주문 완료"
+                android:text="수 령 완 료"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/notosans_light"
                 android:textColor="@color/main" />
         </LinearLayout>
 

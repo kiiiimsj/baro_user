@@ -23,7 +23,7 @@
         >
         <TextView
 
-            android:id="@+id/mesgase"
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -33,7 +33,7 @@
             android:textSize="16sp"
             android:text="주문 결제가 취소 되었습니다"/>
         <TextView
-            android:layout_below="@id/mesgase"
+            android:layout_below="@id/content"
             android:id="@+id/error_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

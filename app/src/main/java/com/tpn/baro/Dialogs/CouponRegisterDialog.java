@@ -29,8 +29,9 @@ public class CouponRegisterDialog {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dlg.setContentView(R.layout.fragment_add_favorite);
+        dlg.setCancelable(false);
         TextView title = (TextView) dlg.findViewById(R.id.title);
-        TextView message = (TextView) dlg.findViewById(R.id.mesgase);
+        TextView message = (TextView) dlg.findViewById(R.id.content);
         if(outSideMessage!= null) {
             title.setText("BARO");
             message.setText(outSideMessage);

@@ -3,8 +3,9 @@ package com.tpn.baro.Dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,9 +30,14 @@ public class SearchDialog {
         dlg.setCanceledOnTouchOutside(false);
         dlg.show();
 
+        Window window = dlg.getWindow();
+        window.setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(R.color.dialog_invisible)));
+
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
         final Button search = (Button) dlg.findViewById(R.id.search);
         final ImageButton close = (ImageButton) dlg.findViewById(R.id.close);
-        final EditText body = (EditText) dlg.findViewById(R.id.searchBody);
+        final EditText body = (EditText) dlg.findViewById(R.id.search_body);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
