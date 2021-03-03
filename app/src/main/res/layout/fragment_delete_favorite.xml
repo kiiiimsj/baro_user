@@ -26,7 +26,7 @@
         android:paddingRight="10dp"
         android:paddingBottom="30dp"
         android:layout_marginTop="20dp"
-        android:id="@+id/mesgase"
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -38,7 +38,7 @@
 
 
     <LinearLayout
-        android:layout_below="@id/mesgase"
+        android:layout_below="@id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

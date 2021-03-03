@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tpn.baro.SideMyCoupon">
+    tools:context="com.tpn.baro.Coupon">
     <fragment
         android:id="@+id/top_bar"
         android:name="com.tpn.baro.Fragment.TopBar"
@@ -40,8 +40,12 @@
                 android:id="@+id/coupon_number_input"
                 android:layout_weight="3"
                 android:layout_width="0dp"
+                android:hint="쿠폰번호 입력"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"/>
+                android:background="@drawable/layout_edit_text_rounded_radius_5dp_stroke_1dp"
+                android:padding="10dp"
+                android:layout_marginEnd="20dp"
+                />
             <Button
                 android:id="@+id/registerBtn"
                 android:layout_weight="1"

@@ -151,7 +151,7 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
             super(itemView);
             storeName = itemView.findViewById(R.id.store_name);
             storeImage = itemView.findViewById(R.id.store_image);
-            storeDistance = itemView.findViewById(R.id.store_distance);
+            storeDistance = itemView.findViewById(R.id.store_infomation);
             storeId = itemView.findViewById(R.id.store_id);
             isOpen = itemView.findViewById(R.id.is_open);
 

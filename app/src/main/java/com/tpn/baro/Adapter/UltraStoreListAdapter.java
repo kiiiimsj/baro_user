@@ -132,7 +132,7 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
 
             storeName = itemView.findViewById(R.id.store_name);
             storeImage = itemView.findViewById(R.id.store_image);
-            storeDistance = itemView.findViewById(R.id.store_distance);
+            storeDistance = itemView.findViewById(R.id.store_infomation);
             storeId = itemView.findViewById(R.id.store_id);
             isOpen = itemView.findViewById(R.id.is_open);
             ViewPagersListStoreParsing.ViewPagerStoreParsing list = listStoreHelperClasses.store.get(po);

@@ -27,8 +27,9 @@ public class MapSetPositionDialog {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dlg.setContentView(R.layout.custom_dialog);
-        dialogMessage = dlg.findViewById(R.id.mesgase);
+        dialogMessage = dlg.findViewById(R.id.content);
         dialogMessage.setText("해당 위치를 현재위치로 설정하시겠습니까?");
+        dlg.setCancelable(false);
         dlg.show();
 
         final Button yes = (Button) dlg.findViewById(R.id.goBasket);

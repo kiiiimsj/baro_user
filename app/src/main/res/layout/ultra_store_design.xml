@@ -24,7 +24,7 @@
             android:letterSpacing="-0.02"/>
         <TextView
             android:layout_below="@id/store_name"
-            android:id="@+id/store_distance"
+            android:id="@+id/store_infomation"
             android:layout_marginTop="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

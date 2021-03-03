@@ -77,9 +77,11 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         holder.store_name.setText(reverse.getStore_name());
         holder.ordered_date.setText(reverse.getOrder_date());
         holder.totalPrice.setText("합계 : "+reverse.getTotal_price() + " 원");
-        if (reverse.getOrder_state() == "DONE") {
+        Log.e("state", reverse.getOrder_state());
+        if (reverse.getOrder_state().equals("DONE")) {
             holder.order_state.setText("수 령 완 료");
-        } else if (reverse.getOrder_state() == "CANCEL"){
+        }
+        if (reverse.getOrder_state().equals("CANCEL")){
             holder.order_state.setText("주 문 취 소");
         }
 
