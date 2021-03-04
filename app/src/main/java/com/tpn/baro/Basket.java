@@ -680,18 +680,17 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
         onPause = true;
         bootPayDialogBranch = BootPayFiveMinDialog.BOOT_PAY_ACTION;
-
+//        .setMethodList(Arrays.asList(Method.EASY_CARD, Method.PHONE, Method.BANK, Method.CARD, Method.VBANK))
         bootpayBuilder.setContext(Basket.this)
                 .setApplicationId(application_id) // 해당 프로젝트(안드로이드)의 application id 값
-                .setPG(PG.NICEPAY) // 결제할 PG 사
+//                .setPG(PG.NICEPAY) // 결제할 PG 사
                 .setContext(Basket.this)
                 .setEasyPayUserToken(user_token)
-                .setMethodList(Arrays.asList(Method.EASY_CARD, Method.PHONE, Method.BANK, Method.CARD, Method.VBANK))
                 .setBootExtra(bootExtra)
                 .setBootUser(bootUser)
                 //               .setUserPhone("010-1234-5678") // 구매자 전화번호
                 .setUX(UX.PG_DIALOG)
-                .setMethod(Method.EASY_CARD) // 결제수단
+//                .setMethod(Method.CARD) // 결제수단
                 //.isShowAgree(true)
                 .setName(storeName) // 결제할 상품명
                 .setOrderId(expired_localtime + user_name) // 결제 고유번호
