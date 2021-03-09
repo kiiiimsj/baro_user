@@ -91,14 +91,14 @@ public class ChangePass2 extends AppCompatActivity implements TopBar.OnBackPress
     }
 
     public void callBackFromFindPass(View view) { super.onBackPressed(); }
-    public String urlMaker() {
-        UrlMaker urlMaker = new UrlMaker();
-        String url = urlMaker.UrlMake("");
-        StringBuilder urlBuilder = new StringBuilder(url);
-        urlBuilder.append(ChangePass2.this.getString(R.string.passUpdate));
-
-        return urlBuilder.toString();
-    }
+//    public String urlMaker() {
+//        UrlMaker urlMaker = new UrlMaker();
+//        String url = urlMaker.UrlMake("");
+//        StringBuilder urlBuilder = new StringBuilder(url);
+//        urlBuilder.append("MemberPassUpdate.do");
+//
+//        return urlBuilder.toString();
+//    }
     public void makeRequestForFindPass(HashMap data) {
         String url = new UrlMaker().UrlMake("MemberPassUpdate.do");
         RequestQueue requestQueue = Volley.newRequestQueue(this);

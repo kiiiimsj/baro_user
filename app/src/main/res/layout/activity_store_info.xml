@@ -38,19 +38,57 @@
                     app:tabMode="scrollable"
                     app:tabRippleColor="@color/invisible" />
             </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="9">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/menu_list"
+                android:layout_weight="9"
+                >
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:scrollbars="vertical" />
-            </RelativeLayout>
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/menu_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:scrollbars="vertical" />
+                </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
         </LinearLayout>
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/discount_text_view_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="80dp"
+        android:layout_marginStart="20dp"
+        android:padding="5dp"
+        android:background="@drawable/layout_border_3dp_stroke_1dp"
+        >
+        <TextView
+            android:id="@+id/discount_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="바로할인 | 현재할인률 "
+            android:fontFamily="@font/notosans_light"
+            android:textColor="@color/main"
+            android:drawableTint="@color/main"
+            android:textSize="11sp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/timer_white" />
+        <TextView
+            android:layout_toEndOf="@id/discount_text_view"
+            android:id="@+id/discount_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18%"
+            android:textSize="11sp"
+            android:fontFamily="@font/notosans_light"
+            android:textColor="@color/main"
+            />
+    </RelativeLayout>
 </RelativeLayout>

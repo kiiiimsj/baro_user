@@ -104,6 +104,7 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("onCreate" , "true");
+        Toast.makeText(this, "test 테스트", Toast.LENGTH_SHORT).show();
         onPause = false;
         setContentView(R.layout.activity_new_main_page);
 
