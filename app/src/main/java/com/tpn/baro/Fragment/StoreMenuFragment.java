@@ -4,18 +4,22 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -79,6 +83,12 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     BottomMenu bottomMenu;
     View rootView;
 
+    NestedScrollView scrollView;
+    RelativeLayout discountTextViewLayout;
+    TextView discountText;
+
+    boolean animating = false;
+
     public int getDiscountRate;
 
     public StoreMenuFragment() { }
@@ -95,6 +105,9 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         rootView = inflater.inflate(R.layout.activity_store_info, container, false);
         mCategoryTabLayout = rootView.findViewById(R.id.category_layout);
         mRecyclerViewMenu = rootView.findViewById(R.id.menu_list);
+        discountTextViewLayout = rootView.findViewById(R.id.discount_text_view_layout);
+        discountText = rootView.findViewById(R.id.discount_text);
+        scrollView = rootView.findViewById(R.id.scroll_view);
         drawStoreInfo(Integer.parseInt(storedIdStr));
         return rootView;
     }
@@ -109,8 +122,85 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         //즐겨찾기 연결
         Intent intent = getActivity().getIntent();
         storedIdStr=intent.getStringExtra("store_id");
+        makeRequestForDiscountRate(Integer.parseInt(storedIdStr));
+    }
+    @SuppressLint("ClickableViewAccessibility")
+    private void setScrollEvent() {
+        final Animation upAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_up_100);
+        final Animation downAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_bottom_100);
 
+        mRecyclerViewMenu.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                    case MotionEvent.ACTION_SCROLL:
+//                        if(animating) {
+//                            break;
+//                        }
+                        Log.e("ACTION_ELSE" , "ACTION ELSE" + discountTextViewLayout.getVisibility());
+//                        animating = true;
+//                        discountTextViewLayout.setAnimation(downAnim);
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                discountTextViewLayout.setVisibility(View.INVISIBLE);
+//                                animating = false;
+//                                Log.e("ACTION_ELSE" , "ACTION handler start" + animating);
+//                            }
+//                        }, 500);
+//                        Log.e("ACTION_ELSE" , "ACTION handler end" + animating);
+                        discountTextViewLayout.setAnimation(downAnim);
+                        discountTextViewLayout.setVisibility(View.INVISIBLE);
+                        break;
+                    default:
+                        discountTextViewLayout.setVisibility(View.VISIBLE);
+                        break;
+                }
+                Log.e("ACTION_CANCEL" , "ACTION CANCEL"+ discountTextViewLayout.getVisibility());
+//                discountTextViewLayout.setVisibility(View.VISIBLE);
+//                discountTextViewLayout.setAnimation(upAnim);
+                return false;
+            }
+        });
+    }
+    public void makeRequestForDiscountRate(int storeId) {
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
+        String url = urlMaker.UrlMake(lastUrl);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
 
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        Log.e("response", response);
+                        setDiscountTextView(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(request);
+    }
+    public void setDiscountTextView(String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            if(jsonObject.getBoolean("result")) {
+                int discountRate = jsonObject.getInt("discount_rate");
+                if(discountRate == 0 ){
+                    discountTextViewLayout.setVisibility(View.GONE);
+                }else {
+                    setScrollEvent();
+                }
+                discountText.setText(discountRate+"%");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
     private void setDrawStoreInfo() {
         new Thread(new Runnable() {

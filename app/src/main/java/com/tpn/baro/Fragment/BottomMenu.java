@@ -46,37 +46,27 @@ public class BottomMenu extends Fragment {
         setBottomButtonColor();
         return rootView;
     }
-
-    /**
-     * BottomNavigation에서 선택된 item의 index를 인식못하는 문제<br/>
-     *  realBottom.getMenu().getItem(index).setChecked(true);<br/>
-     *  기존의 방식에서<br/><br/>
-     *  realBottom.setSelectedItemId(realBottom.getMenu().getItem(0).getItemId());<br/>
-     *  으로 변경<br/>
-     *  -참조<br/>
-     *  https://stackoverflow.com/questions/32246438/navigationdrawer-menuitem-setchecked-doesnt-work
-     **/
     private void setBottomButtonColor() {
         switch (getTokenActivityName(getActivity().toString())) {
             case "NewMainPage" :
-//                realBottom.getMenu().getItem(0).setChecked(true);
-                realBottom.setSelectedItemId(realBottom.getMenu().getItem(0).getItemId());
+                realBottom.getMenu().getItem(0).setChecked(true);
+//                realBottom.setSelectedItemId(realBottom.getMenu().getItem(0).getItemId());
                 break;
             case "ListStoreFavoritePage" :
-//                realBottom.getMenu().getItem(1).setChecked(true);
-                realBottom.setSelectedItemId(realBottom.getMenu().getItem(1).getItemId());
+                realBottom.getMenu().getItem(1).setChecked(true);
+//                realBottom.setSelectedItemId(realBottom.getMenu().getItem(1).getItemId());
                 break;
             case "OrderProgressing" :
-//                realBottom.getMenu().getItem(2).setChecked(true);
-                realBottom.setSelectedItemId(realBottom.getMenu().getItem(2).getItemId());
+                realBottom.getMenu().getItem(2).setChecked(true);
+//                realBottom.setSelectedItemId(realBottom.getMenu().getItem(2).getItemId());
                 break;
             case "OrderHistory" :
-//                realBottom.getMenu().getItem(3).setChecked(true);
-                realBottom.setSelectedItemId(realBottom.getMenu().getItem(3).getItemId());
+                realBottom.getMenu().getItem(3).setChecked(true);
+//                realBottom.setSelectedItemId(realBottom.getMenu().getItem(3).getItemId());
                 break;
             case "MyPage" :
-//                realBottom.getMenu().getItem(4).setChecked(true);
-                realBottom.setSelectedItemId(realBottom.getMenu().getItem(4).getItemId());
+                realBottom.getMenu().getItem(4).setChecked(true);
+//                realBottom.setSelectedItemId(realBottom.getMenu().getItem(4).getItemId());
                 break;
             default:
                 for (int i = 0; i < realBottom.getMenu().size(); i++) {

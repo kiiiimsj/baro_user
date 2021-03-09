@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -64,6 +65,8 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     TopBar topBar;
     ImageView.OnClickListener heartClickListener;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +75,6 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         setOnClickFavorite();
         fm = getSupportFragmentManager();
         topBar = (TopBar) fm.findFragmentById(R.id.top_bar);
-
 
         tabs = findViewById(R.id.tab_tabs);
         tabMenu = (TextView)findViewById(R.id.order_history_list);
@@ -87,8 +89,8 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
 
         myIntent.getIntExtra("discount_rate", 0);
 
-        makeRequestForDiscountRate(Integer.parseInt(storedIdStr));
-
+//        makeRequestForDiscountRate(Integer.parseInt(storedIdStr));
+        setTabEvent();
 //        discountRate = topBar.storeId = Integer.parseInt(storedIdStr);
         saveFavoriteOnce();
 //        if (_phone.equals("")) {
@@ -314,40 +316,6 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         Gson gson = new GsonBuilder().create();
         storeDetailData = gson.fromJson(response, StoreDetail.class);
         setTitleName();
-    }
-    public void makeRequestForDiscountRate(int storeId) {
-        UrlMaker urlMaker = new UrlMaker();
-        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
-        String url = urlMaker.UrlMake(lastUrl);
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
-                        Log.e("response", response);
-                        setDiscountTextView(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        requestQueue.add(request);
-    }
-    public void setDiscountTextView(String result) {
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            if(jsonObject.getBoolean("result")) {
-                discountRate = jsonObject.getInt("discount_rate");
-                topBar.setDiscountTextView(discountRate);
-                setTabEvent();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
     private void setTabEvent() {
         final FragmentManager fm = getSupportFragmentManager();
