@@ -87,6 +87,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     DetailsFixToBasket detailsFixToBasket;
     OrderDetailsEssentialAdapter adapter;
     OrderDetailsNonEssentialAdapter nonEssentialAdapter;
+    TextView getIfDiscountRate;
 //    View v;
     Button fix;
 //    Bitmap bitmap = null;
@@ -139,6 +140,8 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         arrowRight.setVisibility(View.GONE);
         ifDiscountRate = findViewById(R.id.if_discount_rate);
         ifDiscountRate.setVisibility(View.GONE);
+        getIfDiscountRate = findViewById(R.id.discount_rate);
+        getIfDiscountRate.setVisibility(View.GONE);
         totalPriceText = findViewById(R.id.totalPrice);
 
         expandListViewShell = findViewById(R.id.expandListViewShell);
@@ -313,11 +316,13 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
             JSONObject jsonObject = new JSONObject(result);
             if(jsonObject.getBoolean("result")) {
                 discountRate = jsonObject.getInt("discount_rate");
-                topBar.setDiscountTextView(discountRate);
+//                topBar.setDiscountTextView(discountRate);
+                getIfDiscountRate.setText("SALE "+discountRate+"%");
                 if(discountRate == 0) {
                     totalPriceText.setText(String.valueOf(defaultPrice));
                 }else {
                     ifDiscountRate.setVisibility(View.VISIBLE);
+                    getIfDiscountRate.setVisibility(View.VISIBLE);
                     arrowRight.setVisibility(View.VISIBLE);
                     ifDiscountRate.setText(defaultPrice+"");
                     totalPriceText.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));

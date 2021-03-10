@@ -47,7 +47,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     Button button;
     ImageView etcImage;
     TextView timer;
-    TextView discountRate;
+//    TextView discountRate;
     RelativeLayout timerLayout;
 
     Activity activity;
@@ -109,14 +109,14 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
         etcImage = rootView.findViewById(R.id.when_has_image);
         timer = rootView.findViewById(R.id.fifteenTimer);
         timerLayout = rootView.findViewById(R.id.main_timer_layout);
-        discountRate = rootView.findViewById(R.id.discount_rate);
+//        discountRate = rootView.findViewById(R.id.discount_rate);
 
         backButton.setVisibility(View.GONE);
         timer.setVisibility(View.GONE);
         title.setVisibility(View.GONE);
         button.setVisibility(View.GONE);
         etcImage.setVisibility(View.GONE);
-        discountRate.setVisibility(View.GONE);
+//        discountRate.setVisibility(View.GONE);
         timerLayout.setVisibility(View.GONE);
 
         switch (getTokenActivityName(getActivity().toString())) {
@@ -366,14 +366,14 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
 //            e.printStackTrace();
 //        }
 //    }
-    public void setDiscountTextView(int discountRateInt) {
-        if(discountRateInt == 0 ){
-            discountRate.setVisibility(View.GONE);
-        }else {
-            discountRate.setVisibility(View.VISIBLE);
-            discountRate.setText(discountRateInt+"%");
-        }
-    }
+//    public void setDiscountTextView(int discountRateInt) {
+//        if(discountRateInt == 0 ){
+//            discountRate.setVisibility(View.GONE);
+//        }else {
+//            discountRate.setVisibility(View.VISIBLE);
+//            discountRate.setText(discountRateInt+"%");
+//        }
+//    }
 //    public void makeRequestForDiscountRate(int storeId) {
 //        //GetStoreDiscount.do?store_id=
 //        UrlMaker urlMaker = new UrlMaker();

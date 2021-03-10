@@ -103,6 +103,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     LinearLayout recyclerViewShell;
     Button button;
     Button deleteAll;
+    TextView getIfDiscountRate;
 
     private WebSocketClient webSocketClient;
     int store_id;
@@ -167,6 +168,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         recyclerViewShell = findViewById(R.id.linearLayout2);
         storeNameTextView = findViewById(R.id.store_name);
         finalPayValue = findViewById(R.id.total_price_final_pay);
+        getIfDiscountRate = findViewById(R.id.discount_rate);
 
         SharedPreferences sharedPreferences = getSharedPreferences(BasketList, MODE_PRIVATE);
         SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
@@ -178,7 +180,9 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         storeName = sharedPreferences.getString("currentStoreName", "");
         StringTokenizer stringTokenizer = new StringTokenizer(storeName, "\"");
         store_id = Integer.parseInt(sharedPreferences.getString("currentStoreId", "0"));
-        //discountRate = topBar.getDiscountRate();
+        discountRate = topBar.getDiscountRate();
+        getIfDiscountRate.setText("SALE "+discountRate+"%");
+
         makeRequestForDiscountRate(store_id);
         storeNumber = sharedPreferences.getString("currentStoreNumber", "");
         paymentCloseThread = new Thread(new Runnable() {
@@ -832,7 +836,8 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             JSONObject jsonObject = new JSONObject(result);
             if(jsonObject.getBoolean("result")) {
                 discountRate = jsonObject.getInt("discount_rate");
-                topBar.setDiscountTextView(discountRate);
+                getIfDiscountRate.setText("SALE "+discountRate+"%");
+                //topBar.setDiscountTextView(discountRate);
             }
         } catch (JSONException e) {
             e.printStackTrace();

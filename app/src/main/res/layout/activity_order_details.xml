@@ -62,6 +62,24 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/discount_rate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/layout_border_3dp_stroke_1dp"
+                            android:paddingHorizontal="5dp"
+                            android:paddingVertical="4dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:fontFamily="@font/metropolis_regular"
+                            android:includeFontPadding="false"
+                            android:textStyle="bold"
+                            android:text="SALE "
+                            android:textSize="11sp"
+                            android:gravity="center"
+                            android:textAlignment="gravity"
+                            android:textColor="@color/main"
+                            />
+                        <TextView
                             android:includeFontPadding="false"
                             android:id="@+id/menuName"
                             android:layout_width="wrap_content"

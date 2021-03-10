@@ -94,20 +94,20 @@
             android:letterSpacing="-0.03"
             android:text="남았어요!"
             />
-        <TextView
-            android:id="@+id/discount_rate"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@id/timer_last_label"
-            android:background="@drawable/layout_circle_stroke_1dp"
-            android:textColor="@color/white"
-            android:text="15%"
-            android:fontFamily="@font/metropolis_bold"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:textSize="11sp"
-            />
+<!--        <TextView-->
+<!--            android:id="@+id/discount_rate"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:layout_toEndOf="@id/timer_last_label"-->
+<!--            android:background="@drawable/layout_circle_stroke_1dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:text="15%"-->
+<!--            android:fontFamily="@font/metropolis_bold"-->
+<!--            android:gravity="center"-->
+<!--            android:includeFontPadding="false"-->
+<!--            android:textSize="11sp"-->
+<!--            />-->
     </RelativeLayout>
 
     <Button
