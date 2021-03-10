@@ -23,7 +23,7 @@
             android:paddingEnd="20dp"
             android:orientation="vertical">
             <ImageView
-                android:id="@+id/baro_logo"
+                android:id="@+id/menu_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -33,7 +33,7 @@
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/baro_logo"
+                android:layout_below="@id/menu_image"
                 android:layout_marginTop="2.2dp"
                 android:letterSpacing="-0.03"
                 android:background="@color/white"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="25dp"
-                android:layout_alignTop="@id/baro_logo"
+                android:layout_alignTop="@id/menu_image"
                 android:src="@drawable/search"
                 android:layout_toStartOf="@id/alert"
                 />
@@ -69,7 +69,7 @@
                 android:layout_marginEnd="18dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_alignTop="@id/baro_logo"
+                android:layout_alignTop="@id/menu_image"
                 android:background="@drawable/alert_off"
                 />
         </RelativeLayout>

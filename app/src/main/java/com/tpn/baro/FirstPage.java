@@ -64,7 +64,7 @@ public class FirstPage extends AppCompatActivity implements AutoPermissionsListe
 
         orderText = findViewById(R.id.order_text);
         getText = findViewById(R.id.get_text);
-        baroLogo =findViewById(R.id.baro_logo);
+        baroLogo =findViewById(R.id.menu_image);
 
         sideLeftAnim = AnimationUtils.loadAnimation(this, R.anim.anim_slide_in_left);
         rotated_35 = AnimationUtils.loadAnimation(this, R.anim.anim_rotated_35);

@@ -145,7 +145,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         public ImageView arrowRight;
         public MenuViewHolder(@NonNull View itemView) {
             super(itemView);
-            menuName = itemView.findViewById(R.id.menu_button);
+            menuName = itemView.findViewById(R.id.menu_name);
             menuPrice = itemView.findViewById(R.id.menu_price);
             priceCancelImage = itemView.findViewById(R.id.price_cancel_cross_line);
             menuDefaultPrice = itemView.findViewById(R.id.menu_default_price);
@@ -156,7 +156,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
 
             menuId = itemView.findViewById(R.id.menu_id);
             background = itemView.findViewById(R.id.background);
-            menuImage = itemView.findViewById(R.id.baro_logo);
+            menuImage = itemView.findViewById(R.id.menu_image);
             subscription = itemView.findViewById(R.id.subscription);
             sold_out = itemView.findViewById(R.id.sold_out);
         }

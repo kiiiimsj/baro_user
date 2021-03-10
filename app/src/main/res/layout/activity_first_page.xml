@@ -8,8 +8,8 @@
     tools:context="com.tpn.baro.FirstPage">
     <TextView
         android:id="@+id/order_text"
-        android:layout_alignStart="@id/baro_logo"
-        android:layout_above="@id/baro_logo"
+        android:layout_alignStart="@id/menu_image"
+        android:layout_above="@id/menu_image"
         android:text="주문을"
         android:fontFamily="@font/notosans_regular"
         android:includeFontPadding="false"
@@ -21,8 +21,8 @@
         />
     <TextView
         android:id="@+id/get_text"
-        android:layout_alignEnd="@id/baro_logo"
-        android:layout_above="@id/baro_logo"
+        android:layout_alignEnd="@id/menu_image"
+        android:layout_above="@id/menu_image"
         android:text="바로잡다"
         android:fontFamily="@font/notosans_regular"
         android:includeFontPadding="false"
@@ -33,7 +33,7 @@
         android:layout_marginBottom="-10dp"
         />
     <TextView
-        android:id="@+id/baro_logo"
+        android:id="@+id/menu_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BARO"

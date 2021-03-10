@@ -130,7 +130,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 
         makeRequestForDiscountRate(store_id);
         //--------------------------------------------------------
-        imageView = findViewById(R.id.baro_logo);
+        imageView = findViewById(R.id.menu_image);
         expandableListView = findViewById(R.id.menuExpand_NotEssential);
         itemName = findViewById(R.id.menuName);
         itemMinus = findViewById(R.id.itemMinus);
