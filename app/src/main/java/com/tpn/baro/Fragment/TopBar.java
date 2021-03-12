@@ -44,7 +44,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
 
     TextView title;
     ImageView backButton;
-    Button button;
+//    Button button;
     ImageView etcImage;
     TextView timer;
 //    TextView discountRate;
@@ -105,7 +105,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
         rootView = inflater.inflate(R.layout.top_bar, container, false);
         title = rootView.findViewById(R.id.title);
         backButton = rootView.findViewById(R.id.back_pressed);
-        button = rootView.findViewById(R.id.when_has_button);
+//        button = rootView.findViewById(R.id.when_has_button);
         etcImage = rootView.findViewById(R.id.when_has_image);
         timer = rootView.findViewById(R.id.fifteenTimer);
         timerLayout = rootView.findViewById(R.id.main_timer_layout);
@@ -114,7 +114,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
         backButton.setVisibility(View.GONE);
         timer.setVisibility(View.GONE);
         title.setVisibility(View.GONE);
-        button.setVisibility(View.GONE);
+//        button.setVisibility(View.GONE);
         etcImage.setVisibility(View.GONE);
 //        discountRate.setVisibility(View.GONE);
         timerLayout.setVisibility(View.GONE);
@@ -203,7 +203,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
             case "MyMap":
                 backButton.setVisibility(View.VISIBLE);
                 title.setVisibility(View.VISIBLE);
-                button.setVisibility(View.VISIBLE);
+//                button.setVisibility(View.VISIBLE);
 
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -211,14 +211,14 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
                         mListener.onBack();
                     }
                 });
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        clickButtonListener.clickButton();
-                    }
-                });
+//                button.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        clickButtonListener.clickButton();
+//                    }
+//                });
                 title.setText("주변 가게");
-                button.setText("위치 설정");
+//                button.setText("위치 설정");
                 break;
             case "NewMyMap":
                 backButton.setVisibility(View.VISIBLE);

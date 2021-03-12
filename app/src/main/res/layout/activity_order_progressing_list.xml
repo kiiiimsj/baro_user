@@ -219,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:text="110000원"
-                    android:textColor="#8333e6"
+                    android:textColor="@color/black"
                     android:textSize="14sp"
                     android:fontFamily="@font/notosans_bold"
                     android:includeFontPadding="false"

@@ -16,6 +16,8 @@
             android:layout_height="@dimen/design_bottom_navigation_height"
             android:background="@color/white"
             app:labelVisibilityMode="labeled"
+            app:itemIconTint="@drawable/bottom_navigation_select_color"
+            app:itemTextColor="@drawable/bottom_navigation_select_color"
             app:itemRippleColor="@color/invisible"
             app:itemIconSize="16dp"
             app:itemTextAppearanceActive="@style/bottom_text_style"

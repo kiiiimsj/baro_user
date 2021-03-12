@@ -113,14 +113,14 @@
             android:maxLength="15"
             android:text="서울시 동작구 성수동"
             android:textColor="@color/black" />
-
         <TextView
             android:id="@+id/distance"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/store_title"
-            android:layout_toRightOf="@id/address"
-            android:paddingRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/store_preview"
+            android:paddingEnd="20dp"
             android:text="350m"
             android:textAlignment="textEnd" />
     </RelativeLayout>

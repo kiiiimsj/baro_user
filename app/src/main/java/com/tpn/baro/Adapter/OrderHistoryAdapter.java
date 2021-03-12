@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
+import com.tpn.baro.JsonParsingHelper.OrderHistoryParsing;
 import com.tpn.baro.JsonParsingHelper.OrderHistoryParsingHelper;
 import com.tpn.baro.R;
 import com.tpn.baro.Dialogs.HistoryDetailDialog;
@@ -33,10 +34,10 @@ import java.util.ArrayList;
 import maes.tech.intentanim.CustomIntent;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> {
-    static ArrayList<OrderHistoryParsingHelper> order;
+    static OrderHistoryParsing order;
     Context context;
     private OnItemClickListener mListener = null;
-    public OrderHistoryAdapter(ArrayList<OrderHistoryParsingHelper> order, Context context) {
+    public OrderHistoryAdapter(OrderHistoryParsing order, Context context) {
         this.order = order;
         this.context = context;
     }
@@ -73,16 +74,23 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @Override
     public void onBindViewHolder(@NonNull OrderHistoryAdapter.ViewHolder holder, final int position) {
 //        final OrderHistoryParsingHelper reverse = order.get(order.size() - position - 1);
-        final OrderHistoryParsingHelper reverse = order.get(position);
+        final OrderHistoryParsingHelper reverse = order.order.get(position);
         holder.store_name.setText(reverse.getStore_name());
         holder.ordered_date.setText(reverse.getOrder_date());
-        holder.totalPrice.setText("합계 : "+reverse.getTotal_price() + " 원");
+        Log.e("getDiscount_rate", order.getDiscount_rate()+"");
+        Log.e("getDiscount_rate2", reverse.getDiscount_rate()+"");
+        if(reverse.getDiscount_rate() != 0 ) {
+            holder.totalPrice.setText("합계 : "+ (reverse.getTotal_price() - (int)(reverse.getTotal_price() * (reverse.getDiscount_rate() / 100.0))) + " 원");
+        }else {
+            holder.totalPrice.setText("합계 : "+reverse.getTotal_price() + " 원");
+        }
+
         Log.e("state", reverse.getOrder_state());
         if (reverse.getOrder_state().equals("DONE")) {
-            holder.order_state.setText("수 령 완 료");
+            holder.order_state.setText("수령완료");
         }
         if (reverse.getOrder_state().equals("CANCEL")){
-            holder.order_state.setText("주 문 취 소");
+            holder.order_state.setText("주문취소");
         }
 
         holder.goDetail.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +123,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     @Override
     public int getItemCount() {
-        return (order==null ? 0:order.size());
+        return (order.order==null ? 0:order.order.size());
     }
 
     @Override
@@ -178,7 +186,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             String url = urlMaker.UrlMake(lastUrl);
             StringBuilder urlBuilder = new StringBuilder()
                     .append(url)
-                    .append(order.get(po).getStore_image());
+                    .append(order.order.get(po).getStore_image());
 
             ImageRequest request = new ImageRequest(urlBuilder.toString(),
                     new Response.Listener<Bitmap>() {

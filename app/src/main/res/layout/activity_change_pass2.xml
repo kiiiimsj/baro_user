@@ -5,6 +5,7 @@
     android:id="@+id/scrollView4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/main"
     tools:context="com.tpn.baro.ChangePass2">
     <fragment

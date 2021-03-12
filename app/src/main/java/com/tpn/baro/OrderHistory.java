@@ -141,7 +141,7 @@ public class OrderHistory extends AppCompatActivity {
         if(orderHistoryParsing == null || orderHistoryParsing.getOrder() == null || orderHistoryParsing.order.size() == 0) {
             Toast.makeText(OrderHistory.this, "존재하는 주문내역이 없습니다.", Toast.LENGTH_SHORT).show();
         }else {
-            orderHistoryAdapter = new OrderHistoryAdapter(order.getOrder(), this);
+            orderHistoryAdapter = new OrderHistoryAdapter(order, this);
             recyclerView.setLayoutManager(new LinearLayoutManager(OrderHistory.this, LinearLayoutManager.VERTICAL, false));
             recyclerView.setAdapter(orderHistoryAdapter);
         }

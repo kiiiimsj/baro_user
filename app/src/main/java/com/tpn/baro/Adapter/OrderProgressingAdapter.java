@@ -70,6 +70,11 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         holder.stores_name.setText(reverse.getStore_name());
         holder.store_phone.setText(reverse.getStore_phone());
         holder.total_prices.setText(reverse.getTotal_price()+"");
+        if(reverse.getDiscount_rate() != 0 ) {
+            holder.total_prices.setText((reverse.getTotal_price() - (int)(reverse.getTotal_price() * (reverse.getDiscount_rate() / 100.0)))+"");
+        }else {
+            holder.total_prices.setText(reverse.getTotal_price()+ "");
+        }
         holder.showDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,11 +88,11 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
         });
 
         if(reverse.getOrder_state().equals(ACCEPT)){
-            holder.order_state.setText("제 조 중");
+            holder.order_state.setText("제조중");
             holder.chageViewColor(2);
         }
         else if(reverse.getOrder_state().equals(PREPARING)){
-            holder.order_state.setText("접 수 대 기");
+            holder.order_state.setText("접수대기");
             holder.chageViewColor(1);
         }else{
             holder.chageViewColor(3);
