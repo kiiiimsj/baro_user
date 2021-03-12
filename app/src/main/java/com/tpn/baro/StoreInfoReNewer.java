@@ -65,8 +65,6 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     TopBar topBar;
     ImageView.OnClickListener heartClickListener;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
