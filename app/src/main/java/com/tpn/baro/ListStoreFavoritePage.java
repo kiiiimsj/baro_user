@@ -2,6 +2,7 @@ package com.tpn.baro;
 
 import android.content.Intent;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,10 +24,12 @@ import com.tpn.baro.AdapterHelper.FavoriteHelperClass;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.JsonParsingHelper.FavoriteParsing;
 import com.tpn.baro.Url.UrlMaker;
+import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.MyGPSListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +54,9 @@ public class ListStoreFavoritePage extends AppCompatActivity implements StoreLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(ListStoreFavoritePage.this, this.toString());
+        }
         setContentView(R.layout.activity_list_store_favorite_page);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);

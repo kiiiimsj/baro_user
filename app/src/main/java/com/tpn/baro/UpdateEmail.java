@@ -2,6 +2,7 @@ package com.tpn.baro;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
+import com.tpn.baro.helperClass.BaroUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +33,9 @@ public class UpdateEmail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_email);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(UpdateEmail.this, this.toString());
+        }
         currentEmailView = findViewById(R.id.current_email);
 
         HashMap<String, String> updateEmailUser = new HashMap<>();

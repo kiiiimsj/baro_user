@@ -119,7 +119,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
 //        discountRate.setVisibility(View.GONE);
         timerLayout.setVisibility(View.GONE);
 
-        switch (getTokenActivityName(getActivity().toString())) {
+        switch (BaroUtil.getTokenActivityName(getActivity().toString())) {
             case "Register1":
             case "Register2":
             case "ChangePass2":
@@ -330,14 +330,6 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
         new BaroUtil().fifteenTimer(timer, activity);
 //        makeRequestForDiscountRate(storeId);
         super.onResume();
-    }
-    public String getTokenActivityName(String activityName) {
-        StringTokenizer stringTokenizer = new StringTokenizer(activityName, ".");
-        String getName = "";
-        while(stringTokenizer.hasMoreTokens()) {
-            getName = stringTokenizer.nextToken();
-        }
-        return new StringTokenizer(getName, "@").nextToken();
     }
     public void setTitleStringWhereUsedEventsAndListStore(String title_name) {
         title.setText(title_name);

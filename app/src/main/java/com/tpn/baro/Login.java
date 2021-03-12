@@ -1,6 +1,7 @@
 package com.tpn.baro;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +48,9 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(Login.this, this.toString());
+        }
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         FirebaseInstanceId.getInstance().getInstanceId()

@@ -3,6 +3,7 @@ package com.tpn.baro;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -10,6 +11,7 @@ import android.webkit.WebViewClient;
 
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.R;
+import com.tpn.baro.helperClass.BaroUtil;
 
 import maes.tech.intentanim.CustomIntent;
 
@@ -27,6 +29,9 @@ public class Terms extends AppCompatActivity implements TopBar.OnBackPressedInPa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(Terms.this, this.toString());
+        }
         setContentView(R.layout.activity_terms_of_use);
         BRANCH_WEB_VIEW = getIntent().getIntExtra(SET_WEB_VIEW, -1);
         mWebView = (WebView) findViewById(R.id.terms_of_use);

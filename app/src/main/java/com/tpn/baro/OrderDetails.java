@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -43,6 +44,7 @@ import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.DetailsFixToBasket;
 import com.tpn.baro.Dialogs.RefreshBasketByStoreIdDialog;
 import com.google.gson.Gson;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,6 +102,9 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(OrderDetails.this, this.toString());
+        }
         onPause = false;
         setContentView(R.layout.activity_order_details);
 

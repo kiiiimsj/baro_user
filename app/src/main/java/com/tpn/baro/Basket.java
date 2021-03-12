@@ -2,10 +2,10 @@ package com.tpn.baro;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -34,7 +34,6 @@ import com.tpn.baro.Adapter.BasketAdapter;
 import com.tpn.baro.AdapterHelper.ExtraOrder;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.BootPayFiveMinDialog;
-import com.tpn.baro.Dialogs.LastItemDialog;
 import com.tpn.baro.Dialogs.BootPayDialog;
 import com.tpn.baro.Dialogs.OrderDoneDialog;
 import com.tpn.baro.Dialogs.OrderLimitExcessDialog;
@@ -46,9 +45,11 @@ import com.tpn.baro.JsonParsingHelper.OrderInsertParsingChild2;
 import com.tpn.baro.JsonParsingHelper.ReceiptRecordParsing;
 import com.tpn.baro.Dialogs.CouponDialog;
 import com.tpn.baro.Url.UrlMaker;
+import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.DetailsFixToBasket;
 import com.tpn.baro.Dialogs.StoreCloseDialog;
 import com.google.gson.Gson;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
@@ -150,6 +151,9 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(Basket.this, this.toString());
+        }
         setContentView(R.layout.activity_basket);
         executor = Executors.newFixedThreadPool(1);
 

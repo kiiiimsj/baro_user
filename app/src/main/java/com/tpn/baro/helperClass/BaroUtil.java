@@ -1,11 +1,13 @@
 package com.tpn.baro.helperClass;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Looper;
@@ -16,13 +18,16 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.common.util.Hex;
 import com.tpn.baro.Basket;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.NeedLoginDialog;
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.NewMainPage;
 import com.tpn.baro.OrderDetails;
+import com.tpn.baro.R;
 import com.tpn.baro.StoreInfoReNewer;
 
 import java.util.Calendar;
@@ -100,23 +105,23 @@ public class BaroUtil {
         return sb.toString();
     }
     public boolean getActivityOnPause(Activity activity) {
-        if(new TopBar().getTokenActivityName(activity.toString()).equals("NewMainPage")) {
+        if(getTokenActivityName(activity.toString()).equals("NewMainPage")) {
             return NewMainPage.onPause;
         }
-        if(new TopBar().getTokenActivityName(activity.toString()).equals("StoreInfoReNewer")) {
+        if(getTokenActivityName(activity.toString()).equals("StoreInfoReNewer")) {
             return StoreInfoReNewer.onPause;
         }
-        if(new TopBar().getTokenActivityName(activity.toString()).equals("OrderDetails")) {
+        if(getTokenActivityName(activity.toString()).equals("OrderDetails")) {
             return OrderDetails.onPause;
         }
-        if(new TopBar().getTokenActivityName(activity.toString()).equals("Basket")) {
+        if(getTokenActivityName(activity.toString()).equals("Basket")) {
             return Basket.onPause;
         }
 
         return false;
     }
     public boolean checkTopBarTimeThreadActivity(Activity activity) {
-        switch (new TopBar().getTokenActivityName(activity.toString())) {
+        switch (getTokenActivityName(activity.toString())) {
             case "NewMainPage":
             case "StoreInfoReNewer":
             case "OrderDetails":
@@ -166,4 +171,47 @@ public class BaroUtil {
             }
         })).start();
     }
+    public static String getTokenActivityName(String activityName) {
+        StringTokenizer stringTokenizer = new StringTokenizer(activityName, ".");
+        String getName = "";
+        while(stringTokenizer.hasMoreTokens()) {
+            getName = stringTokenizer.nextToken();
+        }
+        return new StringTokenizer(getName, "@").nextToken();
+    }
+
+    /**
+     * UseAge :
+     * if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+     *    BaroUtil.setStatusBarColor(Activity.this, this.toString());
+     * }
+     * @param activity
+     * @param activityToString
+     */
+    @SuppressLint("ResourceType")
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public static void setStatusBarColor(Activity activity, String activityToString) {
+        int setColor = activity.getResources().getColor(R.color.white);
+        switch (getTokenActivityName(activityToString)) {
+            case "FirstPage":
+            case "ChangeEmail":
+            case "ChangeEmail2":
+            case "ChangePass1Logging":
+            case "ChangePass2":
+            case "ChangePass3":
+            case "FindPass1":
+            case "Register1":
+            case "Register2":
+            case "VerifyOTP":
+            case "UpdateEmail":
+            case "Terms":
+            case "Login":
+                activity.getWindow().setStatusBarColor(activity.getResources().getColor(R.color.main));
+                break;
+            default:
+                activity.getWindow().setStatusBarColor(activity.getResources().getColor(R.color.white));
+                break;
+        }
+    }
 }
+

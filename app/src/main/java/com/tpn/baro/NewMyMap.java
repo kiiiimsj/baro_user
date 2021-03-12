@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.tpn.baro.HelperDatabase.StoreDetail;
 import com.tpn.baro.JsonParsingHelper.MapListParsing;
 import com.tpn.baro.JsonParsingHelper.MapParsing;
 import com.tpn.baro.Url.UrlMaker;
+import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.MyGPSListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -74,6 +76,9 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_my_map);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(NewMyMap.this, this.toString());
+        }
         mapView = findViewById(R.id.map_view);
         storeDetail = findViewById(R.id.store_detail);
         storeTitle = findViewById(R.id.store_title);

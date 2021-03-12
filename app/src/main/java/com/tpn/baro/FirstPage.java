@@ -1,8 +1,11 @@
 package com.tpn.baro;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
+import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.PermissionHandler;
 
 import org.jetbrains.annotations.NotNull;
@@ -32,13 +36,15 @@ public class FirstPage extends AppCompatActivity implements AutoPermissionsListe
 
     Animation sideLeftAnim, bottomAnim, rotated_35, rotated_35_to_0;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(FirstPage.this, this.toString());
+        }
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_first_page);
 
         DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();

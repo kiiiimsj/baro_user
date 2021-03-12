@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import com.tpn.baro.JsonParsingHelper.EventDetailHelper;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.gson.Gson;
+import com.tpn.baro.helperClass.BaroUtil;
 
 import maes.tech.intentanim.CustomIntent;
 
@@ -39,7 +41,9 @@ public class Events extends AppCompatActivity implements TopBar.OnBackPressedInP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(Events.this, this.toString());
+        }
         eventDate = findViewById(R.id.event_date);
         eventImage = findViewById(R.id.event_image);
         eventContent = findViewById(R.id.event_content);

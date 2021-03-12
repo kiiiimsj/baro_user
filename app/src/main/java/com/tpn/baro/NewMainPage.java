@@ -53,6 +53,7 @@ import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.LowSensitiveSwipeRefreshLayout;
 import com.tpn.baro.helperClass.MyGPSListener;
+import com.tpn.baro.helperClass.ProgressApplication;
 import com.tpn.baro.helperClass.ViewPagerCustomDuration;
 
 import org.jetbrains.annotations.NotNull;
@@ -103,6 +104,9 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(NewMainPage.this, this.toString());
+        }
         onPause = false;
         setContentView(R.layout.activity_new_main_page);
 

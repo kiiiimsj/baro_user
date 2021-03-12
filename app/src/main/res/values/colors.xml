@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/main</color>
-    <color name="colorPrimaryDark">@color/main</color>
-    <color name="colorAccent">@color/main</color>
+    <!--  Android 2.0 Lollipop 에서 작동  -->
+    <color name="colorPrimary">#8333e6</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#ffffff</color>
+
+
     <color name="lightWhite">#f2f5f8</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>

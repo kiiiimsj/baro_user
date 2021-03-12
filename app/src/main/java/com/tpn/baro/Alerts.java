@@ -5,9 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,9 +18,10 @@ import com.tpn.baro.Adapter.AlertsAdapter;
 import com.tpn.baro.AdapterHelper.AlertsHelperClass;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Fragment.TopBar;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.gson.Gson;
+import com.tpn.baro.helperClass.BaroUtil;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import java.util.HashMap;
 
@@ -36,7 +36,11 @@ public class Alerts extends AppCompatActivity implements TopBar.OnBackPressedInP
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(Alerts.this, this.toString());
+        }
         setContentView(R.layout.alert_list);
+
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         alertsRecyclerView = findViewById(R.id.alert_list);

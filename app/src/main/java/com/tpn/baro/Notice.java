@@ -3,6 +3,7 @@ package com.tpn.baro;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -23,8 +24,9 @@ import com.tpn.baro.AdapterHelper.NoticeGroup;
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.JsonParsingHelper.NoticeListParsing;
 import com.tpn.baro.JsonParsingHelper.NoticeParsing;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
+import com.tpn.baro.helperClass.BaroUtil;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +47,9 @@ public class Notice extends AppCompatActivity implements TopBar.OnBackPressedInP
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(Notice.this, this.toString());
+        }
         setContentView(R.layout.activity_notice);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);

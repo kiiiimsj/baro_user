@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.tpn.baro.helperClass.BaroUtil;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import java.util.concurrent.TimeUnit;
 
@@ -42,6 +44,9 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_o_t_p);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(VerifyOTP.this, this.toString());
+        }
 
         timer = findViewById(R.id.twoMintimer);
         pinFromUser = findViewById(R.id.pin_view);

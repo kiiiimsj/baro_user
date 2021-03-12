@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tpn.baro.helperClass.BaroUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +42,9 @@ public class ChangeEmail extends AppCompatActivity implements TopBar.OnBackPress
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(ChangeEmail.this, this.toString());
+        }
         setContentView(R.layout.activity_change_email);
 
         oldEmail = findViewById(R.id.old_email);
