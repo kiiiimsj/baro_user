@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme.
+                 Defining this lets values-v23/styles.xml reuse it with changes. -->
+    <style name="AppTheme" parent="AppTheme.Base">
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
+</resources>

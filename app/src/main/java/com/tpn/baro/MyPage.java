@@ -3,6 +3,7 @@ package com.tpn.baro;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.tpn.baro.Adapter.MyPageButtonAdapter;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.IfLogoutDialog;
 import com.tpn.baro.Url.UrlMaker;
+import com.tpn.baro.helperClass.BaroUtil;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +66,9 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(MyPage.this, this.toString());
+        }
         setContentView(R.layout.activity_my_page);
         sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
 

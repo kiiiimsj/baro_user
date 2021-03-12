@@ -1,8 +1,8 @@
 package com.tpn.baro;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,9 +16,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.tpn.baro.Fragment.TopBar;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tpn.baro.helperClass.BaroUtil;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +34,10 @@ public class Register1 extends AppCompatActivity implements TopBar.OnBackPressed
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register1);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(Register1.this, this.toString());
+        }
+            setContentView(R.layout.activity_register1);
         progressApplication = new ProgressApplication();
 
         phoneTextInput = findViewById(R.id.register_phone_number);

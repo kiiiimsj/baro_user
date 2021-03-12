@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.JsonParsingHelper.DefaultParsing;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.gson.Gson;
+import com.tpn.baro.helperClass.BaroUtil;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import java.util.HashMap;
 
@@ -43,6 +46,9 @@ public class Coupon extends AppCompatActivity implements TopBar.OnBackPressedInP
     protected void onCreate(Bundle savedInstanceState) {
         gson = new Gson();
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(Coupon.this, this.toString());
+        }
         setContentView(R.layout.activity_side_my_coupon);
         registerBtn = findViewById(R.id.registerBtn);
         couponInput = findViewById(R.id.coupon_number_input);

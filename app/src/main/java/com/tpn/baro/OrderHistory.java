@@ -2,21 +2,18 @@ package com.tpn.baro;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,12 +24,10 @@ import com.android.volley.toolbox.Volley;
 import com.tpn.baro.Adapter.OrderHistoryAdapter;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.JsonParsingHelper.OrderHistoryParsing;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.gson.Gson;
-import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
-import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
-import com.tpn.baro.helperClass.LowSensitiveSwipeRefreshLayout;
+import com.tpn.baro.helperClass.BaroUtil;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import java.util.HashMap;
 
@@ -57,7 +52,11 @@ public class OrderHistory extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(OrderHistory.this, this.toString());
+        }
         setContentView(R.layout.activity_order_history);
+
         refreshLayout = findViewById(R.id.refreshView);
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);

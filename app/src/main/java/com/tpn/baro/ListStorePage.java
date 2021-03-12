@@ -2,6 +2,7 @@ package com.tpn.baro;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.tpn.baro.Adapter.StoreListAdapter;
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.JsonParsingHelper.ListStoreParsing;
 import com.tpn.baro.Url.UrlMaker;
+import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.MyGPSListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -31,6 +33,7 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,7 +78,11 @@ public class ListStorePage extends AppCompatActivity implements StoreListAdapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(ListStorePage.this, this.toString());
+        }
         setContentView(R.layout.activity_list_store_page);
+
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
         count = 1;

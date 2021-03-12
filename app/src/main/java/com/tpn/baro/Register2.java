@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.tpn.baro.JsonParsingHelper.DefaultParsing;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tpn.baro.helperClass.BaroUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +47,9 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(Register2.this, this.toString());
+        }
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         userName = findViewById(R.id.user_name);

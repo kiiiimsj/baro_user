@@ -1,6 +1,7 @@
 package com.tpn.baro;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,11 +21,12 @@ import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.JsonParsingHelper.OrderProgressingParsing;
 import com.tpn.baro.JsonParsingHelper.OrderProgressingParsingHelper;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.gson.Gson;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.tpn.baro.helperClass.BaroUtil;
+import com.tpn.baro.helperClass.ProgressApplication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +45,9 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_progressing);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BaroUtil.setStatusBarColor(OrderProgressing.this, this.toString());
+        }
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
 

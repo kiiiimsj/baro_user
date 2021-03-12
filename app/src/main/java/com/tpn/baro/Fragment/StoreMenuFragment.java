@@ -38,7 +38,7 @@ import com.tpn.baro.HelperDatabase.StoreCategories;
 import com.tpn.baro.HelperDatabase.StoreDetail;
 import com.tpn.baro.HelperDatabase.StoreMenus;
 import com.tpn.baro.OrderDetails;
-import com.tpn.baro.ProgressApplication;
+import com.tpn.baro.helperClass.ProgressApplication;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.google.android.material.tabs.TabLayout;
