@@ -444,6 +444,8 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         intent.putExtra("menuName", getMenuName);
         intent.putExtra("menuDefaultPrice", defaultPrice);
         intent.putExtra("menuId", Integer.parseInt(getMenuId));
+        Log.e("menuImage", saveMenus.get(position).getMenuImage());
+        intent.putExtra("menuImage", saveMenus.get(position).getMenuImage());
         intent.putExtra("storeName", storeDetail.getStore_name());
         intent.putExtra("storeId", storeDetail.getStore_id());
         intent.putExtra("storeNumber",storeDetail.getStore_phone());//가게 전화번호

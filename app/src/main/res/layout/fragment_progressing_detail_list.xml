@@ -133,7 +133,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         <ImageView
             android:id="@+id/arrow_right"
-            android:src="@drawable/arrow_triangle_small"
+            android:src="@drawable/arrow_triangle_big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="7dp"

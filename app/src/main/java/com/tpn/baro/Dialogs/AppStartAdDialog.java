@@ -162,7 +162,7 @@ public class AppStartAdDialog {
                             public void onResponse(Bitmap response) {
                                 eventImage.setImageBitmap(response);
                             }
-                        }, eventImage.getWidth(), eventImage.getHeight(), ImageView.ScaleType.FIT_CENTER, null,
+                        }, eventImage.getWidth(), eventImage.getHeight(), ImageView.ScaleType.FIT_XY, null,
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {

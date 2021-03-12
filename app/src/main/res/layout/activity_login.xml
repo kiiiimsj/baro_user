@@ -152,15 +152,6 @@
                         android:text="아이디/비밀번호 저장"
                         android:textColor="@color/black" />
 
-                    <Button
-                        android:layout_alignParentRight="true"
-                        android:id="@+id/button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#00ff0000"
-                        android:onClick="onClickFindPass"
-                        android:text="비밀번호 찾기"
-                        android:textColor="@color/black" />
                 </RelativeLayout>
                 <Button
                     android:layout_below="@id/check_box_area"
@@ -175,9 +166,19 @@
                     android:fontFamily="@font/notosans_bold"
                     android:letterSpacing="-0.03"
                     />
+                <Button
+                    android:layout_below="@id/login_button"
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="#00ff0000"
+                    android:onClick="onClickFindPass"
+                    android:text="비밀번호 찾기"
+                    android:textColor="@color/gray" />
                 <RelativeLayout
                     android:layout_marginTop="20dp"
-                    android:layout_below="@id/login_button"
+                    android:layout_below="@id/button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"

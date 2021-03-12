@@ -70,7 +70,6 @@ public class Alerts extends AppCompatActivity implements TopBar.OnBackPressedInP
         Gson gson = new Gson();
         alertsHelperClass = gson.fromJson(response, AlertsHelperClass.class);
         if(!alertsHelperClass.result) {
-            Toast.makeText(this,"로딩 실패", Toast.LENGTH_LONG).show();
             progressApplication.progressOFF();
             return;
         }

@@ -68,7 +68,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         String pass2Str = pass2.getEditText().getText().toString().trim();
         String emailStr = email.getEditText().getText().toString().trim();
         String checkEmail = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
-        String checkPass = "^([A-Z]*[0-9a-z]){8,}$";
+        String checkPass = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{8,}$";
 
         if(userNameStr.isEmpty() ){
             userName.setError("이름을 입력하셔야 합니다.");
@@ -86,7 +86,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
             return result;
         }
         if(pass1Str.matches(checkPass)) {
-            pass1.setError("소문자, 대문자, 숫자가 혼합된 8자 이상이어야 합니다.");
+            pass1.setError("영어, 숫자가 혼합된 8자 이상이어야 합니다.");
             pass1.requestFocus();
             return result;
         }

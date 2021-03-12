@@ -1,5 +1,6 @@
 package com.tpn.baro;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -68,6 +69,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 
     String menu_name;
     String menu_code;
+    String menu_image;
     String store_name;
     String store_number;
     int menu_count;
@@ -114,6 +116,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         store_id = intent.getExtras().getInt("storeId");
         store_name = intent.getExtras().getString("storeName");
         store_number = intent.getExtras().getString("storeNumber");
+        menu_image = intent.getStringExtra("menuImage");
 
         topBar.setTitleStringWhereUsedEventsAndListStore(store_name);
         topBar.storeId = store_id;
@@ -250,7 +253,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                     itemCount.setText(String.valueOf(count));
 //                    totalPriceText.setText(String.valueOf(currentPrice * count));
                     totalPriceText.setText(String.valueOf(defaultPrice));
-                    ifDiscountRate.setText(String.valueOf(defaultPrice * 100 / (100 - discountRate)));
+                    ifDiscountRate.setText(String.valueOf(defaultPrice * 100 / (100 - discountRate))+"원");
                     Log.e("priceMinus", defaultPrice +"");
                 }
             }
@@ -267,7 +270,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                 itemCount.setText(String.valueOf(count));
 //                totalPriceText.setText(String.valueOf(currentPrice * count));
                 totalPriceText.setText(String.valueOf(defaultPrice));
-                ifDiscountRate.setText(String.valueOf(defaultPrice * 100 / (100 - discountRate)));
+                ifDiscountRate.setText(String.valueOf(defaultPrice * 100 / (100 - discountRate))+"원");
                 Log.e("pricePlus", defaultPrice +"");
             }
         });
@@ -324,7 +327,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                     ifDiscountRate.setVisibility(View.VISIBLE);
                     getIfDiscountRate.setVisibility(View.VISIBLE);
                     arrowRight.setVisibility(View.VISIBLE);
-                    ifDiscountRate.setText(defaultPrice+"");
+                    ifDiscountRate.setText(defaultPrice+"원");
                     totalPriceText.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
                 }
                 makeRequest();
@@ -488,7 +491,8 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                     @Override
                     public void onResponse(String response) {
                         applyAdapters(response);
-                        getMenuPicture();
+//                        getMenuPicture();
+                        getMenuPicture(menu_image, OrderDetails.this, imageView);
                     }
                 },
                 new Response.ErrorListener() {
@@ -500,29 +504,53 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
                 });
         requestQueue.add(request);
     }
-    private void getMenuPicture() {
-        String url = new UrlMaker().UrlMake("ImageMenu.do?image_name="+menu_code+".png&store_id="+store_id);
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        ImageRequest imageRequest = new ImageRequest(url,
+    public void getMenuPicture(String menu_image, Context context, final ImageView image) {
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "ImageMenu.do?store_id=" + store_id + "&image_name=";
+        String url = urlMaker.UrlMake(lastUrl);
+        StringBuilder urlBuilder = new StringBuilder()
+                .append(url)
+                .append(menu_image);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+        ImageRequest request = new ImageRequest(urlBuilder.toString(),
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap response) {
-                        imageView.setImageBitmap(response);
+                        image.setImageBitmap(response);
                     }
-                },1000,1000,ImageView.ScaleType.FIT_CENTER,null,
-                new Response.ErrorListener(){
+                }, image.getWidth(), image.getHeight(), ImageView.ScaleType.FIT_XY, null,
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.i("error", "error");
+                        Log.e("menuimageerror", "error");
                     }
                 });
-        requestQueue.add(imageRequest);
-
-//        Glide.with(this).load("http://celebe.ohmyapp.io/app-assets/images/portrait/small/avatar-a-1.png").into(imageView);
-//        Glide.with(this).load("http://celebe.ohmyapp.io/app-assets/images/portrait/small/avatar-a-1.png").into(imageView);
-
-
+        requestQueue.add(request);
     }
+//    private void getMenuPicture() {
+//        String url = new UrlMaker().UrlMake("ImageMenu.do?image_name="+menu_code+".png&store_id="+store_id);
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        ImageRequest imageRequest = new ImageRequest(url,
+//                new Response.Listener<Bitmap>() {
+//                    @Override
+//                    public void onResponse(Bitmap response) {
+//                        imageView.setImageBitmap(response);
+//                    }
+//                },1000,1000,ImageView.ScaleType.FIT_CENTER,null,
+//                new Response.ErrorListener(){
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Log.i("error", "error");
+//                    }
+//                });
+//        requestQueue.add(imageRequest);
+//
+////        Glide.with(this).load("http://celebe.ohmyapp.io/app-assets/images/portrait/small/avatar-a-1.png").into(imageView);
+////        Glide.with(this).load("http://celebe.ohmyapp.io/app-assets/images/portrait/small/avatar-a-1.png").into(imageView);
+//
+//
+//    }
     private void jsonParsing(String result, OrderDetailsParsing orderDetailsParsing) {
         try {
             Boolean isSuccess = (Boolean) new JSONObject(result).getBoolean("result");

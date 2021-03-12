@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/get_cart_session"
-        android:layout_width="wrap_content"
+        android:layout_width="10dp"
         android:layout_height="wrap_content"
         android:text="1"
         android:translationX="7.5dp"

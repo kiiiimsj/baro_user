@@ -55,22 +55,22 @@
             android:textAlignment="gravity"
             android:textColor="@color/main"
             />
-        <Button
-            android:id="@+id/deleteAll"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:text="모두 비우기"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@color/main"
-            android:includeFontPadding="false"
-            android:minHeight="30dp"
-            android:fontFamily="@font/notosans_bold"
-            android:background="@drawable/order_history_button"
-            android:onClick="pressDeleteAll"/>
+<!--        <Button-->
+<!--            android:id="@+id/deleteAll"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:text="모두 비우기"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="@color/main"-->
+<!--            android:includeFontPadding="false"-->
+<!--            android:minHeight="30dp"-->
+<!--            android:fontFamily="@font/notosans_bold"-->
+<!--            android:background="@drawable/order_history_button"-->
+<!--            android:onClick="pressDeleteAll"/>-->
     </RelativeLayout>
 
     <RelativeLayout
@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0원"
-            android:textColor="@color/main"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:fontFamily="@font/notosans_bold"
             android:includeFontPadding="false"

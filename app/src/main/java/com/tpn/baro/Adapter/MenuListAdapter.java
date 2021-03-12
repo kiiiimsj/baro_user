@@ -60,7 +60,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         final ListMenuHelperClass listMenuHelperClass = listMenuHelperClasses.get(position);
         if(discountRate != 0) {
             holder.menuPrice.setText((listMenuHelperClass.menuPrice - (int)(listMenuHelperClass.menuPrice * (discountRate / 100.0))) +" 원");
-            holder.menuDefaultPrice.setText(listMenuHelperClass.menuPrice+"");
+            holder.menuDefaultPrice.setText(listMenuHelperClass.menuPrice+"원");
             holder.menuDefaultPrice.setVisibility(View.VISIBLE);
             holder.priceCancelImage.setVisibility(View.VISIBLE);
             holder.arrowRight.setVisibility(View.VISIBLE);
@@ -76,6 +76,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         holder.menuImage.setBackground(Drawable.createFromPath(listMenuHelperClass.menuImage));
         makeRequest(listMenuHelperClass.menuImage, context, holder.menuImage);
         holder.subscription.setText(listMenuHelperClass.menu_info);
+
         if(listMenuHelperClass.is_soldout.equals("Y")){
             holder.sold_out.setVisibility(View.VISIBLE);
             holder.background.setClickable(false);

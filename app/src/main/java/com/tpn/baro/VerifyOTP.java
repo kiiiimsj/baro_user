@@ -34,6 +34,8 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     TextView timer;
     ProgressApplication progressApplication;
 
+    boolean buttonPressed = false;
+
     int sec = 120;
     int min;
     @Override
@@ -177,6 +179,10 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     }
 
     public void onClickVerify(View view) {
+        if(buttonPressed) {
+            return;
+        }
+        buttonPressed = true;
         progressApplication.progressON(this);
         String code = pinFromUser.getText().toString();
         if (!code.isEmpty()) {
