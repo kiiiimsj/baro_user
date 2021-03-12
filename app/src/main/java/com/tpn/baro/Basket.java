@@ -783,20 +783,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                                     return;
                                 }
                                 isOnClose = true;
-                                int type;
-                                switch (getBootPayAction) {
-                                    case BootPayDialog.ON_DONE:
-                                        type = BootPayDialog.ON_DONE;
-                                        break;
-                                    case BootPayDialog.ON_ERROR:
-                                        type = BootPayDialog.ON_ERROR;
-                                        break;
-                                    case BootPayDialog.ON_CANCEL:
-                                    default:
-                                        type = BootPayDialog.ON_CANCEL;
-                                        break;
-                                }
-                                BootPayDialog bootPayDialog = new BootPayDialog(Basket.this, Basket.this, messageString, type);
+                                BootPayDialog bootPayDialog = new BootPayDialog(Basket.this, Basket.this, messageString, getBootPayAction);
                                 bootPayDialog.callFunction();
                                 bootPayDialogBranch = BootPayFiveMinDialog.PAGE_END;
                                 fiveMin = 1;
