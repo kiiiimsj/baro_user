@@ -6,13 +6,19 @@ public class OrderHistoryParsing {
     public Boolean result;
     public String message;
     public ArrayList<OrderHistoryParsingHelper> order;
+    int discount_rate;
 
-    public OrderHistoryParsing(Boolean result, String message, ArrayList<OrderHistoryParsingHelper> order) {
-        this.result = result;
-        this.message = message;
+    public void setOrder(ArrayList<OrderHistoryParsingHelper> order) {
         this.order = order;
     }
 
+    public int getDiscount_rate() {
+        return discount_rate;
+    }
+
+    public void setDiscount_rate(int discount_rate) {
+        this.discount_rate = discount_rate;
+    }
     public Boolean getResult() {
         return result;
     }
@@ -31,5 +37,12 @@ public class OrderHistoryParsing {
 
     public ArrayList<OrderHistoryParsingHelper> getOrder() {
         return order;
+    }
+
+    public OrderHistoryParsing(Boolean result, String message, ArrayList<OrderHistoryParsingHelper> order, int discount_rate) {
+        this.result = result;
+        this.message = message;
+        this.order = order;
+        this.discount_rate = discount_rate;
     }
 }

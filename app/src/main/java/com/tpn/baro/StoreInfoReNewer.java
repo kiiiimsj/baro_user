@@ -65,8 +65,6 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     TopBar topBar;
     ImageView.OnClickListener heartClickListener;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,12 +84,11 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
         myIntent = getIntent();
         storedIdStr = myIntent.getStringExtra("store_id");
-
-        myIntent.getIntExtra("discount_rate", 0);
+        discountRate = myIntent.getIntExtra("discount_rate", 0);
 
 //        makeRequestForDiscountRate(Integer.parseInt(storedIdStr));
         setTabEvent();
-//        discountRate = topBar.storeId = Integer.parseInt(storedIdStr);
+//        topBar.storeId = Integer.parseInt(storedIdStr);
         saveFavoriteOnce();
 //        if (_phone.equals("")) {
 //            topBar.setEtcImageWhereUsedStoreInfo(R.drawable.favorite_empty);

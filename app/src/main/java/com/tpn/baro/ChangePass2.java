@@ -54,14 +54,14 @@ public class ChangePass2 extends AppCompatActivity implements TopBar.OnBackPress
 
     private boolean validatePassword() {
         String _pass = pass1.getEditText().getText().toString();
-        String passPolicy = "[0-9a-zA-Z].{4,}$";
+        String passPolicy = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{8,}$";
 
         if(_pass.isEmpty()){
             pass1.setError("비밀번호를 입력해주세요");
             return false;
         }
         else if(!_pass.matches(passPolicy)){
-            pass1.setError("적어도 4글자이상 입력해주세요");
+            pass1.setError("영어, 숫자가 혼합된 8자 이상이어야 합니다.");
             return false;
         }
         else{
@@ -133,7 +133,7 @@ public class ChangePass2 extends AppCompatActivity implements TopBar.OnBackPress
     public boolean check (boolean result, final String message) {
         if(result) {
             Toast.makeText(ChangePass2.this, message, Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(ChangePass2.this, Login.class));
+            startActivity(new Intent(ChangePass2.this, ChangePass3.class));
             finish();
         }
         Toast.makeText(ChangePass2.this, message, Toast.LENGTH_SHORT).show();

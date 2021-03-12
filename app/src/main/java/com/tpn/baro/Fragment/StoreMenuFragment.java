@@ -88,6 +88,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     TextView discountText;
 
     boolean animating = false;
+    boolean downAnimating = false;
 
     public int getDiscountRate;
 
@@ -128,36 +129,61 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     private void setScrollEvent() {
         final Animation upAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_up_100);
         final Animation downAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_bottom_100);
-
         mRecyclerViewMenu.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_MOVE:
-                    case MotionEvent.ACTION_SCROLL:
-//                        if(animating) {
-//                            break;
-//                        }
-                        Log.e("ACTION_ELSE" , "ACTION ELSE" + discountTextViewLayout.getVisibility());
-//                        animating = true;
-//                        discountTextViewLayout.setAnimation(downAnim);
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                discountTextViewLayout.setVisibility(View.INVISIBLE);
-//                                animating = false;
-//                                Log.e("ACTION_ELSE" , "ACTION handler start" + animating);
-//                            }
-//                        }, 500);
-//                        Log.e("ACTION_ELSE" , "ACTION handler end" + animating);
-                        discountTextViewLayout.setAnimation(downAnim);
+                        if(animating) {
+                            break;
+                        }
+                        animating = true;
+                        Log.e("ACTION_MOVE" , "ACTION_MOVE" + discountTextViewLayout.getVisibility());
+//                        discountTextViewLayout.setAnimation(upAnim);
                         discountTextViewLayout.setVisibility(View.INVISIBLE);
+                        animating = false;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                            }
+                        }, 500);
                         break;
-                    default:
+                    case MotionEvent.ACTION_UP:
+                        if(downAnimating) {
+                            break;
+                        }
+                        downAnimating = true;
                         discountTextViewLayout.setVisibility(View.VISIBLE);
+//                        discountTextViewLayout.setAnimation(downAnim);
+                        downAnimating = false;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                            }
+                        }, 500);
                         break;
+//                    case MotionEvent.ACTION_SCROLL:
+////                        if(animating) {
+////                            break;
+////                        }
+//                        Log.e("ACTION_SCROLL" , "ACTION_SCROLL ELSE" + discountTextViewLayout.getVisibility());
+////                        animating = true;
+////                        discountTextViewLayout.setAnimation(downAnim);
+////                        new Handler().postDelayed(new Runnable() {
+////                            @Override
+////                            public void run() {
+////                                discountTextViewLayout.setVisibility(View.INVISIBLE);
+////                                animating = false;
+////                                Log.e("ACTION_ELSE" , "ACTION handler start" + animating);
+////                            }
+////                        }, 500);
+////                        Log.e("ACTION_ELSE" , "ACTION handler end" + animating);
+////                        discountTextViewLayout.setAnimation(downAnim);
+//                        discountTextViewLayout.setVisibility(View.INVISIBLE);
+//                        break;
                 }
-                Log.e("ACTION_CANCEL" , "ACTION CANCEL"+ discountTextViewLayout.getVisibility());
 //                discountTextViewLayout.setVisibility(View.VISIBLE);
 //                discountTextViewLayout.setAnimation(upAnim);
                 return false;
@@ -418,6 +444,8 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         intent.putExtra("menuName", getMenuName);
         intent.putExtra("menuDefaultPrice", defaultPrice);
         intent.putExtra("menuId", Integer.parseInt(getMenuId));
+        Log.e("menuImage", saveMenus.get(position).getMenuImage());
+        intent.putExtra("menuImage", saveMenus.get(position).getMenuImage());
         intent.putExtra("storeName", storeDetail.getStore_name());
         intent.putExtra("storeId", storeDetail.getStore_id());
         intent.putExtra("storeNumber",storeDetail.getStore_phone());//가게 전화번호

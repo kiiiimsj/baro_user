@@ -186,10 +186,16 @@ public class ListStoreFavoritePage extends AppCompatActivity implements StoreLis
     @Override
     public void onItemSelected(View v, int position) {
         StoreListAdapter.ListStoreViewHolder listStoreViewHolder = (StoreListAdapter.ListStoreViewHolder)mRecyclerView.findViewHolderForAdapterPosition(position);
+        int discountRate = 0;
+        if(!listStoreViewHolder.discountRate.getText().toString().equals("")) {
+            discountRate = Integer.parseInt(listStoreViewHolder.discountRate.getText().toString().substring(5, listStoreViewHolder.discountRate.getText().toString().lastIndexOf("%")));
+        }
         Intent intent = new Intent(ListStoreFavoritePage.this, StoreInfoReNewer.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
-        intent.putExtra("discount_rate", Integer.parseInt(listStoreViewHolder.discountRate.getText().toString().substring(1, listStoreViewHolder.discountRate.getText().toString().lastIndexOf("%"))));
+        if(discountRate != 0 ) {
+            intent.putExtra("discount_rate", discountRate);
+        }
         startActivity(intent);
     }
     private double getDistance(Location myLocation, Location storeLocation){

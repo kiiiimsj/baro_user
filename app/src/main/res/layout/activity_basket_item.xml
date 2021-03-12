@@ -176,7 +176,7 @@
                     android:id="@+id/arrow_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_triangle_small"
+                    android:src="@drawable/arrow_triangle_big"
                     android:layout_marginHorizontal="7dp"
                     app:layout_constraintEnd_toStartOf="@id/textView9"
                     app:layout_constraintTop_toTopOf="@id/textView9"

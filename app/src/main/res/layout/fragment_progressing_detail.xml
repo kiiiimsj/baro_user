@@ -106,7 +106,7 @@
             android:layout_alignParentRight="true"
             android:text="총 할인 금액 : "
             android:textSize="11sp"
-            android:textColor="@color/main"
+            android:textColor="@color/black"
             android:fontFamily="@font/notosans_bold"
             android:includeFontPadding="false"
             android:layout_marginRight="10dp"
@@ -122,7 +122,7 @@
             android:text="총 결제 금액 : "
             android:layout_gravity="center_vertical"
             android:textSize="20sp"
-            android:textColor="@color/main"
+            android:textColor="@color/black"
             android:fontFamily="@font/notosans_bold"
             android:includeFontPadding="false"/>
 

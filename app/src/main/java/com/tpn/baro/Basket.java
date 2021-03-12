@@ -102,7 +102,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     RecyclerView recyclerView;
     LinearLayout recyclerViewShell;
     Button button;
-    Button deleteAll;
+//    Button deleteAll;
     TextView getIfDiscountRate;
 
     private WebSocketClient webSocketClient;
@@ -163,7 +163,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
         basket = Basket.this;
         button = findViewById(R.id.pay);
-        deleteAll = findViewById(R.id.deleteAll);
+//        deleteAll = findViewById(R.id.deleteAll);
         recyclerView = findViewById(R.id.basketList);
         recyclerViewShell = findViewById(R.id.linearLayout2);
         storeNameTextView = findViewById(R.id.store_name);
@@ -453,23 +453,23 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 //        }
         finalPayValue.setText(totalPrice +" 원");
     }
-    public void pressDeleteAll(View view) {
-        if (detailsFixToBaskets.size() > 0) {
-            LastItemDialog dialog = new LastItemDialog(this, new LastItemDialog.DoDelete() {
-                @Override
-                public void doDelete() {
-                    Toast.makeText(Basket.this, "장바구니의 내용이 모두 삭제 되었습니다", Toast.LENGTH_SHORT).show();
-                    detailsFixToBaskets.clear();
-                    deleteBasket();
-                    onBackPressed();
-                }
-            },true);
-            dialog.callFunction();
-
-        } else{
-            Toast.makeText(this, "이미 장바구니가 비어있습니다", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    public void pressDeleteAll(View view) {
+//        if (detailsFixToBaskets.size() > 0) {
+//            LastItemDialog dialog = new LastItemDialog(this, new LastItemDialog.DoDelete() {
+//                @Override
+//                public void doDelete() {
+//                    Toast.makeText(Basket.this, "장바구니의 내용이 모두 삭제 되었습니다", Toast.LENGTH_SHORT).show();
+//                    detailsFixToBaskets.clear();
+//                    deleteBasket();
+//                    onBackPressed();
+//                }
+//            },true);
+//            dialog.callFunction();
+//
+//        } else{
+//            Toast.makeText(this, "이미 장바구니가 비어있습니다", Toast.LENGTH_SHORT).show();
+//        }
+//    }
     public void deleteBasket(){
         SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -692,7 +692,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 .setEasyPayUserToken(user_token)
                 .setBootExtra(bootExtra)
                 .setBootUser(bootUser)
-                .setMethodList(Arrays.asList(Method.EASY_CARD, Method.CARD, Method.BANK, Method.VBANK, Method.KAKAO, Method.NPAY, Method.PAYCO))
+                .setMethodList(Arrays.asList(Method.EASY_CARD, Method.CARD, Method.BANK, Method.VBANK, Method.KAKAO, Method.PAYCO))
                 //               .setUserPhone("010-1234-5678") // 구매자 전화번호
                 .setUX(UX.PG_DIALOG)
 //                .setMethod(Method.CARD) // 결제수단
