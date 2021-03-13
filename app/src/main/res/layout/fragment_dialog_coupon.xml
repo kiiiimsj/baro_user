@@ -217,13 +217,14 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:paddingHorizontal="20dp"
+                    android:paddingHorizontal="5dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
                         android:text="요청사항"
                         android:fontFamily="@font/notosans_bold"
                         android:textColor="#343434"
@@ -235,10 +236,12 @@
                         android:paddingHorizontal="10dp"
                         android:maxLength="100"
                         android:hint="요청 사항을 입력해주세요(100자)"
+                        android:textSize="15sp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="35dp"
                         android:minHeight="0dp"
-                        android:background="@drawable/layout_border_3dp_stroke_1dp"/>
+                        android:background="@drawable/layout_edit_text_rounded_radius_5dp_stroke_1dp"
+                        />
                 </LinearLayout>
                 <LinearLayout
                     android:paddingHorizontal="5dp"
@@ -254,10 +257,9 @@
                         android:includeFontPadding="false"
                         android:fontFamily="@font/notosans_bold"
                         android:background="@drawable/layout_border_5dp_stroke_2dp_main"
-                        android:text="결 제 하 기"
+                        android:text="결제하기"
                         android:textSize="17sp"
-                        android:textColor="@color/white"
-                        android:letterSpacing="-0.02"/>
+                        android:textColor="@color/white" />
                 </LinearLayout>
             </LinearLayout>
 

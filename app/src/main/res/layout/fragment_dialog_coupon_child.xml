@@ -22,33 +22,27 @@
             android:text="8월의 쿠폰"
             android:textColor="#343434"
             android:textSize="17sp"
-            android:includeFontPadding="false"></TextView>
+            android:includeFontPadding="false" />
 
         <TextView
             android:id="@+id/coupon_enddate"
+            android:layout_below="@id/coupon_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="15dp"
             android:fontFamily="@font/notosans_bold"
             android:text="2020년 8월 27일 까지"
             android:textSize="12sp"
             android:includeFontPadding="false"
-            android:textColor="#c4c4c4"></TextView>
+            android:textColor="#c4c4c4" />
 
         <RelativeLayout
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
             android:orientation="horizontal">
-
-            <View
-                android:layout_width="3dp"
-                android:layout_height="match_parent"
-                android:background="@color/black"></View>
-
             <TextView
                 android:fontFamily="@font/notosans_bold"
                 android:id="@+id/discount_amount"
@@ -59,10 +53,10 @@
                 android:text="3000"
                 android:textColor="#343434"
                 android:textSize="17sp"
-                android:includeFontPadding="false"></TextView>
+                android:includeFontPadding="false" />
 
             <TextView
-                android:fontFamily="@font/bmhannapro"
+                android:fontFamily="@font/notosans_regular"
                 android:id="@+id/coupon_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,7 +66,7 @@
                 android:text=" 원"
                 android:textColor="#343434"
                 android:textSize="17sp"
-                android:includeFontPadding="false"></TextView>
+                android:includeFontPadding="false" />
         </RelativeLayout>
 
     </RelativeLayout>

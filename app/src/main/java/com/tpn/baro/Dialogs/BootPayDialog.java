@@ -52,7 +52,11 @@ public class BootPayDialog {
     public void setContent() {
         switch (getBootPayType) {
             case ON_ERROR:
-                contentTextView.setText(content);
+                if(content.equals("error:-15002")) {
+                    contentTextView.setText("주문 결제가 취소 되었습니다.");
+                }else {
+                    contentTextView.setText(content);
+                }
                 break;
             case ON_DONE:
                 contentTextView.setText("주문 결제가 완료 되었습니다.");
