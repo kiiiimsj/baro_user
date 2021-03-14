@@ -68,7 +68,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.List
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.store_design, parent, false);
+        View view = inflater.inflate(R.layout.design_store_list, parent, false);
         ListStoreViewHolder listStoreViewHolder = new ListStoreViewHolder(view);
         return listStoreViewHolder;
     }

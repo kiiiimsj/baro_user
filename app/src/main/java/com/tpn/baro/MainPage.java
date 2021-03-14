@@ -551,7 +551,7 @@ public class MainPage extends AppCompatActivity implements TypeAdapter.OnListIte
         Gson gson = new Gson();
         eventHelperClass = gson.fromJson(response, EventHelperClass.class);
         LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.advertise_design, null, false);
+        View view = layoutInflater.inflate(R.layout.design_advertise, null, false);
         ImageView imageView = view.findViewById(R.id.slider_image);
         ArrayList<Bitmap> bitmaps = new ArrayList<>();
         for (int i = 0; i < eventHelperClass.event.size(); i++) {

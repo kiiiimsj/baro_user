@@ -59,7 +59,7 @@ public class CouponDialog extends DialogFragment {
         void clickBtn(int discountTotal,int dc,int coupon_id,String orderRequest);
     }
     public interface EditTextfocusListener{
-        void isfocus(Boolean hasFocus);
+        void isFocus(Boolean hasFocus);
     }
     @NonNull
     @Override

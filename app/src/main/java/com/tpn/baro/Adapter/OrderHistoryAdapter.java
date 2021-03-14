@@ -29,8 +29,6 @@ import com.tpn.baro.Dialogs.HistoryDetailDialog;
 import com.tpn.baro.StoreInfoReNewer;
 import com.tpn.baro.Url.UrlMaker;
 
-import java.util.ArrayList;
-
 import maes.tech.intentanim.CustomIntent;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> {
@@ -55,7 +53,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     public OrderHistoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.activity_order_history_list,parent,false);
+        View view = inflater.inflate(R.layout.design_order_history_list,parent,false);
         ViewHolder viewHolder = new OrderHistoryAdapter.ViewHolder(view, viewType);
         return viewHolder;
     }

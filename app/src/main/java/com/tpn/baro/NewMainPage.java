@@ -393,7 +393,7 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
         Gson gson = new Gson();
         eventHelperClass = gson.fromJson(response, EventHelperClass.class);
         LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.advertise_design, null, false);
+        View view = layoutInflater.inflate(R.layout.design_advertise, null, false);
         ImageView imageView = view.findViewById(R.id.slider_image);
         ArrayList<Bitmap> bitmaps = new ArrayList<>();
         if(eventHelperClass == null || eventHelperClass.event == null || eventHelperClass.event.size() == 0 ) {

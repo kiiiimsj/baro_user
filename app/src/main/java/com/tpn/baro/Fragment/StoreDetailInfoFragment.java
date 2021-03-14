@@ -73,7 +73,7 @@ public class StoreDetailInfoFragment extends Fragment implements OnMapReadyCallb
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.activity_store_detail, container, false);
+        rootView = inflater.inflate(R.layout.fragment_store_detail, container, false);
         storeInfo = rootView.findViewById(R.id.store_infomation);
         openCloseTime = rootView.findViewById(R.id.open_close);
         daysOff = rootView.findViewById(R.id.days_off);

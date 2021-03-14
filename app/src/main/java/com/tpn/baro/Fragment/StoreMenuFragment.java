@@ -103,7 +103,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.activity_store_info, container, false);
+        rootView = inflater.inflate(R.layout.fragment_store_menu, container, false);
         mCategoryTabLayout = rootView.findViewById(R.id.category_layout);
         mRecyclerViewMenu = rootView.findViewById(R.id.menu_list);
         discountTextViewLayout = rootView.findViewById(R.id.discount_text_view_layout);
@@ -270,7 +270,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     }
     private void setMRecyclerViewCategory() {
         for(int i = 0; i < saveCategories.size(); i++){
-            View tabView = LayoutInflater.from(getActivity()).inflate(R.layout.category_layout, null);
+            View tabView = LayoutInflater.from(getActivity()).inflate(R.layout.desgin_category_tab, null);
             StoreCategories storeCategories = saveCategories.get(i);
 
             TextView categoryId= tabView.findViewById(R.id.category_id);

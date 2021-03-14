@@ -1,7 +1,6 @@
 package com.tpn.baro.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 
@@ -19,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
-import com.tpn.baro.Events;
 import com.tpn.baro.JsonParsingHelper.EventHelperClass;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
@@ -63,7 +60,7 @@ public class AdvertiseAdapter extends PagerAdapter {
         final int realIndex = position % bitmaps.size();
 
         layoutInflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.advertise_design, container, false);
+        View view = layoutInflater.inflate(R.layout.design_advertise, container, false);
         ImageView imageView = view.findViewById(R.id.slider_image);
 
         if(!bitmaps.get(realIndex).equals("")) {

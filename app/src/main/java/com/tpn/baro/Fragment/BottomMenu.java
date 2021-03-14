@@ -1,5 +1,6 @@
 package com.tpn.baro.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,15 +23,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.StringTokenizer;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class BottomMenu extends Fragment {
     BottomNavigationView realBottom;
     public BottomMenu() {}
 
 
-    public static BottomMenu newInstance(String param1, String param2) {
-        BottomMenu fragment = new BottomMenu();
-        return fragment;
-    }
+//    public static BottomMenu newInstance(String param1, String param2) {
+//        BottomMenu fragment = new BottomMenu();
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,7 @@ public class BottomMenu extends Fragment {
 
     public void clickBottomMenu() {
         realBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -89,8 +93,9 @@ public class BottomMenu extends Fragment {
                             break;
                         }
                         Intent intent = new Intent(getActivity(), NewMainPage.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
+                        CustomIntent.customType(getActivity(),"right-to-left");
                         break;
                     case R.id.bottomIconClock:
                         if(!BaroUtil.loginCheck(getActivity())) {
@@ -100,8 +105,9 @@ public class BottomMenu extends Fragment {
                             break;
                         }
                         Intent intent2 = new Intent(getActivity(), OrderProgressing.class);
-                        intent2.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        intent2.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent2);
+                        CustomIntent.customType(getActivity(),"right-to-left");
                         break;
                     case R.id.bottomIconMyStore:
                         if(!BaroUtil.loginCheck(getActivity())) {
@@ -111,8 +117,9 @@ public class BottomMenu extends Fragment {
                             break;
                         }
                         Intent intent3 = new Intent(getActivity(), ListStoreFavoritePage.class);
-                        intent3.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        intent3.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent3);
+                        CustomIntent.customType(getActivity(),"right-to-left");
                         break;
                     case R.id.bottomIconOrderList:
                         if(!BaroUtil.loginCheck(getActivity())) {
@@ -122,8 +129,9 @@ public class BottomMenu extends Fragment {
                             break;
                         }
                         Intent intent4 = new Intent(getActivity(), OrderHistory.class);
-                        intent4.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        intent4.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent4);
+                        CustomIntent.customType(getActivity(),"right-to-left");
                         break;
                     case R.id.bottomIconMyPage:
                         if(!BaroUtil.loginCheck(getActivity())) {
@@ -133,8 +141,9 @@ public class BottomMenu extends Fragment {
                             break;
                         }
                         Intent intent5 = new Intent(getActivity(), MyPage.class);
-                        intent5.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        intent5.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent5);
+                        CustomIntent.customType(getActivity(),"right-to-left");
                         break;
                 }
                 return false;

@@ -49,7 +49,7 @@ public class Coupon extends AppCompatActivity implements TopBar.OnBackPressedInP
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             BaroUtil.setStatusBarColor(Coupon.this, this.toString());
         }
-        setContentView(R.layout.activity_side_my_coupon);
+        setContentView(R.layout.activity_my_coupon);
         registerBtn = findViewById(R.id.registerBtn);
         couponInput = findViewById(R.id.coupon_number_input);
         registerBtn.setOnClickListener(new View.OnClickListener() {

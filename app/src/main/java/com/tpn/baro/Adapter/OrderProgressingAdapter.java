@@ -52,7 +52,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.activity_order_progressing_list,parent,false);
+        View view = layoutInflater.inflate(R.layout.design_order_progressing_list,parent,false);
         ViewHolder viewHolder = new OrderProgressingAdapter.ViewHolder(view, viewType);
 
         return viewHolder;

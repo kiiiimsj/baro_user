@@ -31,6 +31,8 @@ import com.tpn.baro.helperClass.ProgressApplication;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class OrderProgressing extends AppCompatActivity implements TopBar.ClickButton {
     final private String TAG = this.getClass().getSimpleName();
     Gson gson;
@@ -126,6 +128,7 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, NewMainPage.class));
+        CustomIntent.customType(this,"right-to-left");
         finish();
     }
 

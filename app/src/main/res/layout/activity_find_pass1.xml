@@ -89,7 +89,8 @@
                 android:id="@+id/forget_password_phone_number_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/muli_semibold"
+                android:fontFamily="@font/notosans_regular"
+                android:includeFontPadding="false"
                 android:inputType="phone"
                 android:textColor="@color/black"
                 android:textCursorDrawable="@null" />

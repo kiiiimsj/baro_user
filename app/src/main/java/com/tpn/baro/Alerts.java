@@ -39,7 +39,7 @@ public class Alerts extends AppCompatActivity implements TopBar.OnBackPressedInP
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             BaroUtil.setStatusBarColor(Alerts.this, this.toString());
         }
-        setContentView(R.layout.alert_list);
+        setContentView(R.layout.activity_alerts);
 
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);

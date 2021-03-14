@@ -446,8 +446,8 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 //                    new OrderDetailsNonEssentialAdapter(OrderDetails.this, R.layout.activity_order_details_nonessential_group_parent,
 //                            R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount);
             nonEssentialAdapter =
-                    new OrderDetailsNonEssentialAdapter(OrderDetails.this, R.layout.activity_order_details_nonessential_group_parent,
-                            R.layout.activity_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount, defaultPrice , discountRate, this, ifDiscountRate);
+                    new OrderDetailsNonEssentialAdapter(OrderDetails.this, R.layout.design_order_details_nonessential_group_parent,
+                            R.layout.design_order_details_nonessential_group_child, NonEssentialOptionList, totalPriceText, itemCount, defaultPrice , discountRate, this, ifDiscountRate);
             expandableListView.setAdapter(nonEssentialAdapter);
             setListIndicator();
             setExpandableListViewHeight(expandableListView,-1);
