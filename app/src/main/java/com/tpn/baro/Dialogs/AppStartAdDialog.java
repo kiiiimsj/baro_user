@@ -27,7 +27,6 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class AppStartAdDialog {
@@ -52,7 +51,7 @@ public class AppStartAdDialog {
         sf = context.getSharedPreferences("saveEventId", Context.MODE_PRIVATE);
         editor = sf.edit();
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dlg.setContentView(R.layout.app_start_ad_dialog);
+        dlg.setContentView(R.layout.dialog_app_start_ad);
         dlg.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dlg.setCanceledOnTouchOutside(false);
         dlg.setCancelable(false);

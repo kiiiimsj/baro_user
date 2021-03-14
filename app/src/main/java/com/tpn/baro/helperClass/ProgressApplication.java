@@ -38,7 +38,7 @@ public class ProgressApplication extends Application {
             progressDialog = new AppCompatDialog(activity);
             progressDialog.setCancelable(false);
             progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-            progressDialog.setContentView(R.layout.progress_loading);
+            progressDialog.setContentView(R.layout.design_progress_loading);
             progressDialog.show();
         }
 

@@ -6,38 +6,22 @@ import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.tpn.baro.OrderHistory;
 import com.tpn.baro.R;
-import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.BaroUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.StringTokenizer;
 
 public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     View rootView;
@@ -102,7 +86,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activity = getActivity();
-        rootView = inflater.inflate(R.layout.top_bar, container, false);
+        rootView = inflater.inflate(R.layout.fragment_top_bar, container, false);
         title = rootView.findViewById(R.id.title);
         backButton = rootView.findViewById(R.id.back_pressed);
 //        button = rootView.findViewById(R.id.when_has_button);
@@ -177,17 +161,6 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
                 });
                 title.setText("내 쿠폰 리스트");
                 break;
-            case "Notice":
-                backButton.setVisibility(View.VISIBLE);
-                title.setVisibility(View.VISIBLE);
-                backButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.onBack();
-                    }
-                });
-                title.setText("공지사항");
-                break;
             case "Alerts":
                 backButton.setVisibility(View.VISIBLE);
                 title.setVisibility(View.VISIBLE);
@@ -199,26 +172,6 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
                     }
                 });
                 title.setText("알 림");
-                break;
-            case "MyMap":
-                backButton.setVisibility(View.VISIBLE);
-                title.setVisibility(View.VISIBLE);
-//                button.setVisibility(View.VISIBLE);
-
-                backButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.onBack();
-                    }
-                });
-//                button.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        clickButtonListener.clickButton();
-//                    }
-//                });
-                title.setText("주변 가게");
-//                button.setText("위치 설정");
                 break;
             case "NewMyMap":
                 backButton.setVisibility(View.VISIBLE);

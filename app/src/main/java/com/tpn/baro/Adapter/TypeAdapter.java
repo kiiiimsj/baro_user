@@ -65,7 +65,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
-        View view = inflater.inflate(R.layout.type_design,parent, false);
+        View view = inflater.inflate(R.layout.design_type,parent, false);
         TypeViewHolder typeViewHolder = new TypeViewHolder(view, viewType);
         return typeViewHolder;
     }

@@ -58,7 +58,7 @@ public class UltraStoreListAdapter extends RecyclerView.Adapter<UltraStoreListAd
     public UltraStoreListAdapter.UltraStoreListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.ultra_store_design, parent, false);
+        View view = inflater.inflate(R.layout.design_ultra_store, parent, false);
         UltraStoreListViewHolder ultraStoreListViewHolder = new UltraStoreListViewHolder(view, viewType);
         return ultraStoreListViewHolder;
     }

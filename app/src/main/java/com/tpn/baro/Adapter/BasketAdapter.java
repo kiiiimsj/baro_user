@@ -1,7 +1,6 @@
 package com.tpn.baro.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import com.tpn.baro.AdapterHelper.ExtraOrder;
 import com.tpn.baro.Dialogs.LastItemDialog;
 import com.tpn.baro.R;
 import com.tpn.baro.helperClass.DetailsFixToBasket;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +48,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.activity_basket_item,parent,false);
+        View view = inflater.inflate(R.layout.design_basket_item,parent,false);
         ViewHolder viewHolder = new BasketAdapter.ViewHolder(view);
         return viewHolder;
     }
@@ -79,7 +77,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                 essentialPrice+=optionPrice;
             }
             essentialString = essentialString.substring(0,essentialString.length()-2);
-            LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.activity_basket_item_child, null, false);
+            LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.design_basket_item_child, null, false);
             ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(0)).setText(essentialString);
             ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(1)).setText("+ " + essentialPrice);
             holder.essential.removeAllViews();
@@ -101,7 +99,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
                 if (count == 0){
                     continue;
                 }
-                LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.activity_basket_item_child2, null, false);
+                LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.design_basket_item_child2, null, false);
                 ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(0)).setText(context.getString(R.string.viewpager_circle_indicator)+" "+key);
                 ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(2)).setText("" + count);
                 ((TextView) ((ConstraintLayout) linearLayout.getChildAt(0)).getChildAt(3)).setText("+ " + price);

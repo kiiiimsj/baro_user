@@ -50,7 +50,7 @@ public class NewStoreListAdapter extends RecyclerView.Adapter<NewStoreListAdapte
     @Override
     public NewStoreListAdapter.NewStoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.new_store_design, parent, false);
+        View view = inflater.inflate(R.layout.design_new_store, parent, false);
         NewStoreViewHolder newStoreViewHolder = new NewStoreViewHolder(view, viewType);
         return newStoreViewHolder;
     }

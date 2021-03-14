@@ -31,6 +31,8 @@ import com.tpn.baro.helperClass.ProgressApplication;
 
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class OrderHistory extends AppCompatActivity {
     final private String TAG = this.getClass().getSimpleName();
     private final static int FIRST = 1;
@@ -49,6 +51,7 @@ public class OrderHistory extends AppCompatActivity {
     OrderHistoryAdapter orderHistoryAdapter;
 
     ProgressApplication progressApplication;
+    private boolean fromMyPage = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,7 @@ public class OrderHistory extends AppCompatActivity {
             BaroUtil.setStatusBarColor(OrderHistory.this, this.toString());
         }
         setContentView(R.layout.activity_order_history);
+        fromMyPage = getIntent().getBooleanExtra("from_my_page", false);
 
         refreshLayout = findViewById(R.id.refreshView);
         progressApplication = new ProgressApplication();
@@ -174,8 +178,12 @@ public class OrderHistory extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        //startActivity(new Intent(this, NewMainPage.class));
+        if(!fromMyPage) {
+            startActivity(new Intent(this, NewMainPage.class));
+        }else {
+            super.onBackPressed();
+        }
+        CustomIntent.customType(this,"right-to-left");
         finish();
     }
 }

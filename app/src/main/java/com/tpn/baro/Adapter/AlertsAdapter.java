@@ -1,7 +1,6 @@
 package com.tpn.baro.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsView
     @Override
     public AlertsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.alert, parent, false);
+        View view = layoutInflater.inflate(R.layout.design_alert, parent, false);
         AlertsViewHolder alertsViewHolder = new AlertsViewHolder(view, viewType);
         return alertsViewHolder;
     }

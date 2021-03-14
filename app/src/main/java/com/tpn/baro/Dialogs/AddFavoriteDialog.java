@@ -20,7 +20,7 @@ public class AddFavoriteDialog {
     public void callFunction() {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dlg.setContentView(R.layout.fragment_add_favorite);
+        dlg.setContentView(R.layout.dialog_add_favorite);
         WindowManager.LayoutParams params = dlg.getWindow().getAttributes();
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;

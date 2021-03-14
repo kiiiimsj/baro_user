@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -28,7 +27,6 @@ import com.tpn.baro.Fragment.StoreDetailInfoFragment;
 import com.tpn.baro.Fragment.StoreMenuFragment;
 import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.HelperDatabase.StoreDetail;
-import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
 import com.tpn.baro.helperClass.BaroUtil;
 import com.google.android.material.tabs.TabLayout;
@@ -73,7 +71,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
             BaroUtil.setStatusBarColor(StoreInfoReNewer.this, this.toString());
         }
         onPause = false;
-        setContentView(R.layout.activity_store_info_re_newer);
+        setContentView(R.layout.activity_store_info);
 
         setOnClickFavorite();
         fm = getSupportFragmentManager();

@@ -78,7 +78,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
-        View view = inflater.inflate(R.layout.activity_order_details_essential, parent, false) ;
+        View view = inflater.inflate(R.layout.design_order_details_essential, parent, false) ;
         ViewHolder viewHolder = new OrderDetailsEssentialAdapter.ViewHolder(view) ;
 
         return viewHolder;
@@ -93,7 +93,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
         final ArrayList<ToggleButton> toggleButtons = new ArrayList<>();
         int count = 0;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
-        RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.activity_order_details_essential_table,null,false);
+        RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.design_order_details_essential_table,null,false);
         LinearLayout reChild = (LinearLayout) relativeLayout.getChildAt(0);
         LinearLayout reChildRadio = (LinearLayout) relativeLayout.getChildAt(1);
         final String text = mData.get(position);
@@ -107,10 +107,10 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
 
             if(extraOrders.size() > ONE_ROW){
                 Log.e("Essential", 1+"");
-                parent = (LinearLayout) inflater.inflate(R.layout.activity_order_details_radio, null, false);
+                parent = (LinearLayout) inflater.inflate(R.layout.design_order_details_radio, null, false);
                 for(int i = 0;i<extraOrders.size();i++){
                     final ExtraOrder extraOrder = extraOrders.get(i);
-                    final RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.activity_order_details_radio_child,null,false);
+                    final RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.design_order_details_radio_child,null,false);
                     radioButton.setText( extraOrder.getExtra_name()+"  (+"+extraOrder.getExtra_price()+"원)");
                     radioButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -140,7 +140,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                 }
             }else {
                 Log.e("Essential", 2+"");
-                parent = (LinearLayout) inflater.inflate(R.layout.activity_order_details_essential_table_child, null, false);
+                parent = (LinearLayout) inflater.inflate(R.layout.design_order_details_essential_table_child, null, false);
 
 
                 while (count != extraOrders.size()) {

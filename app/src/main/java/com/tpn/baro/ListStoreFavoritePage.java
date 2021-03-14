@@ -36,6 +36,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class ListStoreFavoritePage extends AppCompatActivity implements StoreListAdapter.OnListItemSelectedInterface {
     final private String TAG = this.getClass().getSimpleName();
     ImageView backButton;
@@ -212,6 +214,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements StoreLis
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, NewMainPage.class));
+        CustomIntent.customType(this,"right-to-left");
         finish();
     }
 }

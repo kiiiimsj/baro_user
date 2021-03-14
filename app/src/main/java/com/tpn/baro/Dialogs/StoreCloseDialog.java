@@ -22,7 +22,7 @@ public class StoreCloseDialog {
     public void callFunction() {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dlg.setContentView(R.layout.store_close_dialog);
+        dlg.setContentView(R.layout.dialog_store_close);
         dlg.show();
 
         final Button okay = (Button) dlg.findViewById(R.id.okay);

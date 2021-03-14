@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.tpn.baro.Basket;
 import com.tpn.baro.OrderDetails;
@@ -28,7 +27,7 @@ public class BasketDialog {
     public void callFunction() {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dlg.setContentView(R.layout.custom_dialog);
+        dlg.setContentView(R.layout.dialog_basket_add_menu);
         dlg.setCanceledOnTouchOutside(false);
         dlg.show();
 

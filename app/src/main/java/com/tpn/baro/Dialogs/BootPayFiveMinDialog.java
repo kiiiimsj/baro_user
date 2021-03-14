@@ -35,7 +35,7 @@ public class BootPayFiveMinDialog {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dlg.setCancelable(false);
-        dlg.setContentView(R.layout.fragment_add_favorite);
+        dlg.setContentView(R.layout.dialog_add_favorite);
         TextView title = (TextView) dlg.findViewById(R.id.title);
         TextView message = (TextView) dlg.findViewById(R.id.content);
         if(outSideTitle == null) {

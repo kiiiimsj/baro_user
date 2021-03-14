@@ -29,7 +29,7 @@ public class MyPageButtonAdapter extends RecyclerView.Adapter<MyPageButtonAdapte
     @NonNull
     @Override
     public MyPageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_page_parent_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.design_my_page_button, parent, false);
         MyPageViewHolder myPageViewHolder = new MyPageViewHolder(view, viewType);
         return myPageViewHolder;
     }

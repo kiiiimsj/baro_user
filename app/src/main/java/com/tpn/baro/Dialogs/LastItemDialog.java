@@ -27,7 +27,7 @@ public class LastItemDialog  {
     public void callFunction() {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dlg.setContentView(R.layout.last_item_dialog);
+        dlg.setContentView(R.layout.dialog_last_item);
         dlg.setCancelable(false);
         dlg.setCanceledOnTouchOutside(false);
 

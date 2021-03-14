@@ -125,7 +125,9 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         orderHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MyPage.this, OrderHistory.class));
+                Intent intent = new Intent(MyPage.this, OrderHistory.class);
+                intent.putExtra("from_my_page", true);
+                startActivity(intent);
                 CustomIntent.customType(MyPage.this,"left-to-right");
             }
         });
@@ -309,6 +311,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, NewMainPage.class));
+        CustomIntent.customType(this,"right-to-left");
         finish();
     }
 

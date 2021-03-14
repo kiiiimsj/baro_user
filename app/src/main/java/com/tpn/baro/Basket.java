@@ -504,7 +504,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             }
         }, new CouponDialog.EditTextfocusListener() {
             @Override
-            public void isfocus(Boolean hasFocus) {
+            public void isFocus(Boolean hasFocus) {
                 if(hasFocus){
                     WindowManager.LayoutParams window = Basket.this.getWindow().getAttributes();
                     window.y = Gravity.TOP - 80;

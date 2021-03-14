@@ -32,7 +32,7 @@ public class RefreshBasketByStoreIdDialog {
     public void callFunction() {
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dlg.setContentView(R.layout.refresh_basket_by_store_id);
+        dlg.setContentView(R.layout.dialog_refresh_basket);
         dlg.setCancelable(false);
         dlg.show();
 

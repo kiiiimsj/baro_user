@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:fontFamily="@font/muli_black"
+            android:fontFamily="@font/notosans_regular"
             android:text="이메일 변경"
             android:textAlignment="center"
             android:textSize="30sp"
@@ -62,7 +62,8 @@
                     android:id="@+id/forget_password_phone_number_editText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/muli_semibold"
+                    android:fontFamily="@font/notosans_regular"
+                    android:includeFontPadding="false"
                     android:inputType="phone"
                     android:textColor="@color/black"
                     android:textCursorDrawable="@null" />
