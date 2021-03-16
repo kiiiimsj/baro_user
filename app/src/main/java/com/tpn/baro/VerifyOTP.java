@@ -33,6 +33,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     String phoneNumber;
     String codeBySystem;
     String pageType;
+    TextView title;
     TextView timer;
     ProgressApplication progressApplication;
 
@@ -47,7 +48,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             BaroUtil.setStatusBarColor(VerifyOTP.this, this.toString());
         }
-
+        title = findViewById(R.id.register_title);
         timer = findViewById(R.id.twoMintimer);
         pinFromUser = findViewById(R.id.pin_view);
 
@@ -56,6 +57,12 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
         Intent intent = getIntent();
         pageType = intent.getStringExtra("pageType");
         phoneNumber = intent.getStringExtra("phone");
+        // 타이틀 설정 부분
+        if(pageType.equals("FindPass1")){
+            title.setText("비밀번호 찾기");
+        }else{
+        }
+        //
         sendVerificationCodeToUser(phoneNumber);
         new Thread(new Runnable() {
             @Override

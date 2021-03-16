@@ -41,6 +41,7 @@ import java.util.HashMap;
 import maes.tech.intentanim.CustomIntent;
 
 public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity, TopBar.ClickImage {
+    public static StoreInfoReNewer storeInfoReNewer;
     SessionManager sessionManager;
     String _phone;
     String storedIdStr;
@@ -71,6 +72,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
             BaroUtil.setStatusBarColor(StoreInfoReNewer.this, this.toString());
         }
         onPause = false;
+        storeInfoReNewer = StoreInfoReNewer.this;
         setContentView(R.layout.activity_store_info);
 
         setOnClickFavorite();
@@ -88,7 +90,6 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         myIntent = getIntent();
         storedIdStr = myIntent.getStringExtra("store_id");
         discountRate = myIntent.getIntExtra("discount_rate", 0);
-
 //        makeRequestForDiscountRate(Integer.parseInt(storedIdStr));
         setTabEvent();
 //        topBar.storeId = Integer.parseInt(storedIdStr);

@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.tpn.baro.Basket;
 import com.tpn.baro.NewMainPage;
 import com.tpn.baro.R;
+import com.tpn.baro.StoreInfoReNewer;
 
 public class OrderDoneDialog {
 
@@ -33,9 +34,11 @@ public class OrderDoneDialog {
             public void onClick(View view) {
                 Intent intent = new Intent(context, NewMainPage.class);
                 context.startActivity(intent);
+                dlg.dismiss();
                 Basket basket = (Basket) Basket.basket;
                 basket.finish();
-                dlg.dismiss();
+
+
             }
         });
     }

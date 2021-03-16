@@ -72,7 +72,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         String pass2Str = pass2.getEditText().getText().toString().trim();
         String emailStr = email.getEditText().getText().toString().trim();
         String checkEmail = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
-        String checkPass = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{8,}$";
+        String checkPass = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{7,}$";
 
         if(userNameStr.isEmpty() ){
             userName.setError("이름을 입력하셔야 합니다.");

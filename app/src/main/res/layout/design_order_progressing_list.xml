@@ -168,16 +168,16 @@
                 android:background="@color/gray" />
             <TextView
                 android:id="@+id/store_names"
-                android:gravity="center"
+                android:gravity="center|start"
                 android:text="도스마스 숭실대점"
                 android:fontFamily="@font/notosans_black"
                 android:textColor="#343434"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:includeFontPadding="false"
                 android:layout_weight="3"
                 android:layout_toRightOf="@+id/store_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_above="@id/ordered_dates"
                 android:layout_marginLeft="20dp"/>
             <TextView
@@ -190,7 +190,6 @@
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_alignBottom="@id/store_image"
                 android:layout_toRightOf="@id/store_image"/>
