@@ -91,6 +91,7 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
         ArrayList<Integer> option_ids = new ArrayList<>();
         LinearLayout parent = null;
         final ArrayList<ToggleButton> toggleButtons = new ArrayList<>();
+        final ArrayList<Integer> radioFlag = new ArrayList<>();
         int count = 0;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
         RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.design_order_details_essential_table,null,false);
@@ -106,19 +107,32 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
 //            Log.i("size",String.valueOf(nameList.size()));
 
             if(extraOrders.size() > ONE_ROW){
+
                 Log.e("Essential", 1+"");
                 parent = (LinearLayout) inflater.inflate(R.layout.design_order_details_radio, null, false);
                 for(int i = 0;i<extraOrders.size();i++){
                     final ExtraOrder extraOrder = extraOrders.get(i);
                     final RadioButton radioButton = (RadioButton) inflater.inflate(R.layout.design_order_details_radio_child,null,false);
                     radioButton.setText( extraOrder.getExtra_name()+"  (+"+extraOrder.getExtra_price()+"원)");
+                    radioFlag.add(0);
+                    final int finalI = i;
                     radioButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            must++;
-                            if(must > 1){
-                                must = 1;
+                            /// 라디오 버튼일때 필수 옵션 선택 갯수 결정.
+                            int temp = 0;
+                            for (int i = 0;i<radioFlag.size();i++) {
+                                temp += radioFlag.get(i);
                             }
+                            must -= temp;
+                            temp = 0;
+                            radioFlag.set(finalI,1);
+                            for (int i = 0;i<radioFlag.size();i++) {
+                                temp += radioFlag.get(i);
+                            }
+                            must += temp;
+                            ///////
+
                             holder.selectedOptions.setText(radioButton.getText());
                             int itemCount = Integer.parseInt(itemCountText.getText().toString());
                             int changePrice = extraOrder.getExtra_price();
@@ -134,9 +148,11 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
 
                             selectOptions.put(text, select);
                             memory = changePrice;
+
                         }
                     });
                     ((LinearLayout)parent.getChildAt(0)).addView(radioButton);
+
                 }
             }else {
                 Log.e("Essential", 2+"");
