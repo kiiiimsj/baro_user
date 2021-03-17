@@ -736,8 +736,8 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                         UrlMaker urlMaker = new UrlMaker();
                         String url2 = urlMaker.UrlMake(lastUrl2);
                         makeRequest3(url2, hashMap);
-                        OrderDoneDialog orderDoneDialog = new OrderDoneDialog(Basket.this);
-                        orderDoneDialog.callFunction();
+//                        OrderDoneDialog orderDoneDialog = new OrderDoneDialog(Basket.this);
+//                        orderDoneDialog.callFunction();
                     }
                 })
                 .onReady(new ReadyListener() { // 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
@@ -928,6 +928,9 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     @Override
     public void clickDismiss() {
         finish();
+        if(StoreInfoReNewer.storeInfoReNewer != null){
+            StoreInfoReNewer.storeInfoReNewer.finish();
+        }
     }
 
     @Override

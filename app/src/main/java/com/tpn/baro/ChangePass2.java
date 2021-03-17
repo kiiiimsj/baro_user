@@ -59,7 +59,7 @@ public class ChangePass2 extends AppCompatActivity implements TopBar.OnBackPress
 
     private boolean validatePassword() {
         String _pass = pass1.getEditText().getText().toString();
-        String passPolicy = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{8,}$";
+        String passPolicy = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{7,}$";
 
         if(_pass.isEmpty()){
             pass1.setError("비밀번호를 입력해주세요");

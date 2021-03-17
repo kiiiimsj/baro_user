@@ -17,12 +17,13 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:paddingEnd="15dp"
+
         android:src="@drawable/arrow_left"/>
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/black"
         android:fontFamily="@font/notosans_black"
         android:includeFontPadding="false"

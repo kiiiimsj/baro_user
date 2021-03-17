@@ -38,7 +38,7 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
     Gson gson;
     OrderProgressingParsing orderProgressingParsing;
 
-    SwipyRefreshLayout refreshLayout;
+//    SwipyRefreshLayout refreshLayout;
     RecyclerView recyclerView;
     OrderProgressingAdapter orderProgressingAdapter;
     String phone;
@@ -54,18 +54,18 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
         progressApplication.progressON(this);
 
         recyclerView = findViewById(R.id.orderProgresslist);
-        refreshLayout = findViewById(R.id.refresh_list);
+//        refreshLayout = findViewById(R.id.refresh_list);
         gson = new Gson();
         SessionManager sessionManager = new SessionManager(getApplicationContext(),SessionManager.SESSION_USERSESSION);
         HashMap<String,String> hashMap = sessionManager.getUsersDetailFromSession();
         phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
-        refreshLayout.setDistanceToTriggerSync(20);
-        refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh(SwipyRefreshLayoutDirection direction) {
-                makeRequest(phone);
-            }
-        });
+//        refreshLayout.setDistanceToTriggerSync(20);
+//        refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+//                makeRequest(phone);
+//            }
+//        });
 
 
         makeRequest(phone);
@@ -102,7 +102,7 @@ public class OrderProgressing extends AppCompatActivity implements TopBar.ClickB
         OrderProgressingAdapter orderProgressingAdapter = new OrderProgressingAdapter(orderProgressingParsingHelpers,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderProgressingAdapter);
-        refreshLayout.setRefreshing(false);
+//        refreshLayout.setRefreshing(false);
         progressApplication.progressOFF();
     }
 

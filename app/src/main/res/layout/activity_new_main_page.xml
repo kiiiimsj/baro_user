@@ -114,7 +114,7 @@
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:fontFamily="@font/metropolis_bold"
-                android:text="08:30"
+                android:text="00:00"
                 android:textColor="@color/white"
                 />
             <TextView
