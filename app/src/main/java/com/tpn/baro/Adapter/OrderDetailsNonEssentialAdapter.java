@@ -168,7 +168,7 @@ public class OrderDetailsNonEssentialAdapter extends BaseExpandableListAdapter {
                 int currentPrice = Integer.parseInt(priceTotal.getText().toString());
                 currentPrice = (currentPrice * 100) / (100 - discountRate);
                 if (optionCnt == DataList.get(childPosition).getMaxCount()){
-                    Toast.makeText(context, "더이상 옵션을 추가할수가 없습니다",Toast.LENGTH_LONG);
+                    Toast.makeText(context, "더이상 옵션을 추가할수가 없습니다",Toast.LENGTH_LONG).show();
                     return;
                 }
                 optionCnt+=1;
