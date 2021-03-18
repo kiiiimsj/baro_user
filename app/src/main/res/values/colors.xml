@@ -2,8 +2,8 @@
 <resources>
     <!--  Android 2.0 Lollipop 에서 작동  -->
     <color name="colorPrimary">#8333e6</color>
-    <color name="colorPrimaryDark">#ffffff</color>
-    <color name="colorAccent">#ffffff</color>
+    <color name="colorPrimaryDark">#40000000</color>
+    <color name="colorAccent">#40000000</color>
 
 
     <color name="lightWhite">#f2f5f8</color>

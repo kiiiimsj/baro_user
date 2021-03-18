@@ -131,8 +131,10 @@ public class CouponDialog extends DialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         if(!availableCouponsParsing.getResult()){
             doNotHave.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
         }else{
             doNotHave.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
         ArrayList<AvailableCouponsParsingHelper> availableCouponsParsingHelpers = availableCouponsParsing.getCoupon();
         final AvailableCouponsAdapter availableCouponsAdapter = new AvailableCouponsAdapter(availableCouponsParsingHelpers,realTotal,totalPriceText,discountMoney);
