@@ -283,7 +283,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
         long now = System.currentTimeMillis();
         Date date = new Date(now);
-        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
         String formatDate = sdfNow.format(date);
         int eachCount = 0;
         Gson gson = new Gson();

@@ -197,6 +197,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
         buttonPressed = true;
         progressApplication.progressON(this);
         String code = pinFromUser.getText().toString();
+
         if (!code.isEmpty()) {
             verifyCode(code);
         }
@@ -205,11 +206,10 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
                 @Override
                 public void run() {
                     Toast.makeText(VerifyOTP.this, "입력코드가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                    progressApplication.progressOFF();
                 }
             });
         }
-        //인증버튼 클릭했을경우
+        progressApplication.progressOFF();
     }
 
     @Override
