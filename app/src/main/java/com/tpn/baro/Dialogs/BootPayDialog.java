@@ -17,6 +17,7 @@ public class BootPayDialog {
     public String content;
     public int getBootPayType;
     TextView contentTextView;
+    TextView title;
     public interface OnDismiss{
         void clickDismiss();
     }
@@ -36,6 +37,8 @@ public class BootPayDialog {
         dlg.setContentView(R.layout.fragment_order_cancel);
         dlg.setCancelable(false);
         contentTextView = dlg.findViewById(R.id.content);
+        title = dlg.findViewById(R.id.title);
+        
         setContent();
         dlg.show();
 
@@ -59,6 +62,7 @@ public class BootPayDialog {
                 }
                 break;
             case ON_DONE:
+                title.setText("주문 완료");
                 contentTextView.setText("주문 결제가 완료 되었습니다.");
                 break;
             case ON_CANCEL:

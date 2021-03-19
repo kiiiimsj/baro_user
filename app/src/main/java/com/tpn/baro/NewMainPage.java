@@ -213,6 +213,7 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
         super.onResume();
 
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+        Log.e("userSession", userSession.toString());
         userData = userSession.getUsersDetailFromSession();
         if(userData.get(SessionManager.KEY_PHONENUMBER) == null) {
             alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
