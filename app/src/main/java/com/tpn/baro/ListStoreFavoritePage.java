@@ -127,6 +127,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements StoreLis
         if(!favoriteParsings.isResult() || favoriteParsings.getFavorite().size() == 0) {
             Toast.makeText(ListStoreFavoritePage.this, "가게정보를 받아올 수 없습니다.", Toast.LENGTH_SHORT).show();
             progressApplication.progressOFF();
+            mRecyclerView2();
         }else {
             mRecyclerView2();
         }
@@ -180,6 +181,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements StoreLis
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.e("response", response.toString());
                         jsonParsing(response.toString());
                     }
                 },
