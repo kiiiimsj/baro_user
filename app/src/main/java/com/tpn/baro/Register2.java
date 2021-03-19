@@ -88,18 +88,19 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
             pass1.setError("비밀번호를 작성하셔야 합니다.");
             pass1.requestFocus();
             return result;
+        }else {
+            if (!pass1Str.matches(checkPass)) {
+                pass1.setError("영어, 숫자가 혼합된 8자 이상이어야 합니다.");
+                pass1.requestFocus();
+                return result;
+            }else {
+                pass1.setError(null);
+                pass1.setErrorEnabled(false);
+            }
         }
-        if(pass1Str.matches(checkPass)) {
-            pass1.setError("영어, 숫자가 혼합된 8자 이상이어야 합니다.");
-            pass1.requestFocus();
-            return result;
-        }
-        if(!pass1Str.isEmpty()){
-            pass1.setError(null);
-            pass1.setErrorEnabled(false);
-        }
+
         if(pass2Str.isEmpty()){
-            pass2.setError("비밀번호 확인을 해야합니다.");
+            pass2.setError("비밀번호 확인을 입력하세요.");
             pass2.requestFocus();
             return result;
         }
@@ -110,20 +111,19 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
             return result;
         }
 
-
         if(emailStr.isEmpty()){
             email.setError("이메일을 입력해야합니다.");
             email.requestFocus();
             return result;
-        }
-        if(!emailStr.isEmpty() ){
-            if(!emailStr.matches(checkEmail)) {
+        }else {
+            if (!emailStr.matches(checkEmail)) {
                 email.setError("형식에 맞는 이메일을 입력해주세요.");
                 email.requestFocus();
                 return result;
+            } else {
+                email.setError(null);
+                email.setErrorEnabled(false);
             }
-            email.setError(null);
-            email.setErrorEnabled(false);
         }
         getResult = true;
         return true;
