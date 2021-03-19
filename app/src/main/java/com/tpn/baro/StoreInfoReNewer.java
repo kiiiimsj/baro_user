@@ -288,6 +288,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         try{
             _result = result.getBoolean("result");
             _message = result.getString("message");
+            Log.e("delete result", _message);
         }
         catch(JSONException e){
             e.printStackTrace();

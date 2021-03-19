@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -99,6 +100,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     TopBar topBar;
     FragmentManager fm;
     public static boolean onPause = false;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +142,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         //--------------------------------------------------------
         imageView = findViewById(R.id.menu_image);
         expandableListView = findViewById(R.id.menuExpand_NotEssential);
+        expandableListView.setNestedScrollingEnabled(false);
         itemName = findViewById(R.id.menuName);
         itemMinus = findViewById(R.id.itemMinus);
         itemPlus = findViewById(R.id.itemPlus);
@@ -432,6 +435,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 
         ArrayList<OrderDetailsNonEssential> NonEssentialOptionList = ConvertNonEssential(nonEssentialOptions);
         RecyclerView essentailRecyclerView = findViewById(R.id.menuRecyler_Essential);
+        essentailRecyclerView.setNestedScrollingEnabled(false);
         essentailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (arrayList.size() != 0) {

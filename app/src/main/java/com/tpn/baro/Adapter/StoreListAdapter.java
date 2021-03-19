@@ -85,12 +85,13 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.List
                 holder.mDistance.setText((int) favoriteStore.getDistance() + "m");
             }
             holder.storeId.setText(String.valueOf(favoriteStore.getStore_id()));
-            if(favoriteStore.getStore_is_open() != null) {
-                if(favoriteStore.getStore_is_open().equals("N")) {
+
+            if(favoriteStore.getIs_open() != null) {
+                if(favoriteStore.getIs_open().equals("N")) {
                     holder.isOpen.setText("준비중");
                     holder.isOpen.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.text_info_color)));
                 }
-                if(favoriteStore.getStore_is_open().equals("Y")) {
+                if(favoriteStore.getIs_open().equals("Y")) {
                     holder.isOpen.setText("영업중");
                 }
             }

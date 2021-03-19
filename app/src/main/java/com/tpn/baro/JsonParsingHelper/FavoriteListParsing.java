@@ -8,7 +8,7 @@ public class FavoriteListParsing {
     String store_name;
     String store_location;
     String store_image;
-    String store_is_open;
+    String is_open;
     int discount_rate;
     float distance;
 
@@ -22,7 +22,7 @@ public class FavoriteListParsing {
                 ", store_name='" + store_name + '\'' +
                 ", store_location='" + store_location + '\'' +
                 ", store_image='" + store_image + '\'' +
-                ", store_is_open='" + store_is_open + '\'' +
+                ", store_is_open='" + is_open + '\'' +
                 ", discount_rate=" + discount_rate +
                 ", distance=" + distance +
                 '}';
@@ -84,12 +84,12 @@ public class FavoriteListParsing {
         this.store_image = store_image;
     }
 
-    public String getStore_is_open() {
-        return store_is_open;
+    public String getIs_open() {
+        return is_open;
     }
 
-    public void setStore_is_open(String store_is_open) {
-        this.store_is_open = store_is_open;
+    public void setIs_open(String is_open) {
+        this.is_open = is_open;
     }
 
     public int getDiscount_rate() {
