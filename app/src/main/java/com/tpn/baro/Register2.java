@@ -182,9 +182,9 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
                     @Override
                     public void onResponse(String response) {
                         Log.e("response",response);
-                        CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(Register2.this, Register2.this, null);
-                        couponRegisterDialog.outSideMessage = "바로와 함께하시게 되신걸 축하드립니다!\n1000원 할인 쿠폰을 드렸어요!";
-                        couponRegisterDialog.callFunction();
+//                        CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(Register2.this, Register2.this, null);
+//                        couponRegisterDialog.outSideMessage = "바로와 함께하시게 되신걸 축하드립니다!\n1000원 할인 쿠폰을 드렸어요!";
+//                        couponRegisterDialog.callFunction();
                     }
                 },
                 new Response.ErrorListener() {
