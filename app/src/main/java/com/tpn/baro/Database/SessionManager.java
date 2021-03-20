@@ -2,6 +2,7 @@ package com.tpn.baro.Database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -67,6 +68,7 @@ public class SessionManager {
         Login Session
          */
     public void createLoginSession(String name, String phone, String createDate, String email, String userToken) {
+        Log.e("createLogin", "session");
         detailEditor.putBoolean(IS_LOGIN, true);
         detailEditor.putString(KEY_USERNAME, name);
         detailEditor.putString(KEY_EMAIL, email);

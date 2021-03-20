@@ -213,11 +213,22 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
         super.onResume();
 
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
-        Log.e("userSession", userSession.toString());
         userData = userSession.getUsersDetailFromSession();
+        Log.e("userData", userData.toString());
         if(userData.get(SessionManager.KEY_PHONENUMBER) == null) {
-            alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
+                }
+            });
         }else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    alert.setBackground(getResources().getDrawable(R.drawable.alert_on));
+                }
+            });
             makeRequestForAlerts();
         }
         if (!BaroUtil.checkGPS(this)) {
@@ -305,16 +316,27 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
             JSONObject jsonObject = new JSONObject(response);
             if (jsonObject.getBoolean("result")) {
                 getUnReadAlertCount = jsonObject.getInt("count");
+                Log.e("count", "count : " + getUnReadAlertCount);
             }
         }catch (JSONException e) {
 
         }
         if(getUnReadAlertCount == 0) {
-            alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
+                }
+            });
 
         }
         else if (getUnReadAlertCount > 0){
-            alert.setBackground(getResources().getDrawable(R.drawable.alert_on));
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    alert.setBackground(getResources().getDrawable(R.drawable.alert_on));
+                }
+            });
         }
     }
     private void startLocation() {
