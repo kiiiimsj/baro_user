@@ -163,7 +163,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
             message = jsonObject.getString("message");
             if(getResult) {
                 Log.e("passParsing", "1");
-                makeRequestForInsertCoupon();
+                makeRequestForInsertAlertFirstRegister();
             }
             else {
                 Toast.makeText(Register2.this, "회원가입 오류 발생\n 문자인증부터 다시 시도부탁드립니다.", Toast.LENGTH_SHORT).show();
@@ -185,25 +185,6 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
                         CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(Register2.this, Register2.this, null);
                         couponRegisterDialog.outSideMessage = "바로와 함께하시게 되신걸 축하드립니다!\n1000원 할인 쿠폰을 드렸어요!";
                         couponRegisterDialog.callFunction();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("TAG",error.toString());
-                    }
-                });
-        requestQueue.add(stringRequest);
-    }
-    private void makeRequestForInsertCoupon() {
-        String url = new UrlMaker().UrlMake("CouponInsertByNumber.do?phone="+phone+"&coupon_id=9");
-        RequestQueue requestQueue = Volley.newRequestQueue(Register2.this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("response", response);
-                        makeRequestForInsertAlertFirstRegister();
                     }
                 },
                 new Response.ErrorListener() {
