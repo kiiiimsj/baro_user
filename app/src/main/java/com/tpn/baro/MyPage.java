@@ -1,5 +1,6 @@
 package com.tpn.baro;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -256,11 +257,17 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
         counts[1] = count;
         setButtons();
     }
+
     @Override
     public void clickOkay() {
         if(sessionManager.getUsersDetailFromSession() != null || sessionManager != null) {
             sessionManager.clearDetailUserSession();
         }
+        SharedPreferences basket = getSharedPreferences("basketList", MODE_PRIVATE);
+        SharedPreferences.Editor basketEditor = basket.edit();
+        basketEditor.clear();
+        basketEditor.apply();
+        basketEditor.commit();
         Intent intent = new Intent(this, NewMainPage.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);

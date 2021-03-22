@@ -33,7 +33,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class Register2 extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity, CouponRegisterDialog.OnDismiss {
+public class Register2 extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
     //private final static String SERVER= "http://54.180.56.44:8080/";
     private String message;
 
@@ -182,9 +182,18 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
                     @Override
                     public void onResponse(String response) {
                         Log.e("response",response);
-//                        CouponRegisterDialog couponRegisterDialog = new CouponRegisterDialog(Register2.this, Register2.this, null);
-//                        couponRegisterDialog.outSideMessage = "바로와 함께하시게 되신걸 축하드립니다!\n1000원 할인 쿠폰을 드렸어요!";
-//                        couponRegisterDialog.callFunction();
+                        if(getResult) {
+                            //storeNewPhoneData();
+                            finish();
+                        }
+                        else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(Register2.this, message, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -224,21 +233,5 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
     @Override
     public void onBack() {
         super.onBackPressed();
-    }
-
-    @Override
-    public void clickDismiss() {
-        if(getResult) {
-            //storeNewPhoneData();
-            finish();
-        }
-        else {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(Register2.this, message, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
     }
 }
