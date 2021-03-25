@@ -66,12 +66,15 @@
         <service
             android:name=".firebase.FirebaseMessagingService"
             android:enabled="true"
-            android:exported="true"
+            android:exported="false"
+            android:directBootAware="true"
             android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+
 <!--        <service-->
 <!--            android:name=".firebase.FirebaseInstanceIDService">-->
 <!--            <intent-filter>-->
