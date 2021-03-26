@@ -250,6 +250,8 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
                 title.setText("장바구니");
                 break;
             case "ListStoreFavoritePage":
+                timer.setVisibility(View.VISIBLE);
+                timerLayout.setVisibility(View.VISIBLE);
                 title.setVisibility(View.VISIBLE);
                 title.setText("찜한가게");
                 break;

@@ -25,6 +25,8 @@ import com.tpn.baro.Basket;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.NeedLoginDialog;
 import com.tpn.baro.Fragment.TopBar;
+import com.tpn.baro.ListStoreFavoritePage;
+import com.tpn.baro.ListStorePage;
 import com.tpn.baro.NewMainPage;
 import com.tpn.baro.OrderDetails;
 import com.tpn.baro.R;
@@ -117,6 +119,12 @@ public class BaroUtil {
         if(getTokenActivityName(activity.toString()).equals("Basket")) {
             return Basket.onPause;
         }
+        if(getTokenActivityName(activity.toString()).equals("ListStoreFavoritePage")) {
+            return ListStoreFavoritePage.onPause;
+        }
+        if(getTokenActivityName(activity.toString()).equals("ListStorePage")) {
+            return ListStorePage.onPause;
+        }
 
         return false;
     }
@@ -126,6 +134,8 @@ public class BaroUtil {
             case "StoreInfoReNewer":
             case "OrderDetails":
             case "Basket":
+            case "ListStoreFavoritePage":
+            case "ListStorePage":
                 return true;
             default:
                 return false;
