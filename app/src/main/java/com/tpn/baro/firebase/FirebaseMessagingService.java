@@ -12,6 +12,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.google.firebase.messaging.RemoteMessage;
+import com.tpn.baro.R;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
@@ -24,31 +25,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        if(remoteMessage.getData().size() > 0){
-            if(true){
-                scheduleJob();
-            }
-            else{
-                handleNow();
-            }
-        }
         showNotification(remoteMessage);
     }
 
-    private void scheduleJob() {
-        // [START dispatch_job]
-        OneTimeWorkRequest work = new OneTimeWorkRequest.Builder(MyWorker.class)
-                .build();
-        WorkManager.getInstance().beginWith(work).enqueue();
-        // [END dispatch_job]
-    }
-
-    /**
-     * Handle time allotted to BroadcastReceivers.
-     */
-    private void handleNow() {
-        Log.d("handleNow", "Short lived task is done.");
-    }
 
     private void showNotification(RemoteMessage remoteMessage) {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -64,7 +43,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         style.bigText(remoteMessage.getData().get("body"));
         style.setBigContentTitle(remoteMessage.getData().get("title"));
         builder.setStyle(style);
-        builder.setSmallIcon(android.R.drawable.ic_menu_view);
+        builder.setSmallIcon(R.drawable.and_app_icon);
         Notification notification = builder.build();
 
         manager.notify(1, notification);
