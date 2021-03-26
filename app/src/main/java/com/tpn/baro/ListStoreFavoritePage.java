@@ -44,6 +44,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements StoreLis
 
     RecyclerView mRecyclerView;
     StoreListAdapter adapter;
+    public static boolean onPause = false;
 
     LatLng latLng;
 
@@ -56,6 +57,7 @@ public class ListStoreFavoritePage extends AppCompatActivity implements StoreLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onPause = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             BaroUtil.setStatusBarColor(ListStoreFavoritePage.this, this.toString());
         }
@@ -88,8 +90,16 @@ public class ListStoreFavoritePage extends AppCompatActivity implements StoreLis
     @Override
     protected void onPause() {
         super.onPause();
+        onPause = true;
         overridePendingTransition(0, 0);
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        onPause = false;
+    }
+
     private void mRecyclerView2(){
         mRecyclerView.setHasFixedSize(true);
 //        ArrayList<ListStoreHelperClass> DataList = new ArrayList<>();

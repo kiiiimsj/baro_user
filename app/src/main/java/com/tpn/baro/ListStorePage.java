@@ -55,6 +55,7 @@ public class ListStorePage extends AppCompatActivity implements StoreListAdapter
     int currentPos;
     RecyclerView mRecyclerView;
     StoreListAdapter adapter;
+    public static boolean onPause = false;
 
     TextView typeName;
     //메인페이지에서 넘어온 리스트에 필요한 값들
@@ -78,6 +79,7 @@ public class ListStorePage extends AppCompatActivity implements StoreListAdapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onPause = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             BaroUtil.setStatusBarColor(ListStorePage.this, this.toString());
         }
@@ -117,8 +119,16 @@ public class ListStorePage extends AppCompatActivity implements StoreListAdapter
     @Override
     protected void onPause() {
         super.onPause();
+        onPause= true;
 //        overridePendingTransition(0, 0);
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        onPause = false;
+    }
+
     public void chooseShowList(int state) {
         Intent intent = getIntent();
         if(intent != null) {
@@ -345,7 +355,7 @@ public class ListStorePage extends AppCompatActivity implements StoreListAdapter
 
 
         intent.putExtra("store_id", listStoreViewHolder.storeId.getText().toString());
-        intent.putExtra("discount_rate", Integer.parseInt(listStoreViewHolder.discountRate.getText().toString().substring(1, listStoreViewHolder.discountRate.getText().toString().lastIndexOf("%"))));
+        intent.putExtra("discount_rate", Integer.parseInt(listStoreViewHolder.discountRate.getText().toString().substring(5, listStoreViewHolder.discountRate.getText().toString().lastIndexOf("%"))));
         startActivity(intent);
         CustomIntent.customType(this,"left-to-right");
     }
