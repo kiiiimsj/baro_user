@@ -98,7 +98,7 @@
                     android:textColor="#c4c4c4"
                     android:fontFamily="@font/notosans_regular"
                     android:includeFontPadding="false"
-                    android:text="결제 완료"/>
+                    android:text="결제완료"/>
                 <View
                     android:layout_gravity="center"
                     android:background="@color/main"
@@ -114,7 +114,7 @@
                     android:textColor="#c4c4c4"
                     android:includeFontPadding="false"
                     android:fontFamily="@font/notosans_regular"
-                    android:text="접수 중"/>
+                    android:text="접수완료"/>
                 <View
                     android:layout_gravity="center"
                     android:background="@color/main"
@@ -146,7 +146,7 @@
                     android:textColor="#c4c4c4"
                     android:fontFamily="@font/notosans_regular"
                     android:includeFontPadding="false"
-                    android:text="수령 완료"/>
+                    android:text="수령완료"/>
 
             </LinearLayout>
 
@@ -249,7 +249,7 @@
                     android:id="@+id/order_state"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:text="주문 완료"
+                    android:text="주문완료"
                     android:textSize="14sp"
                     android:textColor="#8333e6"
                     android:fontFamily="@font/notosans_bold"

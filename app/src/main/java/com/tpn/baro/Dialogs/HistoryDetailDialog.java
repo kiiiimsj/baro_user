@@ -133,8 +133,8 @@ public class HistoryDetailDialog extends DialogFragment {
     private ArrayList<HistoryDetailParsing.HistoryDetailParsingHelper> jsonParsing(String result){
         Gson gson = new Gson();
         HistoryDetailParsing historyDetailParsing = gson.fromJson(result,HistoryDetailParsing.class);
-        if (historyDetailParsing.getRequests()==null) {
-            requests.setText("요청사항이 없었습니다.");
+        if (historyDetailParsing.getRequests().equals("")) {
+            requests.setText("요청사항 없음.");
         } else {
             applyAdapter(historyDetailParsing,context);
             requests.setText(historyDetailParsing.getRequests());

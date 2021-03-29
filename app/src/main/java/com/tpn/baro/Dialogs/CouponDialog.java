@@ -93,6 +93,7 @@ public class CouponDialog extends DialogFragment {
         int totalPrice = bundle.getInt("totalPrice");
         totalPriceText.setText(totalPrice+"");
         realTotal.setText((totalPrice-discountAmount) <=0 ? ""+0 : ""+(totalPrice-discountAmount) );
+        pay.setText((totalPrice-discountAmount) <=0 ? ""+0 : ""+(totalPrice-discountAmount) + "원 결제하기");
         makeRequest(phone,totalPrice);
         /////////////////////////////////////////////////////////////////////////
         builder.setView(coupons);

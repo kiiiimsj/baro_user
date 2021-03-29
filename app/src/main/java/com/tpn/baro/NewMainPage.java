@@ -211,7 +211,6 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
     @Override
     protected void onResume() {
         super.onResume();
-
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         userData = userSession.getUsersDetailFromSession();
         Log.e("userData", userData.toString());
@@ -222,14 +221,16 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
                     alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
                 }
             });
-        }else {
+        }
+        else {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    alert.setBackground(getResources().getDrawable(R.drawable.alert_on));
+                    makeRequestForAlerts();
+//                    alert.setBackground(getResources().getDrawable(R.drawable.alert_on));
                 }
             });
-            makeRequestForAlerts();
+
         }
         if (!BaroUtil.checkGPS(this)) {
 
@@ -317,10 +318,13 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
             if (jsonObject.getBoolean("result")) {
                 getUnReadAlertCount = jsonObject.getInt("count");
                 Log.e("count", "count : " + getUnReadAlertCount);
+            }else {
+                getUnReadAlertCount = 0;
             }
         }catch (JSONException e) {
 
         }
+
         if(getUnReadAlertCount == 0) {
             runOnUiThread(new Runnable() {
                 @Override
