@@ -122,7 +122,9 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
         viewPager.setNestedScrollingEnabled(false);
         main_timer = findViewById(R.id.main_timer);
 
+        BaroUtil.storeId = 0;
         new BaroUtil().fifteenTimer(main_timer, this);
+
         eventCountSet = findViewById(R.id.event_count);
 
         alert = findViewById(R.id.alert);
@@ -142,7 +144,7 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
 
         myGPSListener = new MyGPSListener(this);
         latLng = myGPSListener.startLocationService(mAddress);
-        makeRequestForAllStoreList(setHashDataForStoreList());
+//        makeRequestForAllStoreList(setHashDataForStoreList());
 
 //        if(!BaroUtil.checkGPS(this)) {
 //            makeRequestUltraStore(setHashMapData());
@@ -211,6 +213,7 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
     @Override
     protected void onResume() {
         super.onResume();
+        makeRequestForAllStoreList(setHashDataForStoreList());
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         userData = userSession.getUsersDetailFromSession();
         Log.e("userData", userData.toString());

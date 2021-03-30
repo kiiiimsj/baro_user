@@ -123,8 +123,20 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         //즐겨찾기 연결
         Intent intent = getActivity().getIntent();
         storedIdStr=intent.getStringExtra("store_id");
-        makeRequestForDiscountRate(Integer.parseInt(storedIdStr));
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        discountText.setText(getDiscountRate+"%");
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void setScrollEvent() {
         final Animation upAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_up_100);

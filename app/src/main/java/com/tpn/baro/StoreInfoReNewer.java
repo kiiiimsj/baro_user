@@ -90,6 +90,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         myIntent = getIntent();
         storedIdStr = myIntent.getStringExtra("store_id");
         discountRate = myIntent.getIntExtra("discount_rate", 0);
+        BaroUtil.discountRateInt = discountRate;
 //        makeRequestForDiscountRate(Integer.parseInt(storedIdStr));
         setTabEvent();
 //        topBar.storeId = Integer.parseInt(storedIdStr);
@@ -121,6 +122,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     @Override
     protected void onResume() {
         super.onResume();
+        storeMenuFragment.getDiscountRate = BaroUtil.discountRateInt;
         setOnClickFavorite();
         getFavoriteStoreId();
         checkFavorite();

@@ -20,6 +20,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.util.Hex;
 import com.tpn.baro.Basket;
 import com.tpn.baro.Database.SessionManager;
@@ -31,12 +37,19 @@ import com.tpn.baro.NewMainPage;
 import com.tpn.baro.OrderDetails;
 import com.tpn.baro.R;
 import com.tpn.baro.StoreInfoReNewer;
+import com.tpn.baro.Url.UrlMaker;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
 public class BaroUtil {
+    public static int discountRateInt;
+    public static int storeId;
+
     public interface ReloadActivity {
         void reload();
     }
@@ -141,7 +154,7 @@ public class BaroUtil {
                 return false;
         }
     }
-    public void fifteenTimer(final TextView timerTextView, final Activity activity /*,final ReloadActivity reloadActivity*/) {
+    public void fifteenTimer(final TextView timerTextView, final Activity activity/*, final int store_id*/) {
         if(!checkTopBarTimeThreadActivity(activity)) {
             return;
         }
@@ -156,16 +169,21 @@ public class BaroUtil {
                     Log.i("activity : ", activity.toString()+secondString);
                     try {
                         Thread.sleep(1000);
-                        final int minuteFinal = 14 - (Integer.parseInt(minuteString) % 15);;
+                        final int minuteFinal = 1 - (Integer.parseInt(minuteString) % 2);
                         final int secondFinal = 59 - Integer.parseInt(secondString);
-
                         if(minuteFinal==0 && secondFinal == 1) {
                             /*reloadActivity.reload();*/
-                            Log.e("refresh", true+"");
-                            activity.finish();
-                            activity.overridePendingTransition(0, 0);
-                            activity.startActivity(activity.getIntent());
-                            activity.overridePendingTransition(0, 0);
+                            if(storeId != 0) {
+                                Log.e("BaroUtil_store_id : ", storeId+"");
+                                activity.finish();
+                                activity.overridePendingTransition(0, 0);
+                                makeRequestForDiscountRate(storeId, activity);
+                            }else {
+                                activity.overridePendingTransition(0, 0);
+                                activity.startActivity(activity.getIntent());
+                                activity.finish();
+                                activity.overridePendingTransition(0, 0);
+                            }
                         }
                         activity.runOnUiThread(new Runnable() {
                             @Override
@@ -189,7 +207,42 @@ public class BaroUtil {
         }
         return new StringTokenizer(getName, "@").nextToken();
     }
+    public void makeRequestForDiscountRate(int storeId, final Activity activity) {
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
+        String url = urlMaker.UrlMake(lastUrl);
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
 
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        Log.e("response", response);
+                        setDiscountTextView(response, activity);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(request);
+    }
+    public void setDiscountTextView(String result, Activity activity) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            if(jsonObject.getBoolean("result")) {
+                discountRateInt = jsonObject.getInt("discount_rate");
+                Log.e("discountRateInt : ", discountRateInt+"");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        activity.overridePendingTransition(0, 0);
+        activity.startActivity(activity.getIntent());
+    }
     /**
      * UseAge :
      * if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
