@@ -38,6 +38,7 @@ import com.tpn.baro.HelperDatabase.StoreCategories;
 import com.tpn.baro.HelperDatabase.StoreDetail;
 import com.tpn.baro.HelperDatabase.StoreMenus;
 import com.tpn.baro.OrderDetails;
+import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.ProgressApplication;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
@@ -98,6 +99,9 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
+        Intent intent = getActivity().getIntent();
+        storedIdStr=intent.getStringExtra("store_id");
+        Log.e("onAttach", "1");
     }
 
     @Nullable
@@ -121,19 +125,19 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
         //즐겨찾기 연결
-        Intent intent = getActivity().getIntent();
-        storedIdStr=intent.getStringExtra("store_id");
+        Log.e("onCreate", "1");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
+        Log.e("onStart", "1");
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.e("discountInMenu", getDiscountRate+"");
         discountText.setText(getDiscountRate+"%");
     }
 

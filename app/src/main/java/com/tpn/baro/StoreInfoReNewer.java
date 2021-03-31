@@ -71,6 +71,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             BaroUtil.setStatusBarColor(StoreInfoReNewer.this, this.toString());
         }
+
         onPause = false;
         storeInfoReNewer = StoreInfoReNewer.this;
         setContentView(R.layout.activity_store_info);
@@ -90,7 +91,8 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
         myIntent = getIntent();
         storedIdStr = myIntent.getStringExtra("store_id");
         discountRate = myIntent.getIntExtra("discount_rate", 0);
-        BaroUtil.discountRateInt = discountRate;
+
+        BaroUtil.storeId = Integer.parseInt(storedIdStr);
 //        makeRequestForDiscountRate(Integer.parseInt(storedIdStr));
         setTabEvent();
 //        topBar.storeId = Integer.parseInt(storedIdStr);
@@ -122,17 +124,25 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     @Override
     protected void onResume() {
         super.onResume();
-        storeMenuFragment.getDiscountRate = BaroUtil.discountRateInt;
+        BaroUtil.storeId = Integer.parseInt(storedIdStr);;
+        Log.e("fromPreferences", BaroUtil.getDiscountRateInt()+"");
+        storeMenuFragment.getDiscountRate = BaroUtil.getDiscountRateInt();
         setOnClickFavorite();
         getFavoriteStoreId();
         checkFavorite();
 
     }
+
+    @Override
+    protected void onDestroy() {
+        onPause = true;
+        super.onDestroy();
+    }
+
     @Override
     protected void onPause() {
         onPause = true;
         super.onPause();
-//        overridePendingTransition(0, 0);
     }
 
     public void onClickBack(View view) {
