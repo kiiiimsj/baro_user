@@ -543,6 +543,7 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
         intent.putExtra("store_id", listStoreParsing.store.get(position).getStore_id()+"");
         //intent.putExtra("discount_rate", Integer.parseInt(listStoreViewHolder.discountRate.getText().toString().substring(1, listStoreViewHolder.discountRate.getText().toString().lastIndexOf("%"))));
         intent.putExtra("discount_rate", listStoreParsing.store.get(position).getDiscount_rate());
+        BaroUtil.setDiscountRateInt(listStoreParsing.store.get(position).getDiscount_rate(), this);
         startActivity(intent);
         CustomIntent.customType(this,"left-to-right");
     }

@@ -309,7 +309,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     @Override
     protected void onResume() {
         super.onResume();
-        discountRate = BaroUtil.discountRateInt;
+        discountRate = BaroUtil.getDiscountRateInt();
         getIfDiscountRate.setText("SALE "+discountRate+"%");
         getPreferences();
         startTrace();

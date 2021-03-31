@@ -292,13 +292,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     @Override
     protected void onResume() {
         super.onResume();
-        setDiscountTextView(BaroUtil.discountRateInt);
-    }
-
-    @Override
-    protected void onDestroy() {
-        onPause = true;
-        super.onDestroy();
+        setDiscountTextView(BaroUtil.getDiscountRateInt());
     }
 
     @Override
