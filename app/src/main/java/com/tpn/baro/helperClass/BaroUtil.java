@@ -173,7 +173,7 @@ public class BaroUtil {
                     Log.i("activity : ", activity.toString()+secondString);
                     try {
                         Thread.sleep(1000);
-                        final int minuteFinal = 1 - (Integer.parseInt(minuteString) % 2);
+                        final int minuteFinal = 14 - (Integer.parseInt(minuteString) % 15);
                         final int secondFinal = 59 - Integer.parseInt(secondString);
                         if(minuteFinal==0 && secondFinal == 1) {
                             if(storeId != 0) {
