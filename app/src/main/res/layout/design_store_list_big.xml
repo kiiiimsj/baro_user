@@ -23,9 +23,11 @@
 
             <ImageView
                 android:id="@+id/store_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="414dp"
+                android:layout_height="200dp"
                 android:layout_marginVertical="5dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitXY"
                 />
             <TextView
                 android:id="@+id/discount_rate"
@@ -34,39 +36,42 @@
                 android:background="@drawable/layout_border_3dp_stroke_1dp"
                 android:paddingHorizontal="5dp"
                 android:paddingVertical="4dp"
-                android:layout_alignStart="@id/store_name"
+                android:layout_margin="12dp"
+                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/metropolis_regular"
                 android:includeFontPadding="false"
                 android:textStyle="bold"
                 android:text="SALE 10%"
-                android:textSize="11sp"
+                android:textSize="15sp"
                 android:gravity="center"
                 android:textAlignment="gravity"
                 android:textColor="@color/main"
                 />
-            <TextView
-                android:layout_marginStart="10dp"
-                android:id="@+id/store_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/notosans_bold"
-                android:includeFontPadding="false"
-                android:layout_toEndOf="@id/store_image"
-                android:layout_below="@id/discount_rate"
-                android:letterSpacing="-0.03"
-                android:text="커피만"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+
             <RelativeLayout
-                android:layout_marginStart="20dp"
+                android:layout_below="@id/store_image"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignTop="@id/store_image"
-                android:layout_alignBottom="@id/store_image"
+                android:layout_alignStart="@id/store_image"
+                android:layout_alignEnd="@id/store_image"
                 >
+                <TextView
+                    android:id="@+id/store_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+                <TextView
+                    android:id="@+id/store_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosans_bold"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="커피만"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
                 <TextView
                     android:id="@+id/is_open"
                     android:layout_width="35dp"
@@ -81,27 +86,18 @@
                     android:includeFontPadding="false"
                     />
                 <TextView
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
                     android:id="@+id/distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/is_open"
+                    android:layout_marginEnd="10dp"
                     android:fontFamily="@font/notosans_regular"
                     android:includeFontPadding="false"
                     android:textColor="@color/more_bright_gray"
                     android:textSize="12sp"
                     android:text="500m" />
 
-                <TextView
-                    android:id="@+id/store_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
             </RelativeLayout>
-
         </RelativeLayout>
-
     </RelativeLayout>
-
-
 </RelativeLayout>

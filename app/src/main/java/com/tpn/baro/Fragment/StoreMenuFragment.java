@@ -138,13 +138,14 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     public void onResume() {
         super.onResume();
         Log.e("discountInMenu", getDiscountRate+"");
-        discountText.setText(getDiscountRate+"%");
+        setDiscountTextView(getDiscountRate);
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void setScrollEvent() {
         final Animation upAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_up_100);
         final Animation downAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_bottom_100);
+
         mRecyclerViewMenu.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -217,7 +218,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                     @Override
                     public void onResponse(final String response) {
                         Log.e("response", response);
-                        setDiscountTextView(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -228,21 +228,14 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 });
         requestQueue.add(request);
     }
-    public void setDiscountTextView(String result) {
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            if(jsonObject.getBoolean("result")) {
-                int discountRate = jsonObject.getInt("discount_rate");
-                if(discountRate == 0 ){
-                    discountTextViewLayout.setVisibility(View.GONE);
-                }else {
-                    setScrollEvent();
-                }
-                discountText.setText(discountRate+"%");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+    public void setDiscountTextView(int discountRate) {
+        if(discountRate == 0 ){
+            discountTextViewLayout.setVisibility(View.GONE);
+        }else {
+            setScrollEvent();
+            discountText.setText(discountRate+"%");
         }
+
     }
     private void setDrawStoreInfo() {
         new Thread(new Runnable() {
