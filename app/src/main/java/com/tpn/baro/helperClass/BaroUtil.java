@@ -184,7 +184,12 @@ public class BaroUtil {
 //                                activity.startActivity(activity.getIntent());
 //                                activity.finish();
 //                                activity.overridePendingTransition(0, 0);
-                                activity.recreate();
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        activity.recreate();
+                                    }
+                                });
                             }
                         }
                         activity.runOnUiThread(new Runnable() {
