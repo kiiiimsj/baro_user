@@ -208,7 +208,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.List
                     public void onResponse(Bitmap response) {
                         image.setImageBitmap(response);
                     }
-                }, 100, 100, ImageView.ScaleType.FIT_XY, null,
+                }, image.getMaxWidth(), image.getMaxHeight(), ImageView.ScaleType.FIT_XY, null,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {

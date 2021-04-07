@@ -231,7 +231,7 @@ public class NewMyMap extends AppCompatActivity implements OnMapReadyCallback, T
                     public void onResponse(Bitmap response) {
                         setStoreInfo(distanceStr, response);
                     }
-                }, 200, 200, ImageView.ScaleType.FIT_XY, null,
+                }, storePreview.getMaxWidth(), storePreview.getMaxHeight(), ImageView.ScaleType.FIT_XY, null,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
