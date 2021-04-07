@@ -192,7 +192,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                         public void onResponse(Bitmap response) {
                             store_image.setImageBitmap(response);
                         }
-                    }, 100, 100, ImageView.ScaleType.FIT_CENTER, null,
+                    }, store_image.getMaxWidth(), store_image.getMaxHeight(), ImageView.ScaleType.FIT_CENTER, null,
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {

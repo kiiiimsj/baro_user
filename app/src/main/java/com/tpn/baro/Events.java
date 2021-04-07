@@ -92,7 +92,7 @@ public class Events extends AppCompatActivity implements TopBar.OnBackPressedInP
                     public void onResponse(Bitmap response) {
                         imageView.setImageBitmap(response);
                     }
-                }, 300, 300, ImageView.ScaleType.FIT_END, null,
+                }, imageView.getMaxWidth(), imageView.getMaxHeight(), ImageView.ScaleType.FIT_END, null,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
