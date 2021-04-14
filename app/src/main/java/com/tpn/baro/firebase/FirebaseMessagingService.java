@@ -8,8 +8,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
 
 import com.google.firebase.messaging.RemoteMessage;
 import com.tpn.baro.R;
@@ -33,17 +31,18 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            manager.createNotificationChannel(new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT));
+            manager.createNotificationChannel(new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH));
             builder = new NotificationCompat.Builder(this, CHANNEL_ID);
         } else {
             builder = new NotificationCompat.Builder(this);
         }
-
         NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
         style.bigText(remoteMessage.getData().get("body"));
         style.setBigContentTitle(remoteMessage.getData().get("title"));
-        builder.setStyle(style);
-        builder.setSmallIcon(R.drawable.and_app_icon);
+        builder.setSmallIcon(R.drawable.and_app_icon)
+        .setContentTitle(remoteMessage.getData().get("title"))
+        .setContentText(remoteMessage.getData().get("body"))
+        .setStyle(style);
         Notification notification = builder.build();
 
         manager.notify(1, notification);
