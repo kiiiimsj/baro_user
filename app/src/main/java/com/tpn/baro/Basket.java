@@ -538,17 +538,18 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                         Gson gson = new Gson();
                         ClarityIsOpenStoreParsing clarityIsOpenStoreParsing = gson.fromJson(response,ClarityIsOpenStoreParsing.class);
                         isOpen = clarityIsOpenStoreParsing.getResult();
-//                        if(isOpen==true) {
-//                            findUserForm();
-//                        }else{
-//                            SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList, Context.MODE_PRIVATE);
-//                            SharedPreferences.Editor editor = sharedPreferences.edit();
-//                            editor.remove(Basket.IN_MY_BASEKT);
-//                            editor.commit();
-//                            StoreCloseDialog storeCloseDialog = new StoreCloseDialog(Basket.this);
-//                            storeCloseDialog.callFunction();
-//
-//                        }
+                        if(isOpen==true) {
+
+                        }else{
+                            SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.remove(Basket.IN_MY_BASEKT);
+                            editor.commit();
+                            StoreCloseDialog storeCloseDialog = new StoreCloseDialog(Basket.this);
+                            storeCloseDialog.callFunction();
+
+                            Bootpay.removePaymentWindow();
+                        }
 
                         if(isOpen!=true) {
                             SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList, Context.MODE_PRIVATE);
@@ -719,8 +720,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                     @Override
                     public void onConfirm(@Nullable String message) {
                         Log.e("onConfirm", "onConfirm");
-                        if (0 < stuck) Bootpay.confirm(message); // 재고가 있을 경우.
-                        else Bootpay.removePaymentWindow(); // 재고가 없어 중간에 결제창을 닫고 싶을 경우
+                        clarityIsOpenStore();
                     }
                 })
                 .onDone(new DoneListener() { // 결제완료시 호출, 아이템 지급 등 데이터 동기화 로직을 수행합니다

@@ -182,7 +182,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
             makeStatusData();
 
 
-            makeRequest( mData.get(mData.size()-po-1).getStore_image(),context,store_image);
+            makeRequest( mData.get(po).getStore_image(),context,store_image);
 
             callStore.setOnClickListener(new View.OnClickListener() {
                 @Override
