@@ -147,10 +147,11 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
     Thread paymentCloseThread;
     ExecutorService executor;
-    public static boolean onPause;
+    public static boolean onPause = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("onCreate Basket", "true");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             BaroUtil.setStatusBarColor(Basket.this, this.toString());
         }
@@ -159,8 +160,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
 
         fm = getSupportFragmentManager();
         topBar = (TopBar)fm.findFragmentById(R.id.top_bar);
-        topBar.storeId = store_id;
-        onPause = false;
 
         progressApplication = new ProgressApplication();
         progressApplication.progressON(this);
@@ -174,21 +173,13 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         finalPayValue = findViewById(R.id.total_price_final_pay);
         getIfDiscountRate = findViewById(R.id.discount_rate);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(BasketList, MODE_PRIVATE);
         SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
         phone = userData.get(SessionManager.KEY_PHONENUMBER);
         email = userData.get(SessionManager.KEY_EMAIL);
         user_name = userData.get(SessionManager.KEY_USERNAME);
-        Gson gson = new Gson();
-        storeName = sharedPreferences.getString("currentStoreName", "");
-        StringTokenizer stringTokenizer = new StringTokenizer(storeName, "\"");
-        store_id = Integer.parseInt(sharedPreferences.getString("currentStoreId", "0"));
-        discountRate = topBar.getDiscountRate();
-        getIfDiscountRate.setText("SALE "+discountRate+"%");
+//        makeRequestForDiscountRate(store_id);
 
-        makeRequestForDiscountRate(store_id);
-        storeNumber = sharedPreferences.getString("currentStoreNumber", "");
         paymentCloseThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -233,34 +224,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             }
         });
 
-        if (store_id == 0) {
-            Toast.makeText(this, "잘못된 접근 요청입니다", Toast.LENGTH_LONG);
-        }
-        String inMyBasket = sharedPreferences.getString(IN_MY_BASEKT, "");
-        storeNameTextView.setText(stringTokenizer.nextToken());
-        detailsFixToBaskets = new ArrayList<>();
-        if (!(inMyBasket.equals(""))) {
-            try {
-                JSONArray jsonArray = new JSONArray(inMyBasket);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    String jsonChild = jsonArray.optString(i);
-                    detailsFixToBasket = gson.fromJson(jsonChild, DetailsFixToBasket.class);
-                    if (detailsFixToBasket.getName().equals("")) continue;
-                    totalOrderCount += detailsFixToBasket.getCount();
-                    detailsFixToBaskets.add(detailsFixToBasket);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        recalculateTotalPrice();
-        //finalPayValue.setText(totalPrice+" 원");
-        basketAdapter = new BasketAdapter(detailsFixToBaskets, this,this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(basketAdapter);
-        if(storeName!="") {
-            clarityIsOpenStore();
-        }
 
         // 초기설정 - 해당 프로젝트(안드로이드)의 application id 값을 설정합니다. 결제와 통계를 위해 꼭 필요합니다.
         BootpayAnalytics.init(this, application_id);
@@ -274,13 +237,10 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 null, // bootUser 생년월일 앞자리
                 phone, // bootUser 휴대폰 번호
                 null); //  서울|인천|대구|대전|광주|부산|울산|경기|강원|충청북도|충북|충청남도|충남|전라북도|전북|전라남도|전남|경상북도|경북|경상남도|경남|제주|세종 중 택 1
-        startTrace();
-        progressApplication.progressOFF();
         //결제=========================================
     }
 
-    public void orderInsert(){
-
+    public void orderInsert() {
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
@@ -349,8 +309,11 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     @Override
     protected void onResume() {
         super.onResume();
+        discountRate = BaroUtil.getDiscountRateInt();
+        getIfDiscountRate.setText("SALE "+discountRate+"%");
+        getPreferences();
+        startTrace();
 
-        Log.e("onPause?", onPause+"");
         if(fiveMin == 1) {
             Log.e("resumed", true+"");
         }
@@ -358,18 +321,65 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("orderCnt", detailsFixToBaskets.size());
         editor.commit();
+
+        progressApplication.progressOFF();
+    }
+
+    public void getPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences(BasketList, MODE_PRIVATE);
+        storeName = sharedPreferences.getString("currentStoreName", "");
+        StringTokenizer stringTokenizer = new StringTokenizer(storeName, "\"");
+        store_id = Integer.parseInt(sharedPreferences.getString("currentStoreId", "0"));
+        storeNumber = sharedPreferences.getString("currentStoreNumber", "");
+
+        BaroUtil.storeId = store_id;
+        Log.e("BaroUtilStoreId", BaroUtil.storeId+"");
+        Log.e("store_id", store_id+"");
+        if (store_id == 0) {
+            Toast.makeText(this, "잘못된 접근 요청입니다", Toast.LENGTH_LONG);
+        }
+
+        String inMyBasket = sharedPreferences.getString(IN_MY_BASEKT, "");
+        storeNameTextView.setText(stringTokenizer.nextToken());
+        detailsFixToBaskets = new ArrayList<>();
+        if (!(inMyBasket.equals(""))) {
+            try {
+                JSONArray jsonArray = new JSONArray(inMyBasket);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    String jsonChild = jsonArray.optString(i);
+                    detailsFixToBasket = new Gson().fromJson(jsonChild, DetailsFixToBasket.class);
+                    if (detailsFixToBasket.getName().equals("")) continue;
+                    totalOrderCount += detailsFixToBasket.getCount();
+                    detailsFixToBaskets.add(detailsFixToBasket);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        recalculateTotalPrice();
+        //finalPayValue.setText(totalPrice+" 원");
+        basketAdapter = new BasketAdapter(detailsFixToBaskets, this,this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(basketAdapter);
+        if(storeName!="") {
+            clarityIsOpenStore();
+        }
     }
 
     @Override
     protected void onRestart() {
-        Log.e("onRestart", "onRestart");
         onPause = false;
         super.onRestart();
     }
 
     @Override
+    protected void onDestroy() {
+        onPause = true;
+        super.onDestroy();
+    }
+
+    @Override
     protected void onPause() {
-        Log.e("pause", "pause");
         onPause = true;
         super.onPause();
 
@@ -393,7 +403,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             editor.putInt("orderCnt", count);
             editor.commit();
         }else{
-            ;
+
         }
     }
     private void findUserForm() {
@@ -801,40 +811,40 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         }
         bootpayBuilder.request();
     }
-    public void makeRequestForDiscountRate(int storeId) {
-        UrlMaker urlMaker = new UrlMaker();
-        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
-        String url = urlMaker.UrlMake(lastUrl);
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
-                        Log.e("response", response);
-                        setDiscountTextView(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        requestQueue.add(request);
-    }
-    public void setDiscountTextView(String result) {
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            if(jsonObject.getBoolean("result")) {
-                discountRate = jsonObject.getInt("discount_rate");
-                getIfDiscountRate.setText("SALE "+discountRate+"%");
-                //topBar.setDiscountTextView(discountRate);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void makeRequestForDiscountRate(int storeId) {
+//        UrlMaker urlMaker = new UrlMaker();
+//        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
+//        String url = urlMaker.UrlMake(lastUrl);
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//
+//        StringRequest request = new StringRequest(Request.Method.GET, url,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(final String response) {
+//                        Log.e("response", response);
+//                        setDiscountTextView(response);
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                });
+//        requestQueue.add(request);
+//    }
+//    public void setDiscountTextView(String result) {
+//        try {
+//            JSONObject jsonObject = new JSONObject(result);
+//            if(jsonObject.getBoolean("result")) {
+//                discountRate = jsonObject.getInt("discount_rate");
+//                getIfDiscountRate.setText("SALE "+discountRate+"%");
+//                //topBar.setDiscountTextView(discountRate);
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
     private synchronized void makeRequest3(String url, HashMap hashMap) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(hashMap),

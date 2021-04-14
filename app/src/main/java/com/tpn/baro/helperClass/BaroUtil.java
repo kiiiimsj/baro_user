@@ -2,47 +2,64 @@ package com.tpn.baro.helperClass;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Build;
-import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.common.util.Hex;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.tpn.baro.Basket;
 import com.tpn.baro.Database.SessionManager;
 import com.tpn.baro.Dialogs.NeedLoginDialog;
-import com.tpn.baro.Fragment.TopBar;
 import com.tpn.baro.ListStoreFavoritePage;
 import com.tpn.baro.ListStorePage;
 import com.tpn.baro.NewMainPage;
 import com.tpn.baro.OrderDetails;
 import com.tpn.baro.R;
 import com.tpn.baro.StoreInfoReNewer;
+import com.tpn.baro.Url.UrlMaker;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
 public class BaroUtil {
-    public interface ReloadActivity {
-        void reload();
-    }
+    public static int discountRateInt;
+    public static int storeId;
 
     static SharedPreferences sf;
+
+    public static void setDiscountRateInt(int discountRateInt, Context context) {
+        sf = context.getSharedPreferences("shared_discount", Context.MODE_PRIVATE);
+        Log.e("setDiscount", discountRateInt+"");
+        SharedPreferences.Editor sf_editor = sf.edit();
+        sf_editor.putInt("discount_rate", discountRateInt);
+        sf_editor.apply();
+        sf_editor.commit();
+    }
+    public static int getDiscountRateInt() {
+        int discount_rate = sf.getInt("discount_rate", 0);
+        return discount_rate;
+    }
+
     public static boolean loginCheck(final Activity activity){
+
         SessionManager sm = new SessionManager(activity, SessionManager.SESSION_USERSESSION);
         SharedPreferences sf = sm.getUsersDetailSession();
         String nick = sf.getString(SessionManager.KEY_USERNAME,"");
@@ -141,7 +158,7 @@ public class BaroUtil {
                 return false;
         }
     }
-    public void fifteenTimer(final TextView timerTextView, final Activity activity /*,final ReloadActivity reloadActivity*/) {
+    public void fifteenTimer(final TextView timerTextView, final Activity activity) {
         if(!checkTopBarTimeThreadActivity(activity)) {
             return;
         }
@@ -156,16 +173,24 @@ public class BaroUtil {
                     Log.i("activity : ", activity.toString()+secondString);
                     try {
                         Thread.sleep(1000);
-                        final int minuteFinal = 14 - (Integer.parseInt(minuteString) % 15);;
+                        final int minuteFinal = 14 - (Integer.parseInt(minuteString) % 15);
                         final int secondFinal = 59 - Integer.parseInt(secondString);
-
                         if(minuteFinal==0 && secondFinal == 1) {
-                            /*reloadActivity.reload();*/
-                            Log.e("refresh", true+"");
-                            activity.finish();
-                            activity.overridePendingTransition(0, 0);
-                            activity.startActivity(activity.getIntent());
-                            activity.overridePendingTransition(0, 0);
+                            if(storeId != 0) {
+                                Log.e("BaroUtil_store_id : ", storeId+"");
+                                makeRequestForDiscountRate(storeId, activity);
+                            }else {
+//                                activity.overridePendingTransition(0, 0);
+//                                activity.startActivity(activity.getIntent());
+//                                activity.finish();
+//                                activity.overridePendingTransition(0, 0);
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        activity.recreate();
+                                    }
+                                });
+                            }
                         }
                         activity.runOnUiThread(new Runnable() {
                             @Override
@@ -189,7 +214,51 @@ public class BaroUtil {
         }
         return new StringTokenizer(getName, "@").nextToken();
     }
+    public void makeRequestForDiscountRate(int storeId, final Activity activity) {
+        UrlMaker urlMaker = new UrlMaker();
+        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
+        String url = urlMaker.UrlMake(lastUrl);
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
 
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        Log.e("response", response);
+                        setDiscountTextView(response, activity);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(request);
+    }
+    public void setDiscountTextView(String result, Activity activity) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            if(jsonObject.getBoolean("result")) {
+                discountRateInt = jsonObject.getInt("discount_rate");
+                Log.e("discountRateInt : ", discountRateInt+"");
+                setDiscountRateInt(discountRateInt, activity);
+//                activity.overridePendingTransition(0, 0);
+//                activity.getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                //
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    activity.finishAndRemoveTask();
+//                }else {
+//                    activity.finish();
+//                }
+//                activity.startActivity(activity.getIntent());
+//                activity.overridePendingTransition(0, 0);
+                activity.recreate();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * UseAge :
      * if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

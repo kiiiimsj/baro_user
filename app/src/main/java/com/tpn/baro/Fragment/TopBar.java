@@ -37,7 +37,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     Activity activity;
 
     public int storeId;
-    public int discountRateInt;
+
 
 //    @Override
 //    public void reload() {
@@ -296,9 +296,7 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     public void setEtcImageWhereUsedStoreInfo(int image) {
         etcImage.setImageResource(image);
     }
-    public int getDiscountRate() {
-        return discountRateInt;
-    }
+
 //    public void setDiscountTextView(String result) {
 //        try {
 //            JSONObject jsonObject = new JSONObject(result);

@@ -104,6 +104,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("onCreate", "true");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             BaroUtil.setStatusBarColor(OrderDetails.this, this.toString());
         }
@@ -135,10 +136,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         essentialOrNot = new HashMap<>();
         essentialOptions = new HashMap<>();
         nonEssentialOptions = new HashMap<>();
-
-
-
-        makeRequestForDiscountRate(store_id);
+//        makeRequestForDiscountRate(store_id);
         //--------------------------------------------------------
         imageView = findViewById(R.id.menu_image);
         expandableListView = findViewById(R.id.menuExpand_NotEssential);
@@ -159,6 +157,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         recyclerViewShell = findViewById(R.id.essentialOptionShell);
         fix = findViewById(R.id.fix);
 
+        BaroUtil.storeId = store_id;
 
         //--------------------------------------------------------
         itemName.setText(menu_name);
@@ -293,6 +292,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     @Override
     protected void onResume() {
         super.onResume();
+        setDiscountTextView(BaroUtil.getDiscountRateInt());
     }
 
     @Override
@@ -300,50 +300,41 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         onPause = true;
         super.onPause();
     }
-    public void makeRequestForDiscountRate(int storeId) {
-        UrlMaker urlMaker = new UrlMaker();
-        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
-        String url = urlMaker.UrlMake(lastUrl);
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
-                        Log.e("response", response);
-                        setDiscountTextView(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressApplication.progressOFF();
-                    }
-                });
-        requestQueue.add(request);
-    }
-    public void setDiscountTextView(String result) {
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            if(jsonObject.getBoolean("result")) {
-                discountRate = jsonObject.getInt("discount_rate");
-//                topBar.setDiscountTextView(discountRate);
-                getIfDiscountRate.setText("SALE "+discountRate+"%");
-                if(discountRate == 0) {
-                    totalPriceText.setText(String.valueOf(defaultPrice));
-                }else {
-                    ifDiscountRate.setVisibility(View.VISIBLE);
-                    getIfDiscountRate.setVisibility(View.VISIBLE);
-                    arrowRight.setVisibility(View.VISIBLE);
-                    ifDiscountRate.setText(defaultPrice+"원");
-                    totalPriceText.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
-                }
-                makeRequest();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            progressApplication.progressOFF();
+//    public void makeRequestForDiscountRate(int storeId) {
+//        UrlMaker urlMaker = new UrlMaker();
+//        String lastUrl = "GetStoreDiscount.do?store_id="+storeId;
+//        String url = urlMaker.UrlMake(lastUrl);
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//
+//        StringRequest request = new StringRequest(Request.Method.GET, url,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(final String response) {
+//                        Log.e("response", response);
+//                        setDiscountTextView(response);
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        progressApplication.progressOFF();
+//                    }
+//                });
+//        requestQueue.add(request);
+//    }
+    public void setDiscountTextView(int discountRate) {
+        getIfDiscountRate.setText("SALE "+discountRate+"%");
+        if(discountRate == 0) {
+            totalPriceText.setText(String.valueOf(defaultPrice));
+        }else {
+            ifDiscountRate.setVisibility(View.VISIBLE);
+            getIfDiscountRate.setVisibility(View.VISIBLE);
+            arrowRight.setVisibility(View.VISIBLE);
+            ifDiscountRate.setText(defaultPrice+"원");
+            totalPriceText.setText(String.valueOf(defaultPrice - (int)(defaultPrice * (discountRate / 100.0))));
         }
+        makeRequest();
+        progressApplication.progressOFF();
     }
     private void addNewMenuToBasket(ArrayList<DetailsFixToBasket> detailsFixToBaskets, SharedPreferences.Editor editor){
         Gson gson = new Gson();

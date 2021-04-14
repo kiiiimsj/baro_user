@@ -38,6 +38,7 @@ import com.tpn.baro.HelperDatabase.StoreCategories;
 import com.tpn.baro.HelperDatabase.StoreDetail;
 import com.tpn.baro.HelperDatabase.StoreMenus;
 import com.tpn.baro.OrderDetails;
+import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.ProgressApplication;
 import com.tpn.baro.R;
 import com.tpn.baro.Url.UrlMaker;
@@ -98,6 +99,9 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
+        Intent intent = getActivity().getIntent();
+        storedIdStr=intent.getStringExtra("store_id");
+        Log.e("onAttach", "1");
     }
 
     @Nullable
@@ -121,14 +125,27 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         HashMap<String, String> hashMap = sessionManager.getUsersDetailFromSession();
         _phone = hashMap.get(SessionManager.KEY_PHONENUMBER);
         //즐겨찾기 연결
-        Intent intent = getActivity().getIntent();
-        storedIdStr=intent.getStringExtra("store_id");
-        makeRequestForDiscountRate(Integer.parseInt(storedIdStr));
+        Log.e("onCreate", "1");
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("onStart", "1");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("discountInMenu", getDiscountRate+"");
+        setDiscountTextView(getDiscountRate);
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void setScrollEvent() {
         final Animation upAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_up_100);
         final Animation downAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_bottom_100);
+
         mRecyclerViewMenu.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -201,7 +218,6 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                     @Override
                     public void onResponse(final String response) {
                         Log.e("response", response);
-                        setDiscountTextView(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -212,21 +228,14 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 });
         requestQueue.add(request);
     }
-    public void setDiscountTextView(String result) {
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            if(jsonObject.getBoolean("result")) {
-                int discountRate = jsonObject.getInt("discount_rate");
-                if(discountRate == 0 ){
-                    discountTextViewLayout.setVisibility(View.GONE);
-                }else {
-                    setScrollEvent();
-                }
-                discountText.setText(discountRate+"%");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+    public void setDiscountTextView(int discountRate) {
+        if(discountRate == 0 ){
+            discountTextViewLayout.setVisibility(View.GONE);
+        }else {
+            setScrollEvent();
+            discountText.setText(discountRate+"%");
         }
+
     }
     private void setDrawStoreInfo() {
         new Thread(new Runnable() {

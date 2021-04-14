@@ -68,7 +68,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.List
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.design_store_list, parent, false);
+        View view = inflater.inflate(R.layout.design_store_list_big, parent, false);
         ListStoreViewHolder listStoreViewHolder = new ListStoreViewHolder(view);
         return listStoreViewHolder;
     }
@@ -208,7 +208,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.List
                     public void onResponse(Bitmap response) {
                         image.setImageBitmap(response);
                     }
-                }, 100, 100, ImageView.ScaleType.FIT_CENTER, null,
+                }, image.getMaxWidth(), image.getMaxHeight(), ImageView.ScaleType.FIT_XY, null,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {

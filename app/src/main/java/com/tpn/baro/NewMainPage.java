@@ -122,7 +122,9 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
         viewPager.setNestedScrollingEnabled(false);
         main_timer = findViewById(R.id.main_timer);
 
+        BaroUtil.storeId = 0;
         new BaroUtil().fifteenTimer(main_timer, this);
+
         eventCountSet = findViewById(R.id.event_count);
 
         alert = findViewById(R.id.alert);
@@ -142,7 +144,7 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
 
         myGPSListener = new MyGPSListener(this);
         latLng = myGPSListener.startLocationService(mAddress);
-        makeRequestForAllStoreList(setHashDataForStoreList());
+//        makeRequestForAllStoreList(setHashDataForStoreList());
 
 //        if(!BaroUtil.checkGPS(this)) {
 //            makeRequestUltraStore(setHashMapData());
@@ -211,7 +213,7 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
     @Override
     protected void onResume() {
         super.onResume();
-
+        makeRequestForAllStoreList(setHashDataForStoreList());
         userSession = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         userData = userSession.getUsersDetailFromSession();
         Log.e("userData", userData.toString());
@@ -222,14 +224,16 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
                     alert.setBackground(getResources().getDrawable(R.drawable.alert_off));
                 }
             });
-        }else {
+        }
+        else {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    alert.setBackground(getResources().getDrawable(R.drawable.alert_on));
+                    makeRequestForAlerts();
+//                    alert.setBackground(getResources().getDrawable(R.drawable.alert_on));
                 }
             });
-            makeRequestForAlerts();
+
         }
         if (!BaroUtil.checkGPS(this)) {
 
@@ -317,10 +321,13 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
             if (jsonObject.getBoolean("result")) {
                 getUnReadAlertCount = jsonObject.getInt("count");
                 Log.e("count", "count : " + getUnReadAlertCount);
+            }else {
+                getUnReadAlertCount = 0;
             }
         }catch (JSONException e) {
 
         }
+
         if(getUnReadAlertCount == 0) {
             runOnUiThread(new Runnable() {
                 @Override
@@ -536,6 +543,7 @@ public class NewMainPage extends AppCompatActivity implements StoreListAdapter.O
         intent.putExtra("store_id", listStoreParsing.store.get(position).getStore_id()+"");
         //intent.putExtra("discount_rate", Integer.parseInt(listStoreViewHolder.discountRate.getText().toString().substring(1, listStoreViewHolder.discountRate.getText().toString().lastIndexOf("%"))));
         intent.putExtra("discount_rate", listStoreParsing.store.get(position).getDiscount_rate());
+        BaroUtil.setDiscountRateInt(listStoreParsing.store.get(position).getDiscount_rate(), this);
         startActivity(intent);
         CustomIntent.customType(this,"left-to-right");
     }
