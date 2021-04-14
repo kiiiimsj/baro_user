@@ -65,7 +65,7 @@ public class OrderProgressingAdapter extends RecyclerView.Adapter<OrderProgressi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final OrderProgressingParsingHelper reverse = mData.get(mData.size()-position-1);
+        final OrderProgressingParsingHelper reverse = mData.get(position);
         holder.order_date.setText(reverse.getOrder_date());
         holder.stores_name.setText(reverse.getStore_name());
         holder.store_phone.setText(reverse.getStore_phone());
