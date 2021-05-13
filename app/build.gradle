@@ -9,8 +9,8 @@ android {
         applicationId "com.tpn.baro"
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 9
-        versionName "9.0"
+        versionCode 11
+        versionName "11.0"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
