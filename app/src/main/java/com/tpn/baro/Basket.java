@@ -535,6 +535,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.e("clarityIsOpenStore","clarityIsOpenStore");
                         Gson gson = new Gson();
                         ClarityIsOpenStoreParsing clarityIsOpenStoreParsing = gson.fromJson(response,ClarityIsOpenStoreParsing.class);
                         isOpen = clarityIsOpenStoreParsing.getResult();
@@ -720,6 +721,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                     @Override
                     public void onConfirm(@Nullable String message) {
                         Log.e("onConfirm", "onConfirm");
+                        Bootpay.confirm(message);
                         clarityIsOpenStore();
                     }
                 })
@@ -768,7 +770,9 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                     @Override
                     public void onError(@Nullable String message) {
                         getBootPayAction = BootPayDialog.ON_ERROR;
+                        Log.e("onDone", message);
                         try {
+
                             JSONObject jsonObject = new JSONObject(message);
                             messageString = jsonObject.getString("msg");
                         }
