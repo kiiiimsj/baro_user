@@ -171,7 +171,7 @@ public class MyPage extends AppCompatActivity implements MyPageButtonAdapter.OnI
     }
     private void setMyInfo() {
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
-        String name = userData.get(SessionManager.KEY_USERNAME);
+        String name = userData.get(SessionManager.KEY_PHONENUMBER).substring(7);
         String email = userData.get(SessionManager.KEY_EMAIL);
         StringBuilder nameString = new StringBuilder(name + "님");
         nameSpace.setText(nameString.toString());
