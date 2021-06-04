@@ -708,7 +708,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 .setEasyPayUserToken(user_token)
                 .setBootExtra(bootExtra)
                 .setBootUser(bootUser)
-                .setMethodList(Arrays.asList(Method.EASY_CARD, Method.CARD, Method.BANK, Method.VBANK, Method.KAKAO, Method.PAYCO))
+                .setMethodList(Arrays.asList(Method.EASY_CARD, Method.CARD, Method.KAKAO, Method.PAYCO))
                 //               .setUserPhone("010-1234-5678") // 구매자 전화번호
                 .setUX(UX.PG_DIALOG)
 //                .setMethod(Method.CARD) // 결제수단
