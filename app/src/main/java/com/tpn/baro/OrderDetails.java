@@ -555,7 +555,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 //    }
     private void jsonParsing(String result, OrderDetailsParsing orderDetailsParsing) {
         try {
-            Boolean isSuccess = (Boolean) new JSONObject(result).getBoolean("result");
+//            Boolean isSuccess = (Boolean) new JSONObject(result).getBoolean("result");
             orderDetailsParsing.setMessage(new JSONObject(result).getString("message"));
             JSONArray jsonArray = new JSONObject(result).getJSONArray("extra");
             ArrayList<OrderDetailsListParsing> orderDetailsListParsings = new ArrayList<>();
