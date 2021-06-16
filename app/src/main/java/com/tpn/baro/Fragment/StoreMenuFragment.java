@@ -439,7 +439,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     public void onItemSelectedForMenu(View v, int position) {
         MenuListAdapter.MenuViewHolder viewHolder = (MenuListAdapter.MenuViewHolder)mRecyclerViewMenu.findViewHolderForAdapterPosition(position);
         String getMenuName = viewHolder.menuName.getText().toString();
-
+        String getMenuImage = viewHolder.menuImage.getTag().toString();
         String getMenuPrice = viewHolder.menuPrice.getText().toString();
         StringTokenizer stringTokenizer = new StringTokenizer(getMenuPrice, " 원");
         int defaultPrice = Integer.parseInt(stringTokenizer.nextToken());
@@ -453,8 +453,8 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
         intent.putExtra("menuName", getMenuName);
         intent.putExtra("menuDefaultPrice", defaultPrice);
         intent.putExtra("menuId", Integer.parseInt(getMenuId));
-        Log.e("menuImage", saveMenus.get(position).getMenuImage());
-        intent.putExtra("menuImage", saveMenus.get(position).getMenuImage());
+        Log.e("image", getMenuImage);
+        intent.putExtra("menuImage", getMenuImage);
         intent.putExtra("storeName", storeDetail.getStore_name());
         intent.putExtra("storeId", storeDetail.getStore_id());
         intent.putExtra("storeNumber",storeDetail.getStore_phone());//가게 전화번호
@@ -513,7 +513,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //printLog(response);
+                        BaroUtil.printLog("TAG",response);
                         jsonParsingMenu(response);
                     }
                 },
