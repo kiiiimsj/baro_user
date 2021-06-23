@@ -74,6 +74,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
         holder.menuName.setText(listMenuHelperClass.menus);
         holder.menuId.setText(Integer.toString(listMenuHelperClass.menuId));
         holder.menuImage.setBackground(Drawable.createFromPath(listMenuHelperClass.menuImage));
+        holder.menuImage.setTag(listMenuHelperClass.menuImage);
         makeRequest(listMenuHelperClass.menuImage, context, holder.menuImage);
         holder.subscription.setText(listMenuHelperClass.menu_info);
 
@@ -185,6 +186,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuVi
                         Log.e("menuimageerror", "error");
                     }
                 });
+        requestQueue.getCache().clear();
         requestQueue.add(request);
     }
 }

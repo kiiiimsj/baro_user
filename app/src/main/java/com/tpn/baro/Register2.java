@@ -37,7 +37,7 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
     //private final static String SERVER= "http://54.180.56.44:8080/";
     private String message;
 
-    TextInputLayout pass1, pass2, email, userName;
+    TextInputLayout pass1, pass2, email;
     private String phone;
 
     SharedPreferences getMarketingPermission;
@@ -52,7 +52,6 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
         }
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        userName = findViewById(R.id.user_name);
         pass1 = findViewById(R.id.login_password);
         pass2 = findViewById(R.id.login_password_confirm);
         email = findViewById(R.id.signup_email);
@@ -67,22 +66,11 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
 
     private boolean checkInput() {
         boolean result = false;
-        String userNameStr = userName.getEditText().getText().toString().trim();
         String pass1Str = pass1.getEditText().getText().toString().trim();
         String pass2Str = pass2.getEditText().getText().toString().trim();
         String emailStr = email.getEditText().getText().toString().trim();
         String checkEmail = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
         String checkPass = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{7,}$";
-
-        if(userNameStr.isEmpty() ){
-            userName.setError("이름을 입력하셔야 합니다.");
-            userName.requestFocus();
-            return result;
-        }
-        if(!userNameStr.isEmpty() ){
-            userName.setError(null);
-            userName.setErrorEnabled(false);
-        }
 
         if(pass1Str.isEmpty()){
             pass1.setError("비밀번호를 작성하셔야 합니다.");
@@ -133,17 +121,15 @@ public class Register2 extends AppCompatActivity implements TopBar.OnBackPressed
     public void onClickRegister(View view) {
         //회원가입 완료버튼 눌렀을때
         if(!checkInput()){ return; }
-        String userNameStr = userName.getEditText().getText().toString();
         String pass1Str = pass1.getEditText().getText().toString();
         String emailStr = email.getEditText().getText().toString();
         getMarketingPermission = getSharedPreferences("marketingSnsPermissionSave", MODE_PRIVATE);
         boolean isCheckMarketing = getMarketingPermission.getBoolean("marketingSnsPermissionSave" , false);
-        RegisterUser registerUser = new RegisterUser(phone, emailStr, userNameStr, pass1Str);
+        RegisterUser registerUser = new RegisterUser(phone, emailStr, pass1Str);
 
         HashMap<String, String> registerUsers = new HashMap<>();
         registerUsers.put("phone", registerUser.getPhone());
         registerUsers.put("email", registerUser.getEmail());
-        registerUsers.put("nick", registerUser.getNick());
         registerUsers.put("pass", registerUser.getPass());
         registerUsers.put("marketing", isCheckMarketing+"");
 

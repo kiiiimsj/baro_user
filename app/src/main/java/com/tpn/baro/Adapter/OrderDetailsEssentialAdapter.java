@@ -1,6 +1,8 @@
 package com.tpn.baro.Adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -152,12 +154,10 @@ public class OrderDetailsEssentialAdapter extends RecyclerView.Adapter<OrderDeta
                         }
                     });
                     ((LinearLayout)parent.getChildAt(0)).addView(radioButton);
-
                 }
             }else {
                 Log.e("Essential", 2+"");
                 parent = (LinearLayout) inflater.inflate(R.layout.design_order_details_essential_table_child, null, false);
-
 
                 while (count != extraOrders.size()) {
 

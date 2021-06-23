@@ -58,6 +58,16 @@ public class BaroUtil {
         return discount_rate;
     }
 
+    public static void printLog(String TAG, String message) {
+        int maxLogSize = 2000;
+        for(int i = 0; i <= message.length() / maxLogSize; i++) {
+            int start = i * maxLogSize;
+            int end = (i+1) * maxLogSize;
+            end = end > message.length() ? message.length() : end;
+            android.util.Log.d(TAG, message.substring(start, end));
+        }
+    }
+
     public static boolean loginCheck(final Activity activity){
 
         SessionManager sm = new SessionManager(activity, SessionManager.SESSION_USERSESSION);
@@ -173,7 +183,7 @@ public class BaroUtil {
                     Log.i("activity : ", activity.toString()+secondString);
                     try {
                         Thread.sleep(1000);
-                        final int minuteFinal = 14 - (Integer.parseInt(minuteString) % 15);
+                        final int minuteFinal = 59 - (Integer.parseInt(minuteString) % 60);
                         final int secondFinal = 59 - Integer.parseInt(secondString);
                         if(minuteFinal==0 && secondFinal == 1) {
                             if(storeId != 0) {

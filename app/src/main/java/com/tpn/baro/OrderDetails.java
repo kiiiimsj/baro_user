@@ -125,6 +125,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
         store_name = intent.getExtras().getString("storeName");
         store_number = intent.getExtras().getString("storeNumber");
         menu_image = intent.getStringExtra("menuImage");
+        discountRate = intent.getIntExtra("discount_rate", 0);
 
         topBar.setTitleStringWhereUsedEventsAndListStore(store_name);
         topBar.storeId = store_id;
@@ -278,7 +279,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 //                totalPriceText.setText(String.valueOf(currentPrice * count));
                 totalPriceText.setText(String.valueOf(defaultPrice));
                 ifDiscountRate.setText(String.valueOf(defaultPrice * 100 / (100 - discountRate))+"원");
-                Log.e("pricePlus", defaultPrice +"");
+                Log.e("pricePlus", defaultPrice +":"+discountRate);
             }
         });
         progressApplication.progressOFF();
@@ -293,6 +294,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     protected void onResume() {
         super.onResume();
         setDiscountTextView(BaroUtil.getDiscountRateInt());
+        discountRate = BaroUtil.getDiscountRateInt();
     }
 
     @Override
@@ -553,7 +555,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
 //    }
     private void jsonParsing(String result, OrderDetailsParsing orderDetailsParsing) {
         try {
-            Boolean isSuccess = (Boolean) new JSONObject(result).getBoolean("result");
+//            Boolean isSuccess = (Boolean) new JSONObject(result).getBoolean("result");
             orderDetailsParsing.setMessage(new JSONObject(result).getString("message"));
             JSONArray jsonArray = new JSONObject(result).getJSONArray("extra");
             ArrayList<OrderDetailsListParsing> orderDetailsListParsings = new ArrayList<>();

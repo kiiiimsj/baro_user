@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:buttonTint="@color/gray"
+    android:buttonTint="@color/main"
     android:textColor="@color/gray"
     android:layout_marginLeft="10sp"
     android:layout_marginRight="10sp"
