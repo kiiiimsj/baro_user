@@ -146,7 +146,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     private BootpayBuilder bootpayBuilder;
 
     Thread paymentCloseThread;
-    ExecutorService executor;
     public static boolean onPause = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +155,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             BaroUtil.setStatusBarColor(Basket.this, this.toString());
         }
         setContentView(R.layout.activity_basket);
-        executor = Executors.newFixedThreadPool(1);
 
         fm = getSupportFragmentManager();
         topBar = (TopBar)fm.findFragmentById(R.id.top_bar);
@@ -179,13 +177,12 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         email = userData.get(SessionManager.KEY_EMAIL);
         user_name = userData.get(SessionManager.KEY_USERNAME);
 //        makeRequestForDiscountRate(store_id);
-
         paymentCloseThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(fiveMin != 0) {
                     try {
-                        if(fiveMin == 0 ) {
+                        if(fiveMin == 1 ) {
                             bootPayDialogBranch = BootPayFiveMinDialog.OVER_5;
                         }
                         if(bootPayDialogBranch == BootPayFiveMinDialog.CLOSE_BEFORE){
@@ -202,6 +199,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                             });
                         }
                         Thread.sleep(1000);
+                        Log.e("five", fiveMin+"");
                         fiveMin --;
                         Log.e("bootPayDialogBranch", bootPayDialogBranch+"");
                         Log.e("thread run ", fiveMin+"");
@@ -212,6 +210,8 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                     }
                 }
                 if(bootPayDialogBranch == BootPayFiveMinDialog.OVER_5) {
+                    Log.e("branch", bootPayDialogBranch+"");
+                    Log.e("asd", "12");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -223,7 +223,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 }
             }
         });
-
+        paymentCloseThread.start();
 
         // 초기설정 - 해당 프로젝트(안드로이드)의 application id 값을 설정합니다. 결제와 통계를 위해 꼭 필요합니다.
         BootpayAnalytics.init(this, application_id);
@@ -377,6 +377,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     protected void onDestroy() {
         super.onDestroy();
         onPause = true;
+        fiveMin = 1;
     }
 
     @Override
@@ -694,7 +695,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         }
         if(getFragmentManager() ==null){
         }
-        executor.submit(paymentCloseThread);
+        fiveMin = 1;
         final BootUser bootUser = new BootUser().setPhone(phone);
         final BootExtra bootExtra = new BootExtra().setQuotas(new int[]{0, 2, 3});
         bootpayBuilder = Bootpay.init(getFragmentManager());
