@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "188217718840-ajelel34vr14auptneoravci9vorpesd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tpn.baro",
+            "certificate_hash": "ef0bc74fe31736f129d087567b6b160c9539532c"
+          }
+        },
+        {
           "client_id": "188217718840-l41m3prcedptvg3l6ml569jp7v5qrhqd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -64,10 +72,11 @@
               "client_type": 3
             },
             {
-              "client_id": "188217718840-9c78ej5o60989ih0f2m0n6bp2vtcjmpg.apps.googleusercontent.com",
+              "client_id": "188217718840-caiqmi5q08afcjoh72d21ngov492ocon.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.baro.baro.BARO-USER"
+                "bundle_id": "com.tpn.baro",
+                "app_store_id": "1549485311"
               }
             }
           ]
