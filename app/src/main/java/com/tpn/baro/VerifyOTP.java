@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.tpn.baro.helperClass.BaroUtil;
 import com.tpn.baro.helperClass.ProgressApplication;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
@@ -36,6 +39,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     TextView title;
     TextView timer;
     ProgressApplication progressApplication;
+    Thread auth;
 
     boolean buttonPressed = false;
 
@@ -48,6 +52,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             BaroUtil.setStatusBarColor(VerifyOTP.this, this.toString());
         }
+
         title = findViewById(R.id.register_title);
         timer = findViewById(R.id.twoMintimer);
         pinFromUser = findViewById(R.id.pin_view);
@@ -57,14 +62,14 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
         Intent intent = getIntent();
         pageType = intent.getStringExtra("pageType");
         phoneNumber = intent.getStringExtra("phone");
+
         // 타이틀 설정 부분
         if(pageType.equals("FindPass1")){
             title.setText("비밀번호 찾기");
-        }else{
         }
-        //
+
         sendVerificationCodeToUser(phoneNumber);
-        new Thread(new Runnable() {
+        auth = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(sec != 0) {
@@ -84,17 +89,24 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
                 }
 
                 Looper.prepare();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(VerifyOTP.this, "인증시간이 지났습니다. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
-                    }
-                });
                 Looper.loop();
                 finish();
             }
-        }).start();
+        });
 
+        auth.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sec = 1;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(VerifyOTP.this, "인증시간이 지났습니다. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void sendVerificationCodeToUser(String phoneNo) {
@@ -123,6 +135,7 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
                 }
                 @Override
                 public void onVerificationFailed(@NonNull FirebaseException e) {
+                    Log.e("error", e.toString());
                     Toast.makeText(VerifyOTP.this, "인증 메세지 전송에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                     finish();
                 }
