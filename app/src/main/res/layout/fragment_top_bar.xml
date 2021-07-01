@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/black"
-        android:fontFamily="@font/notosans_black"
+        android:fontFamily="@font/notosans_bold"
         android:includeFontPadding="false"
         android:textSize="17sp"
         android:maxLength="20"
