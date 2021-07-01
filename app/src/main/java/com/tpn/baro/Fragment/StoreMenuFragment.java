@@ -513,7 +513,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        BaroUtil.printLog("TAG",response);
+//                        BaroUtil.printLog("TAG",response);
                         jsonParsingMenu(response);
                     }
                 },

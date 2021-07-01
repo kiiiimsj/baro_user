@@ -180,14 +180,14 @@ public class BaroUtil {
                     Calendar calendar = GregorianCalendar.getInstance();
                     String minuteString = BaroUtil.pad(2, '0', calendar.get(Calendar.MINUTE) + "");
                     String secondString = BaroUtil.pad(2, '0', calendar.get(Calendar.SECOND) +"");
-                    Log.i("activity : ", activity.toString()+secondString);
+//                    Log.i("activity : ", activity.toString()+secondString);
                     try {
                         Thread.sleep(1000);
                         final int minuteFinal = 59 - (Integer.parseInt(minuteString) % 60);
                         final int secondFinal = 59 - Integer.parseInt(secondString);
                         if(minuteFinal==0 && secondFinal == 1) {
                             if(storeId != 0) {
-                                Log.e("BaroUtil_store_id : ", storeId+"");
+//                                Log.e("BaroUtil_store_id : ", storeId+"");
                                 makeRequestForDiscountRate(storeId, activity);
                             }else {
 //                                activity.overridePendingTransition(0, 0);

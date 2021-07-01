@@ -31,7 +31,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressedInParentActivity {
-
+    private boolean THREAD_END = false;
+    private boolean ON_DESTORY = false;
     private PinView pinFromUser;
     String phoneNumber;
     String codeBySystem;
@@ -72,9 +73,13 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
         auth = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(sec != 0) {
+                while(!THREAD_END) {
                     try {
+                        if(sec == 1 ) {
+                            THREAD_END = true;
+                        }
                         Thread.sleep(1000);
+                        Log.e("sec", sec+"");
                         sec--;
                         min = sec / 60;
                         runOnUiThread(new Runnable() {
@@ -87,10 +92,15 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
                         e.printStackTrace();
                     }
                 }
-
-                Looper.prepare();
-                Looper.loop();
-                finish();
+                if(!ON_DESTORY) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(VerifyOTP.this, "인증시간이 지났습니다. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
+                }
             }
         });
 
@@ -100,13 +110,9 @@ public class VerifyOTP extends AppCompatActivity implements TopBar.OnBackPressed
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sec = 1;
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(VerifyOTP.this, "인증시간이 지났습니다. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Log.e("des?", "des?");
+        THREAD_END = true;
+        ON_DESTORY = true;
     }
 
     private void sendVerificationCodeToUser(String phoneNo) {
