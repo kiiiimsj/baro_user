@@ -195,7 +195,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                                 }
                             });
                             THREAD_END = true;
-                            bootpayBuilder.removePaymentWindow();
                         }
                         if(bootPayDialogBranch == BootPayFiveMinDialog.CLOSE_BEFORE){
                             bootPayDialogBranch = BootPayFiveMinDialog.PAGE_END;
@@ -220,7 +219,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 }
             }
         });
-
         // 초기설정 - 해당 프로젝트(안드로이드)의 application id 값을 설정합니다. 결제와 통계를 위해 꼭 필요합니다.
         BootpayAnalytics.init(this, application_id);
 
@@ -308,15 +306,17 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         onPause = false;
         discountRate = BaroUtil.getDiscountRateInt();
         getIfDiscountRate.setText("SALE "+discountRate+"%");
-        getPreferences();
-        startTrace();
+        if(!isOnClose) {
+            getPreferences();
+            startTrace();
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("orderCnt", detailsFixToBaskets.size());
-        editor.commit();
+            SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("orderCnt", detailsFixToBaskets.size());
+            editor.commit();
 
-        progressApplication.progressOFF();
+            progressApplication.progressOFF();
+        }
     }
 
     public void getPreferences() {
@@ -730,12 +730,14 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                         getBootPayAction = BootPayDialog.ON_DONE;
                         SharedPreferences shf = Basket.this.getSharedPreferences("basketList", MODE_PRIVATE);
                         SharedPreferences.Editor editor = shf.edit();
+
                         editor.clear().commit();
                         HashMap<String, String> hashMap = new HashMap<>();
+
                         String price = null;
                         String receipt_id = null;
-                        Gson gson = new Gson();
-                        ReceiptRecordParsing receiptRecordParsing = gson.fromJson(message,ReceiptRecordParsing.class);
+
+                        ReceiptRecordParsing receiptRecordParsing = new Gson().fromJson(message, ReceiptRecordParsing.class);
                         price = receiptRecordParsing.getPrice();
                         receipt_id = receiptRecordParsing.getReceipt_id();
                         receiptId = receipt_id;
@@ -801,6 +803,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                                 bootPayDialog.callFunction();
                                 bootPayDialogBranch = BootPayFiveMinDialog.PAGE_END;
                                 onPause = false;
+                                THREAD_END = true;
 //                                finish();
                                 Log.e("close", "close");
                             }
@@ -860,8 +863,6 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                         editor.commit();
                         String inMyBasket = sharedPreferences.getString(IN_MY_BASEKT, "");
                         orderInsert();
-
-
                     }
                 },
                 new Response.ErrorListener() {
