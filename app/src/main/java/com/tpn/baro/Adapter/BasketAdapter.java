@@ -118,10 +118,9 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
         if(detailsFixToBasket.getDiscount_rate() == 0 ){
             ((TextView)holder.priceLinear.getChildAt(3)).setVisibility(View.GONE);
             ((ImageView)holder.priceLinear.getChildAt(4)).setVisibility(View.GONE);
-        }else {
-            ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getDefaultPrice()+"");
-            ((TextView)holder.priceLinear.getChildAt(5)).setText(detailsFixToBasket.getDefaultPrice() - (int)(detailsFixToBasket.getDefaultPrice() * (detailsFixToBasket.getDiscount_rate() / 100.0))+"원");
         }
+        ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getDefaultPrice()+"");
+        ((TextView)holder.priceLinear.getChildAt(5)).setText(detailsFixToBasket.getDefaultPrice() - (int)(detailsFixToBasket.getDefaultPrice() * (detailsFixToBasket.getDiscount_rate() / 100.0))+"원");
 //        ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getPrice() *(100-detailsFixToBasket.getDiscount_rate()) /100 + " 원");
 
         holder.deleteThis.setOnClickListener(new View.OnClickListener(){
