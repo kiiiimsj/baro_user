@@ -1,6 +1,7 @@
 package com.tpn.baro.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
             return;
         }
         ((TextView)holder.itemName.getChildAt(0)).setText(detailsFixToBasket.getName());
+        Log.e("defaultPrice", detailsFixToBasket.getDefaultPrice()+"");
         ((TextView)holder.itemName.getChildAt(1)).setText(""+detailsFixToBasket.getDefaultPrice());
 
         if(essentials.size()!=0) {
@@ -109,14 +111,17 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.ViewHolder
             holder.nonEssential.setVisibility(View.GONE);
         }
 
-        ((TextView)holder.priceLinear.getChildAt(0)).setText(detailsFixToBasket.getPrice() * 100 / (100 - detailsFixToBasket.getDiscount_rate())+"원");
+        ((TextView)holder.priceLinear.getChildAt(0)).setText(detailsFixToBasket.getDefaultPrice()+"원");
+//        ((TextView)holder.priceLinear.getChildAt(0)).setText(detailsFixToBasket.getDefaultPrice()+"원");
         ((TextView)holder.priceLinear.getChildAt(2)).setText(detailsFixToBasket.getCount()+"");
+
         if(detailsFixToBasket.getDiscount_rate() == 0 ){
             ((TextView)holder.priceLinear.getChildAt(3)).setVisibility(View.GONE);
             ((ImageView)holder.priceLinear.getChildAt(4)).setVisibility(View.GONE);
+        }else {
+            ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getDefaultPrice()+"");
+            ((TextView)holder.priceLinear.getChildAt(5)).setText(detailsFixToBasket.getDefaultPrice() - (int)(detailsFixToBasket.getDefaultPrice() * (detailsFixToBasket.getDiscount_rate() / 100.0))+"원");
         }
-        ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getPrice() * 100 / (100 - detailsFixToBasket.getDiscount_rate())+"원");
-        ((TextView)holder.priceLinear.getChildAt(5)).setText(detailsFixToBasket.getPrice() + " 원");
 //        ((TextView)holder.priceLinear.getChildAt(3)).setText(detailsFixToBasket.getPrice() *(100-detailsFixToBasket.getDiscount_rate()) /100 + " 원");
 
         holder.deleteThis.setOnClickListener(new View.OnClickListener(){
