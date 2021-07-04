@@ -138,6 +138,7 @@ public class StoreMenuFragment extends Fragment implements MenuListAdapter.OnLis
     public void onResume() {
         super.onResume();
         Log.e("discountInMenu", getDiscountRate+"");
+        getDiscountRate = BaroUtil.getDiscountRateInt();
         setDiscountTextView(getDiscountRate);
     }
 

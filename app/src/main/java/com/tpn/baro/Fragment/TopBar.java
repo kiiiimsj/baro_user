@@ -283,7 +283,6 @@ public class TopBar extends Fragment /*implements BaroUtil.ReloadActivity*/ {
     @Override
     public void onResume() {
         new BaroUtil().fifteenTimer(timer, activity);
-//        makeRequestForDiscountRate(storeId);
         super.onResume();
     }
     public void setTitleStringWhereUsedEventsAndListStore(String title_name) {

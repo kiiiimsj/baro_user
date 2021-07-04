@@ -294,7 +294,7 @@ public class OrderDetails extends AppCompatActivity implements TopBar.OnBackPres
     protected void onResume() {
         super.onResume();
 //        setDiscountTextView(BaroUtil.getDiscountRateInt());
-//        discountRate = BaroUtil.getDiscountRateInt();
+        discountRate = BaroUtil.getDiscountRateInt();
         setDiscountTextView(discountRate);
     }
 

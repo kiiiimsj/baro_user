@@ -125,8 +125,7 @@ public class StoreInfoReNewer extends AppCompatActivity implements TopBar.OnBack
     protected void onResume() {
         super.onResume();
         BaroUtil.storeId = Integer.parseInt(storedIdStr);;
-//        Log.e("fromPreferences", BaroUtil.getDiscountRateInt()+"");
-//        storeMenuFragment.getDiscountRate = BaroUtil.getDiscountRateInt();
+        discountRate = BaroUtil.getDiscountRateInt();
         setOnClickFavorite();
         getFavoriteStoreId();
         checkFavorite();

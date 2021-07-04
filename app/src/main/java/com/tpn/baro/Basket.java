@@ -199,7 +199,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                         }
                         if(bootPayDialogBranch == BootPayFiveMinDialog.CLOSE_BEFORE){
                             bootPayDialogBranch = BootPayFiveMinDialog.PAGE_END;
-                            fiveMin = 0;
+                            THREAD_END = true;
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -371,15 +371,12 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     protected void onDestroy() {
         super.onDestroy();
         onPause = true;
-        BaroUtil.setDiscountRateInt(discountRate, Basket.this);
     }
 
     @Override
     protected void onPause() {
         onPause = true;
         super.onPause();
-        BaroUtil.setDiscountRateInt(discountRate, Basket.this);
-
         SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if(!isOpen){
@@ -455,7 +452,11 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
             if((detailsFixToBaskets.get(i).getName().equals(""))){
                 continue;
             }
-            totalPrice += detailsFixToBaskets.get(i).getPrice();
+            if(detailsFixToBaskets.get(i).getDiscount_rate() != 0 ){
+                totalPrice += ( detailsFixToBaskets.get(i).getDefaultPrice() - (int)( detailsFixToBaskets.get(i).getDefaultPrice() * (detailsFixToBaskets.get(i).getDiscount_rate() / 100.0)) );
+            }else {
+                totalPrice += detailsFixToBaskets.get(i).getDefaultPrice();
+            }
         }
 //        if(discountRate != 0) {
 //            finalPayValue.setText(totalPrice - (int)(totalPrice * (discountRate / 100.0 ))+" 원");
