@@ -183,7 +183,7 @@ public class BaroUtil {
 //                    Log.i("activity : ", activity.toString()+secondString);
                     try {
                         Thread.sleep(1000);
-                        final int minuteFinal = 59 - (Integer.parseInt(minuteString) % 60);
+                        final int minuteFinal = 1 - (Integer.parseInt(minuteString) % 2);
                         final int secondFinal = 59 - Integer.parseInt(secondString);
                         if(minuteFinal==0 && secondFinal == 1) {
                             if(storeId != 0) {
@@ -251,7 +251,6 @@ public class BaroUtil {
             JSONObject jsonObject = new JSONObject(result);
             if(jsonObject.getBoolean("result")) {
                 discountRateInt = jsonObject.getInt("discount_rate");
-                Log.e("discountRateInt : ", discountRateInt+"");
                 setDiscountRateInt(discountRateInt, activity);
 //                activity.overridePendingTransition(0, 0);
 //                activity.getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
