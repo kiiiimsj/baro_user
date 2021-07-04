@@ -171,6 +171,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
         storeNameTextView = findViewById(R.id.store_name);
         finalPayValue = findViewById(R.id.total_price_final_pay);
         getIfDiscountRate = findViewById(R.id.discount_rate);
+        discountRate = getIntent().getIntExtra("discount_rate", 0);
 
         SessionManager sessionManager = new SessionManager(getApplicationContext(), SessionManager.SESSION_USERSESSION);
         HashMap<String, String> userData = sessionManager.getUsersDetailFromSession();
@@ -341,6 +342,7 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
                 for (int i = 0; i < jsonArray.length(); i++) {
                     String jsonChild = jsonArray.optString(i);
                     detailsFixToBasket = new Gson().fromJson(jsonChild, DetailsFixToBasket.class);
+                    detailsFixToBasket.setDiscount_rate(discountRate);
                     if (detailsFixToBasket.getName().equals("")) continue;
                     totalOrderCount += detailsFixToBasket.getCount();
                     detailsFixToBaskets.add(detailsFixToBasket);
@@ -369,12 +371,14 @@ public class Basket extends AppCompatActivity implements BootpayRestImplement, T
     protected void onDestroy() {
         super.onDestroy();
         onPause = true;
+        BaroUtil.setDiscountRateInt(discountRate, Basket.this);
     }
 
     @Override
     protected void onPause() {
         onPause = true;
         super.onPause();
+        BaroUtil.setDiscountRateInt(discountRate, Basket.this);
 
         SharedPreferences sharedPreferences = getSharedPreferences(Basket.BasketList,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
